@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/mysql-connector-java-5.1.18-bin.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/fluent-hc-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/httpclient-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/httpclient-cache-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/httpcore-4.3.2.jar"/>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/httpmime-4.3.3.jar"/>
+	<classpathentry kind="lib" path="/usr/share/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar" sourcepath="/usr/share/eclipse/plugins/org.junit.source_4.11.0.v201303080030.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://junit-team.github.io/junit/javadoc/latest/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/home/patrick/SVN/NationBuilder/Java/Lib/Jar/guava-16.0.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

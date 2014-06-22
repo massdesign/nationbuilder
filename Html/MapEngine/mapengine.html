@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <script type="text/JavaScript" src="jquery-1.11.0.js"></script>
+  <script type="text/JavaScript" src="baseservice.js"></script>
+  <script type="text/Javascript" src="mapservice.js"></script>
+  <script type="text/JavaScript" src="kinetic-v5.1.0.min.js"></script>
+  <script type="text/JavaScript" src="angular13.min.js"></script>
+  
+  <script type="text/javascript" src="map.js"></script>
+  <style>
+	body {
+        margin: 0px;
+        padding: 20px;
+      }
+	#container{	
+  	border:solid 1px #ccc;
+  	margin-top: 10px;
+}
+</style>
+  </head>
+  <body>
+  <div id="container"></div>
+    <canvas id="myCanvas" width="700" height="700"></canvas>
+    <script>
+    
+javascript_console = console;
+$(document).ready(function()
+ {
+     
+	  var canvas = document.getElementById('myCanvas');
+     var context = canvas.getContext('2d');
+     
+	  var s = new MapService(); 
+    s.getMap(function (mapData) {      	
+    	images  = Array();	
+     var	data = mapData[0]['layers'];    	
+    	map.init();
+    	s.getImages(function(imagedata)
+    	{ 
+    	 map.render(imagedata,data);
+    	});
+    	
+    	});
+    	
+    	});
+    </script>
+  </body>	
+</html>

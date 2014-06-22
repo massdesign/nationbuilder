@@ -1,0 +1,2 @@
+object @tile
+attributes:id

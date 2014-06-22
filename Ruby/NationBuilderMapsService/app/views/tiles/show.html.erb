@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Xposition:</strong>
+  <%= @tile.xposition %>
+</p>
+
+<p>
+  <strong>Yposition:</strong>
+  <%= @tile.yposition %>
+</p>
+
+<p>
+  <strong>Xoffset:</strong>
+  <%= @tile.xoffset %>
+</p>
+
+<p>
+  <strong>Yoffset:</strong>
+  <%= @tile.yoffset %>
+</p>
+
+<%= link_to 'Edit', edit_tile_path(@tile) %> |
+<%= link_to 'Back', tiles_path %>

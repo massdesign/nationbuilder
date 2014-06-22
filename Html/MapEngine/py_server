@@ -1,0 +1,3 @@
+#start the python2 simpleHttpServer like this
+ python2 -m SimpleHTTPServer
+

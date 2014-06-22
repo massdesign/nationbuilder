@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="World2" tilewidth="32" tileheight="32">
+  <image source="../TileSets/World2.png" width="256" height="352"/>
+ </tileset>
+ <tileset firstgid="89" name="World3" tilewidth="32" tileheight="32">
+  <image source="../TileSets/World3.png" width="256" height="1152"/>
+ </tileset>
+ <tileset firstgid="377" name="worldmapcompleteph7" tilewidth="32" tileheight="32">
+  <image source="../TileSets/worldmapcompleteph7.png" width="640" height="480"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="5" height="5">
+  <data>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="538"/>
+   <tile gid="539"/>
+   <tile gid="578"/>
+   <tile gid="478"/>
+   <tile gid="578"/>
+   <tile gid="558"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="521"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+   <tile gid="578"/>
+  </data>
+ </layer>
+</map>
