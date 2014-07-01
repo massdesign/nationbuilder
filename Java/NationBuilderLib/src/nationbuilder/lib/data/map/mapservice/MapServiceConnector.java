@@ -7,9 +7,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import nationbuilder.lib.data.map.*;
-import nationbuilder.lib.data.map.xml.Image;
-import nationbuilder.lib.data.map.xml.Tile;
+import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.http.JsonServiceConnector;
 import nationbuilder.lib.http.data.HttpData;
 import nationbuilder.lib.http.data.ID;

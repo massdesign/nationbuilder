@@ -4,8 +4,8 @@ import json
 
 class MapsService:
 
-	#service = '192.168.1.6:3000'	
-	service = 'localhost:3000'
+	service = '192.168.1.6:3000'	
+	#service = 'localhost:3000'
 	def __init__(self):
 			print("MapsService started")
 	def getImages(self):

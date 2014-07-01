@@ -5,7 +5,7 @@ import numpy
 from PIL import Image
 
 class Cacheservice:
-			fullpath = "/home/patrick/SVN/NationBuilder/Html/MapEngine/"
+			fullpath = "/home/patrick/Git/nationbuilder/Html/MapEngine/"
 			cachedir = "ncache"
 			def __init__(self):
 				self._createcache()

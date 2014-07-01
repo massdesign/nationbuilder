@@ -1,4 +1,4 @@
-package nationbuilder.lib.data.map;
+package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.http.data.ID;
 

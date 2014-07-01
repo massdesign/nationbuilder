@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import nationbuilder.lib.data.map.*;
+import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.Image;
 import nationbuilder.lib.data.map.xml.Layer;
 import nationbuilder.lib.data.map.xml.Tile;

@@ -1,10 +1,8 @@
-package nationbuilder.lib.data.map;
+package nationbuilder.lib.data.map.entities;
 
 import java.io.File;
 
 import nationbuilder.lib.http.data.ID;
-
-import com.google.gson.annotations.SerializedName;
 
 
 public class MapImage {
