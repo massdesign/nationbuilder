@@ -1,2 +1,0 @@
-object @tile
-attributes:id
