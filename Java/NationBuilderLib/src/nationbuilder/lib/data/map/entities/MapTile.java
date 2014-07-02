@@ -7,6 +7,7 @@ public class MapTile {
 	
 	private int xposition;
 	private int yposition;
+    private int gidtag;
 	private int xoffset;
 	private int yoffset;
 	private MapImage image;
@@ -67,6 +68,8 @@ public class MapTile {
 	public void setYoffset(int yoffset) {
 		this.yoffset = yoffset;
 	}
+    public int getGidtag() {  return gidtag;  }
+    public void setGidtag(int resource_id) { this.gidtag = resource_id;  }
 	public MapTile()
 	{
 		

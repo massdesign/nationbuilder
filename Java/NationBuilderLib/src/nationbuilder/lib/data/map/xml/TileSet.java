@@ -53,7 +53,21 @@ public class TileSet {
 			result = new Image(elements.get(0));
 		 }
 		 return result;
-}
+    }
+
+    public ArrayList<Tile> getTiles()
+    {
+        ArrayList<Tile> result = new ArrayList<Tile>();
+
+        ArrayList<Element> elements = XmlHelper.getElements("tile",element);
+
+        for(Element element : elements)
+        {
+            Tile tile = new Tile(element);
+            result.add(tile);
+        }
+        return result;
+    }
 	
 
 }

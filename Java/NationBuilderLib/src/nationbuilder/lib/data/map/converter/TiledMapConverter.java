@@ -69,7 +69,7 @@ public class TiledMapConverter {
     public MapTile convertTile(Tile tile)
     {
         MapTile result = new MapTile();
-
+        result.setGidtag(tile.getGID());
 
         if(this.mapTileSetImage(result, tile.getGID()))
         {

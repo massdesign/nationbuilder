@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="../../../../SVN/NationBuilder/Tiled/TileSets/World3.png" width="256" height="1152"/>
+  <tile id="0">
+   <properties>
+    <property name="tiletype" value="PLAINLAND"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="289" name="water" tilewidth="32" tileheight="32">
+  <image source="../../../../SVN/NationBuilder/Tiled/TileSets/land1nt4.png" width="384" height="128"/>
+  <tile id="1">
+   <properties>
+    <property name="tiletype" value="SEA"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="tiletype" value="COAST"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Water" width="10" height="10">
+  <data>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="290"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="290"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+  </data>
+ </layer>
+ <layer name="Land" width="10" height="10">
+  <data>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="0"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+   <tile gid="290"/>
+  </data>
+ </layer>
+ <layer name="Coast" width="10" height="10">
+  <data>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="301"/>
+   <tile gid="302"/>
+   <tile gid="303"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="301"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="303"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="313"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="327"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="325"/>
+   <tile gid="326"/>
+   <tile gid="326"/>
+   <tile gid="327"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+  </data>
+ </layer>
+</map>
