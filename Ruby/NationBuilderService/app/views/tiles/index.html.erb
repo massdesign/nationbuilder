@@ -1,0 +1,33 @@
+<h1>Listing tiles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Xposition</th>
+      <th>Yposition</th>
+      <th>Xoffset</th>
+      <th>Yoffset</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tiles.each do |tile| %>
+      <tr>
+        <td><%= tile.xposition %></td>
+        <td><%= tile.yposition %></td>
+        <td><%= tile.xoffset %></td>
+        <td><%= tile.yoffset %></td>
+        <td><%= link_to 'Show', tile %></td>
+        <td><%= link_to 'Edit', edit_tile_path(tile) %></td>
+        <td><%= link_to 'Destroy', tile, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tile', new_tile_path %>
