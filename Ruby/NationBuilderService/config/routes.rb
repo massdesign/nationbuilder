@@ -1,4 +1,6 @@
 NationBuilderMapsService::Application.routes.draw do
+  resources :terrain_types
+
   resources :uploads
 
   resources :tiles
