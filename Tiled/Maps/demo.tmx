@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
-  <image source="../../../../SVN/NationBuilder/Tiled/TileSets/World3.png" width="256" height="1152"/>
+  <image source="../../../../Git/nationbuilder/Tiled/TileSets/World3.png" width="256" height="1152"/>
   <tile id="0">
    <properties>
     <property name="tiletype" value="PLAINLAND"/>
@@ -9,7 +9,7 @@
   </tile>
  </tileset>
  <tileset firstgid="289" name="water" tilewidth="32" tileheight="32">
-  <image source="../../../../SVN/NationBuilder/Tiled/TileSets/land1nt4.png" width="384" height="128"/>
+  <image source="../../../../Git/nationbuilder/Tiled/TileSets/land1nt4.png" width="384" height="128"/>
   <tile id="1">
    <properties>
     <property name="tiletype" value="SEA"/>
