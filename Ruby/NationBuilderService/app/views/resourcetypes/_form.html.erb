@@ -1,0 +1,17 @@
+<%= form_for(@resourcetype) do |f| %>
+  <% if @resourcetype.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@resourcetype.errors.count, "error") %> prohibited this resourcetype from being saved:</h2>
+
+      <ul>
+      <% @resourcetype.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
