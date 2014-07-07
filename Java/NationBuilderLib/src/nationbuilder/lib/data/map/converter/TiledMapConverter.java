@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.Image;
 import nationbuilder.lib.data.map.xml.Layer;
@@ -13,12 +14,12 @@ import nationbuilder.lib.data.map.xml.TiledXmlMap;
 
 public class TiledMapConverter {
 
-
     TiledXmlMap xmlMap;
     ArrayList<MapImage> mapImages;
     ArrayList<MapTile> mapTiles;
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
+    RubyContext rubyContext = new RubyContext();
     public TiledMapConverter(TiledXmlMap xmlMap)
     {
         this();
@@ -45,6 +46,7 @@ public class TiledMapConverter {
             Image image =	tileset.getImage();
 
             MapImage mapImage = new MapImage();
+           // MapImage mapImage = this.rubyContext.createRubyModel(MapImage);
             mapImage.setMap(this.map);
             mapImage.setImageFile(new File(image.getFileLocation()));
             mapImage.setHeight(image.getHeight());

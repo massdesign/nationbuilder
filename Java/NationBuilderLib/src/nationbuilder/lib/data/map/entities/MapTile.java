@@ -1,8 +1,10 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
-public class MapTile {
+public class MapTile extends BaseRubyModel {
 
 	
 	private int xposition;
@@ -81,7 +83,10 @@ public class MapTile {
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
 	}
-	
-	
-	
+
+
+    @Override
+    public boolean Save() {
+        return false;
+    }
 }

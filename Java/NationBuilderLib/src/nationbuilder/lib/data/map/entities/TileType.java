@@ -3,7 +3,10 @@ package nationbuilder.lib.data.map.entities;
 /**
  * Created by patrick on 7/1/14.
  */
-public enum TileType {
+public class TileType {
+
+    private String name;
+    /*
     WATER,
     SEA,
     FOREST,
@@ -12,4 +15,5 @@ public enum TileType {
     PLAINLAND,
     COAST,
     NONE
+    */
 }

@@ -2,10 +2,12 @@ package nationbuilder.lib.data.map.entities;
 
 import java.io.File;
 
+import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
 
-public class MapImage {
+public class MapImage extends BaseRubyModel {
 		
 	@Override
 	public String toString() {
