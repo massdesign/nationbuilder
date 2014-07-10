@@ -83,10 +83,4 @@ public class MapTile extends BaseRubyModel {
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
 	}
-
-
-    @Override
-    public boolean Save() {
-        return false;
-    }
 }

@@ -25,7 +25,7 @@ public class MapImage extends BaseRubyModel {
 	private int lastGid;
 	private int tileWidth;
 	private int tileHeight;
-	private File imageFile;
+	private MapImageFile imageFile;
 
     public MapMap getMap() {
         return map;
@@ -54,10 +54,10 @@ public class MapImage extends BaseRubyModel {
 	public void setId(ID id) {
 		this.id = id;
 	}
-	public File getImageFile() {
+	public MapImageFile getImageFile() {
 		return imageFile;
 	}
-	public void setImageFile(File imageFile) {
+	public void setImageFile(MapImageFile imageFile) {
 		this.imageFile = imageFile;
 	}
 	public int getTileWidth() {

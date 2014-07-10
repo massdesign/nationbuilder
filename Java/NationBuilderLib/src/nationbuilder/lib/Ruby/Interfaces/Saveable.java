@@ -5,5 +5,5 @@ package nationbuilder.lib.Ruby.Interfaces;
  */
 public interface Saveable {
 
-    public boolean Save();
+    public boolean Save(String resourceUrl);
 }
