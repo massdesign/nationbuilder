@@ -14,8 +14,6 @@ public class MapMap extends BaseRubyModel {
     private int width;
     private int height;
 
-    private ID id;
-
     public int getTileWidth() {
         return tileWidth;
     }
@@ -47,15 +45,6 @@ public class MapMap extends BaseRubyModel {
     public void setHeight(int height) {
         this.height = height;
     }
-
-    public ID getId() {
-        return id;
-    }
-
-    public void setId(ID id) {
-        this.id = id;
-    }
-
 
     public MapMap()
     {

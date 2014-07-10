@@ -11,7 +11,7 @@ public class RubyContextFactory {
 
     public RubyContext createRubyContext()
     {
-        RubyService service = new JsonServiceConnector(String.format("",RubyConfiguration.RubyBackend,RubyConfiguration.RubyBackendPort));
+        RubyService service = new JsonServiceConnector(String.format("%s:%s",RubyConfiguration.RubyBackend,RubyConfiguration.RubyBackendPort));
         RubyContext result = new RubyContext(service);
         return result;
     }

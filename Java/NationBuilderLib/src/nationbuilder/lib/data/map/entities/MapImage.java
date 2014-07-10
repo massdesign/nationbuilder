@@ -14,8 +14,7 @@ public class MapImage extends BaseRubyModel {
 		return "MapImage [url=" + url + ", name=" + name + ", width=" + width
 				+ ", height=" + height + ", firstGid=" + firstGid
 				+ ", lastGid=" + lastGid + ", tileWidth=" + tileWidth
-				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile
-				+ ", id=" + id + "]";
+				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile;
 	}
 	private String url;
 	private String name;
@@ -46,14 +45,7 @@ public class MapImage extends BaseRubyModel {
         this.mid = Integer.parseInt(this.getMap().getId().getId());
     }
     private int mid;
-	private ID id;
 	
-	public ID getId() {
-		return id;
-	}
-	public void setId(ID id) {
-		this.id = id;
-	}
 	public MapImageFile getImageFile() {
 		return imageFile;
 	}

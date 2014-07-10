@@ -31,7 +31,7 @@ public class RubyContext {
 
     public RubyContext(RubyService service)
     {
-
+     this.rubyService = service;
     }
 
     public<T extends RubyModel> T createRubyModel(Class<?> clazz)
