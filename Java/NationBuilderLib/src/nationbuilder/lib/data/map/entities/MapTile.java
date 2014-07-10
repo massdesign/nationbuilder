@@ -20,17 +20,10 @@ public class MapTile extends BaseRubyModel {
 	public void setLayer(MapLayer layer) {
 		this.layer = layer;
 	}
-	private ID id;
 	// image id copied to local instance
 	private int imd;
 	// layer id copied to local instance
 	private int lmd;
-	public ID getId() {
-		return id;
-	}
-	public void setId(ID id) {
-		this.id = id;
-	}
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());

@@ -49,15 +49,6 @@ public class MapLayer extends BaseRubyModel {
 	public void setTileWidth(int tileWidth) {
 		this.tileWidth = tileWidth;
 	}
-	
-	private ID id; 
-	public ID getId() {
-		return id;
-	}
-
-	public void setId(ID id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
