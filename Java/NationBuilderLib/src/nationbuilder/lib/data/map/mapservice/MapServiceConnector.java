@@ -64,38 +64,19 @@ public class MapServiceConnector {
             Log.write(e, LogType.ERROR);
         }
 
-       /* Gson gson = new Gson();
-
-        try {
-            HttpData data = this.jsonServiceConnector.postObject(map,"/maps/");
-            ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
-            map.setId(resultObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
     }
 	public void addLayer(MapLayer layer)
 	{
-	//	Gson gson = new Gson();
 		layer.fetchIDs();
         try {
             context.SaveObject(layer,"/layers/");
         } catch (IOException e) {
             Log.write(e,LogType.ERROR);
         }
-        //	try {
-	//		HttpData data = this.jsonServiceConnector.postObject(layer, "/layers/");
-	//		ID resultObject = gson.fromJson(data.getBody(), ID.class);
-	//		layer.setId(resultObject);
-	//	} catch (IOException e) {
-	//		e.printStackTrace();
-	//	}
 	}
 	public void addDataset(MapDataset dataset)
 	{
         this.addMap(dataset.getMap());
-	//	this.addImage(dataset.getMapImages().get(0));
 		for(MapImage image : dataset.getMapImages())
 		{
 			this.addImage(image);
@@ -108,7 +89,6 @@ public class MapServiceConnector {
 		{
 			Map.Entry<String, MapLayer> pair = (Map.Entry<String, MapLayer>)it.next();
             mapLayer.add(pair.getValue());
-			 //this.addLayer(pair.getValue());
 		}
 
         ListIterator<MapLayer> li = mapLayer.listIterator(mapLayer.size());
@@ -126,21 +106,10 @@ public class MapServiceConnector {
 	public void addImage(MapImage image)
 	{
 		int resultId = 0;
-		//try {
 			image.getImageFile();
 			image.fetchIDs();
-		//	HttpData dataObject = this.jsonServiceConnector.postObject(image, "/images/");
-             // context.SaveObject(image,"/images/");
             image.Save("/images/");
-			//Gson gson = new Gson();
-		  //  ID resultObject =	gson.fromJson(dataObject.getBody(), ID.class);
-		    // image.setId(resultObject);
             image.getImageFile().Save("/uploads/");
-			//int fileStatusCode = this.jsonServiceConnector.postFile(image.getImageFile(), "/uploads/");
-		//} catch (IOException e) {
-		    //Log.write(e,LogType.ERROR);
-		//}
-		//return resultId;
 	}
 
 }
