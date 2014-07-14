@@ -1,8 +1,10 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
-public class MapTile {
+public class MapTile extends BaseRubyModel {
 
 	
 	private int xposition;
@@ -18,17 +20,10 @@ public class MapTile {
 	public void setLayer(MapLayer layer) {
 		this.layer = layer;
 	}
-	private ID id;
 	// image id copied to local instance
 	private int imd;
 	// layer id copied to local instance
 	private int lmd;
-	public ID getId() {
-		return id;
-	}
-	public void setId(ID id) {
-		this.id = id;
-	}
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());
@@ -81,7 +76,4 @@ public class MapTile {
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
 	}
-	
-	
-	
 }

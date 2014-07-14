@@ -1,8 +1,10 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
-public class MapLayer {
+public class MapLayer extends BaseRubyModel {
 
 	
 	private String name;
@@ -46,15 +48,6 @@ public class MapLayer {
 
 	public void setTileWidth(int tileWidth) {
 		this.tileWidth = tileWidth;
-	}
-	
-	private ID id; 
-	public ID getId() {
-		return id;
-	}
-
-	public void setId(ID id) {
-		this.id = id;
 	}
 
 	public String getName() {

@@ -2,18 +2,19 @@ package nationbuilder.lib.data.map.entities;
 
 import java.io.File;
 
+import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
 
-public class MapImage {
+public class MapImage extends BaseRubyModel {
 		
 	@Override
 	public String toString() {
 		return "MapImage [url=" + url + ", name=" + name + ", width=" + width
 				+ ", height=" + height + ", firstGid=" + firstGid
 				+ ", lastGid=" + lastGid + ", tileWidth=" + tileWidth
-				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile
-				+ ", id=" + id + "]";
+				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile;
 	}
 	private String url;
 	private String name;
@@ -23,7 +24,7 @@ public class MapImage {
 	private int lastGid;
 	private int tileWidth;
 	private int tileHeight;
-	private File imageFile;
+	private MapImageFile imageFile;
 
     public MapMap getMap() {
         return map;
@@ -44,18 +45,11 @@ public class MapImage {
         this.mid = Integer.parseInt(this.getMap().getId().getId());
     }
     private int mid;
-	private ID id;
 	
-	public ID getId() {
-		return id;
-	}
-	public void setId(ID id) {
-		this.id = id;
-	}
-	public File getImageFile() {
+	public MapImageFile getImageFile() {
 		return imageFile;
 	}
-	public void setImageFile(File imageFile) {
+	public void setImageFile(MapImageFile imageFile) {
 		this.imageFile = imageFile;
 	}
 	public int getTileWidth() {

@@ -3,13 +3,15 @@ package nationbuilder.lib.http;
 import java.io.File;
 import java.io.IOException;
 
+import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.HttpData;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class JsonServiceConnector {
+public class JsonServiceConnector implements RubyService {
 
 	private String serverUrl;
 	Gson gson;
@@ -46,14 +48,10 @@ public class JsonServiceConnector {
 		return status_code;
 	}
 	
-	public int postFile(File file,String resourceUrl) throws IOException
+	public int postFile(BaseRubyResourceModel model,String resourceUrl) throws IOException
 	{		
-		int status_code = HttpRequest.sendPostUploadRequest(this.serverUrl + resourceUrl, file);	
+		int status_code = HttpRequest.sendPostUploadRequest(this.serverUrl + resourceUrl, model.getResource());
 		return status_code;
-	}
-	public void connect()
-	{
-		// TODO: implement
 	}
 	
 }

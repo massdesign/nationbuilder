@@ -7,6 +7,11 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.Ruby.RubyConfiguration;
+import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.http.JsonServiceConnector;
 import nationbuilder.lib.http.data.HttpData;
@@ -16,7 +21,8 @@ public class MapServiceConnector {
 
 
 	private String location;
-	private JsonServiceConnector jsonServiceConnector;
+	private RubyService jsonServiceConnector;
+    private RubyContext context;
 	public String getLocation() {
 		return location;
 	}
@@ -25,9 +31,11 @@ public class MapServiceConnector {
 	}
 
 
-	public MapServiceConnector(String location)
+	public MapServiceConnector(RubyContext context)
 	{
+        this.location =  RubyConfiguration.RubyBackend + ":" + RubyConfiguration.RubyBackendPort;
 		this.jsonServiceConnector = new JsonServiceConnector(location);
+        this.context = context;
 	}
 
 	public void addTile(MapTile tile)
@@ -49,7 +57,14 @@ public class MapServiceConnector {
 	}
     public void addMap(MapMap map)
     {
-        Gson gson = new Gson();
+
+        try {
+            context.SaveObject(map,"/maps/");
+        } catch (IOException e) {
+            Log.write(e, LogType.ERROR);
+        }
+
+       /* Gson gson = new Gson();
 
         try {
             HttpData data = this.jsonServiceConnector.postObject(map,"/maps/");
@@ -58,18 +73,24 @@ public class MapServiceConnector {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 	public void addLayer(MapLayer layer)
 	{
-		Gson gson = new Gson();
+	//	Gson gson = new Gson();
 		layer.fetchIDs();
-		try {
-			HttpData data = this.jsonServiceConnector.postObject(layer, "/layers/");
-			ID resultObject = gson.fromJson(data.getBody(), ID.class);
-			layer.setId(resultObject);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        try {
+            context.SaveObject(layer,"/layers/");
+        } catch (IOException e) {
+            Log.write(e,LogType.ERROR);
+        }
+        //	try {
+	//		HttpData data = this.jsonServiceConnector.postObject(layer, "/layers/");
+	//		ID resultObject = gson.fromJson(data.getBody(), ID.class);
+	//		layer.setId(resultObject);
+	//	} catch (IOException e) {
+	//		e.printStackTrace();
+	//	}
 	}
 	public void addDataset(MapDataset dataset)
 	{
@@ -102,22 +123,24 @@ public class MapServiceConnector {
 			this.addTile(tile);
 		}
 	}
-	public int addImage(MapImage image)
+	public void addImage(MapImage image)
 	{
 		int resultId = 0;
-		try {
+		//try {
 			image.getImageFile();
 			image.fetchIDs();
-			HttpData dataObject = this.jsonServiceConnector.postObject(image, "/images/");
-
-			Gson gson = new Gson();
-		    ID resultObject =	gson.fromJson(dataObject.getBody(), ID.class);
-		     image.setId(resultObject);
-			int fileStatusCode = this.jsonServiceConnector.postFile(image.getImageFile(), "/uploads/");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return resultId;
+		//	HttpData dataObject = this.jsonServiceConnector.postObject(image, "/images/");
+             // context.SaveObject(image,"/images/");
+            image.Save("/images/");
+			//Gson gson = new Gson();
+		  //  ID resultObject =	gson.fromJson(dataObject.getBody(), ID.class);
+		    // image.setId(resultObject);
+            image.getImageFile().Save("/uploads/");
+			//int fileStatusCode = this.jsonServiceConnector.postFile(image.getImageFile(), "/uploads/");
+		//} catch (IOException e) {
+		    //Log.write(e,LogType.ERROR);
+		//}
+		//return resultId;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.Image;
 import nationbuilder.lib.data.map.xml.Layer;
@@ -13,16 +14,17 @@ import nationbuilder.lib.data.map.xml.TiledXmlMap;
 
 public class TiledMapConverter {
 
-
     TiledXmlMap xmlMap;
     ArrayList<MapImage> mapImages;
     ArrayList<MapTile> mapTiles;
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
-    public TiledMapConverter(TiledXmlMap xmlMap)
+    RubyContext rubyContext;
+    public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
     {
         this();
         this.xmlMap = xmlMap;
+        this.rubyContext = context;
     }
     public TiledMapConverter()
     {
@@ -44,9 +46,12 @@ public class TiledMapConverter {
         {
             Image image =	tileset.getImage();
 
-            MapImage mapImage = new MapImage();
+            MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
+            MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
             mapImage.setMap(this.map);
-            mapImage.setImageFile(new File(image.getFileLocation()));
+            mapImageFile.setResource(new File(image.getFileLocation()));
+           // mapImage.setImageFile(new File(image.getFileLocation()));
+            mapImage.setImageFile(mapImageFile);
             mapImage.setHeight(image.getHeight());
             mapImage.setWidth(image.getWidth());
 
@@ -68,7 +73,7 @@ public class TiledMapConverter {
 
     public MapTile convertTile(Tile tile)
     {
-        MapTile result = new MapTile();
+        MapTile result = this.rubyContext.createRubyModel(MapTile.class);
         result.setGidtag(tile.getGID());
 
         if(this.mapTileSetImage(result, tile.getGID()))
@@ -175,7 +180,7 @@ public class TiledMapConverter {
                         }
                         else
                         {
-                            MapLayer newLayer = new MapLayer();
+                            MapLayer newLayer = this.rubyContext.createRubyModel(MapLayer.class);
                             newLayer.setZindex(zindex);
                             newLayer.setMap(this.map);
                             newLayer.setName(layer.getName());
