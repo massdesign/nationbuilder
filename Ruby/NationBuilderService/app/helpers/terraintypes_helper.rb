@@ -1,0 +1,2 @@
+module TerraintypesHelper
+end

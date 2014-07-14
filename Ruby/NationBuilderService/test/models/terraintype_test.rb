@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TerrainTypeTest < ActiveSupport::TestCase
+class TerraintypeTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

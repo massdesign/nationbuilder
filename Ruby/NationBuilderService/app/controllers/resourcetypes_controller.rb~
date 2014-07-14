@@ -31,7 +31,7 @@ class ResourcetypesController < ApplicationController
      else
        render action: 'new'
      end
-    end
+   end
   end
   # PATCH/PUT /resourcetypes/1
   def update
