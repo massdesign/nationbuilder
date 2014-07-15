@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 
+import World.Filler;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -29,6 +30,10 @@ public class Main {
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
         //MapServiceConnector mapsServiceConnector = new MapServiceConnector("http://localhost:3000");
 		mapsServiceConnector.addDataset(dataset);
+
+
+        Filler filler = new Filler(context);
+        filler.Fill();
    	  }
 	}
 	

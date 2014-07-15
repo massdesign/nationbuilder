@@ -32,7 +32,7 @@ public class BaseRubyModel implements RubyModel {
     public boolean Save(String ResourceUrl)
     {
         try {
-            context.SaveObject(this,ResourceUrl);
+           return context.SaveObject(this,ResourceUrl);
         } catch (IOException e) {
             Log.write(ResourceUrl, LogType.ERROR);
         }

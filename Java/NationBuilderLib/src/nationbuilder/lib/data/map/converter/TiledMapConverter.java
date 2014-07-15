@@ -20,6 +20,8 @@ public class TiledMapConverter {
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
     RubyContext rubyContext;
+    private HashMap<Integer,Tile> tilesWithterrainTypes;
+
     public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
     {
         this();
@@ -29,6 +31,7 @@ public class TiledMapConverter {
     public TiledMapConverter()
     {
         this.mapLayers = new HashMap<String,MapLayer>();
+        this.tilesWithterrainTypes = new HashMap<Integer, Tile>();
     }
     public MapMap convertMap(TiledXmlMap map)
     {
@@ -39,18 +42,29 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
+    private void addtilesToterrainTypeS(ArrayList<Tile> tiles)
+    {
+        for(Tile tile : tiles)
+        {
+            if(!this.tilesWithterrainTypes.containsKey(tile.getGID()))
+            {
+                this.tilesWithterrainTypes.put(tile.getGID(),tile);
+            }
+        }
+
+    }
     private ArrayList<MapImage> convertTilesets(ArrayList<TileSet> tilesets)
     {
         ArrayList<MapImage> mapImages = new ArrayList<MapImage>();
         for(TileSet tileset : tilesets)
         {
+            addtilesToterrainTypeS(tileset.getTiles());
             Image image =	tileset.getImage();
 
             MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
             MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
             mapImage.setMap(this.map);
             mapImageFile.setResource(new File(image.getFileLocation()));
-           // mapImage.setImageFile(new File(image.getFileLocation()));
             mapImage.setImageFile(mapImageFile);
             mapImage.setHeight(image.getHeight());
             mapImage.setWidth(image.getWidth());
@@ -62,7 +76,6 @@ public class TiledMapConverter {
 
             mapImage.setUrl("/upload/" + image.getName());
             mapImage.setName(image.getName());
-            int status_code = 0;
 
             mapImages.add(mapImage);
         }
@@ -75,13 +88,20 @@ public class TiledMapConverter {
     {
         MapTile result = this.rubyContext.createRubyModel(MapTile.class);
         result.setGidtag(tile.getGID());
-
+         // TODO: volgens mij kan deze code ook wel een stukje korter.. maak unit test voor dit ding en refactor hem dan
         if(this.mapTileSetImage(result, tile.getGID()))
         {
+
             if(!this.mapTileImageOffset(result,tile.getGID()))
             {
                 result = null;
             }
+            if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
+            {
+
+            }
+
+
         }
         else
         {
