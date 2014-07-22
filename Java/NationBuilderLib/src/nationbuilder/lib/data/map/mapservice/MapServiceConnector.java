@@ -65,6 +65,18 @@ public class MapServiceConnector {
         }
 
     }
+    public void addResource(Resource resource)
+    {
+        resource.fetchIDs();
+        try
+        {
+            context.SaveObject(resource,"/resources/");
+        }
+        catch (IOException e)
+        {
+            Log.write(e,LogType.ERROR);
+        }
+    }
 	public void addLayer(MapLayer layer)
 	{
 		layer.fetchIDs();
@@ -77,6 +89,11 @@ public class MapServiceConnector {
 	public void addDataset(MapDataset dataset)
 	{
         this.addMap(dataset.getMap());
+
+        for(Resource resource : dataset.getResources())
+        {
+            this.addResource(resource);
+        }
 		for(MapImage image : dataset.getMapImages())
 		{
 			this.addImage(image);
@@ -105,7 +122,6 @@ public class MapServiceConnector {
 	}
 	public void addImage(MapImage image)
 	{
-		int resultId = 0;
 			image.getImageFile();
 			image.fetchIDs();
             image.Save("/images/");

@@ -3,13 +3,11 @@ package nationbuilder.lib.http;
 import java.io.File;
 import java.io.IOException;
 
+import com.google.gson.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.HttpData;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class JsonServiceConnector implements RubyService {
 
@@ -18,8 +16,26 @@ public class JsonServiceConnector implements RubyService {
 	public JsonServiceConnector(String serverUrl)
 	{
 		this.serverUrl = serverUrl;
-		this.gson = new Gson();
-		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+                if (fieldAttributes.getName().equals("context"))
+                {
+                    return  true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> aClass) {
+                return  false;
+            }
+        });
+        this.gson =  gsonBuilder.create();
 	}
 	public HttpData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException
 	{

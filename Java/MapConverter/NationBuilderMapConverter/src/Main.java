@@ -19,21 +19,21 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
         RubyContext context = new RubyContextFactory().createRubyContext();
+        // first run the filler to create all the essential datbase stuff
+        Filler filler = new Filler(context);
+        filler.Fill();
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/overview.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
-        //MapServiceConnector mapsServiceConnector = new MapServiceConnector("http://localhost:3000");
 		mapsServiceConnector.addDataset(dataset);
 
 
-        Filler filler = new Filler(context);
-        filler.Fill();
    	  }
 	}
 	

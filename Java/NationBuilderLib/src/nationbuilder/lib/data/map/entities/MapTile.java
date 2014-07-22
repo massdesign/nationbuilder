@@ -14,6 +14,7 @@ public class MapTile extends BaseRubyModel {
 	private int yoffset;
 	private MapImage image;
 	private MapLayer layer;
+    private Resource resource;
 	public MapLayer getLayer() {
 		return layer;
 	}
@@ -24,6 +25,8 @@ public class MapTile extends BaseRubyModel {
 	private int imd;
 	// layer id copied to local instance
 	private int lmd;
+    // resource id copied to local instance
+    private int rid;
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());
@@ -31,7 +34,10 @@ public class MapTile extends BaseRubyModel {
 	public void fetchIDs()
 	{
 		this.imd = Integer.parseInt(this.image.getId().getId());
-		this.lmd = Integer.parseInt(this.layer.getId().getId());	
+		this.lmd = Integer.parseInt(this.layer.getId().getId());
+        if(this.resource != null) {
+            this.rid = Integer.parseInt(this.resource.getId().getId());
+        }
 	}
 	public MapImage getImage() {
 		return image;
@@ -76,4 +82,12 @@ public class MapTile extends BaseRubyModel {
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
 	}
+    public Resource getResources() {
+        return resource;
+    }
+
+    public void setResources(Resource resources) {
+        this.resource = resources;
+    }
+
 }

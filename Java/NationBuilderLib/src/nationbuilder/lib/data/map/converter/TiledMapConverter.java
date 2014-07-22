@@ -3,24 +3,23 @@ package nationbuilder.lib.data.map.converter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
-import nationbuilder.lib.data.map.xml.Image;
-import nationbuilder.lib.data.map.xml.Layer;
-import nationbuilder.lib.data.map.xml.Tile;
-import nationbuilder.lib.data.map.xml.TileSet;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
+import nationbuilder.lib.data.map.xml.*;
 
 public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
     ArrayList<MapImage> mapImages;
     ArrayList<MapTile> mapTiles;
+    ArrayList<Resource> resources;
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
     RubyContext rubyContext;
     private HashMap<Integer,Tile> tilesWithterrainTypes;
+
 
     public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
     {
@@ -83,6 +82,13 @@ public class TiledMapConverter {
         return mapImages;
 
     }
+    private ArrayList<Resource> convertTilesetPropertiesToResources()
+    {
+        ArrayList<Resource> resources = new ArrayList<Resource>();
+
+
+        return resources;
+    }
 
     public MapTile convertTile(Tile tile)
     {
@@ -98,10 +104,13 @@ public class TiledMapConverter {
             }
             if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
             {
-
+                Resource resource =  this.rubyContext.createRubyModel(Resource.class);
+                resource.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
+                resource.setResourceType(this.getResourceType());
+                result.setResources(resource);
+                // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
+                this.resources.add(resource);
             }
-
-
         }
         else
         {
@@ -109,6 +118,37 @@ public class TiledMapConverter {
         }
 
         return result;
+    }
+
+    private TerrainType convertPropertyToTerrainType(ArrayList<Property> properties)
+    {
+        TerrainType result = null;
+        // search in the database for the right TerrainType..
+
+        // TODO: pretty ineffecient way of quering the db, find a way to handle db queries in a generic way
+        // SQL syntax for this bitch would be SELECT id from resourcetype WHERE name = 'name'
+        for(Property property : properties)
+        {
+            if(property.getName().toLowerCase().equals("tiletype"))
+            {
+                List<TerrainType> models = this.rubyContext.getModels(TerrainType.class);
+                for(TerrainType model : models)
+                {
+                    if(model.getName().equals(property.getValue()))
+                    {
+                        result = model;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    private ResourceType getResourceType()
+    {
+        // pick the first one.. does nog matter.. it is only for coupling.. resources will be designated in the xml.. later
+       List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
+       return result.get(0);
     }
     private boolean mapTileImageOffset(MapTile newTile,int tile_gid)
     {
@@ -243,6 +283,7 @@ public class TiledMapConverter {
     {
         MapDataset result = new MapDataset();
         result.setMap(this.map);
+        result.setResources(resources);
         result.setMapImages(this.mapImages);
         result.setMapTiles(this.mapTiles);
         result.setMapLayers(mapLayers);
@@ -251,8 +292,11 @@ public class TiledMapConverter {
     public void Convert()
     {
         this.map = this.convertMap(this.xmlMap);
+        this.resources = this.convertTilesetPropertiesToResources();
         this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
         this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
+
+
     }
 
 }

@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.xml;
 
+import nationbuilder.lib.Logging.Log;
 import org.w3c.dom.Element;
 
 import java.lang.reflect.Array;
@@ -15,7 +16,31 @@ public class Tile {
 	
 	public int getGID()
 	{
-	 return	XmlHelper.getInt(this.element, "gid");
+        int result = -1;
+        try {
+            result = XmlHelper.getInt(this.element, "gid");
+
+            return  result;
+        }
+        catch (NumberFormatException ex)
+        {
+            Log.writeInfo("gid attribute fetch failed, trying id attribute");
+            // if we catch a numberformat exception.. fall be to the attribute id and see if if that one works
+
+        }
+        try
+        {
+            result =  XmlHelper.getInt(this.element,"id");
+            // count +1 because tiled somehow keeps track of another way of counting when doing properties
+            result++;
+
+            return result;
+        }
+        catch (NumberFormatException ex)
+        {
+            Log.writeError("Parsing of the Tile GID attribute failed");
+            return result;
+        }
 	}
 
 

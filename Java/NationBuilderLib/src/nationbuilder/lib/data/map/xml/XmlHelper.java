@@ -41,9 +41,15 @@ public class XmlHelper {
 		  return result;
 	}
 	
-	public static int getInt(Element element,String attributeName)
+	public static int getInt(Element element,String attributeName) throws NumberFormatException
 	{
-		return Integer.parseInt(element.getAttribute(attributeName));
+        try {
+            return Integer.parseInt(element.getAttribute(attributeName));
+        }
+        catch (NumberFormatException ex)
+        {
+            throw ex;
+        }
 	}
 	public static String getString(Element element,String attributeName)
 	{
