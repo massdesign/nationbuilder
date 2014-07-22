@@ -33,10 +33,14 @@ ActionController::Parameters.permit_all_parameters = true
 
     @image = Image.find(params[:imd])
     @layer = Layer.find(params[:lmd])
-
+    if params[:rid] != 0
+    	@resource = Resource.find(params[:rid])
+	   @resource.tiles << @tile
+	 end 
     #@tile.image = @image
     @image.tiles << @tile 
     @layer.tiles << @tile
+    
 Rails.logger.debug "tile params: " + params[:imd].to_s
   
     respond_to do |format|

@@ -1,6 +1,8 @@
 class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
-
+  
+  protect_from_forgery :secret => 'salty_phrase',
+		       :except => :create
   # GET /resources
   def index
     @resources = Resource.all
@@ -23,10 +25,14 @@ class ResourcesController < ApplicationController
   def create
     @resource = Resource.new(resource_params)
 
-    if @resource.save
-      redirect_to @resource, notice: 'Resource was successfully created.'
-    else
-      render action: 'new'
+    respond_to do |format|
+      if @resource.save
+        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+        format.json { render action: 'id', status: :created, location: @resource }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
+      end
     end
   end
 
