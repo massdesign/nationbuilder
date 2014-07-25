@@ -25,14 +25,13 @@ public class Main {
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo2.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
 		mapsServiceConnector.addDataset(dataset);
-
 
    	  }
 	}

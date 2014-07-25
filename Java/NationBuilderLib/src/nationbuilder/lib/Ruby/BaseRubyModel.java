@@ -20,6 +20,7 @@ public class BaseRubyModel implements RubyModel {
         return id;
     }
 
+
     @Override
     public void setId(ID id) {
     this.id = id;

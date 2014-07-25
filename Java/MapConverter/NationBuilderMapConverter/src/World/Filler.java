@@ -25,7 +25,6 @@ public class Filler {
 
         fillTerrainTypes();
         fillResourceTypes();
-        fillResourceTypes();
 
         this.save();
     }

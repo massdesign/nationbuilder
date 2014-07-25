@@ -86,7 +86,7 @@ public class MapServiceConnector {
             Log.write(e,LogType.ERROR);
         }
 	}
-	public void addDataset(MapDataset dataset)
+	public void   addDataset(MapDataset dataset)
 	{
         this.addMap(dataset.getMap());
 
@@ -94,6 +94,7 @@ public class MapServiceConnector {
         {
             this.addResource(resource);
         }
+
 		for(MapImage image : dataset.getMapImages())
 		{
 			this.addImage(image);
@@ -119,6 +120,8 @@ public class MapServiceConnector {
 		{
 			this.addTile(tile);
 		}
+
+
 	}
 	public void addImage(MapImage image)
 	{

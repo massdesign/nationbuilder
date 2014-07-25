@@ -106,7 +106,8 @@ public class TiledMapConverter {
             {
                 Resource resource =  this.rubyContext.createRubyModel(Resource.class);
                 resource.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
-                resource.setResourceType(this.getResourceType());
+                resource.addResourceType(this.getResourceType(0));
+                resource.addResourceType(this.getResourceType(1));
                 result.setResources(resource);
                 // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
                 this.resources.add(resource);
@@ -120,6 +121,13 @@ public class TiledMapConverter {
         return result;
     }
 
+    /**
+     * Methode om stukjes code in te testen
+     */
+    public void runSampleCode()
+    {
+
+    }
     private TerrainType convertPropertyToTerrainType(ArrayList<Property> properties)
     {
         TerrainType result = null;
@@ -144,11 +152,11 @@ public class TiledMapConverter {
         }
         return result;
     }
-    private ResourceType getResourceType()
+    private ResourceType getResourceType(int index)
     {
         // pick the first one.. does nog matter.. it is only for coupling.. resources will be designated in the xml.. later
        List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
-       return result.get(0);
+       return result.get(index);
     }
     private boolean mapTileImageOffset(MapTile newTile,int tile_gid)
     {
