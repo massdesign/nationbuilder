@@ -1,3 +1,3 @@
 class Terraintype < ActiveRecord::Base
-belongs_to :resource
+has_many :resources
 end

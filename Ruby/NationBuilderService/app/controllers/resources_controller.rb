@@ -24,6 +24,18 @@ class ResourcesController < ApplicationController
   # POST /resources
   def create
     @resource = Resource.new(resource_params)
+    
+    @terraintype = Terraintype.find(params[:tti])
+    
+
+	if params[:rtis] != nil
+	params[:rtis].each {
+	 |x| 
+	 @resourcetype = Resourcetype.find(x)	 
+	 @resourcetype.resources << @resource
+	}
+	end		 
+	@terraintype.resources << @resource
 
     respond_to do |format|
       if @resource.save

@@ -1,5 +1,5 @@
 class Resource < ActiveRecord::Base
-has_one :terraintype
-has_one :resourcetype	
+belongs_to :terraintype
+has_and_belongs_to_many :resourcetype	
 has_many :tiles
 end

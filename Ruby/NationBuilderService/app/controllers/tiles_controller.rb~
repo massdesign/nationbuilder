@@ -33,10 +33,14 @@ ActionController::Parameters.permit_all_parameters = true
 
     @image = Image.find(params[:imd])
     @layer = Layer.find(params[:lmd])
-
+    if rid != 0
+    	@resource = Resource.find(params[:rid])
+	   @resource.tiles << @tile
+	 end
     #@tile.image = @image
     @image.tiles << @tile 
     @layer.tiles << @tile
+    
 Rails.logger.debug "tile params: " + params[:imd].to_s
   
     respond_to do |format|
@@ -83,6 +87,6 @@ Rails.logger.debug "tile params: " + params[:imd].to_s
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tile_params
-      params.require(:tile).permit(:xposition, :yposition, :xoffset, :yoffset)
+      params.require(:tile).permit(:gidtag,:xposition, :yposition, :xoffset, :yoffset)
     end
 end
