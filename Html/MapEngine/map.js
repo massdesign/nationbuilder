@@ -1,5 +1,6 @@
 function Map(javascript_console)
 {
+		this.layers = [];
 		
 		this.jsconsole = javascript_console
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
@@ -9,6 +10,8 @@ function Map(javascript_console)
     	this._g_tileHeight = 32
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
+    	
+    	this.layers.push(new SelectLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -24,6 +27,7 @@ function Map(javascript_console)
     	}
        
 
+		
     	this._showMousePos = function(mousePos,context)
     	{
     		context.font = '12pt Calibri';
@@ -39,6 +43,7 @@ function Map(javascript_console)
       	var message = 'Mouse position: ' + x + ',' + y;
      		this._context.fillText(message, 220, 25);
 	 	}
+	 	/*
 		this._currentTilePosition = function (mousePosx,mousePosy,currentx,currenty) {
     
     	var X_AXIS = 0;
@@ -70,8 +75,29 @@ function Map(javascript_console)
     		}
     	}	
     	return result;
+    }*/
+    this.getStage = function() {
+	 return this.stage;    
     }
-    
+    this.getTileValue = function(x,y,axis)
+    { 
+    	return this._g_tileValues[x][y][axis];
+    }
+    this.getTileHeight = function() {
+      return this._g_tileHeight;
+    }
+    this.getTileWidth = function() {
+     return this._g_tileWidth;
+    }
+    this.getMapWidth = function() {
+    	 return this._g_mapWidth;
+ 	 }
+ 	 this.getMapHeight = function () {
+		return this._g_mapWidth; 	 
+ 	 }
+ 	 
+ 
+    /*
     this._createBackgroundRect = function(c_width,c_height)
     {
     	var currentContext = this;
@@ -99,7 +125,7 @@ function Map(javascript_console)
 		  }  	
 	});
  
-    }
+    }*/
     this._createGrid = function ()
     {
     	 var result  = new Kinetic.Layer();
@@ -188,22 +214,35 @@ function Map(javascript_console)
 	this.init = function()
 	{
        // create the Kinetic stage and layer
-  	  	 	this.stage = new Kinetic.Stage({
+  	  	 	this._stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 1500,
      	   height: 1200
    	 }); 
+   	 // duplicaat om het even te laten werken
+   	 this.stage = new Kinetic.Stage({
+    	    container: 'container',
+    	    width: 1500,
+     	   height: 1200
+   	 }); 
+   	 
+    	 
     	 this.maplayer = new Kinetic.Layer();
-    	 this.selectlayer = new Kinetic.Layer({clearBeforeDraw: true});
+    	 //this.selectlayer = new Kinetic.Layer({clearBeforeDraw: true});
    	 
    
       this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);   
       var canvas = document.getElementById('myCanvas');
-		this._createBackgroundRect();
+		//this._createBackgroundRect();
 		this.stage.add(this.maplayer);
 		this.stage.add(this._createGrid());
-		this.stage.add(this.selectlayer);
-	
+		//this.stage.add(this.selectlayer);
+			for(i=0;i<this.layers.length;i++)  {
+		
+		this.layers[i].init();
+		
+		this.stage.add(this.layers[i].getLayer());
+		}   	
  		var currentObject = this;
 
       this._context = canvas.getContext('2d');
