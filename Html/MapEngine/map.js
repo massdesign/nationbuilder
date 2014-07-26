@@ -12,6 +12,7 @@ function Map(javascript_console)
     	this._g_yoffset = 0;
     	
     	this.layers.push(new SelectLayer(this,javascript_console));
+    	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -43,39 +44,6 @@ function Map(javascript_console)
       	var message = 'Mouse position: ' + x + ',' + y;
      		this._context.fillText(message, 220, 25);
 	 	}
-	 	/*
-		this._currentTilePosition = function (mousePosx,mousePosy,currentx,currenty) {
-    
-    	var X_AXIS = 0;
-    	var Y_AXIS = 1;
-    	var result = null
-    	for(var x=0;x<currentx;x++)
-    	{
-    		for(var y=0;y<currenty;y++)
-    		{ 
-    		  // topleft 
-    		  var topleftx = this._g_tileValues[x][y][X_AXIS];
-    		  var toplefty = this._g_tileValues[x][y][Y_AXIS];
-    		  // topright
-    		  var toprightx = this._g_tileValues[x][y][X_AXIS] + this._g_tileWidth; 
-    		  var toprighty = this._g_tileValues[x][y][Y_AXIS];
-    		      		  
-    		  var bottomleftx = this._g_tileValues[x][y][X_AXIS];
-    		  var bottomlefty = this._g_tileValues[x][y][Y_AXIS] + this._g_tileHeight;    	
-    		      		  
-    		  var bottomrightx = this._g_tileValues[x][y][X_AXIS] + this._g_tileWidth;
-    		  var bottomrighty = this._g_tileValues[x][y][Y_AXIS] + this._g_tileHeight;
-    		  if(mousePosx > topleftx && mousePosx < toprightx &&
-    		  	 mousePosy > toprighty && mousePosy < bottomlefty)
-    		  { 		   
-    		   	//this._showSelectedTile(this._g_tileValues[x][y][X_AXIS],this._g_tileValues[x][y][Y_AXIS]);
-  					result = [this._g_tileValues[x][y][X_AXIS],this._g_tileValues[x][y][Y_AXIS]];
-    		    	break;
-    		  }
-    		}
-    	}	
-    	return result;
-    }*/
     this.getStage = function() {
 	 return this.stage;    
     }
@@ -83,6 +51,10 @@ function Map(javascript_console)
     { 
     	return this._g_tileValues[x][y][axis];
     }
+    this.setTileValue = function(x,y,axis,value) {
+    	
+    	this._g_tileValues[x][y][axis] = value;
+ 	 }
     this.getTileHeight = function() {
       return this._g_tileHeight;
     }
@@ -95,37 +67,13 @@ function Map(javascript_console)
  	 this.getMapHeight = function () {
 		return this._g_mapWidth; 	 
  	 }
+ 	 this.getXOffset = function() {
+		return this._g_xoffset;
+ 	 }
+ 	 this.getYOffset = function() {
+		return this._g_yoffset;
+ 	 }
  	 
- 
-    /*
-    this._createBackgroundRect = function(c_width,c_height)
-    {
-    	var currentContext = this;
-    	this.stage.getContent().addEventListener('click', function (evt) {	
-    	       
-       var mouseXY = currentContext.stage.getPointerPosition();
-    	 var canvasX = mouseXY.x;
-    	 var canvasY = mouseXY.y;
-       var cst = currentContext._currentTilePosition(canvasX,canvasY,currentContext._g_mapWidth,currentContext._g_mapHeight);
-        if(cst != null)
-        {
-        			var selectedRect = new Kinetic.Rect({
-    					x: cst[0],
-    					y: cst[1],
-    					width: 32,
-    					height: 32,
-    					fill: 'green',
-    					stroke: 'green',
-    					strokeWidth: 1,
-    					opacity: 0.5
-			}); 		
-			currentContext.selectlayer.destroyChildren();
-			currentContext.selectlayer.add(selectedRect);
-			currentContext.selectlayer.draw();
-		  }  	
-	});
- 
-    }*/
     this._createGrid = function ()
     {
     	 var result  = new Kinetic.Layer();
@@ -228,15 +176,12 @@ function Map(javascript_console)
    	 
     	 
     	 this.maplayer = new Kinetic.Layer();
-    	 //this.selectlayer = new Kinetic.Layer({clearBeforeDraw: true});
    	 
    
       this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);   
       var canvas = document.getElementById('myCanvas');
-		//this._createBackgroundRect();
 		this.stage.add(this.maplayer);
-		this.stage.add(this._createGrid());
-		//this.stage.add(this.selectlayer);
+		//this.stage.add(this._createGrid());
 			for(i=0;i<this.layers.length;i++)  {
 		
 		this.layers[i].init();

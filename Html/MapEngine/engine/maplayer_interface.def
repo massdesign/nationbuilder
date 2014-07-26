@@ -1,0 +1,15 @@
+/*
+
+function GridLayer(parentMap)
+{
+  this.parentMap = parentMap
+	
+	this.init = function()
+	{
+		
+   }
+   	
+	this.render = function()
+	{
+	}
+}*/
