@@ -8,7 +8,7 @@ function GridLayer(parentMap,loginstance)
 		this._createGrid();
    }
    	
-	this.render = function()
+	this.render = function(imagedata,data)
 	{
 	}
 	this.getLayer = function()

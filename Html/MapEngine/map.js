@@ -11,6 +11,7 @@ function Map(javascript_console)
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
     	
+    	this.layers.push(new TileLayer(this,javascript_console));
     	this.layers.push(new SelectLayer(this,javascript_console));
     	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
@@ -74,7 +75,7 @@ function Map(javascript_console)
 		return this._g_yoffset;
  	 }
  	 
-    this._createGrid = function ()
+    /*this._createGrid = function ()
     {
     	 var result  = new Kinetic.Layer();
 		 var currentx = 0;
@@ -126,7 +127,8 @@ function Map(javascript_console)
 		}
 		
 		return result;
-    }    
+    } */
+    /*
 	 this.loadAllImages =   function(imgs,imagePos,imageURLs){
         for (var i=0; i<imageURLs.length; i++) {
             var img = new Image();
@@ -158,15 +160,15 @@ function Map(javascript_console)
             img.crossOrigin="anonymous";
             img.src =imageURLs[i];
         }      
-    }
+    }*/
 	this.init = function()
 	{
        // create the Kinetic stage and layer
-  	  	 	this._stage = new Kinetic.Stage({
-    	    container: 'container',
-    	    width: 1500,
-     	   height: 1200
-   	 }); 
+  	  	 //	this._stage = new Kinetic.Stage({
+    	  //  container: 'container',
+    	  //  width: 1500,
+     	 //  height: 1200
+   	// }); 
    	 // duplicaat om het even te laten werken
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
@@ -175,18 +177,16 @@ function Map(javascript_console)
    	 }); 
    	 
     	 
-    	 this.maplayer = new Kinetic.Layer();
+    	 //this.maplayer = new Kinetic.Layer();
    	 
    
       this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);   
       var canvas = document.getElementById('myCanvas');
-		this.stage.add(this.maplayer);
+		//this.stage.add(this.maplayer);
 		//this.stage.add(this._createGrid());
-			for(i=0;i<this.layers.length;i++)  {
-		
-		this.layers[i].init();
-		
-		this.stage.add(this.layers[i].getLayer());
+		for(i=0;i<this.layers.length;i++)  {
+			this.layers[i].init();
+			this.stage.add(this.layers[i].getLayer());
 		}   	
  		var currentObject = this;
 
@@ -195,11 +195,16 @@ function Map(javascript_console)
    }
    this.render = function(imagedata,data) {
 
-   	var imagenames = Array();
+   	/*var imagenames = Array();
    	var imgs = [];
     	var imagePos = [];
     	var imageURLs=[];
+    	*/
 
+		for(i=0;i<this.layers.length;i++)  {
+			this.layers[i].render(imagedata,data);	
+		}  
+		/*
    	for(var i=0;i<imagedata.length;i++)
     	{
 			imagenames[imagedata[i].id] = imagedata[i].name     	  
@@ -224,9 +229,9 @@ function Map(javascript_console)
   	  	 		imageURLs.push(source);  	  	 		
   	  	 		imagePos.push([xposition,yposition]);
     		}	
-    	}
+    	}*/
  
-    	this.loadAllImages(imgs,imagePos,imageURLs);   	
+    	//this.loadAllImages(imgs,imagePos,imageURLs);   	
    }   
 }
 var map = new Map(console);

@@ -15,7 +15,7 @@ this.getLayer = function()
 	return this._layer;
 }
 
-this.render = function() {
+this.render = function(imagedata,data) {
 
 
 }
