@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <script type="text/JavaScript" src="jquery-1.11.0.js"></script>
   <script type="text/JavaScript" src="baseservice.js"></script>
   <script type="text/Javascript" src="mapservice.js"></script>
@@ -9,8 +10,8 @@
   <script type="text/JavaScript" src="engine/tilelayer.js"></script>
   <script type="text/JavaScript" src="engine/gridlayer.js"></script>
   <script type="text/JavaScript" src="engine/selectlayer.js"></script>  
-  <script type="text/javascript" src="map.js"></script>
-  
+  <script type="text/javascript" src="map.js"></script> 
+  <script type="text/JavaScript" src="main.js"></script>
   <style>
 	body {
         margin: 0px;
@@ -21,13 +22,9 @@
   	margin-top: 10px;
 }
 </style>
-  </head>
-  <body>
-  <div id="container"></div>
-    <canvas id="myCanvas" width="700" height="700"></canvas>
-    <script>
-    
+    <script>   
 javascript_console = console;
+
 $(document).ready(function()
  {
      
@@ -47,6 +44,22 @@ $(document).ready(function()
     	});
     	
     	});
+
     </script>
+  </head>
+  <body>
+<div id="main" ng-app ng-controller="InlineEditorController" ng-click="hideTooltip()">
+	<div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
+		<input type="text" ng-model="value" />
+	</div>
+	<p ng-click="toggleTooltip($event)">{{value}}</p>
+
+  
+  
+  <div id="container"></div>
+    <canvas id="myCanvas" width="700" height="700"></canvas>
+    </div>  
+
+    
   </body>	
 </html>
