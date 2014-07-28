@@ -3,23 +3,24 @@ package nationbuilder.lib.data.map.converter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
-import nationbuilder.lib.data.map.xml.Image;
-import nationbuilder.lib.data.map.xml.Layer;
-import nationbuilder.lib.data.map.xml.Tile;
-import nationbuilder.lib.data.map.xml.TileSet;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
+import nationbuilder.lib.data.map.xml.*;
 
 public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
     ArrayList<MapImage> mapImages;
     ArrayList<MapTile> mapTiles;
+    ArrayList<Resource> resources;
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
     RubyContext rubyContext;
+    private HashMap<Integer,Tile> tilesWithterrainTypes;
+
+
     public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
     {
         this();
@@ -29,6 +30,7 @@ public class TiledMapConverter {
     public TiledMapConverter()
     {
         this.mapLayers = new HashMap<String,MapLayer>();
+        this.tilesWithterrainTypes = new HashMap<Integer, Tile>();
     }
     public MapMap convertMap(TiledXmlMap map)
     {
@@ -39,18 +41,29 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
+    private void addtilesToterrainTypeS(ArrayList<Tile> tiles)
+    {
+        for(Tile tile : tiles)
+        {
+            if(!this.tilesWithterrainTypes.containsKey(tile.getGID()))
+            {
+                this.tilesWithterrainTypes.put(tile.getGID(),tile);
+            }
+        }
+
+    }
     private ArrayList<MapImage> convertTilesets(ArrayList<TileSet> tilesets)
     {
         ArrayList<MapImage> mapImages = new ArrayList<MapImage>();
         for(TileSet tileset : tilesets)
         {
+            addtilesToterrainTypeS(tileset.getTiles());
             Image image =	tileset.getImage();
 
             MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
             MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
             mapImage.setMap(this.map);
             mapImageFile.setResource(new File(image.getFileLocation()));
-           // mapImage.setImageFile(new File(image.getFileLocation()));
             mapImage.setImageFile(mapImageFile);
             mapImage.setHeight(image.getHeight());
             mapImage.setWidth(image.getWidth());
@@ -62,7 +75,6 @@ public class TiledMapConverter {
 
             mapImage.setUrl("/upload/" + image.getName());
             mapImage.setName(image.getName());
-            int status_code = 0;
 
             mapImages.add(mapImage);
         }
@@ -70,17 +82,35 @@ public class TiledMapConverter {
         return mapImages;
 
     }
+    private ArrayList<Resource> convertTilesetPropertiesToResources()
+    {
+        ArrayList<Resource> resources = new ArrayList<Resource>();
+
+
+        return resources;
+    }
 
     public MapTile convertTile(Tile tile)
     {
         MapTile result = this.rubyContext.createRubyModel(MapTile.class);
         result.setGidtag(tile.getGID());
-
+         // TODO: volgens mij kan deze code ook wel een stukje korter.. maak unit test voor dit ding en refactor hem dan
         if(this.mapTileSetImage(result, tile.getGID()))
         {
+
             if(!this.mapTileImageOffset(result,tile.getGID()))
             {
                 result = null;
+            }
+            if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
+            {
+                Resource resource =  this.rubyContext.createRubyModel(Resource.class);
+                resource.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
+                resource.addResourceType(this.getResourceType(0));
+                resource.addResourceType(this.getResourceType(1));
+                result.setResources(resource);
+                // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
+                this.resources.add(resource);
             }
         }
         else
@@ -89,6 +119,44 @@ public class TiledMapConverter {
         }
 
         return result;
+    }
+
+    /**
+     * Methode om stukjes code in te testen
+     */
+    public void runSampleCode()
+    {
+
+    }
+    private TerrainType convertPropertyToTerrainType(ArrayList<Property> properties)
+    {
+        TerrainType result = null;
+        // search in the database for the right TerrainType..
+
+        // TODO: pretty ineffecient way of quering the db, find a way to handle db queries in a generic way
+        // SQL syntax for this bitch would be SELECT id from resourcetype WHERE name = 'name'
+        for(Property property : properties)
+        {
+            if(property.getName().toLowerCase().equals("tiletype"))
+            {
+                List<TerrainType> models = this.rubyContext.getModels(TerrainType.class);
+                for(TerrainType model : models)
+                {
+                    if(model.getName().equals(property.getValue()))
+                    {
+                        result = model;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    private ResourceType getResourceType(int index)
+    {
+        // pick the first one.. does nog matter.. it is only for coupling.. resources will be designated in the xml.. later
+       List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
+       return result.get(index);
     }
     private boolean mapTileImageOffset(MapTile newTile,int tile_gid)
     {
@@ -223,6 +291,7 @@ public class TiledMapConverter {
     {
         MapDataset result = new MapDataset();
         result.setMap(this.map);
+        result.setResources(resources);
         result.setMapImages(this.mapImages);
         result.setMapTiles(this.mapTiles);
         result.setMapLayers(mapLayers);
@@ -231,8 +300,11 @@ public class TiledMapConverter {
     public void Convert()
     {
         this.map = this.convertMap(this.xmlMap);
+        this.resources = this.convertTilesetPropertiesToResources();
         this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
         this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
+
+
     }
 
 }

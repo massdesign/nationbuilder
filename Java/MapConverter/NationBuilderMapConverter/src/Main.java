@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 
+import World.Filler;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -18,23 +19,20 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 
         RubyContext context = new RubyContextFactory().createRubyContext();
+        // first run the filler to create all the essential datbase stuff
+        Filler filler = new Filler(context);
+        filler.Fill();
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo2.tmx");
 
-	    Tile tile =	tiledXmlMap.getTilesets().get(0).getTiles().get(0);
-
-//        Property property = tile.getProperties().get(0);
-
-  //      System.out.println(property.getName() +  " : " + property.getValue());
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
-	//	MapTile tile =  dataset.getMapTiles().get(0);
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
-        //MapServiceConnector mapsServiceConnector = new MapServiceConnector("http://localhost:3000");
 		mapsServiceConnector.addDataset(dataset);
+
    	  }
 	}
 	

@@ -1,5 +1,6 @@
 package nationbuilder.lib.Ruby;
 
+import com.google.gson.annotations.Expose;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
@@ -12,11 +13,13 @@ import java.io.IOException;
  */
 public class BaseRubyModel implements RubyModel {
     private ID id;
+    @Expose
     protected RubyContext context;
     @Override
     public ID getId() {
         return id;
     }
+
 
     @Override
     public void setId(ID id) {
@@ -32,7 +35,7 @@ public class BaseRubyModel implements RubyModel {
     public boolean Save(String ResourceUrl)
     {
         try {
-            context.SaveObject(this,ResourceUrl);
+           return context.SaveObject(this,ResourceUrl);
         } catch (IOException e) {
             Log.write(ResourceUrl, LogType.ERROR);
         }

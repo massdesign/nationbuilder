@@ -12,7 +12,7 @@ import nationbuilder.lib.http.data.ID;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
+import java.util.List;
 
 /**
  * Created by patrick on 7/8/14.
@@ -28,10 +28,12 @@ public class RubyContext {
     }
 
     private RubyService rubyService;
-
+    private RubyStore rubyStore;
     public RubyContext(RubyService service)
     {
      this.rubyService = service;
+      // NOTE: maybe in the future we want to have this passed trough the constructor
+     this.rubyStore = new RubyStore();
     }
 
     public<T extends RubyModel> T createRubyModel(Class<?> clazz)
@@ -59,8 +61,12 @@ public class RubyContext {
         HttpData data =  this.rubyService.postObject(object,resourceUrl);
 
         ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
+        resultObject.setType(object.getClass().getName());
         object.setId(resultObject);
-        return resultObject != null ? false : true;
+
+        this.rubyStore.registerRubyModel((RubyModel)object);
+
+        return resultObject != null ? true : false;
 
     }
     public boolean SaveResource(BaseRubyResourceModel object,String resourceUrl)
@@ -72,6 +78,15 @@ public class RubyContext {
             Log.write(e,LogType.ERROR);
             return  false;
         }
+    }
+    public RubyModel getModel(ID id, Class<?> clazz)
+    {
+        // TODO: implement when needed
+        return null;
+    }
+    public<T extends RubyModel> List<T> getModels(Class<?> clazz)
+    {
+        return this.rubyStore.getRubyModelByType(clazz);
     }
 
 }

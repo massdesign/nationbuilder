@@ -1,6 +1,8 @@
 class ResourcesController < ApplicationController
   before_action :set_resource, only: [:show, :edit, :update, :destroy]
-
+  
+  protect_from_forgery :secret => 'salty_phrase',
+		       :except => :create
   # GET /resources
   def index
     @resources = Resource.all
@@ -22,11 +24,27 @@ class ResourcesController < ApplicationController
   # POST /resources
   def create
     @resource = Resource.new(resource_params)
+    
+    @terraintype = Terraintype.find(params[:tti])
+    
 
-    if @resource.save
-      redirect_to @resource, notice: 'Resource was successfully created.'
-    else
-      render action: 'new'
+	if params[:rtis] != nil
+	params[:rtis].each {
+	 |x| 
+	 @resourcetype = Resourcetype.find(x)	 
+	 @resourcetype.resources << @resource
+	}
+	end		 
+	@terraintype.resources << @resource
+
+    respond_to do |format|
+      if @resource.save
+        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+        format.json { render action: 'id', status: :created, location: @resource }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @resource.errors, status: :unprocessable_entity }
+      end
     end
   end
 

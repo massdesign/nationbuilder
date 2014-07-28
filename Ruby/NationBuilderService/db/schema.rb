@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140707231843) do
+ActiveRecord::Schema.define(version: 20140725225550) do
 
   create_table "images", force: true do |t|
     t.integer  "map_id"
@@ -43,16 +43,23 @@ ActiveRecord::Schema.define(version: 20140707231843) do
   create_table "resources", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "tile_id"
-    t.integer  "terrain_type_id"
+    t.integer  "terraintype_id"
+  end
+
+  create_table "resources_resourcetypes", force: true do |t|
+    t.integer "resource_id"
+    t.integer "resourcetype_id"
   end
 
   create_table "resourcetypes", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "location"
+    t.boolean  "regenerating"
   end
 
-  create_table "terrain_types", force: true do |t|
+  create_table "terraintypes", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -68,6 +75,7 @@ ActiveRecord::Schema.define(version: 20140707231843) do
     t.datetime "updated_at"
     t.integer  "layer_id"
     t.integer  "image_id"
+    t.integer  "resource_id"
   end
 
 end

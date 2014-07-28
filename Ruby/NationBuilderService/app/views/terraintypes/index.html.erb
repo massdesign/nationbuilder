@@ -1,0 +1,27 @@
+<h1>Listing terraintypes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @terraintypes.each do |terraintype| %>
+      <tr>
+        <td><%= terraintype.name %></td>
+        <td><%= link_to 'Show', terraintype %></td>
+        <td><%= link_to 'Edit', edit_terraintype_path(terraintype) %></td>
+        <td><%= link_to 'Destroy', terraintype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Terraintype', new_terraintype_path %>

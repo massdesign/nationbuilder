@@ -5,7 +5,7 @@ class CreateResourcetypes < ActiveRecord::Migration
       t.timestamps
       t.string :name
       t.string :location
-      t.boolean :regenerating
+      t.bit :regenerating
     end
   end
 end

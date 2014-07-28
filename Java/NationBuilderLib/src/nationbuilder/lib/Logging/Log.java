@@ -22,7 +22,7 @@ public class Log {
                logline += "INFO:";
                break;
         }
-
+        logline += message;
         System.out.println(logline);
     }
     public static void write(Exception ex,LogType type)
