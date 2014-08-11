@@ -6,6 +6,8 @@ function InlineEditorController($scope){
 
 	$scope.showtooltip = false;
 	$scope.value = 'Edit me.';
+	
+	$scope.testValue = 'even testen'
 
 	// Some helper functions that will be
 	// available in the angular declarations
