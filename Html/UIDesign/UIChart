@@ -1,0 +1,15 @@
+[staat]^-[province]
+[province]^-[community]
+[structure]--[tile]
+[community]--[tile]
+
+[structure]-[militairy compound]
+[structure]-[world trade center]
+[structure]-[oil raffinery]
+[structure]-[gas raffinery]
+[structure]-[wood processing plant]
+[structure]-[steel processing plant]
+[structure]-[financial trading center]
+[structure]-[food processing plant]
+
+
