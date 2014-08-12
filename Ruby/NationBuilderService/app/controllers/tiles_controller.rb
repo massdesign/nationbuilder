@@ -15,7 +15,13 @@ class TilesController < ApplicationController
   # GET /tiles/1.json
   def show
   end
-
+  # GET /tiles/foo
+  def find 
+  @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
+   respond_to do |format|
+ 		format.json { render action: 'show', status: :created, location: @tile }
+	 end
+  end
   # GET /tiles/new
   def new
     @tile = Tile.new
