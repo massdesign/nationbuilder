@@ -1,8 +1,18 @@
-[staat]^-[province]
-[province]^-[community]
-[structure]--[tile]
-[community]--[tile]
+[user]--[state]
 
+[state]^-[province]
+[province]^-[community]
+[structure]--[land]
+[community]--[land]
+[province]--[land]
+[state]--[land]
+[state]--[owner]
+[province]--[owner]
+[community]--[owner]
+[privateparty]--[owner]
+[foreignparty]--[owner]
+[owner]--[land]
+[owner]--[structure]
 [structure]-[militairy compound]
 [structure]-[world trade center]
 [structure]-[oil raffinery]
@@ -11,5 +21,30 @@
 [structure]-[steel processing plant]
 [structure]-[financial trading center]
 [structure]-[food processing plant]
+[structure]-[military base]
+[structure]-[policestation]
+[structure]-[tax office]
+[military base]-[small base]
+[military base]-[medium base]
+[military base]-[large base]
+[privateparty]--[bank]
+[privateparty]--[investor]
+[privateparty]--[citizen]
+[privateparty]--[company]
+
+
+[state]--[military]
+[state]--[fiscalservices]
+[state]--[welfare]
+[state]--[policeforce]
+
+
+[military]--[owner]
+[fiscalservices]--[owner]
+[welfare]--[owner]
+[policeforce]--[owner]
+
+
+
 
 
