@@ -13,7 +13,7 @@ In het  context komt informatie over deze tile te staan.
  
  
  
- Partij
+ *Partij
  
  Een partij bestaat uit een gebruikersaccount. 
  Een partij kan souvereigniteit hebben over een bepaald grondgebied en de bijhorende bevolking/faciliteiten
@@ -23,22 +23,22 @@ In het  context komt informatie over deze tile te staan.
  
  
  
- Indexering
+ *Indexering
  
  - Een speler kan een gebied indexeren door er onderzoekers/ambassadeurs naartoe te sturen 
  - Als het gebied bezit door een andere partij dan is dan kunnen er ambassadeurs naartoe gestuurd worden
  
  
- Ambassadeurs
+ *Ambassadeurs
  
  Ambassadeurs kunnen naar een tile gestuurd worden die bezet is door een andere partij
  Ambassadeurs kunnen alleen naar een tile gestuurd worden als deze tile inwoners of een vorm van representatie bevat
  Afhankelijk van de faciliteiten die in de tile aanwezig zijn kunnen overeenkomsten afgesloten worden om een consulaat te openen/ambassade te openen, grond leasing overeen te komen
  
  
- Betrekkingen
+ *Betrekkingen
  
- Grond leasing
+ *Grond leasing
  
  Als een tile in het bezit van een partij is kan deze geleased worden door een andere partij. Betaling Voor grondleasing kan in de vorm van geld,grondstoffen of diensten gedaan worden
  Er zijn twee soorten betalingen. Eenmalige betalingen in de vorm van grondstoffen,goederen of geld, of herhalende betalingen in de vorm van grondstoffen,goederen,geld of diensten 
@@ -47,12 +47,12 @@ In het  context komt informatie over deze tile te staan.
  Bij ontbinding worden de overige dagen in rekening gebracht bij de rechtmatige eigenaar van de grond. Deze schuld wordt internationaal geregistreerd en kan alleen kwijtgescholden worden door de rechtmatige eigenaar van de grond.
  De tegenpartij is niet verplicht dit bedrag gelijk terug te betalen, maar omdat het internationaal geregistreerd is kan het als drukmiddel gebruikt worden. 
  
-Diensten
+*Diensten
 
 Een partij kan diensten verlenen aan een andere partij. Onder diensten vallen, defensie,politie,douane,
 gebruik van infrastructuur van de andere partij,gebruik van territoriale wateren van de andere partij,ontheffingen voor export naar de partij
 
-Staatsvorm
+*Staatsvorm
 
 Bij een partij horen een staatsvorm en grondsgebied. De volgende staatsvormen zijn mogelijk
 
@@ -70,13 +70,13 @@ In een centrale eenheidsstaat is het mogelijk om provincies te definieren
 
 
 
-Staat
+*Staat
 
 Een staat is een grondgebied met bevolking die wordt gerepresenteerd door een partij. Een staat kan bestaan uit meerdere subeenheden,Er zijn standaard 3 lagen mogelijk, Hoofd,Sub,SubSub
 De partij kan zelf aangeven of de "staat" openstaat voor buitenstaanders. Er is ook een mogelijkheid onderverdelingen te maken zonder dat er andere partijen bij betrokken zijn 
 Omdat de staat een bestuurlijk onderdeel moet hebben moet een regeringszetel aangewezen worden. Dit kan gedaan worden door een parlements gebouw op een tile te bouwen. 
 
-Provincie/deelstaat
+*Provincie/deelstaat
 
 Een provincie is een partij die ondergeschikt is aan een grotere overheid. Afhankelijk van de verbondenheid mag de bovenliggende partij wijzigingen aanbrengen of de bestuurslaag opheffen
 Een provincie kan onafhankelijk bestuurd worden vanuit de centrale overheid.
@@ -92,7 +92,7 @@ Industrie
 Afhankelijk van het ingestelde percentage moet de provincie altijd belasting over zijn inkomsten afdragen aan de staat
 
 
-Belasting 
+*Belasting 
 
 De staat kan belasting heffen per provincie of gemeenschap. Als deze onderverdeling niet aanwezig is dan kan er voor gekozen worden om rechtstreeks belasting te heffen
 
@@ -103,7 +103,7 @@ Voedsel (Landbouw)
 Drank Sigaretten en andere verdovende middelen (Bier,Wijn Wiskey etc.. )
 Retail (Winkels) 
 
-Militair
+*Militair
 
 Een partij kan beschikken over een militaire macht. Een militaire macht bestaat uit 4 hoofdonderdelen
 
@@ -123,6 +123,10 @@ middel: tot 40.000 troepen en 400 pantservoertuigen
 groot: tot 80.000 troepen en 800 pantservoertuigen
 
 basis kan uitgebreid worden met increments van 1000 
+
+Als een basis aangemaakt wordt dan moeten hier mensen op geplaatst worden. Afhankelijk van de grootte van de populatie van de staat en of dienstplicht verplicht is groeit dit per week
+
+Bij een verplichte dienstplicht groeit dit per week 
 
 Luchtmacht is beschikbaar als er een luchtmachtbasis gebouwd wordt. 
 
@@ -154,6 +158,18 @@ Mammuth schepen
 
 
 Politie
+
+Infrastructuur
+
+Voor het transporteren van goederen en het bereikbaar maken van een faciliteit moeten er wegen gebouwd worden. 
+
+Wegen kunnen betaald worden door een andere partij(diensten) of simpelweg door de overheid van belastinggelden betaald worden.
+
+Als een weg betaald is door een andere partij blijft deze eigenaar van het grondgebied tenzij dit afgestaan wordt, de overheid kan altijd eigenaarschap opeisen
+
+Een weg kan ook betaald worden via tol, afhankelijk van het gebruik wordt het geld terugbetaald aan de partij die de weg heeft betaald 
+
+Infrastructuur kost om de 6 maanden geld om te onderhouden. Het uistellen van deze werkzaamheden zorgt voor slechtere doorvoer
 
 
 
