@@ -19,7 +19,23 @@ this.render = function(imagedata,data) {
 
 
 }
-
+this._showSelectedTile = function showSelectedTile(x,y)
+{
+	// TODO: make the declarion of context consistent.. 
+	//this.parentMap.getCanvas().font = '12pt Calibri';
+	//this.parentMap.getCanvas().fillStyle = 'black';
+  	//var message = 'Mouse position: ' + x + ',' + y;
+	//this.parentMap.getCanvas().fillText(message, 220, 25);
+	var new_x  = x/this.parentMap.getTileWidth();
+	var new_y = y/this.parentMap.getTileHeight();
+	
+	this.parentMap.getMapData().setClickedTile(new_x,new_y);	
+	console.log(this.parentMap.getMapData());
+	this.parentMap.getAngularBridge().updateMapControllerScope(this.parentMap.getMapData());	
+	
+	console.log(new_x + " " + new_y);
+	
+}
 
 this._createBackgroundRect = function(c_width,c_height)
 {
@@ -33,7 +49,6 @@ this._createBackgroundRect = function(c_width,c_height)
     	 var canvasY = mouseXY.y;
        var cst = currentContext._currentTilePosition(canvasX,canvasY,currentContext.parentMap.getMapWidth(),
        currentContext.parentMap.getMapHeight());
-	 loginstance.log(cst);  
         if(cst != null)
         {
         			var selectedRect = new Kinetic.Rect({
@@ -77,7 +92,7 @@ this._createBackgroundRect = function(c_width,c_height)
     		  if(mousePosx > topleftx && mousePosx < toprightx &&
     		  	 mousePosy > toprighty && mousePosy < bottomlefty)
     		  { 		   
-    		   	//this._showSelectedTile(this._g_tileValues[x][y][X_AXIS],this._g_tileValues[x][y][Y_AXIS]);
+    		   	this._showSelectedTile(this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS));
   					result = [this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS)];
     		    	break;
     		  }
