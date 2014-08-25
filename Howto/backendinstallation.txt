@@ -1,0 +1,22 @@
+MariaDB/Mysql installation
+1. Install mariaDB (sudo pacman -S mariadb)
+2. Register it as a service sudo systemctl enable mysqld
+Start the service systemctl start mysqld
+	If you forgot pass stop the service and start the mysqld_safe service located at (/usr/bin/mysqld_safe)
+	start service in safe mode	sudo mysqld_safe --grant-tables &
+	than login with the root user
+	mysql --user=root mysql
+	
+	reset the root pass with the following query 
+	update user set Password=PASSWORD('new-password-here') WHERE User='root';
+	
+	restart the service with sudo systemctl start mysqld
+	
+	
+	
+TODO: phpmyadmin installation
+
+TODO: Nginx installation 
+
+TODO: ruby installation
+
