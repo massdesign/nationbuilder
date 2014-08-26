@@ -20,3 +20,10 @@ TODO: Nginx installation
 
 TODO: ruby installation
 
+TODO: python installation 
+
+for the local python client you need to install the requests module to get everything working 
+to install requests execute the following command
+pip install requests
+
+
