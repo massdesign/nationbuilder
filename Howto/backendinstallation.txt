@@ -16,9 +16,80 @@ Start the service systemctl start mysqld
 	
 TODO: phpmyadmin installation
 
+first install nginx with php.. if that's working than you can install phpmyadmin
+to install (sudo pacman -S phpmyadmin)
+
+phpmyadmin will be installed in /usr/share/webapps/phpMyAdmin. copy it to the nginx directory /usr/share/nginx/html
+
+to connect with your database make sure maridb(mysql) is runnng		
+
 TODO: Nginx installation 
+https://wiki.archlinux.org/index.php/nginx#Installation
+
+for database management we use phpmyadmin and nginx.. 
+
+to install nginx do (sudo pacman -S nginx)
+
+start nginx (systemctl start nginx)
+
+to get phpmyadmin running we need database and php.. first install php (sudo pacman -S php)
+
+after php installation open the /etc/php/php.ini file and uncomment the line extension=mysqli.so
+
+now php is configured and installed.. we need to tell nginx to parse php files
+
+for this we use php-fpm install it with pacman (sudo pacman -S php-fpm)
+
+start sudo systemctl start php-fpm
+
+add the following to nginx.conf to php-fpm working
+
+all code need to be put in the server block
+
+location ~ \.php$ {
+     fastcgi_pass   unix:/run/php-fpm/php-fpm.sock;
+     fastcgi_index  index.php;
+     include        fastcgi.conf;
+}
+
+don't forget to put the root element in the scope of the server block like this
+
+server {
+    listen 80;
+    server_name localhost;
+    root /usr/share/nginx/html;
+    location / {
+        index index.html index.htm index.php;
+    }
+
+    location ~ \.php$ {
+        #fastcgi_pass 127.0.0.1:9000; (depending on your php-fpm socket configuration)
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi.conf;
+    }
+
+
+
+after adding don't forget to restart nginx and php-fpm
+
+to test php-fpm and nginx go to localhost 
+
+put php file test.php in the directory usr/share/nginx/html  with the following context
+
+<?php
+ phpinfo();
+?>
+
+if php gives you a error like "no input file specified" or just refused to work.. check php.ini and comment out the line with open_basedir=..... 
+
+
 
 TODO: ruby installation
+
+for the installation of ruby on rails and stuff install ruby first (sudo pacman -S ruby)
+
+after ruby is installed we can make use of gem to install rails (gem install rails)
 
 TODO: python installation 
 
