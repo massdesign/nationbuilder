@@ -93,8 +93,8 @@ after ruby is installed we can make use of gem to install rails (gem install rai
 
 TODO: python installation 
 
-for the local python client you need to install the requests module to get everything working 
-to install requests execute the following command
+For the pythonserver.py to work correctly we need the following libraries installed with pip.. 
 pip install requests
-
+pip install numpy
+pip install Pillow
 
