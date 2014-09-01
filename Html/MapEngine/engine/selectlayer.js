@@ -8,6 +8,8 @@ this.init = function() {
 	
 this._layer = new Kinetic.Layer({clearBeforeDraw: true});
 this._createBackgroundRect(2,2);
+this._mapService = new MapService();
+
 
 }
 this.getLayer = function()
@@ -21,20 +23,15 @@ this.render = function(imagedata,data) {
 }
 this._showSelectedTile = function showSelectedTile(x,y)
 {
-	// TODO: make the declarion of context consistent.. 
-	//this.parentMap.getCanvas().font = '12pt Calibri';
-	//this.parentMap.getCanvas().fillStyle = 'black';
-  	//var message = 'Mouse position: ' + x + ',' + y;
-	//this.parentMap.getCanvas().fillText(message, 220, 25);
 	var new_x  = x/this.parentMap.getTileWidth();
 	var new_y = y/this.parentMap.getTileHeight();
 	
-	this.parentMap.getMapData().setClickedTile(new_x,new_y);	
-	console.log(this.parentMap.getMapData());
-	this.parentMap.getAngularBridge().updateMapControllerScope(this.parentMap.getMapData());	
-	
-	console.log(new_x + " " + new_y);
-	
+   var p =	this.parentMap;
+	this._mapService.getTileByXY(new_x,new_y,function(data)	{
+		p.getMapData().setClickedTile(new_x,new_y);	
+		console.log(data);
+		p.getAngularBridge().updateMapControllerScope(p.getMapData());
+	});	
 }
 
 this._createBackgroundRect = function(c_width,c_height)
