@@ -8,6 +8,7 @@ from localMapService import tileset
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
 	def createMapCache(self):
 		mservice = mapservice.MapsService()
+		print(mservice)
 		cservice = cacheservice.Cacheservice()
 		mapdata =  mservice.getImages()
 		for element in mapdata:

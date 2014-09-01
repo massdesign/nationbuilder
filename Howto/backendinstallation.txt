@@ -90,6 +90,11 @@ TODO: ruby installation
 for the installation of ruby on rails and stuff install ruby first (sudo pacman -S ruby)
 
 after ruby is installed we can make use of gem to install rails (gem install rails)
+for you can do the rails server command you need to add it to the Path (PATH=$PATH:/home/patrick/.gem/ruby/2.1.0/bin)
+before you can run (rails server) we need to run (bundle install) to install missing gems
+
+if you get an error about Javascript and such install also nodejs (sudo pacman -S nodejs)
+
 
 TODO: python installation 
 
@@ -97,4 +102,23 @@ For the pythonserver.py to work correctly we need the following libraries instal
 pip install requests
 pip install numpy
 pip install Pillow
+
+Application Startup
+
+
+start the neccessary services
+
+sudo systemctl start mysqld
+sudo systemctl start php-fpm
+sudo systemctl start nginx
+
+create the database
+rake db:create
+rake db:migrate
+
+go to Ruby/NationBuilderServer and start ruby server (rails server)
+
+
+
+
 
