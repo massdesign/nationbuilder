@@ -5,6 +5,6 @@ package nationbuilder.lib.Ruby;
  */
 public class RubyConfiguration {
 
-    public static String RubyBackend = "http://192.168.1.6";
+    public static String RubyBackend = "http://localhost";
     public static String RubyBackendPort = "3000";
 }
