@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 from PIL import Image
+from localMapService import log
+from localMapService import util
 
 
 class Tile:
@@ -24,22 +26,21 @@ class Tile:
         nodename = "sx" + str(self._size) + "_" + str(self._size) + "_" + str(x) + str(y) + tilesetName
         crop_rect = (newx, newy, newx + self._size, newy + self._size)
         cropped_image = self._im.crop(crop_rect)
-        # http://stackoverflow.com/questions/273946/how-do-i-resize-an-image-using-pil-and-maintain-its-aspect-ratio
-        print("creating tileset")
+
+        print(crop_rect)
         if not self._cservice.isFileInCache(nodename):
             self._cservice.saveImagePNG(nodename, cropped_image)
         global newSize
         newSize = self._size/2
-        while newSize > 0:
-            nodename = "sx" + str(newSize) + "_" + str(newSize) + "_" + str(x) + str(y) + tilesetName
-
-            newSize /= 2
+        while newSize > 1:
+            log.loginfo("basesize: " + util.ftos(self._size) + " newSize:" + util.ftos(newSize))
+            nodename = "sx" + str(int(newSize)) + "_" + str(int(newSize)) + "_" + str(x) + str(y) + tilesetName
+            print(nodename)
             if not self._cservice.isFileInCache(nodename):
                 size = x,y
                 self._im.thumbnail(size, Image.ANTIALIAS)
-           #     self._cservice.saveImagePNG(nodename, cropped_image)
-
-            break
+                self._cservice.saveImagePNG(nodename, cropped_image)
+            newSize /= 2
 
     def resize(self,x,y):
         if not self._cservice.isFileInCache(nodename):

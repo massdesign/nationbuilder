@@ -3,6 +3,7 @@ from localMapService import mapservice
 from localMapService import cacheservice
 from localMapService import tile
 from localMapService import tileset
+from localMapService import log
 
 mservice = mapservice.MapsService()
 cservice = cacheservice.Cacheservice()

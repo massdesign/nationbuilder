@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from PIL import Image
 from localMapService import tile
+from localMapService import log
 
 
 class TileSet:
