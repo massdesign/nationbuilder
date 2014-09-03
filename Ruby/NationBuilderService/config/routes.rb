@@ -1,5 +1,6 @@
 NationBuilderMapsService::Application.routes.draw do
- 
+
+    get ':controller(/:action(/:xposition)(/:yposition))' 
   resources :resources
 
   resources :terraintypes
@@ -8,8 +9,8 @@ NationBuilderMapsService::Application.routes.draw do
 
   resources :uploads
 
-  resources :tiles
-
+  resources :tiles 
+  
   resources :layers
 
   resources :images

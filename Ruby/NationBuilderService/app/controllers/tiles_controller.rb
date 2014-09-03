@@ -1,7 +1,5 @@
 class TilesController < ApplicationController
 
-
-
   before_action :set_tile, only: [:show, :edit, :update, :destroy]
   protect_from_forgery :secret => 'salty_phrase',
 		       :except => :create
@@ -15,7 +13,20 @@ class TilesController < ApplicationController
   # GET /tiles/1.json
   def show
   end
+  # GET /tiles/foo
+  def find 
+  #TODO: find out if we can do this in one query.. we are doing 2 querys here.. first search for the tile then join the result together
+  @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
+  @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
+  #@resource =	Resource.joins(:tiles).where(id: @tile.resource_id).take
+  
 
+  
+  
+   respond_to do |format|
+ 		format.json { render action: 'find', status: :created, location: @resource }
+	 end
+  end
   # GET /tiles/new
   def new
     @tile = Tile.new

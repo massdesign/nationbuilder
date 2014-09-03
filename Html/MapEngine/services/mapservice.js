@@ -27,6 +27,9 @@ function MapService() {
 		
 		this._baseService.doGetRequest('/layers',callback);
 	}
-	
+	this.getTileByXY = function(x,y,callback) {
+
+		this._baseService.doGetRequest('/tiles/find/' + x + "/" + y,callback)	
+	}
 	
 }

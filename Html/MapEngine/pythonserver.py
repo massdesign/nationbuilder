@@ -22,13 +22,20 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			tset = tileset.TileSet(cservice.getFilePath("ts_" + element['name']),cservice)
 			tset.unpack()
 	def do_GET(self):
-		if self.path == '/map':
-			self.path = '/mapengine.html'
+		if self.path == '/install':
+			self.path = '/install.html'
 			self.createMapCache()
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+		elif self.path == '/app':
+			self.path = '/mapengine.html'
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 		elif self.path == '/':
 			self.path = '/index.html'
-			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)			
+		elif self.path == '/test':
+	 		self.path = '/test.html'
+	 		return http.server.SimpleHTTPRequestHandler.do_GET(self)
+
 		else:
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
