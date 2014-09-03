@@ -40,22 +40,19 @@ $(document).ready(function()
     	
   </script>
   <body ng-controller="ClickdataCtrl">
-  {{mapData.clickedTile.x}}<br/>
-  {{mapData.clickedTile.y}}
- <!-- {{modelData.xposition}}<br/>
-  {{modelData.yposition}}<br/>
-  {{modelData.xoffset}}<br/>
-  {{modelData.yoffset}}<br/> -->
+  <div>
+  <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
+  <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
+  </div>
+  <div>
+  <ul>
+  <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
+  		{{resource.resourcetype.name}}
+	</li>  
+  </ul>
+  </div>
     <div id="container"></div> 
     <canvas id="myCanvas" width="700" height="700"></canvas>
     </div>  
-<!--  <ul>
-    <li ng-repeat="phone in phones">
-      {{phone.name}}
-      <p>{{phone.snippet}}</p>
-    </li>
-  </ul> -->
-
-  
 </body>
 </html>

@@ -8,10 +8,9 @@ this.clickedTile = function() {
 	this.y = -1;
 }
 
-this.setClickedTile = function(x,y) {
+this.setClickedTile = function(tile) {
 
-this.clickedTile.x = x;
-this.clickedTile.y = y;
+this.clickedTile = tile;
 
 }
 

@@ -8,9 +8,10 @@
   <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script> 
   <script type="text/JavaScript" src="lib/angular13.min.js"></script>
   <script type="text/JavaScript" src="controllers/controllers.js"></script>
+  <script type="text/JavaScript" src="engine/mapdata.js"></script>
+  <script type="text/JavaScript" src="engine/angularbridge.js"></script>
   <script type="text/JavaScript" src="engine/tilelayer.js"></script>
   <script type="text/JavaScript" src="engine/gridlayer.js"></script>
-  <script type="text/JavaScript" src="engine/angularbridge.js"></script>
   <script type="text/JavaScript" src="engine/selectlayer.js"></script>  
   <script type="text/javascript" src="map.js"></script> 
   </head>
@@ -39,20 +40,20 @@ $(document).ready(function()
     	
   </script>
   <body ng-controller="ClickdataCtrl">
-  {{modelData.xposition}}<br/>
-  {{modelData.yposition}}<br/>
-  {{modelData.xoffset}}<br/>
-  {{modelData.yoffset}}<br/>
-    <div id="container"></div>
+  <div>
+  <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
+  <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
+  </div>
+  <div>
+  <ul>
+  <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
+   <label>Name: {{resource.resourcetype.name}}</label>
+   <label>Location: {{resource.resourcetype.location}}</label> 
+	</li>  
+  </ul>
+  </div>
+    <div id="container"></div> 
     <canvas id="myCanvas" width="700" height="700"></canvas>
     </div>  
-<!--  <ul>
-    <li ng-repeat="phone in phones">
-      {{phone.name}}
-      <p>{{phone.snippet}}</p>
-    </li>
-  </ul> -->
-
-  
 </body>
 </html>
