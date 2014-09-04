@@ -7,12 +7,15 @@ function Map(javascript_console,applicationName)
 		this._context = null;
 		this.jsconsole = javascript_console
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 40;
-    	this._g_mapHeight = 40;
-    	this._g_tileWidth = 32
-    	this._g_tileHeight = 32
+	  	this._g_mapWidth = 12;
+    	this._g_mapHeight = 12;
+        // TODO: replace width/height with tilesize we only support symmetrical tiles
+    	this._g_tileWidth = 32;
+    	this._g_tileHeight = 32;
+        this._g_tilesize = 32;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
+        this._zoomlevel = 1
     	
     	this.layers.push(new TileLayer(this,javascript_console));
     	this.layers.push(new SelectLayer(this,javascript_console));
@@ -30,7 +33,6 @@ function Map(javascript_console,applicationName)
     		
     		return result;
     	}
-      
     this.getStage = function() {
 	 return this.stage;    
     }
@@ -48,6 +50,9 @@ function Map(javascript_console,applicationName)
     this.getTileWidth = function() {
      return this._g_tileWidth;
     }
+    this.getTileSize = function() {
+        return this._g_tilesize;
+    }
     this.getMapWidth = function() {
     	 return this._g_mapWidth;
  	 }
@@ -60,6 +65,7 @@ function Map(javascript_console,applicationName)
  	 this.getYOffset = function() {
 		return this._g_yoffset;
  	 }
+
  	 this.getAngularBridge = function() {
 
 		return this._angularBridge; 	 
@@ -73,20 +79,19 @@ function Map(javascript_console,applicationName)
    	 // duplicaat om het even te laten werken
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
-    	    width: 1500,
-     	   height: 1200
-   	 }); 
-   	 
-   	
-      this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);   
-      var canvas = document.getElementById('myCanvas');
+    	    width: 320,
+     	   height: 320
+   	 });
+
+
+      this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   	
  		var currentObject = this;
 
-      this._context = canvas.getContext('2d');
+     // this._context = canvas.getContext('2d');
 		
    }
    this.render = function(imagedata,data) {

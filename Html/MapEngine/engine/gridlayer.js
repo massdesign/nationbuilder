@@ -26,10 +26,10 @@ function GridLayer(parentMap,loginstance)
 			currenty = 0;
 					
 				
-			for(var y=0;y<this.parentMap.getMapHeight();y++)
+			for(var y=0;y<this.parentMap.getMapHeight()-1;y++)
 			{
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset()
-				, currentx+this.parentMap.getXOffset(),currenty+this.parentMap.getTileHeight()+this.parentMap.getYOffset()];
+				, currentx+this.parentMap.getXOffset(),currenty+this.parentMap.getRelativeTilesize()+this.parentMap.getYOffset()];
 				  var blackLine = new Kinetic.Line({
         					points:  points,
        					 stroke: 'black',
@@ -41,20 +41,20 @@ function GridLayer(parentMap,loginstance)
    		 	this._layer.add(blackLine);
 			  this.parentMap.setTileValue(x,y,0,currentx + this.parentMap.getXOffset());
 			  this.parentMap.setTileValue(x,y,1,currenty + this.parentMap.getYOffset());
-			  currenty = y*this.parentMap.getTileHeight();		 
+			  currenty = y*this.parentMap.getRelativeTilesize();
 			}
 			
-			 currentx = x*this.parentMap.getTileWidth();
+			 currentx = x*this.parentMap.getRelativeTilesize();
 		}
 		
 		 var currentx = 0;
 		 var currenty = 0;
 		for(var y=0;y<this.parentMap.getMapHeight();y++)
 		{
-			for(var x=0;x<this.parentMap.getMapWidth();x++)
+			for(var x=0;x<this.parentMap.getMapWidth()-2;x++)
 			{
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset(),
-				currentx+this.parentMap.getTileWidth()+this.parentMap.getXOffset(),currenty+this.parentMap.getYOffset()];
+				currentx+this.parentMap.getRelativeTilesize()+this.parentMap.getXOffset(),currenty+this.parentMap.getYOffset()];
 			  			  var blackLine = new Kinetic.Line({
         					points:  points,
        					 stroke: 'black',
@@ -63,9 +63,9 @@ function GridLayer(parentMap,loginstance)
        					 lineJoin: 'round'
      					 });
      		  	this._layer.add(blackLine);
-			  currentx = x*this.parentMap.getTileWidth();
-			}
-			 currenty = y*this.parentMap.getTileHeight();
-		}
+			  currentx = x*this.parentMap.getRelativeTilesize();
+            }
+			 currenty = y*this.parentMap.getRelativeTilesize();
+        }
     } 
 }

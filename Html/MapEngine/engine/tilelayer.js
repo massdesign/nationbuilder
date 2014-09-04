@@ -34,8 +34,9 @@ function TileLayer(parentMap,loginstance)
     			yposition = tile.yposition
     			image_id = tile.image_id
     			
-   		
-    			tilerequest = xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];		
+   		        tilesize = this.parentMap.getRelativeTilesize();
+                console.log(tilesize)
+    			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://localhost:8083/ncache/" + tilerequest;
   	  	 		imageURLs.push(source);  	  	 		
   	  	 		imagePos.push([xposition,yposition]);
@@ -45,7 +46,7 @@ function TileLayer(parentMap,loginstance)
     	this.loadAllImages(imgs,imagePos,imageURLs);   			
 		
 	}
-	
+
 	this.loadAllImages =   function(imgs,imagePos,imageURLs){
         for (var i=0; i<imageURLs.length; i++) {
             var img = new Image();
@@ -53,6 +54,9 @@ function TileLayer(parentMap,loginstance)
             var imUrlsLength = imageURLs.length;
             var currentContext = this;
             var imagesOK = 0;
+
+            var currentContext = this
+
             img.onload = function(){ 
                 imagesOK++; 
               
@@ -61,12 +65,12 @@ function TileLayer(parentMap,loginstance)
                    // start(currentContext,imgs,imagePos);
           		 for(var i=0;i<imgs.length;i++){
            			 var img=new Kinetic.Image({
-                	 x:imagePos[i][0]*32,
-                	 y:imagePos[i][1]*32,
-                	 width:32,
-                	 height:32,
+                	 x:imagePos[i][0]*currentContext.parentMap.getRelativeTilesize(),
+                         y:imagePos[i][1]*currentContext.parentMap.getRelativeTilesize(),
+                     width:currentContext.parentMap.getRelativeTilesize(),
+                	 height:currentContext.parentMap.getRelativeTilesize(),
                 	 image:imgs[i],
-                	 draggable:true
+                	 draggable:false
             });
             currentContext._layer.add(img);
         }

@@ -12,17 +12,49 @@
   <script type="text/JavaScript" src="engine/angularbridge.js"></script>
   <script type="text/JavaScript" src="engine/tilelayer.js"></script>
   <script type="text/JavaScript" src="engine/gridlayer.js"></script>
-  <script type="text/JavaScript" src="engine/selectlayer.js"></script>  
-  <script type="text/javascript" src="map.js"></script> 
+  <script type="text/JavaScript" src="engine/selectlayer.js"></script>
+  <script type="text/javascript" src="map.js"></script>
+  <style>
+
+      .mapcontrols {
+          position: relative;
+          left:322px;
+          bottom: -40px;
+          width:20px;
+      }
+      .zoombutton {
+       width:20px;
+       height: 20px;
+      }
+      .map
+      .relative {
+          position: relative;
+          float:right;
+      }
+      .absolute {
+          position: relative;
+          top:400px;
+      }
+
+
+</style>
   </head>
-  <script>
+  <body>
+
+  <div class="mapcontrols">
+      <button type="button" class="zoombutton">+</button>
+      <button type="button" class="zoombutton">-</button>
+
+  </div>
+  <div id="container" class="map"/>
+
+    <script>
+
 javascript_console = console;
 
 $(document).ready(function()
  {
-     
-	  var canvas = document.getElementById('myCanvas');
-     var context = canvas.getContext('2d');
+
      
 	  var s = new MapService(); 
     s.getMap(function (mapData) {      	
@@ -37,7 +69,6 @@ $(document).ready(function()
     	});
     	
     	});
-    	
   </script>
   <body ng-controller="ClickdataCtrl">
   <div>
