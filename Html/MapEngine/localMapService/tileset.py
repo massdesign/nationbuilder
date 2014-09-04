@@ -22,8 +22,8 @@ class TileSet:
         im = Image.open(self._filename)
         ts_width, ts_height = im.size
 
-        maxbredth = ts_width / self.width
-        maxdepth = ts_height / self.height
+        maxbredth = ts_width / self.width-1
+        maxdepth = ts_height / self.height-1
         log.loginfo("width: " + str(maxbredth) + " height: " + str(maxdepth))
         fname = self._filename.split('/')[1].split('.')[0]
         for x in range(0, int(maxbredth + 1)):

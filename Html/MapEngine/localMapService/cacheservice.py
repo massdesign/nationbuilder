@@ -7,7 +7,11 @@ from localMapService import log
 
 
 class Cacheservice:
+    #topicus laptop fullpath
+    #fullpath = "/home/patrick/Thuis/Git/nationbuilder/Html/MapEngine/"
+    #Thuis computer fullpath
     fullpath = "/home/patrick/Thuis/Git/nationbuilder/Html/MapEngine/"
+
     cachedir = "ncache"
 
     def __init__(self):

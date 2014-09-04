@@ -37,8 +37,13 @@ class Tile:
             print(nodename)
             if not self._cservice.isFileInCache(nodename):
                 size = x,y
-                #self._im.thumbnail(size, Image.ANTIALIAS)
-                #self._cservice.saveImagePNG(nodename, cropped_image)
+                basewidth = int(newSize)
+                img = cropped_image
+                wpercent = (basewidth/float(img.size[0]))
+                hsize = int((float(img.size[1])*float(wpercent)))
+                resizedimage = img.resize((basewidth,hsize), Image.ANTIALIAS)
+                #resizedimage.show()
+                self._cservice.saveImagePNG(nodename, resizedimage)
             newSize /= 2
 
     def resize(self,x,y):
