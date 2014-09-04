@@ -7,31 +7,52 @@
   <script type="text/Javascript" src="services/mapservice.js"></script>
   <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script> 
   <script type="text/JavaScript" src="lib/angular13.min.js"></script>
-  <script type="text/JavaScript" src="controllers/controllers.js"></script>
   <script type="text/JavaScript" src="engine/mapdata.js"></script>
   <script type="text/JavaScript" src="engine/angularbridge.js"></script>
   <script type="text/JavaScript" src="engine/tilelayer.js"></script>
   <script type="text/JavaScript" src="engine/gridlayer.js"></script>
   <script type="text/JavaScript" src="engine/selectlayer.js"></script>  
-  <script type="text/javascript" src="map.js"></script> 
+  <script type="text/javascript" src="map.js"></script>
+  <script type="text/JavaScript" src="controllers/controllers.js"></script>
+      <style>
+
+          .mapcontrols {
+              position: relative;
+              left:322px;
+              bottom: -40px;
+              width:20px;
+          }
+          .zoombutton {
+              width:20px;
+              height: 20px;
+          }
+          .map
+          .relative {
+              position: relative;
+              float:right;
+          }
+          .absolute {
+              position: relative;
+              top:400px;
+          }
+
+
+      </style>
   </head>
   <script>
 javascript_console = console;
 
 $(document).ready(function()
  {
-     
-	  var canvas = document.getElementById('myCanvas');
-     var context = canvas.getContext('2d');
-     
 	  var s = new MapService(); 
     s.getMap(function (mapData) {      	
     	images  = Array();	
      var	data = mapData[0]['layers'];    	
     	map.init();
     	s.getImages(function(imagedata)
-    	{ 
-    	 map.render(imagedata,data);
+    	{
+            map.setImageData(imagedata,data);
+    	    map.render();
     	});
     	
     	});
@@ -41,9 +62,16 @@ $(document).ready(function()
   </script>
   <body ng-controller="ClickdataCtrl">
   <div>
-  <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
-  <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
+      <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
+      <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
   </div>
+  <div class="mapcontrols">
+      <button type="button" class="zoombutton" ng-click="zoomIn($event)">+</button>
+      <button type="button" class="zoombutton" ng-click="zoomOut($event)">-</button>
+
+  </div>
+  <div id="container"></div>
+
   <div>
   <ul>
   <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
@@ -51,8 +79,7 @@ $(document).ready(function()
 	</li>  
   </ul>
   </div>
-    <div id="container"></div> 
-    <canvas id="myCanvas" width="700" height="700"></canvas>
+
     </div>  
 </body>
 </html>

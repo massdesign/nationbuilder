@@ -52,8 +52,8 @@ this._createBackgroundRect = function(c_width,c_height)
         			var selectedRect = new Kinetic.Rect({
     					x: cst[0],
     					y: cst[1],
-    					width: 32,
-    					height: 32,
+    					width: currentContext.parentMap.getRelativeTilesize(),
+    					height: currentContext.parentMap.getRelativeTilesize(),
     					fill: 'green',
     					stroke: 'green',
     					strokeWidth: 1,
@@ -79,19 +79,20 @@ this._createBackgroundRect = function(c_width,c_height)
     		  var topleftx = this.parentMap.getTileValue(x,y,X_AXIS);
     		  var toplefty = this.parentMap.getTileValue(x,y,Y_AXIS);
     		  // topright
-    		  var toprightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getTileWidth(); 
+    		  var toprightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
     		  var toprighty = this.parentMap.getTileValue(x,y,Y_AXIS);
     		      		  
     		  var bottomleftx = this.parentMap.getTileValue(x,y,X_AXIS);
-    		  var bottomlefty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getTileHeight()    	
+    		  var bottomlefty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize()
     		      		  
-    		  var bottomrightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getTileWidth(); 
-    		  var bottomrighty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getTileHeight();
+    		  var bottomrightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
+    		  var bottomrighty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize();
     		  if(mousePosx > topleftx && mousePosx < toprightx &&
     		  	 mousePosy > toprighty && mousePosy < bottomlefty)
     		  { 		   
     		   	this._showSelectedTile(this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS));
   					result = [this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS)];
+
     		    	break;
     		  }
     		}

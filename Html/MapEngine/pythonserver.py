@@ -4,6 +4,7 @@ import socketserver
 from localMapService import mapservice
 from localMapService import cacheservice
 from localMapService import tileset
+from localMapService import log
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
 	def createMapCache(self):

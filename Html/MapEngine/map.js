@@ -7,12 +7,18 @@ function Map(javascript_console,applicationName)
 		this._context = null;
 		this.jsconsole = javascript_console
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 40;
-    	this._g_mapHeight = 40;
-    	this._g_tileWidth = 32
-    	this._g_tileHeight = 32
+	  	this._g_mapWidth = 12;
+    	this._g_mapHeight = 12;
+        // TODO: replace width/height with tilesize we only support symmetrical tiles
+    	this._g_tileWidth = 32;
+    	this._g_tileHeight = 32;
+        this._g_tilesize = 32;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
+        this._zoomlevel = 1;
+
+        this._imagedata = isNaN;
+        this._data = isNaN;
     	
     	this.layers.push(new TileLayer(this,javascript_console));
     	this.layers.push(new SelectLayer(this,javascript_console));
@@ -30,13 +36,17 @@ function Map(javascript_console,applicationName)
     		
     		return result;
     	}
-      
     this.getStage = function() {
 	 return this.stage;    
     }
     this.getTileValue = function(x,y,axis)
     { 
     	return this._g_tileValues[x][y][axis];
+    }
+    // TODO: this is crappy.. why do we need two parameters?? and find an decent naming scheme for it.
+    this.setImageData = function(imagedata,data){
+        this._imagedata = imagedata;
+        this._data = data
     }
     this.setTileValue = function(x,y,axis,value) {
     	
@@ -47,6 +57,9 @@ function Map(javascript_console,applicationName)
     }
     this.getTileWidth = function() {
      return this._g_tileWidth;
+    }
+    this.getTileSize = function() {
+        return this._g_tilesize;
     }
     this.getMapWidth = function() {
     	 return this._g_mapWidth;
@@ -60,39 +73,61 @@ function Map(javascript_console,applicationName)
  	 this.getYOffset = function() {
 		return this._g_yoffset;
  	 }
+
  	 this.getAngularBridge = function() {
 
 		return this._angularBridge; 	 
  	 }
+    this.zoomIn = function()
+    {
+        if(this._zoomlevel < 16)
+        {
+            this._zoomlevel *= 2;
+            this.init();
+            this.render();
+        }
+
+    }
+    this.zoomOut = function()
+    {
+        if(this._zoomlevel != 1) {
+            this._zoomlevel /= 2;
+            this.init();
+            this.render();
+        }
+    }
  	this.getMapData = function() {
 		return this._mapData; 	
  	}
+     this.getZoomlevel = function() {
+         return this._zoomlevel;
+     }
+    this.getRelativeTilesize = function() {
+
+        return  Math.ceil(this.getTileSize()/this.getZoomlevel());
+
+    }
 
 	this.init = function()
 	{
-   	 // duplicaat om het even te laten werken
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
-    	    width: 1500,
-     	   height: 1200
-   	 }); 
-   	 
-   	
-      this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);   
-      var canvas = document.getElementById('myCanvas');
+    	    width: 320,
+     	   height: 320
+   	 });
+
+
+      this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   	
- 		var currentObject = this;
-
-      this._context = canvas.getContext('2d');
-		
+ 		//var currentObject = this;
    }
-   this.render = function(imagedata,data) {
+   this.render = function() {
 
 		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].render(imagedata,data);	
+			this.layers[i].render(this._imagedata,this._data);
 		}  
    }
    this.getCanvas = function () {
