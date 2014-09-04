@@ -26,8 +26,7 @@ class Tile:
         nodename = "sx" + str(self._size) + "_" + str(self._size) + "_" + str(x) + str(y) + tilesetName
         crop_rect = (newx, newy, newx + self._size, newy + self._size)
         cropped_image = self._im.crop(crop_rect)
-
-        print(crop_rect)
+        #cropped_image.show()
         if not self._cservice.isFileInCache(nodename):
             self._cservice.saveImagePNG(nodename, cropped_image)
         global newSize
@@ -38,8 +37,8 @@ class Tile:
             print(nodename)
             if not self._cservice.isFileInCache(nodename):
                 size = x,y
-                self._im.thumbnail(size, Image.ANTIALIAS)
-                self._cservice.saveImagePNG(nodename, cropped_image)
+                #self._im.thumbnail(size, Image.ANTIALIAS)
+                #self._cservice.saveImagePNG(nodename, cropped_image)
             newSize /= 2
 
     def resize(self,x,y):

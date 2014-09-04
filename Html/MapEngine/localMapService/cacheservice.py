@@ -3,6 +3,7 @@ import os
 import shutil
 import numpy
 from PIL import Image
+from localMapService import log
 
 
 class Cacheservice:
@@ -20,14 +21,16 @@ class Cacheservice:
                 out_file.write(chunk)
 
     def saveImagePNG(self, filename, image):
-        print("saving image: " + filename + " to cache")
+        filepath = self.cachedir + "/" + filename
+        log.loginfo("writing file: " + filepath)
         image.save(self.cachedir + "/" + filename, "png")
 
     def isFileInCache(self, filename):
         return os.path.isfile(self.fullpath + "/" + self.cachedir + "/" + filename)
 
     def getImageFile(self, filename):
-        return Image.open(self.cachedir + "/" + filename)
+        filepath = self.cachedir + "/" + filename
+        return Image.open(filepath)
 
     def getFilePath(self, filename):
         return self.cachedir + "/" + filename
@@ -38,4 +41,3 @@ class Cacheservice:
     def _createcache(self):
         if not os.path.exists(self.cachedir):
             os.makedirs(self.cachedir)
-				
