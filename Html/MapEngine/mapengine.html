@@ -1,90 +1,84 @@
 <!DOCTYPE HTML>
 <html lang="en" ng-app="nationbuilderApp">
-  <head>
- <!-- <link rel="stylesheet" type="text/css" href="style.css">  -->
-  <script type="text/JavaScript" src="lib/jquery-1.11.0.js"></script>
-  <script type="text/JavaScript" src="services/baseservice.js"></script>
-  <script type="text/Javascript" src="services/mapservice.js"></script>
-  <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script> 
-  <script type="text/JavaScript" src="lib/angular13.min.js"></script>
-  <script type="text/JavaScript" src="controllers/controllers.js"></script>
-  <script type="text/JavaScript" src="engine/mapdata.js"></script>
-  <script type="text/JavaScript" src="engine/angularbridge.js"></script>
-  <script type="text/JavaScript" src="engine/tilelayer.js"></script>
-  <script type="text/JavaScript" src="engine/gridlayer.js"></script>
-  <script type="text/JavaScript" src="engine/selectlayer.js"></script>
-  <script type="text/javascript" src="map.js"></script>
-  <style>
+<head>
+    <script type="text/JavaScript" src="lib/jquery-1.11.0.js"></script>
+    <script type="text/JavaScript" src="services/baseservice.js"></script>
+    <script type="text/Javascript" src="services/mapservice.js"></script>
+    <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script>
+    <script type="text/JavaScript" src="lib/angular13.min.js"></script>
+    <script type="text/JavaScript" src="engine/mapdata.js"></script>
+    <script type="text/JavaScript" src="engine/angularbridge.js"></script>
+    <script type="text/JavaScript" src="engine/tilelayer.js"></script>
+    <script type="text/JavaScript" src="engine/gridlayer.js"></script>
+    <script type="text/JavaScript" src="engine/selectlayer.js"></script>
+    <script type="text/javascript" src="map.js"></script>
+    <script type="text/JavaScript" src="controllers/controllers.js"></script>
+    <style>
 
-      .mapcontrols {
-          position: relative;
-          left:322px;
-          bottom: -40px;
-          width:20px;
-      }
-      .zoombutton {
-       width:20px;
-       height: 20px;
-      }
-      .map
-      .relative {
-          position: relative;
-          float:right;
-      }
-      .absolute {
-          position: relative;
-          top:400px;
-      }
+        .mapcontrols {
+            position: relative;
+            left:322px;
+            bottom: -40px;
+            width:20px;
+        }
+        .zoombutton {
+            width:20px;
+            height: 20px;
+        }
+        .map
+        .relative {
+            position: relative;
+            float:right;
+        }
+        .absolute {
+            position: relative;
+            top:400px;
+        }
 
 
-</style>
-  </head>
-  <body>
+    </style>
+</head>
+<script>
+    javascript_console = console;
 
-  <div class="mapcontrols">
-      <button type="button" class="zoombutton">+</button>
-      <button type="button" class="zoombutton">-</button>
+    $(document).ready(function()
+    {
+        var s = new MapService();
+        s.getMap(function (mapData) {
+            images  = Array();
+            var	data = mapData[0]['layers'];
+            map.init();
+            s.getImages(function(imagedata)
+            {
+                map.setImageData(imagedata,data);
+                map.render();
+            });
 
-  </div>
-  <div id="container" class="map"/>
+        });
 
-    <script>
+    });
 
-javascript_console = console;
+</script>
+<body ng-controller="ClickdataCtrl">
+<div>
+    <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
+    <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
+</div>
+<div class="mapcontrols">
+    <button type="button" class="zoombutton" ng-click="zoomIn($event)">+</button>
+    <button type="button" class="zoombutton" ng-click="zoomOut($event)">-</button>
 
-$(document).ready(function()
- {
+</div>
+<div id="container"></div>
 
-     
-	  var s = new MapService(); 
-    s.getMap(function (mapData) {      	
-    	images  = Array();	
-     var	data = mapData[0]['layers'];    	
-    	map.init();
-    	s.getImages(function(imagedata)
-    	{ 
-    	 map.render(imagedata,data);
-    	});
-    	
-    	});
-    	
-    	});
-  </script>
-  <body ng-controller="ClickdataCtrl">
-  <div>
-  <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
-  <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
-  </div>
-  <div>
-  <ul>
-  <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
-   <label>Name: {{resource.resourcetype.name}}</label>
-   <label>Location: {{resource.resourcetype.location}}</label> 
-	</li>  
-  </ul>
-  </div>
-    <div id="container"></div> 
-    <canvas id="myCanvas" width="700" height="700"></canvas>
-    </div>  
+<div>
+    <ul>
+        <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
+            {{resource.resourcetype.name}}
+        </li>
+    </ul>
+</div>
+
+</div>
 </body>
 </html>
