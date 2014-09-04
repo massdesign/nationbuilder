@@ -29,7 +29,6 @@ this._showSelectedTile = function showSelectedTile(x,y)
    var p =	this.parentMap;
 	this._mapService.getTileByXY(new_x,new_y,function(data)	{
 		p.getMapData().setClickedTile(new_x,new_y);	
-		console.log(data);
 		p.getMapData().setClickedTile(data)	
 		p.getAngularBridge().updateMapControllerScope(p.getMapData());
 	});	
