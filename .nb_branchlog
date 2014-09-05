@@ -3,5 +3,8 @@ NB-3: mapresources feature branch*
 NB-4: AngularJs integration with frontend to  represent resources datail*
 NB-5: Unit tests for the backend. 
 NB-6: Overall game design  
-NB-7: inzoomen,uitzoomen
-NB-8: importer off by one error bugfix
+NB-7: inzoomen,uitzoomen*
+NB-8: importer off by one error bugfix*
+NB-9: Up down scrolling,large tiled map with various resources
+NB-10: Optimize the filler to keep track of changes to speed up the process of filleing, also make bulk import possible
+NB-11: do lazy loading of the map tiles, to increase performance
