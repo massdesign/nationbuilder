@@ -15,15 +15,44 @@
     <script type="text/JavaScript" src="controllers/controllers.js"></script>
     <style>
 
-        .mapcontrols {
+        .zoomcontrols {
             position: relative;
             left:322px;
             bottom: -40px;
             width:20px;
         }
+        .scrollcontrols {
+       	position: relative;
+       	width:100px;
+       	height:45px;
+       	bottom: 40px;
+        }
         .zoombutton {
             width:20px;
             height: 20px;
+        }
+        .scrollupbutton {
+			 position: absolute;
+			 top:1px;      
+			 left:33px;  
+			 left:
+        }
+        .scrolldownbutton {
+			 position: absolute;
+			 bottom:1px;        
+			 left: 33px;
+			 
+        }
+        .scrollrightbutton {
+			
+			position:absolute;
+			right:1px;       
+			top:15px;
+        }
+        .scrollleftbutton {
+			  position:  absolute;
+			  left:1px;  
+			  top:15px;      
         }
         .map
         .relative {
@@ -64,10 +93,16 @@
     <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
     <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
 </div>
-<div class="mapcontrols">
+<div class="zoomcontrols">
     <button type="button" class="zoombutton" ng-click="zoomIn($event)">+</button>
     <button type="button" class="zoombutton" ng-click="zoomOut($event)">-</button>
 
+</div>
+<div class="scrollcontrols">
+	<button type="button" class="scrollleftbutton">L</button>
+	<button type="button" class="scrollupbutton">U</button>
+	<button type="button" class="scrolldownbutton">D</button>
+	<button type="button" class="scrollrightbutton">R</button>
 </div>
 <div id="container"></div>
 
