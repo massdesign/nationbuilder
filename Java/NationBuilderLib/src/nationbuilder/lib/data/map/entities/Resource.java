@@ -1,6 +1,8 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 import java.util.ArrayList;
@@ -11,9 +13,10 @@ import java.util.List;
  */
 public class Resource extends BaseRubyModel {
 
-
+    @OneToMany(mapidTo = "rtis")
     private List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
    // private ResourceType resourceType;
+	@OneToOne(mapIdTo = "tti")
     private TerrainType terrainType;
 
     // terraintype for reference in backend
@@ -43,8 +46,8 @@ public class Resource extends BaseRubyModel {
 
     public void fetchIDs()
     {
-       this.rtis = RubyAssociationResolver.CreateIDsFromArrayList(resourceTypes);
+       //this.rtis = RubyAssociationResolver.CreateIDsFromArrayList(resourceTypes);
        //this.rti = this.getResourceType().getId().getId();
-       this.tti = this.getTerrainType().getId().getId();
+       //this.tti = this.getTerrainType().getId().getId();
     }
 }

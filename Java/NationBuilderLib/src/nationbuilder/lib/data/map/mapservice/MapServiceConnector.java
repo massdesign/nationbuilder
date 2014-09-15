@@ -44,7 +44,7 @@ public class MapServiceConnector {
 		{
 			Gson gson = new Gson();
 
-			tile.fetchIDs();
+			//tile.fetchIDs();
 			HttpData data = this.jsonServiceConnector.postObject(tile, "/tiles/");
 
 		    ID resultObject =	gson.fromJson(data.getBody(), ID.class);
@@ -67,7 +67,7 @@ public class MapServiceConnector {
     }
     public void addResource(Resource resource)
     {
-        resource.fetchIDs();
+        //resource.fetchIDs();
         try
         {
             context.SaveObject(resource,"/resources/");
@@ -79,7 +79,7 @@ public class MapServiceConnector {
     }
 	public void addLayer(MapLayer layer)
 	{
-		layer.fetchIDs();
+	//	layer.fetchIDs();
         try {
             context.SaveObject(layer,"/layers/");
         } catch (IOException e) {
@@ -126,7 +126,7 @@ public class MapServiceConnector {
 	public void addImage(MapImage image)
 	{
 			image.getImageFile();
-			image.fetchIDs();
+			//image.fetchIDs();
             image.Save("/images/");
             image.getImageFile().Save("/uploads/");
 	}

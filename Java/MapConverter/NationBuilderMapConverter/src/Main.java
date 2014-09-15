@@ -2,11 +2,17 @@
 import java.io.IOException;
 
 import World.Filler;
+import java.util.Map;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.MapDataset;
 import nationbuilder.lib.data.map.converter.TiledMapConverter;
+import nationbuilder.lib.data.map.entities.MapImage;
+import nationbuilder.lib.data.map.entities.MapTile;
+import nationbuilder.lib.data.map.entities.Resource;
+import nationbuilder.lib.data.map.entities.TerrainType;
 import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
+import nationbuilder.lib.data.map.xml.Image;
 import nationbuilder.lib.data.map.xml.Property;
 import nationbuilder.lib.data.map.xml.Tile;
 import nationbuilder.lib.data.map.xml.TiledXmlMap;
@@ -18,20 +24,34 @@ import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-        RubyContext context = new RubyContextFactory().createRubyContext();
+        /*RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
         filler.Fill();
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo2.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/demo2.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
 		mapsServiceConnector.addDataset(dataset);
+		*/
+
+		RubyContext context = new RubyContextFactory().createRubyContext();
+		TerrainType terrainType1 = context.createRubyModel(TerrainType.class);
+		terrainType1.setName("TESTTERRAINTYPE");
+		Resource resource1 = context.createRubyModel(Resource.class);
+		resource1.setTerrainType(terrainType1);
+		MapImage mapImage1 = context.createRubyModel(MapImage.class);
+		MapTile mapTile1 = context.createRubyModel(MapTile.class);
+
+		context.SaveObject(terrainType1,"/terraintypes/");
+		context.SaveObject(resource1,"/resources/");
+		context.SaveObject(mapImage1,"/images/");
+		context.SaveObject(mapTile1, "/tiles/");
 
    	  }
 	}

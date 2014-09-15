@@ -58,6 +58,7 @@ public class RubyContext {
 
     public boolean SaveObject(RubyModel object,String resourceUrl) throws IOException {
         Gson gson = new Gson();
+		object.FetchIDs();
         HttpData data =  this.rubyService.postObject(object,resourceUrl);
 
         ID resultObject  =  gson.fromJson(data.getBody(),ID.class);

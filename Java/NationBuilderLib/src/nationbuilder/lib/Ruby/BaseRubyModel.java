@@ -3,6 +3,8 @@ package nationbuilder.lib.Ruby;
 import com.google.gson.annotations.Expose;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.RubyObjectHierarchy;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
@@ -26,7 +28,15 @@ public class BaseRubyModel implements RubyModel {
     this.id = id;
     }
 
-    @Override
+	@Override
+	public void FetchIDs()
+	{
+		RubyObjectHierarchy hierarchy = RubyAssociationResolver.buildObjectTree(this);
+
+
+	}
+
+	@Override
     public void setRubyContext(RubyContext context) {
     this.context = context;
     }
