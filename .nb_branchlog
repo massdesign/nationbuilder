@@ -5,3 +5,4 @@ NB-5: Unit tests for the backend.
 NB-6: Overall game design  
 NB-7: inzoomen,uitzoomen
 NB-8: importer off by one error bugfix
+NB-11: Refactoren van de Javacode die interfaced met Ruby, daarnaast nog wat entities toevoegen tbv het plaatsen  van gebouwen
