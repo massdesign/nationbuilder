@@ -1,0 +1,197 @@
+GUI elements 
+
+Game Map
+
+* Het is mogelijk om op de gamemap tegels te selecteren.
+* Bij het selecteren van een tegel kan de gebruiker de volgende acties uitvoeren
+
+
+In het  context komt informatie over deze tile te staan. 
+ - Welk soort land het is.(Dit is alleen als de tile geindexeerd is door de speler)
+ - Welke resources zich bevinden in deze tile(Bovengrondse resources zoals hout,landbouwgrond,Steen,Zand) worden meegenomen tijdens de indexering
+ - Welke faciliteiten aanwezig zijn op deze tile, afhankelijk van de status van de tile. (Betrekkingen met de eigenaar spelen hier een rol)
+ 
+ 
+ 
+ *Partij
+ 
+ Een partij bestaat uit een gebruikersaccount. 
+ Een partij kan souvereigniteit hebben over een bepaald grondgebied en de bijhorende bevolking/faciliteiten
+ Een partij kan ondergeschikt zijn aan een hogere macht. 
+ Een partij kan lid zijn van een verbond van andere partijen
+ Een partij kan afstand doen van het grondgebied waarop het souvereigniteit uitoefend
+ 
+ 
+ 
+ *Indexering
+ 
+ - Een speler kan een gebied indexeren door er onderzoekers/ambassadeurs naartoe te sturen 
+ - Als het gebied bezit door een andere partij dan is dan kunnen er ambassadeurs naartoe gestuurd worden
+ 
+ 
+ *Ambassadeurs
+ 
+ Ambassadeurs kunnen naar een tile gestuurd worden die bezet is door een andere partij
+ Ambassadeurs kunnen alleen naar een tile gestuurd worden als deze tile inwoners of een vorm van representatie bevat
+ Afhankelijk van de faciliteiten die in de tile aanwezig zijn kunnen overeenkomsten afgesloten worden om een consulaat te openen/ambassade te openen, grond leasing overeen te komen
+ 
+ 
+ *Betrekkingen
+ 
+ *Grond leasing
+ 
+ Als een tile in het bezit van een partij is kan deze geleased worden door een andere partij. Betaling Voor grondleasing kan in de vorm van geld,grondstoffen of diensten gedaan worden
+ Er zijn twee soorten betalingen. Eenmalige betalingen in de vorm van grondstoffen,goederen of geld, of herhalende betalingen in de vorm van grondstoffen,goederen,geld of diensten 
+ Grond wordt altijd geleased vanaf een bepaalde periode tot een bepaalde periode. 
+ Ontbinding van het lease contract is alleen mogelijk in overeenstemming met de tegenpartij of het geval van een conflict tussen beide partijen. 
+ Bij ontbinding worden de overige dagen in rekening gebracht bij de rechtmatige eigenaar van de grond. Deze schuld wordt internationaal geregistreerd en kan alleen kwijtgescholden worden door de rechtmatige eigenaar van de grond.
+ De tegenpartij is niet verplicht dit bedrag gelijk terug te betalen, maar omdat het internationaal geregistreerd is kan het als drukmiddel gebruikt worden. 
+ 
+*Diensten
+
+Een partij kan diensten verlenen aan een andere partij. Onder diensten vallen, defensie,politie,douane,
+gebruik van infrastructuur van de andere partij,gebruik van territoriale wateren van de andere partij,ontheffingen voor export naar de partij
+
+*Staatsvorm
+
+Bij een partij horen een staatsvorm en grondsgebied. De volgende staatsvormen zijn mogelijk
+
+centrale eenheidsstaat
+decentrale eenheidsstaat
+centrale federatie
+decentrale federatie
+
+Centrale eenheidsstaat 
+
+Deze vorm zorgt ervoor dat alle macht uitsluitend bij de overheid ligt. Er kan voor gekozen worden om bepaalde zaken aan lagere overheden te delegeren, deze mogen ten alle tijde opgeheven worden
+
+In een centrale eenheidsstaat is het mogelijk om provincies te definieren
+
+
+
+
+*Staat
+
+Een staat is een grondgebied met bevolking die wordt gerepresenteerd door een partij. Een staat kan bestaan uit meerdere subeenheden,Er zijn standaard 3 lagen mogelijk, Hoofd,Sub,SubSub
+De partij kan zelf aangeven of de "staat" openstaat voor buitenstaanders. Er is ook een mogelijkheid onderverdelingen te maken zonder dat er andere partijen bij betrokken zijn 
+Omdat de staat een bestuurlijk onderdeel moet hebben moet een regeringszetel aangewezen worden. Dit kan gedaan worden door een parlements gebouw op een tile te bouwen. 
+
+*Provincie/deelstaat
+
+Een provincie is een partij die ondergeschikt is aan een grotere overheid. Afhankelijk van de verbondenheid mag de bovenliggende partij wijzigingen aanbrengen of de bestuurslaag opheffen
+Een provincie kan onafhankelijk bestuurd worden vanuit de centrale overheid.
+
+Een provincie bestaat uit een grondgebied. Alle acties in de provincie kunnen overruled worden door de "staat" De provincie is altijd ondergeschikt aan de staat
+
+Een provincie krijgt in principe een budget vanuit de centrale overheid. Met dit budget kunnen de volgende zaken geregeld worden
+
+Infrastructuur
+Bronontginning (Gas,Olie,Hout,Erts etc...)
+Industrie 
+
+Afhankelijk van het ingestelde percentage moet de provincie altijd belasting over zijn inkomsten afdragen aan de staat
+
+
+*Belasting 
+
+De staat kan belasting heffen per provincie of gemeenschap. Als deze onderverdeling niet aanwezig is dan kan er voor gekozen worden om rechtstreeks belasting te heffen
+
+Verschillende sectoren in de economie kunnen belast worden. De verschillende soorten zijn
+
+Fossiele brandstoffen
+Voedsel (Landbouw)
+Drank Sigaretten en andere verdovende middelen (Bier,Wijn Wiskey etc.. )
+Retail (Winkels) 
+
+*Militair
+
+Een partij kan beschikken over een militaire macht. Een militaire macht bestaat uit 4 hoofdonderdelen
+
+Luchtmacht
+Landmacht
+Special Forces
+Marine
+
+Een militaire macht wordt beschikbaar op het moment dat er een hoofdkwartier gebouwd wordt op een tile.
+
+Grondtroepen zijn beschikbaar Als er een basis gebouwd wordt op een tile. 
+De reatietijd vna je grondtroepen is afhankelijk van de afstand van de basis tot het conflict, afstand wordt in tiles gerekend
+Een basis heeft 3 formaten klein,middel en groot
+
+klein: tot 10.000 troepen en 150 pantservoertuigen
+middel: tot 40.000 troepen en 400 pantservoertuigen
+groot: tot 80.000 troepen en 800 pantservoertuigen
+
+basis kan uitgebreid worden met increments van 1000 
+
+Als een basis aangemaakt wordt dan moeten hier mensen op geplaatst worden. Afhankelijk van de grootte van de populatie van de staat en of dienstplicht verplicht is groeit dit per week
+
+Bij een verplichte dienstplicht groeit dit per week 
+
+Luchtmacht is beschikbaar als er een luchtmachtbasis gebouwd wordt. 
+
+klein: tot 25 vliegtuigen
+middel: tot 60 vliegtuigen
+groot: tot 150 vliegtuigen
+
+de kosten worden berekend aan de hand van een basis bedrag(klein,middel,groot) en daarbovenop per vliegtuig.
+
+
+Marine is beschikbaar als er een haven aan zee is gebouwd. 
+
+Een kleine haven kan kleine tot middelklasse schepen herbergen. 
+
+Een grote haven kan kleine tot en met mammuth klasse schepen herbergen
+
+Afhankelijk van het techlevel van de basis kost de basis meer of minder geld
+Een militaire basis wordt per maand in rekening gebracht 
+
+
+Schepen 
+Kleine schepen 
+
+Middel schepen
+
+Grote schepen
+
+Mammuth schepen
+
+
+Politie
+
+Infrastructuur
+
+Voor het transporteren van goederen en het bereikbaar maken van een faciliteit moeten er wegen gebouwd worden. 
+
+Wegen kunnen betaald worden door een andere partij(diensten) of simpelweg door de overheid van belastinggelden betaald worden.
+
+Als een weg betaald is door een andere partij blijft deze eigenaar van het grondgebied tenzij dit afgestaan wordt, de overheid kan altijd eigenaarschap opeisen
+
+Een weg kan ook betaald worden via tol, afhankelijk van het gebruik wordt het geld terugbetaald aan de partij die de weg heeft betaald 
+
+Infrastructuur kost om de 6 maanden geld om te onderhouden. Het uistellen van deze werkzaamheden zorgt voor slechtere doorvoer
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+
