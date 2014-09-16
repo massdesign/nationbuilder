@@ -5,5 +5,5 @@ package nationbuilder.lib.Ruby.Association.annotation;
  */
 public @interface OneToMany
 {
-	String mapidTo() default "";
+	String mapIdTo() default "";
 }

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Resource extends BaseRubyModel {
 
-    @OneToMany(mapidTo = "rtis")
+    @OneToMany(mapIdTo = "rtis")
     private List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
    // private ResourceType resourceType;
 	@OneToOne(mapIdTo = "tti")
