@@ -1,8 +1,9 @@
 NB-2: javascript refactor*
 NB-3: mapresources feature branch*
 NB-4: AngularJs integration with frontend to  represent resources datail*
-NB-5: Unit tests for the backend. 
-NB-6: Overall game design  
-NB-7: inzoomen,uitzoomen
-NB-8: importer off by one error bugfix
+NB-5: Unit tests for the backend 
+NB-6: Overall game design * 
+NB-7: inzoomen,uitzoomeni*
+NB-8: importer off by one error bugfixi*
+NB-9: Basic scrolling from left,right up and down 
 NB-11: Refactoren van de Javacode die interfaced met Ruby, daarnaast nog wat entities toevoegen tbv het plaatsen  van gebouwen
