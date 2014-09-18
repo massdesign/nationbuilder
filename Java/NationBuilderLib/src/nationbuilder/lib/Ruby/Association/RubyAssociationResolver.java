@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 import java.lang.reflect.Field;
@@ -18,10 +19,9 @@ import nationbuilder.lib.http.data.ID;
  */
 public class RubyAssociationResolver
 {
-	// TODO: someday we will implement this stuff..
-	public static RubyObjectHierarchy buildObjectTree(RubyModel model)
+	public static void AssignIds(RubyModel model) throws NotSavedEntityException
 	{
-		RubyObjectHierarchy result = new RubyObjectHierarchy();
+		//RubyObjectHierarchy result = new RubyObjectHierarchy();
 
 		if (model != null)
 		{
@@ -38,18 +38,19 @@ public class RubyAssociationResolver
 				mappedField = getMappedField(OneToMany.class, field, model);
 				if(mappedField != null)
 				{
-					HandleOneToManyRelation(mappedField,field);
+					HandleOneToManyRelation(mappedField,field,model);
+					continue;
 				}
 			}
 		}
 
-		return result;
+		//return result;
 	}
-	private static void HandleOneToManyRelation(Field mappedField,Field objectField)
+	private static void HandleOneToManyRelation(Field mappedField,Field objectField,RubyModel model)
 	{
 		try
 		{
-			Object fieldValue = objectField.get(objectField);
+			Object fieldValue = objectField.get(model);
 			List<RubyModel> rubyModels = new ArrayList<>();
 			if(fieldValue instanceof Collection)
 			{
@@ -65,13 +66,15 @@ public class RubyAssociationResolver
 				}
 
 			}
+
+		     mappedField.set(model,CreateIDsFromArrayList(rubyModels));
 		}
 		catch (IllegalAccessException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	private static void HandleOneToOneRelation(Field mappedField,RubyModel model,Field objectField)
+	private static void HandleOneToOneRelation(Field mappedField,RubyModel model,Field objectField) throws NotSavedEntityException
 	{
 		try
 		{
@@ -86,6 +89,10 @@ public class RubyAssociationResolver
 					if (fieldId != null)
 					{
 						mappedField.set(model, fieldId.getId());
+					}
+					else
+					{
+						throw  new NotSavedEntityException(castedFieldValue);
 					}
 
 				}

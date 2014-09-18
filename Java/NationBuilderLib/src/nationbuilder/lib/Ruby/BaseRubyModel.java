@@ -5,6 +5,7 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.RubyObjectHierarchy;
+import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
@@ -31,9 +32,14 @@ public class BaseRubyModel implements RubyModel {
 	@Override
 	public void FetchIDs()
 	{
-		RubyObjectHierarchy hierarchy = RubyAssociationResolver.buildObjectTree(this);
-
-
+		try
+		{
+			RubyAssociationResolver.AssignIds(this);
+		}
+		catch (NotSavedEntityException e)
+		{
+			Log.write(e,LogType.ERROR);
+		}
 	}
 
 	@Override

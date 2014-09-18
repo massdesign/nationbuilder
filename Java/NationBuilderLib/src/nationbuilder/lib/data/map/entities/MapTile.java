@@ -34,16 +34,6 @@ public class MapTile extends BaseRubyModel {
 		return  Integer.parseInt(this.image.getId().getId());
 	}
 
-/*
-	public void fetchIDs()
-	{
-		this.imd = Integer.parseInt(this.image.getId().getId());
-		this.lmd = Integer.parseInt(this.layer.getId().getId());
-        if(this.resource != null) {
-            this.rid = Integer.parseInt(this.resource.getId().getId());
-        }
-	}
-	*/
 	public MapImage getImage() {
 		return image;
 	}
