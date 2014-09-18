@@ -6,6 +6,7 @@ import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.RubyObjectHierarchy;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
+import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
@@ -52,7 +53,8 @@ public class BaseRubyModel implements RubyModel {
     {
         try {
            return context.SaveObject(this,ResourceUrl);
-        } catch (IOException e) {
+        }
+		catch (ObjectPersistanceFailedException e) {
             Log.write(ResourceUrl, LogType.ERROR);
         }
 

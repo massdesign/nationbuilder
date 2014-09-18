@@ -24,11 +24,11 @@ public class MapTile extends BaseRubyModel {
 		this.layer = layer;
 	}
 	// image id copied to local instance
-	private int imd;
+	private String imd;
 	// layer id copied to local instance
-	private int lmd;
+	private String lmd;
     // resource id copied to local instance
-    private int rid;
+    private String rid;
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());
