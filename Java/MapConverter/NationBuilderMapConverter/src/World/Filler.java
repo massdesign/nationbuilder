@@ -2,6 +2,8 @@ package World;
 
 import nationbuilder.lib.Ruby.BaseRubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.data.map.entities.Building;
+import nationbuilder.lib.data.map.entities.EnergyBuilding;
 import nationbuilder.lib.data.map.entities.ResourceType;
 import nationbuilder.lib.data.map.entities.TerrainType;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
@@ -47,7 +49,28 @@ public class Filler {
         this.rubyModels.add(createTerrainType("COAST"));
         this.rubyModels.add(createTerrainType("NONE"));
     }
+	private void fillBuildings()
+	{
+		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 1",400,"Nuclear"));
+		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 2", 1000, "Nuclear"));
+		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 3", 3550, "Nuclear"));
+		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 4", 6520, "Nuclear"));
+		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 5", 7100, "Nuclear"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 1", 30, "Natural gas"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 2", 100, "Natural gas"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 3", 250, "Natural gas"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 4", 450, "Natural gas"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 5", 682, "Natural gas"));
+		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 6", 782, "Natural gas"));
 
+	}
+	private EnergyBuilding createEnergyBuilding(String name,int outputinMW,String type)
+	{
+		EnergyBuilding result = new EnergyBuilding();
+		result.setName(name);
+		result.setPoweroutput(outputinMW);
+		return result;
+	}
     private TerrainType createTerrainType(String name)
     {
         TerrainType result = context.createRubyModel(TerrainType.class);
