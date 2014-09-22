@@ -27,6 +27,7 @@ public class Filler {
 
         fillTerrainTypes();
         fillResourceTypes();
+        fillBuildings();
 
         this.save();
     }
@@ -56,12 +57,28 @@ public class Filler {
 		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 3", 3550, "Nuclear"));
 		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 4", 6520, "Nuclear"));
 		this.rubyModels.add(createEnergyBuilding("Nuclear power plant MK 5", 7100, "Nuclear"));
-		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 1", 30, "Natural gas"));
+
+        this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 1", 30, "Natural gas"));
 		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 2", 100, "Natural gas"));
 		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 3", 250, "Natural gas"));
 		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 4", 450, "Natural gas"));
 		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 5", 682, "Natural gas"));
 		this.rubyModels.add(createEnergyBuilding("Gas Turbine Generator MK 6", 782, "Natural gas"));
+
+        this.rubyModels.add(createEnergyBuilding("Coal Power Station MK 1",800,"Coal"));
+        this.rubyModels.add(createEnergyBuilding("Coal Power Station MK 2",1600,"Coal"));
+        this.rubyModels.add(createEnergyBuilding("Coal Power Station MK 3",2000,"Coal"));
+        this.rubyModels.add(createEnergyBuilding("Coal Power Station MK 4",4000,"Coal"));
+        this.rubyModels.add(createEnergyBuilding("Coal Power Station MK 5",5600,"Coal"));
+
+        this.rubyModels.add(createEnergyBuilding("Biomass Power Station MK 1",100,"Biomass"));
+        this.rubyModels.add(createEnergyBuilding("Biomass Power Station MK 2",225,"Biomass"));
+        this.rubyModels.add(createEnergyBuilding("Biomass Power Station MK 3",450,"Biomass"));
+        this.rubyModels.add(createEnergyBuilding("Biomass Power Station MK 4",600,"Biomass"));
+        this.rubyModels.add(createEnergyBuilding("Biomass Power Station MK 5",760,"Biomass"));
+
+        this.rubyModels.add(createEnergyBuilding("Geothermal Power Station MK 1",))
+
 
 	}
 	private EnergyBuilding createEnergyBuilding(String name,int outputinMW,String type)
