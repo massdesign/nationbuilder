@@ -30,9 +30,11 @@ public class Main {
         RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
-        filler.Fill();
+        filler.testFill();
+        //filler.Fill();
 
-		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
+
+		/*TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
 		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/demo2.tmx");
 
@@ -41,7 +43,7 @@ public class Main {
 		MapDataset dataset = converter.GetMapDataset();
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
 		mapsServiceConnector.addDataset(dataset);
-
+        */
 
 	/*	RubyContext context = new RubyContextFactory().createRubyContext();
 		TerrainType terrainType1 = context.createRubyModel(TerrainType.class);

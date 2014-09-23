@@ -8,6 +8,9 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
 public class EnergyBuildingType extends BaseRubyModel
 {
 	private String name;
+    /**
+     * Power output is measures per game turn in megawatt
+     */
 	private int powerOutput;
 	private String energySource;
 

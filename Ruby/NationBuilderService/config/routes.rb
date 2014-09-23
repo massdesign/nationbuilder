@@ -2,6 +2,8 @@ NationBuilderMapsService::Application.routes.draw do
 
   resources :energy_buildings
 
+  resources :energy_building_types
+
     get ':controller(/:action(/:xposition)(/:yposition))' 
   resources :resources
 

@@ -1,0 +1,31 @@
+<h1>Listing energy_building_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Energysource</th>
+      <th>Poweroutput</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @energy_building_types.each do |energy_building_type| %>
+      <tr>
+        <td><%= energy_building_type.energySource %></td>
+        <td><%= energy_building_type.powerOutput %></td>
+        <td><%= energy_building_type.name %></td>
+        <td><%= link_to 'Show', energy_building_type %></td>
+        <td><%= link_to 'Edit', edit_energy_building_type_path(energy_building_type) %></td>
+        <td><%= link_to 'Destroy', energy_building_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Energy building type', new_energy_building_type_path %>

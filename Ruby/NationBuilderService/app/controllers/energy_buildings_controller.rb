@@ -1,6 +1,8 @@
 class EnergyBuildingsController < ApplicationController
   before_action :set_energy_building, only: [:show, :edit, :update, :destroy]
 
+  protect_from_forgery :secret => 'salty_phrase',
+                       :except => :create
   # GET /energy_buildings
   def index
     @energy_buildings = EnergyBuilding.all
@@ -22,13 +24,18 @@ class EnergyBuildingsController < ApplicationController
   # POST /energy_buildings
   def create
     @energy_building = EnergyBuilding.new(energy_building_params)
+    @energy_building_type = EnergyBuildingType.find(params[:btid])
 
+    @energy_building.energy_building_type = @energy_building_type
+    respond_to do |format|
       if @energy_building.save
-       format.html { redirect_to @energy_building, notice: 'Terraintype was successfully created.' }
-       format.json { render action: 'id', status: :created, location: @energy_building }
-     else
-       render action: 'new'
-     end
+        format.html { redirect_to @energy_building, notice: 'Energybuilding was successfully created.' }
+        format.json { render action: 'id', status: :created, location: @energy_building }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @energy_building.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /energy_buildings/1
@@ -54,6 +61,6 @@ class EnergyBuildingsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def energy_building_params
-      params.require(:energy_building).permit(:name, :poweroutput, :type)
+      params.require(:energy_building).permit(:name)
     end
 end

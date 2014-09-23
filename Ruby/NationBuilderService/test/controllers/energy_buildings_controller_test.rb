@@ -18,7 +18,7 @@ class EnergyBuildingsControllerTest < ActionController::TestCase
 
   test "should create energy_building" do
     assert_difference('EnergyBuilding.count') do
-      post :create, energy_building: { name: @energy_building.name, poweroutput: @energy_building.poweroutput, type: @energy_building.type }
+      post :create, energy_building: { name: @energy_building.name }
     end
 
     assert_redirected_to energy_building_path(assigns(:energy_building))
@@ -35,7 +35,7 @@ class EnergyBuildingsControllerTest < ActionController::TestCase
   end
 
   test "should update energy_building" do
-    patch :update, id: @energy_building, energy_building: { name: @energy_building.name, poweroutput: @energy_building.poweroutput, type: @energy_building.type }
+    patch :update, id: @energy_building, energy_building: { name: @energy_building.name }
     assert_redirected_to energy_building_path(assigns(:energy_building))
   end
 

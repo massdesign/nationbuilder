@@ -19,10 +19,7 @@ class TilesController < ApplicationController
   @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
   @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
   #@resource =	Resource.joins(:tiles).where(id: @tile.resource_id).take
-  
 
-  
-  
    respond_to do |format|
  		format.json { render action: 'find', status: :created, location: @resource }
 	 end

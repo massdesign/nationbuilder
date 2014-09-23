@@ -5,15 +5,5 @@
   <%= @energy_building.name %>
 </p>
 
-<p>
-  <strong>Poweroutput:</strong>
-  <%= @energy_building.poweroutput %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @energy_building.type %>
-</p>
-
 <%= link_to 'Edit', edit_energy_building_path(@energy_building) %> |
 <%= link_to 'Back', energy_buildings_path %>
