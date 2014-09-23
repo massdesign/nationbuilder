@@ -2,10 +2,7 @@ package World;
 
 import nationbuilder.lib.Ruby.BaseRubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.data.map.entities.EnergyBuilding;
-import nationbuilder.lib.data.map.entities.EnergyBuildingType;
-import nationbuilder.lib.data.map.entities.ResourceType;
-import nationbuilder.lib.data.map.entities.TerrainType;
+import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import java.util.ArrayList;
 
@@ -33,10 +30,12 @@ public class Filler {
 
 	public void testFill()
 	{
+        MapTile mt1 = createMapTile();
         EnergyBuildingType ebt1 =   createEnergyBuildingType("test plant",100,"Beer");
         EnergyBuilding eb1 = createEnergyBuilding("Ijssel centrale");
         eb1.setBuildingType(ebt1);
-
+        eb1.setLocatedOn(mt1);
+        mt1.Save("/tiles/");
         ebt1.Save("/energy_building_types");
         eb1.Save("/energy_buildings");
     }
@@ -85,9 +84,17 @@ public class Filler {
         this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 4", 600, "Biomass"));
         this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 5", 760, "Biomass"));
       //  this.rubyModels.add(createEnergyBuildingType("Geothermal Power Station MK 1",))
-
-
 	}
+    private MapTile createMapTile()
+    {
+        MapTile result = this.context.createRubyModel(MapTile.class);
+        result.setXoffset(1);
+        result.setYoffset(1);
+        result.setGidtag(2);
+        result.setYposition(3);
+        result.setXposition(4);
+        return result;
+    }
     private EnergyBuilding createEnergyBuilding(String name)
     {
         EnergyBuilding result = this.context.createRubyModel(EnergyBuilding.class);

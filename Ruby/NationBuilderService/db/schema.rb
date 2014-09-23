@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140923213955) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "energy_building_type_id"
+    t.integer  "tile_id"
   end
 
   create_table "images", force: true do |t|

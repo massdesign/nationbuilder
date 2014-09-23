@@ -21,30 +21,29 @@ public class RubyAssociationResolver
 {
 	public static void AssignIds(RubyModel model) throws NotSavedEntityException
 	{
-		//RubyObjectHierarchy result = new RubyObjectHierarchy();
 
 		if (model != null)
 		{
-			for (Field field : model.getClass().getDeclaredFields())
-			{
-				Field mappedField = null;
-				field.setAccessible(true);
-			    mappedField =	 getMappedField(OneToOne.class,field,model);
-				if(mappedField != null)
-				{
-					HandleOneToOneRelation(mappedField,model,field);
-					continue;
-				}
-				mappedField = getMappedField(OneToMany.class, field, model);
-				if(mappedField != null)
-				{
-					HandleOneToManyRelation(mappedField,field,model);
-					continue;
-				}
-			}
-		}
+            Class currentClass =  model.getClass();
 
-		//return result;
+            while(currentClass != null) {
+                for (Field field : currentClass.getDeclaredFields()) {
+                    Field mappedField = null;
+                    field.setAccessible(true);
+                    mappedField = getMappedField(OneToOne.class, field, currentClass);
+                    if (mappedField != null) {
+                        HandleOneToOneRelation(mappedField, model, field);
+                        continue;
+                    }
+                    mappedField = getMappedField(OneToMany.class, field, currentClass);
+                    if (mappedField != null) {
+                        HandleOneToManyRelation(mappedField, field, model);
+                        continue;
+                    }
+                }
+              currentClass =  currentClass.getSuperclass();
+            }
+		}
 	}
 	private static void HandleOneToManyRelation(Field mappedField,Field objectField,RubyModel model)
 	{
@@ -103,7 +102,7 @@ public class RubyAssociationResolver
 			e.printStackTrace();
 		}
 	}
-	private static Field getMappedField(Class annotationType,Field field,RubyModel model)
+	private static Field getMappedField(Class annotationType,Field field,Class currentClass)
 	{
 		Field result = null;
 		if(field.isAnnotationPresent(annotationType))
@@ -120,7 +119,8 @@ public class RubyAssociationResolver
 			}
 			try
 			{
-				result = model.getClass().getDeclaredField(fieldidentifier);
+				result = currentClass.getDeclaredField(fieldidentifier);
+
 			}
 			catch (NoSuchFieldException e)
 			{

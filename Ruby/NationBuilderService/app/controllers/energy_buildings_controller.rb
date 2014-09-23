@@ -24,9 +24,15 @@ class EnergyBuildingsController < ApplicationController
   # POST /energy_buildings
   def create
     @energy_building = EnergyBuilding.new(energy_building_params)
-    @energy_building_type = EnergyBuildingType.find(params[:btid])
 
-    @energy_building.energy_building_type = @energy_building_type
+    if params[:btid] != nil
+      @energy_building_type = EnergyBuildingType.find(params[:btid])
+      @energy_building.energy_building_type = @energy_building_type
+    end
+    if params[:loid] != nil
+      @tile = Tile.find(params[:loid])
+      @energy_building.tile = @tile
+    end
     respond_to do |format|
       if @energy_building.save
         format.html { redirect_to @energy_building, notice: 'Energybuilding was successfully created.' }

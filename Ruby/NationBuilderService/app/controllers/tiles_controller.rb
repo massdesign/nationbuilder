@@ -39,15 +39,22 @@ class TilesController < ApplicationController
 ActionController::Parameters.permit_all_parameters = true
     @tile = Tile.new(tile_params)
 
-    @image = Image.find(params[:imd])
-    @layer = Layer.find(params[:lmd])
-    if params[:rid] != 0
+    if params[:imd] != nil
+      @image = Image.find(params[:imd])
+      @image.tiles << @tile
+    end
+    if params[:lmd] != nil
+      @layer = Layer.find(params[:lmd])
+      @layer.tiles << @tile
+    end
+
+    if params[:rid] != nil
     	@resource = Resource.find(params[:rid])
 	   @resource.tiles << @tile
 	 end 
     #@tile.image = @image
-    @image.tiles << @tile 
-    @layer.tiles << @tile
+
+
     
 Rails.logger.debug "tile params: " + params[:imd].to_s
   
