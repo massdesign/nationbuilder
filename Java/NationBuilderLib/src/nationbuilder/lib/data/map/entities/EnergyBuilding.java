@@ -8,27 +8,9 @@ public class EnergyBuilding extends Building
 	/**
 	 * Power output is measures per game turn in megawatt
 	 */
-	private int poweroutput;
 	private String type;
-	public int getPowerload()
-	{
-		return powerload;
-	}
+	private EnergyBuildingType buildingType;
 
-	public void setPowerload(int powerload)
-	{
-		this.powerload = powerload;
-	}
-
-	public int getPoweroutput()
-	{
-		return poweroutput;
-	}
-
-	public void setPoweroutput(int poweroutput)
-	{
-		this.poweroutput = poweroutput;
-	}
 
 	public Connection getConnection()
 	{
@@ -40,16 +22,5 @@ public class EnergyBuilding extends Building
 		this.connection = connection;
 	}
 
-	public String getType()
-	{
-		return type;
-	}
-
-	public void setType(String type)
-	{
-		this.type = type;
-	}
-
-	private int powerload;
 	private Connection connection;
 }
