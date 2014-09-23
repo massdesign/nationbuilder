@@ -5,6 +5,8 @@ import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by patrick on 7/14/14.
@@ -13,10 +15,12 @@ public class Filler {
 
     private RubyContext context;
     private ArrayList<BaseRubyModel> rubyModels;
+    private List<EnergyBuildingType> energyBuildingTypes;
     public Filler(RubyContext context)
     {
         this.context = context;
         this.rubyModels = new ArrayList<BaseRubyModel>();
+        this.energyBuildingTypes = new ArrayList<>();
     }
 
     public void Fill()
@@ -24,6 +28,7 @@ public class Filler {
         fillTerrainTypes();
         fillResourceTypes();
         fillEnergyBuildingTypes();
+        fillEnergyBuildings();
 
         this.save();
     }
@@ -85,6 +90,11 @@ public class Filler {
         this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 5", 760, "Biomass"));
       //  this.rubyModels.add(createEnergyBuildingType("Geothermal Power Station MK 1",))
 	}
+    private void fillEnergyBuildings()
+    {
+        this.rubyModels.add(createEnergyBuilding("IjsselCentrale"));
+        this.rubyModels.add(createEnergyBuilding("MoerdijkCentrale"));
+    }
     private MapTile createMapTile()
     {
         MapTile result = this.context.createRubyModel(MapTile.class);
@@ -97,8 +107,14 @@ public class Filler {
     }
     private EnergyBuilding createEnergyBuilding(String name)
     {
+        Random rand = new Random();
+
+        int next = rand.nextInt(this.energyBuildingTypes.size()-1);
+
         EnergyBuilding result = this.context.createRubyModel(EnergyBuilding.class);
         result.setName(name);
+        result.setBuildingType(this.energyBuildingTypes.get(next));
+
         return result;
     }
 	private EnergyBuildingType createEnergyBuildingType(String name, int outputinMW, String energysource)
@@ -107,6 +123,7 @@ public class Filler {
 		result.setPowerOutput(outputinMW);
 		result.setName(name);
 		result.setEnergySource(energysource);
+        this.energyBuildingTypes.add(result);
 		return result;
 	}
     private TerrainType createTerrainType(String name)
@@ -128,6 +145,8 @@ public class Filler {
     {
         String resourceTypeUrl = "/resourcetypes";
         String terrainTypeUrl = "/terraintypes";
+        String energyBuildingTypeUrl = "/energy_building_types";
+        String energyBuildingUrl = "/energy_buildings";
         for(BaseRubyModel type : rubyModels)
         {
             // TODO: dit kan handiger.. als resourceURL weggerefactored is kan dit ook simpeler
@@ -138,6 +157,14 @@ public class Filler {
             else if(type instanceof  ResourceType)
             {
                 type.Save(resourceTypeUrl);
+            }
+            else if(type instanceof  EnergyBuildingType)
+            {
+                type.Save(energyBuildingTypeUrl);
+            }
+            else if(type instanceof EnergyBuilding)
+            {
+                type.Save(energyBuildingUrl);
             }
 
         }
