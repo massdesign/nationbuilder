@@ -1,6 +1,9 @@
 NationBuilderMapsService::Application.routes.draw do
 
-    get ':controller(/:action(/:xposition)(/:yposition))' 
+   # get ':controller(/:action(/:xposition)(/:yposition))' 
+  get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile' 
+  get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles' 
+    
   resources :resources
 
   resources :terraintypes
