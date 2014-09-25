@@ -80,10 +80,10 @@
             s.getImages(function(imagedata)
             {
                 map.setImageData(imagedata,data);
-                map.render();
+               	 map.render();
             });
 
-        });
+        },0,0,9,9);
 
     });
 
@@ -99,10 +99,10 @@
 
 </div>
 <div class="scrollcontrols">
-	<button type="button" class="scrollleftbutton">L</button>
-	<button type="button" class="scrollupbutton">U</button>
-	<button type="button" class="scrolldownbutton">D</button>
-	<button type="button" class="scrollrightbutton">R</button>
+	<button type="button" class="scrollleftbutton"  ng-click="scrollleft($event)" >L</button>
+	<button type="button" class="scrollupbutton"    ng-click="scrollup($event)">U</button>
+	<button type="button" class="scrolldownbutton"  ng-click="scrolldown($event)">D</button>
+	<button type="button" class="scrollrightbutton" ng-click="scrollright($event)">R</button>
 </div>
 <div id="container"></div>
 

@@ -15,9 +15,10 @@ function MapService() {
 			this._baseService.doGetRequest('/tiles',function() {  })
 	}
 	
-	this.getMap = function(callback) {	
-			
-			this._baseService.doGetRequest('/maps',callback);
+	this.getMap = function(callback,x,y,width,height) {	
+	
+	//alert('/maps/getscreen/' + x + '/'+ y +'/' + x+width + '/' + y+height)
+			this._baseService.doGetRequest('/maps/getscreen/' + x + '/'+ y +'/' + (x+width) + '/' + (y+height),callback);
 		}
 	this.getImages = function(callback) {
 		

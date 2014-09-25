@@ -25,7 +25,7 @@ public class Main {
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/demo.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
