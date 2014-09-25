@@ -17,7 +17,31 @@ class MapsController < ApplicationController
   # GET /maps/1.json
   def show
   end
+  # current getscreen supports only one map. If we need more we will implement this
+def getscreen
+  	 xposrange = params[:width]
+	 yposrange = params[:height]  	 
+  	 
+  	 
+  	 @maps = Map.includes([
+  	 {
+  	 :layers => [:tiles]
+  	 }
+  	 
+  	 
+  	 ]).where(:tiles => { :xposition => params[:centerpositionx]..xposrange,:yposition => params[:centerpositiony]..yposrange})
+  	 @layers = Layer.includes(:tiles).where(:tiles => { :xposition => params[:centerpositionx]..xposrange,:yposition => params[:centerpositiony]..yposrange}) #.select('*')#.where(tiles: {:xposition => 0})
+  	 #@layers = Layer.includes(:tiles).where(:tiles => { :xposition => params[:centerpositionx]..xposrange,:yposition => params[:centerpositiony]..yposrange})) #.select('*')#.where(tiles: {:xposition => 0})
+  	# @maps = Map.find(:all,:include => Layer.find(:all,:include =>	 Tile.find(:all)))
+  	 
+  	 
+  	 #@maps = Map.first(:select => @tiles)
 
+	 #@maps =  Map.joins(:layers).where(layers: @layers)
+  	 #@maps = Map.first #where(tiles: @tiles)
+    #@layers = Layer.where(tiles: @tiles)
+    #@maps = Map.where(layers: @layers)	 
+end
   # GET /maps/new
   def new
     @map = Map.new

@@ -17,7 +17,7 @@ class TilesController < ApplicationController
   	 xposrange = params[:width]
 	 yposrange = params[:height]  	 
   	 @tiles = Tile.find(:all,:conditions => 
-  	 { :xposition => params[:centerpositionx]..xposrange
+  	 { :xposition => params[:centerpositionx]..xposrange,
   	   :yposition => params[:centerpositiony]..yposrange
   	 })
   	 #@tiles = Tile.all.where(xposition: params[:centerpositionx],yposition: params[:centerpositiony])
