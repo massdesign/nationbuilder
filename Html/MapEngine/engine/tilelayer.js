@@ -34,8 +34,8 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			xposition = tile.xposition
-    			yposition = tile.yposition
+    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()
+    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()
     			image_id = tile.image_id
     			
    		        tilesize = this.parentMap.getRelativeTilesize();
@@ -102,7 +102,6 @@ function TileLayer(parentMap,loginstance)
               
                 if (imagesOK>=imUrlsLength) {
                 
-                   // start(currentContext,imgs,imagePos);
           		 for(var i=0;i<imgs.length;i++){
            			 var img=new Kinetic.Image({
                 	 x:imagePos[i][0]*currentContext.parentMap.getRelativeTilesize(),
