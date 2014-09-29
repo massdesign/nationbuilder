@@ -21,8 +21,7 @@ function TileLayer(parentMap,loginstance)
 			imagenames[imagedata[i].id] = imagedata[i].name     	  
     	}
         // TODO: sort layers
-        data = this._sort(data);
-    //    console.log(data[1].layer.zindex);
+       	 data = this._sort(data);
       //  console.log(data)
     	for(var i=0;i<data.length;i++) {
    		var tileLayer = data[i].layer;
@@ -35,8 +34,8 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			xposition = tile.xposition
-    			yposition = tile.yposition
+    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()
+    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()
     			image_id = tile.image_id
     			
    		        tilesize = this.parentMap.getRelativeTilesize();
@@ -52,27 +51,40 @@ function TileLayer(parentMap,loginstance)
 	}
     this._sort = function(data)
     {
+    		var failsafe = 200
         result = [];
         var currentIndex = 0;
+        var currentCounter = 0;
         var done =  false;
+        var indexfound = false
         while(!done) {
             for (var i = 0; i < data.length; i++) {
+     	
                 if(data[i].layer.zindex == currentIndex)
                 {
-                    console.log("found")
-                    result[currentIndex] = data[i];
+                    console.log("found currentIndex is: " + currentIndex)
+                    
+                    result[currentCounter] = data[i];
                     currentIndex++;
+                    currentCounter++;
+                    indexfound = true
                 }
             }
             if(result.length == data.length) {
                 console.log("done")
                 done = true
             }
-
-
+            else  {
+            	
+            		if(!indexfound) {
+            			console.log("skipping index: " + currentIndex)
+            			currentIndex++; 
+            			indexfound  = false 
+            		}						          
+            }
         }
-        console.log(result)
         return result;
+       
     }
 
 	this.loadAllImages =   function(imgs,imagePos,imageURLs){
@@ -90,7 +102,6 @@ function TileLayer(parentMap,loginstance)
               
                 if (imagesOK>=imUrlsLength) {
                 
-                   // start(currentContext,imgs,imagePos);
           		 for(var i=0;i<imgs.length;i++){
            			 var img=new Kinetic.Image({
                 	 x:imagePos[i][0]*currentContext.parentMap.getRelativeTilesize(),

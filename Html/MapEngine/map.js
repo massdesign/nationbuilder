@@ -88,6 +88,7 @@ function Map(javascript_console,applicationName)
         }
 
     }
+    this
     this.zoomOut = function()
     {
         if(this._zoomlevel != 1) {

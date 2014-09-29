@@ -1,11 +1,11 @@
 NB-2: javascript refactor*
 NB-3: mapresources feature branch*
-NB-4: AngularJs integration with frontend to  represent resources datail*
+NB-4: AngularJs integration with frontend to represent resources datail*
 NB-5: Unit tests for the backend 
 NB-6: Overall game design * 
 NB-7: inzoomen,uitzoomeni*
 NB-8: importer off by one error bugfixi*
-NB-9: Basic scrolling from left,right up and down 
+NB-9: Basic scrolling from left,right up and down* 
 NB-10: Gebruikerslogin. Het Mogelijk maken om een account aan te maken binnen nationbuilder
 NB-11: Refactoren van de Javacode die interfaced met Ruby(fetchIDs wegrefactored uitde pojos), daarnaast nog wat entities toevoegen tbv het plaatsen van gebouwen(eerste opzet)
 NB-12: problemen en inconssstensies fixen in de json response van de verschillende ruby controllers.. alles veranderen naar prefixloze json. 
@@ -14,11 +14,6 @@ NB-14: Performance problemen met scrollen oplossen
 NB-15: Basic caching mechanisme implementeren voor json calls in de python client
 NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop
 NB-17: Javascript map.js verplaatsen en refactoren van angularjs controller en dode code opruimen 
-
-
-A
-A
-A
-NB-18: 
-
-
+NB-18: De basis van de mapgenerator, mapgenerator moet een map kunnen genereren van een willekeurige grootte met alleen maar zeewater erin 
+NB-19: Optimize the filler to keep track of changes to speed up the process of filleing, also make bulk import possible
+NB-11: do lazy loading of the map tiles, to increase performance
