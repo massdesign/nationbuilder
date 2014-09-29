@@ -9,3 +9,16 @@ NB-9: Basic scrolling from left,right up and down
 NB-10: Gebruikerslogin. Het Mogelijk maken om een account aan te maken binnen nationbuilder
 NB-11: Refactoren van de Javacode die interfaced met Ruby(fetchIDs wegrefactored uitde pojos), daarnaast nog wat entities toevoegen tbv het plaatsen van gebouwen(eerste opzet)
 NB-12: problemen en inconssstensies fixen in de json response van de verschillende ruby controllers.. alles veranderen naar prefixloze json. 
+NB-13: Connections beschikbaar maken in de tiled editor en map maken met verbinding tussen 2 energybuildings en dit ook tonen in mapengine 
+NB-14: Performance problemen met scrollen oplossen
+NB-15: Basic caching mechanisme implementeren voor json calls in de python client
+NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop
+NB-17: Javascript map.js verplaatsen en refactoren van angularjs controller en dode code opruimen 
+
+
+A
+A
+A
+NB-18: 
+
+
