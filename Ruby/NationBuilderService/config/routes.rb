@@ -1,8 +1,10 @@
 NationBuilderMapsService::Application.routes.draw do
 
    # get ':controller(/:action(/:xposition)(/:yposition))' 
+  resources :energy_buildings
 
-    
+  resources :energy_building_types
+
   resources :resources
 
   resources :terraintypes

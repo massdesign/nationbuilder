@@ -9,6 +9,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
@@ -37,14 +38,14 @@ public class MapServiceConnector {
 		this.jsonServiceConnector = new JsonServiceConnector(location);
         this.context = context;
 	}
-
+/*
 	public void addTile(MapTile tile)
 	{
 		try
 		{
 			Gson gson = new Gson();
 
-			tile.fetchIDs();
+			//tile.fetchIDs();
 			HttpData data = this.jsonServiceConnector.postObject(tile, "/tiles/");
 
 		    ID resultObject =	gson.fromJson(data.getBody(), ID.class);
@@ -54,35 +55,38 @@ public class MapServiceConnector {
 		{
 			e.printStackTrace();
 		}
-	}
+	}*/
     public void addMap(MapMap map)
     {
 
-        try {
-            context.SaveObject(map,"/maps/");
-        } catch (IOException e) {
-            Log.write(e, LogType.ERROR);
-        }
+        try
+		{
+			context.SaveObject(map, "/maps/");
 
-    }
+		}
+		catch (ObjectPersistanceFailedException e)
+		{
+			Log.write(e, LogType.ERROR);
+		}
+
+	}
     public void addResource(Resource resource)
     {
-        resource.fetchIDs();
         try
         {
             context.SaveObject(resource,"/resources/");
         }
-        catch (IOException e)
+		catch (ObjectPersistanceFailedException e)
         {
             Log.write(e,LogType.ERROR);
         }
     }
 	public void addLayer(MapLayer layer)
 	{
-		layer.fetchIDs();
         try {
-            context.SaveObject(layer,"/layers/");
-        } catch (IOException e) {
+            context.SaveObject(layer, "/layers/");
+        }
+		catch (ObjectPersistanceFailedException e) {
             Log.write(e,LogType.ERROR);
         }
 	}
@@ -118,7 +122,14 @@ public class MapServiceConnector {
 
 		for(MapTile tile : dataset.getMapTiles())
 		{
-			this.addTile(tile);
+			try
+			{
+				context.SaveObject(tile,"/tiles/");
+			}
+			catch (ObjectPersistanceFailedException e)
+			{
+				Log.write(e,LogType.ERROR);
+			}
 		}
 
 
@@ -126,7 +137,7 @@ public class MapServiceConnector {
 	public void addImage(MapImage image)
 	{
 			image.getImageFile();
-			image.fetchIDs();
+			//image.fetchIDs();
             image.Save("/images/");
             image.getImageFile().Save("/uploads/");
 	}

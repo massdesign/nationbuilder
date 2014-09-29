@@ -11,6 +11,7 @@ import java.io.Serializable;
 public interface RubyModel extends Saveable,Serializable {
     public ID getId();
     public void setId(ID id);
+	public void FetchIDs();
     public void setRubyContext(RubyContext context);
 
 }

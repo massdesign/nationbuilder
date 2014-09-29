@@ -1,0 +1,2 @@
+module EnergyBuildingsHelper
+end

@@ -1,8 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
-import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.http.data.ID;
 
 public class MapTile extends BaseRubyModel {
 
@@ -12,8 +11,11 @@ public class MapTile extends BaseRubyModel {
     private int gidtag;
 	private int xoffset;
 	private int yoffset;
+	@OneToOne(mapIdTo = "imd")
 	private MapImage image;
+	@OneToOne(mapIdTo = "lmd")
 	private MapLayer layer;
+	@OneToOne(mapIdTo = "rid")
     private Resource resource;
 	public MapLayer getLayer() {
 		return layer;
@@ -22,23 +24,16 @@ public class MapTile extends BaseRubyModel {
 		this.layer = layer;
 	}
 	// image id copied to local instance
-	private int imd;
+	private String imd;
 	// layer id copied to local instance
-	private int lmd;
+	private String lmd;
     // resource id copied to local instance
-    private int rid;
+    private String rid;
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());
 	}
-	public void fetchIDs()
-	{
-		this.imd = Integer.parseInt(this.image.getId().getId());
-		this.lmd = Integer.parseInt(this.layer.getId().getId());
-        if(this.resource != null) {
-            this.rid = Integer.parseInt(this.resource.getId().getId());
-        }
-	}
+
 	public MapImage getImage() {
 		return image;
 	}

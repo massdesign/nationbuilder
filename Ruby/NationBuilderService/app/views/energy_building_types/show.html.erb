@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Energysource:</strong>
+  <%= @energy_building_type.energySource %>
+</p>
+
+<p>
+  <strong>Poweroutput:</strong>
+  <%= @energy_building_type.powerOutput %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @energy_building_type.name %>
+</p>
+
+<%= link_to 'Edit', edit_energy_building_type_path(@energy_building_type) %> |
+<%= link_to 'Back', energy_building_types_path %>

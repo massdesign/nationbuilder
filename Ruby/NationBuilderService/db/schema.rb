@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725225550) do
+ActiveRecord::Schema.define(version: 20140923213955) do
+
+  create_table "energy_building_types", force: true do |t|
+    t.string   "energySource"
+    t.integer  "powerOutput"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "energy_buildings", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "energy_building_type_id"
+    t.integer  "tile_id"
+  end
 
   create_table "images", force: true do |t|
     t.integer  "map_id"

@@ -3,6 +3,7 @@ package nationbuilder.lib.Ruby;
 import com.google.gson.Gson;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
@@ -56,11 +57,22 @@ public class RubyContext {
         return null;
     }
 
-    public boolean SaveObject(RubyModel object,String resourceUrl) throws IOException {
+    public boolean SaveObject(RubyModel object,String resourceUrl) throws ObjectPersistanceFailedException
+	{
         Gson gson = new Gson();
-        HttpData data =  this.rubyService.postObject(object,resourceUrl);
+		object.FetchIDs();
+		HttpData data = null;
+		try
+		{
+			data = this.rubyService.postObject(object,resourceUrl);
+		}
+		catch (IOException e)
+		{
+			throw new ObjectPersistanceFailedException(object,e);
 
-        ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
+		}
+
+		ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
         resultObject.setType(object.getClass().getName());
         object.setId(resultObject);
 

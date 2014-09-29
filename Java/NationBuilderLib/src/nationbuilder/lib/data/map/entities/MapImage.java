@@ -2,10 +2,8 @@ package nationbuilder.lib.data.map.entities;
 
 import java.io.File;
 
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
-import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.http.data.ID;
-
 
 public class MapImage extends BaseRubyModel {
 		
@@ -17,8 +15,13 @@ public class MapImage extends BaseRubyModel {
 				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile;
 	}
 	private String url;
+	private String mid;
+
+	@OneToOne(mapIdTo = "mid")
+	private MapMap map;
 	private String name;
 	private int width;
+
 	private int height;
 	private int firstGid;
 	private int lastGid;
@@ -34,18 +37,12 @@ public class MapImage extends BaseRubyModel {
         this.map = map;
     }
 
-    private MapMap map;
+
 	
 	public MapImage()
 	{
 	}
 
-    public void fetchIDs()
-    {
-        this.mid = Integer.parseInt(this.getMap().getId().getId());
-    }
-    private int mid;
-	
 	public MapImageFile getImageFile() {
 		return imageFile;
 	}

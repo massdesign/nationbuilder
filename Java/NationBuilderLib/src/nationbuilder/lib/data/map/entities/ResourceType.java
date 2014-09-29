@@ -12,6 +12,16 @@ public class ResourceType extends BaseRubyModel {
     private boolean regenerating;
     private RESOURCELOCATION location;
 
+	public ResourceType()
+	{
+
+	}
+	public ResourceType(String name,boolean regenerating,RESOURCELOCATION location)
+	{
+		this.name = name;
+		this.regenerating = regenerating;
+		this.location = location;
+	}
 
     public String getName() {
         return name;

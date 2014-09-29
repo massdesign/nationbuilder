@@ -9,7 +9,6 @@ apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb9
 add-apt-repository 'deb http://mirror.stshosting.co.uk/mariadb/repo/10.0/ubuntu trusty main'
 
 apt-get update
-<<<<<<< HEAD
 apt-get install mariadb-server
 
 
@@ -23,6 +22,4 @@ rvm install 1.9.3
 rvm use 1.9.3 --default
 rvm rubygems current
 gem install rails
-=======
 apt-get install mariadb-server
->>>>>>> NB-6
