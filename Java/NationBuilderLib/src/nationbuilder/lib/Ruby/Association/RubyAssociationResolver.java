@@ -50,7 +50,7 @@ public class RubyAssociationResolver
 		try
 		{
 			Object fieldValue = objectField.get(model);
-			List<RubyModel> rubyModels = new ArrayList<>();
+			List<RubyModel> rubyModels = new ArrayList<RubyModel>();
 			if(fieldValue instanceof Collection)
 			{
 

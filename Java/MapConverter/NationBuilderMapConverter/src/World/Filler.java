@@ -20,7 +20,7 @@ public class Filler {
     {
         this.context = context;
         this.rubyModels = new ArrayList<BaseRubyModel>();
-        this.energyBuildingTypes = new ArrayList<>();
+        this.energyBuildingTypes = new ArrayList<EnergyBuildingType>();
     }
 
     public void Fill()

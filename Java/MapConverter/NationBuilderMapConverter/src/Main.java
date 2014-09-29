@@ -34,16 +34,15 @@ public class Main {
         filler.Fill();
 
 
-		/*TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
+		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/demo2.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
 		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
 		mapsServiceConnector.addDataset(dataset);
-        */
 
 	/*	RubyContext context = new RubyContextFactory().createRubyContext();
 		TerrainType terrainType1 = context.createRubyModel(TerrainType.class);
@@ -57,7 +56,6 @@ public class Main {
 		MapTile mapTile1 = context.createRubyModel(MapTile.class);
 		MapMap map1 = context.createRubyModel(MapMap.class);
 		mapImage1.setMap(map1);
-
 
 		context.SaveObject(terrainType1,"/terraintypes/");
 		context.SaveObject(resourceType1, "/resourcetypes");

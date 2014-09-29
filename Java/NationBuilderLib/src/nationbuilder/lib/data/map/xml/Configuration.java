@@ -3,5 +3,5 @@ package nationbuilder.lib.data.map.xml;
 public class Configuration {
 
 	
-	public static String ImageHomeDir = "/home/patrick/Thuis/Git/nationbuilder/Tiled/TileSets";
+	public static String ImageHomeDir = "/home/patrick/Git/nationbuilder/Tiled/TileSets";
 }
