@@ -12,7 +12,19 @@ class MapsController < ApplicationController
     #@maps.layers.tiles.joins(:image)
     #@maps.layers
   end
+  def create
+    @map = Map.new(map_params)
 
+    respond_to do |format|
+      if @map.save
+        format.html { redirect_to @map, notice: 'Map was successfully created.' }
+        format.json { render action: 'id', status: :created, location: @map }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @map.errors, status: :unprocessable_entity }
+      end
+    end
+  end
   # GET /maps/1
   # GET /maps/1.json
   def show
@@ -40,19 +52,7 @@ end
 
   # POST /maps
   # POST /maps.json
-  def create
-    @map = Map.new(map_params)
 
-    respond_to do |format|
-      if @map.save
-        format.html { redirect_to @map, notice: 'Map was successfully created.' }
-        format.json { render action: 'id', status: :created, location: @map }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @map.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /maps/1
   # PATCH/PUT /maps/1.json

@@ -1,0 +1,7 @@
+when faced with mysql client problems when running rake. do the following
+
+sudo gem uninstall mysql2
+bundle install
+
+this will install the correct mysql client
+
