@@ -5,8 +5,10 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.RubyObjectHierarchy;
+import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
@@ -49,13 +51,17 @@ public class BaseRubyModel implements RubyModel {
     }
 
     @Override
-    public boolean Save(String ResourceUrl)
-    {
+    public boolean Save(String ResourceUrl) throws RubyException
+	{
+		if (context == null)
+		{
+			throw new NoAttachedRubyContextException(this);
+		}
         try {
            return context.SaveObject(this,ResourceUrl);
         }
-		catch (ObjectPersistanceFailedException e) {
-            Log.write(ResourceUrl, LogType.ERROR);
+		catch (RubyException e) {
+            Log.write(ResourceUrl + " " + e.getMessage(), LogType.ERROR);
         }
 
         return false;

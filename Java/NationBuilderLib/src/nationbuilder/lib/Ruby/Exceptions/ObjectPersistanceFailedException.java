@@ -5,7 +5,7 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 /**
  * Created by patrick on 9/18/14.
  */
-public class ObjectPersistanceFailedException extends Exception
+public class ObjectPersistanceFailedException extends RubyException
 {
 	public ObjectPersistanceFailedException(RubyModel model,Exception ex)
 	{

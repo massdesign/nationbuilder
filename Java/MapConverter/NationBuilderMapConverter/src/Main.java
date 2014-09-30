@@ -15,6 +15,7 @@ import nationbuilder.lib.data.map.entities.ResourceType;
 import nationbuilder.lib.data.map.entities.TerrainType;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
+import nationbuilder.lib.data.map.xml.Configuration;
 import nationbuilder.lib.data.map.xml.Image;
 import nationbuilder.lib.data.map.xml.Property;
 import nationbuilder.lib.data.map.xml.Tile;
@@ -30,19 +31,16 @@ public class Main {
         RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
-       // filler.testFill();
-        filler.Fill();
+        filler.testFill();
+      //  filler.Fill();
 
-
-		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
-
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo_small.tmx");
-
-		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
-		converter.Convert();
-		MapDataset dataset = converter.GetMapDataset();
-		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
-		mapsServiceConnector.addDataset(dataset);
+		//TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
+		//	TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
+		//TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
+		//converter.Convert();
+	//	MapDataset dataset = converter.GetMapDataset();
+	///	MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
+	//	mapsServiceConnector.addDataset(dataset);
 
 	/*	RubyContext context = new RubyContextFactory().createRubyContext();
 		TerrainType terrainType1 = context.createRubyModel(TerrainType.class);

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Screenname:</strong>
+  <%= @user.screenname %>
+</p>
+
+<p>
+  <strong>Loginname:</strong>
+  <%= @user.loginname %>
+</p>
+
+<p>
+  <strong>Passwordhash:</strong>
+  <%= @user.passwordhash %>
+</p>
+
+<p>
+  <strong>Registerdate:</strong>
+  <%= @user.registerdate %>
+</p>
+
+<p>
+  <strong>Emailadres:</strong>
+  <%= @user.emailadres %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

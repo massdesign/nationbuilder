@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923213955) do
+ActiveRecord::Schema.define(version: 20140930153927) do
+
+  create_table "destroys", force: true do |t|
+    t.string   "Users"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "energy_building_types", force: true do |t|
     t.string   "energySource"
@@ -92,6 +98,16 @@ ActiveRecord::Schema.define(version: 20140923213955) do
     t.integer  "layer_id"
     t.integer  "image_id"
     t.integer  "resource_id"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "screenname"
+    t.string   "loginname"
+    t.string   "passwordhash"
+    t.string   "registerdate"
+    t.string   "emailadres"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

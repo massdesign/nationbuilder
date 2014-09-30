@@ -1,7 +1,14 @@
 package World;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.Secure.PasswordHash;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import java.util.ArrayList;
@@ -27,15 +34,17 @@ public class Filler {
     {
         fillTerrainTypes();
         fillResourceTypes();
-        fillEnergyBuildingTypes();
-        fillEnergyBuildings();
 
+
+		fillEnergyBuildingTypes();
+		fillUsers();
+		fillEnergyBuildings();
         this.save();
     }
 
 	public void testFill()
 	{
-        MapTile mt1 = createMapTile();
+      /*  MapTile mt1 = createMapTile();
         EnergyBuildingType ebt1 =   createEnergyBuildingType("test plant",100,"Beer");
         EnergyBuilding eb1 = createEnergyBuilding("Ijssel centrale");
         eb1.setBuildingType(ebt1);
@@ -43,7 +52,22 @@ public class Filler {
         mt1.Save("/tiles/");
         ebt1.Save("/energy_building_types");
         eb1.Save("/energy_buildings");
-    }
+        */
+		User u1 = createUser("test","test","test");
+		try
+		{
+			u1.Save("/users/");
+		}
+		catch (RubyException e)
+		{
+			Log.write(e,LogType.ERROR);
+		}
+	}
+
+	private void fillUsers()
+	{
+		this.rubyModels.add(createUser("test","Henk de tester","test"));
+	}
     private void fillResourceTypes()
     {
         this.rubyModels.add(createResourceType("Oil", false, RESOURCELOCATION.SUBTERRAINIAN));
@@ -95,6 +119,28 @@ public class Filler {
         this.rubyModels.add(createEnergyBuilding("IjsselCentrale"));
         this.rubyModels.add(createEnergyBuilding("MoerdijkCentrale"));
     }
+
+
+	private User createUser(String loginName,String screenName,String password)
+	{
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		User result = this.context.createRubyModel(User.class);
+		result.setLoginname(loginName);
+		result.setScreenname(screenName);
+		result.setEmailadres("henk@henk.nl");
+		result.setRegisterdate(dateFormat.format(cal.getTime()));
+		try
+		{
+			result.setPaswordhash(PasswordHash.createHash(password));
+		}
+		catch (Exception ex)
+		{
+			Log.write(ex, LogType.ERROR);
+		}
+		return result;
+
+	}
     private MapTile createMapTile()
     {
         MapTile result = this.context.createRubyModel(MapTile.class);
@@ -149,23 +195,30 @@ public class Filler {
         String energyBuildingUrl = "/energy_buildings";
         for(BaseRubyModel type : rubyModels)
         {
-            // TODO: dit kan handiger.. als resourceURL weggerefactored is kan dit ook simpeler
-            if(type instanceof  TerrainType)
-            {
-                type.Save(terrainTypeUrl);
-            }
-            else if(type instanceof  ResourceType)
-            {
-                type.Save(resourceTypeUrl);
-            }
-            else if(type instanceof  EnergyBuildingType)
-            {
-                type.Save(energyBuildingTypeUrl);
-            }
-            else if(type instanceof EnergyBuilding)
-            {
-                type.Save(energyBuildingUrl);
-            }
+			try
+			{
+				// TODO: dit kan handiger.. als resourceURL weggerefactored is kan dit ook simpeler
+				if (type instanceof TerrainType)
+				{
+					type.Save(terrainTypeUrl);
+				}
+				else if (type instanceof ResourceType)
+				{
+					type.Save(resourceTypeUrl);
+				}
+				else if (type instanceof EnergyBuildingType)
+				{
+					type.Save(energyBuildingTypeUrl);
+				}
+				else if (type instanceof EnergyBuilding)
+				{
+					type.Save(energyBuildingUrl);
+				}
+			}
+			catch (RubyException ex)
+			{
+				Log.write(ex,LogType.ERROR);
+			}
 
         }
 
