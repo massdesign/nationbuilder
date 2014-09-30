@@ -16,4 +16,3 @@ NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop
 NB-17: Javascript map.js verplaatsen en refactoren van angularjs controller en dode code opruimen 
 NB-18: De basis van de mapgenerator, mapgenerator moet een map kunnen genereren van een willekeurige grootte met alleen maar zeewater erin 
 NB-19: Optimize the filler to keep track of changes to speed up the process of filleing, also make bulk import possible
-NB-11: do lazy loading of the map tiles, to increase performance
