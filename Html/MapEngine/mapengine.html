@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en" ng-app="nationbuilderApp">
 <head>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen" />
     <script type="text/JavaScript" src="lib/jquery-1.11.0.js"></script>
     <script type="text/JavaScript" src="services/baseservice.js"></script>
     <script type="text/Javascript" src="services/mapservice.js"></script>
@@ -14,59 +15,6 @@
     <script type="text/JavaScript" src="engine/selectlayer.js"></script>
     <script type="text/javascript" src="map.js"></script>
     <script type="text/JavaScript" src="controllers/controllers.js"></script>
-    <style>
-
-        .zoomcontrols {
-            position: relative;
-            left:322px;
-            bottom: -40px;
-            width:20px;
-        }
-        .scrollcontrols {
-       	position: relative;
-       	width:100px;
-       	height:45px;
-       	bottom: 40px;
-        }
-        .zoombutton {
-            width:20px;
-            height: 20px;
-        }
-        .scrollupbutton {
-			 position: absolute;
-			 top:1px;      
-			 left:33px;  
-			 left:
-        }
-        .scrolldownbutton {
-			 position: absolute;
-			 bottom:1px;        
-			 left: 33px;
-			 
-        }
-        .scrollrightbutton {
-			
-			position:absolute;
-			right:1px;       
-			top:15px;
-        }
-        .scrollleftbutton {
-			  position:  absolute;
-			  left:1px;  
-			  top:15px;      
-        }
-        .map
-        .relative {
-            position: relative;
-            float:right;
-        }
-        .absolute {
-            position: relative;
-            top:400px;
-        }
-
-
-    </style>
 </head>
 <script>
     javascript_console = console;
@@ -94,10 +42,6 @@
 <label>Welcome: {{userData.screenname}} </label><br/>
 <label>State: {{userData.state.name}}</label>
 </div>
-<div>
-    <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
-    <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
-</div>
 <div class="zoomcontrols">
     <button type="button" class="zoombutton" ng-click="zoomIn($event)">+</button>
     <button type="button" class="zoombutton" ng-click="zoomOut($event)">-</button>
@@ -109,14 +53,61 @@
 	<button type="button" class="scrolldownbutton"  ng-click="scrolldown($event)">D</button>
 	<button type="button" class="scrollrightbutton" ng-click="scrollright($event)">R</button>
 </div>
+
 <div id="container"></div>
 
-<div>
-    <ul>
-        <li ng-repeat="resource in mapData.clickedTile.resourcetypes">
-            {{resource.resourcetype.name}}
+
+<div class="tileinfo" >
+<ul class="tabs">
+        <li>
+          <input type="radio" checked name="tabs" id="tab1">
+          <label for="tab1">tab 1</label>
+          <div id="tab-content1" class="tab-content animated fadeIn">
+    			<label>X: {{mapData.clickedTile.tiles[0].tile.xposition}}</label>
+    			<label>Y: {{mapData.clickedTile.tiles[0].tile.yposition}}</label>
+          </div>
         </li>
-    </ul>
+        <li>
+          <input type="radio" name="tabs" id="tab2">
+          <label for="tab2">tab 2</label>
+          <div id="tab-content2" class="tab-content animated fadeIn">
+
+  				  <ul>
+        			<li ng-repeat="resource in mapData.clickedTile.resourcetypes">
+            		{{resource.resourcetype.name}}
+        			</li>
+    			 </ul>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab3">
+          <label for="tab3">tab 3</label>
+          <div id="tab-content3" class="tab-content animated fadeIn">
+            ...
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab4">
+          <label for="tab4">tab 4</label>
+          <div id="tab-content3" class="tab-content animated fadeIn">
+            ...
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab5">
+          <label for="tab5">tab 5</label>
+          <div id="tab-content3" class="tab-content animated fadeIn">
+            ...
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab6">
+          <label for="tab6">tab 6</label>
+          <div id="tab-content3" class="tab-content animated fadeIn">
+            ...
+          </div>
+        </li>
+</ul>
 </div>
 
 </div>
