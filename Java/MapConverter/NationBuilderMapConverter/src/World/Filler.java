@@ -23,21 +23,23 @@ public class Filler {
     private RubyContext context;
     private ArrayList<BaseRubyModel> rubyModels;
     private List<EnergyBuildingType> energyBuildingTypes;
+	private UserFiller userFiller;
     public Filler(RubyContext context)
     {
         this.context = context;
         this.rubyModels = new ArrayList<BaseRubyModel>();
         this.energyBuildingTypes = new ArrayList<EnergyBuildingType>();
+		this.userFiller = new UserFiller(context);
     }
 
     public void Fill()
     {
+		userFiller.Fill();
         fillTerrainTypes();
         fillResourceTypes();
 
 
 		fillEnergyBuildingTypes();
-		fillUsers();
 		fillEnergyBuildings();
         this.save();
     }
@@ -53,7 +55,7 @@ public class Filler {
         ebt1.Save("/energy_building_types");
         eb1.Save("/energy_buildings");
         */
-		User u1 = createUser("test","test","test");
+		User u1 = userFiller.createUser("test","test","test");
 		try
 		{
 			u1.Save("/users/");
@@ -64,10 +66,7 @@ public class Filler {
 		}
 	}
 
-	private void fillUsers()
-	{
-		this.rubyModels.add(createUser("test","Henk de tester","test"));
-	}
+
     private void fillResourceTypes()
     {
         this.rubyModels.add(createResourceType("Oil", false, RESOURCELOCATION.SUBTERRAINIAN));
@@ -121,7 +120,7 @@ public class Filler {
     }
 
 
-	private User createUser(String loginName,String screenName,String password)
+	/*private User createUser(String loginName,String screenName,String password)
 	{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
@@ -140,7 +139,7 @@ public class Filler {
 		}
 		return result;
 
-	}
+	}*/
     private MapTile createMapTile()
     {
         MapTile result = this.context.createRubyModel(MapTile.class);

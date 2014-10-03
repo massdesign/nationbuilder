@@ -4,6 +4,7 @@ package nationbuilder.lib.data.map.entities;
  * Created by patrick on 9/18/14.
  */
 
+import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 /**
@@ -12,5 +13,6 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
 public class GameEntity extends BaseRubyModel
 {
 	private String name;
+	@IgnoreInRails
 	private User ruledBy;
 }

@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 /**
@@ -7,8 +8,14 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
  */
 public class User extends BaseRubyModel
 {
+
+
+	@OneToOne(mapIdTo = "ge")
+	private GameEntity gameEntity;
+
 	private String screenname;
 
+	private String ge;
 	private String loginname;
 
 	private String paswordhash;
@@ -65,6 +72,16 @@ public class User extends BaseRubyModel
 	public void setRegisterdate(String registerdate)
 	{
 		this.registerdate = registerdate;
+	}
+
+	public GameEntity getGameEntity()
+	{
+		return gameEntity;
+	}
+
+	public void setGameEntity(GameEntity gameEntity)
+	{
+		this.gameEntity = gameEntity;
 	}
 
 
