@@ -5,6 +5,7 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.RubyObjectHierarchy;
+import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
@@ -18,8 +19,10 @@ import java.io.IOException;
  * Created by patrick on 7/8/14.
  */
 public class BaseRubyModel implements RubyModel {
+	@IgnoreInRails
     private ID id;
     @Expose
+	@IgnoreInRails
     protected RubyContext context;
     @Override
     public ID getId() {

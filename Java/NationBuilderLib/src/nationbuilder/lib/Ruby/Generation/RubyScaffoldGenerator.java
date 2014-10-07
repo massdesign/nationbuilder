@@ -126,6 +126,7 @@ public class RubyScaffoldGenerator
 	{
 		return cpCommand +  " /tmp/" + rablidfilename + " " + createRablIdFilePath(clazz);
 	}
+	// TODO: all english words ending with y need also to be converted to ie
 	private String pluralize(String s)
 	{
 		return s + "s";
@@ -134,7 +135,13 @@ public class RubyScaffoldGenerator
 	{
 		List<String> result = new ArrayList<>();
 
-		Field[] fields = clazz.getDeclaredFields();
+
+
+
+		Class<?> superclass = clazz;
+		do {
+
+			Field[] fields = superclass.getDeclaredFields();
 		for(int i=0;i<fields.length;i++)
 		{
 			if(!fields[i].isAnnotationPresent(IgnoreInRails.class))
@@ -146,6 +153,8 @@ public class RubyScaffoldGenerator
 			}
 
 		}
+			superclass = superclass.getSuperclass();
+		}while(superclass != null);
 		return result;
 	}
 	private String getRubyType(String type)

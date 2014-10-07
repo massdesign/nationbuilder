@@ -1,5 +1,9 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :currencies
+
+  resources :states
+
   resources :users
 
    # get ':controller(/:action(/:xposition)(/:yposition))' 

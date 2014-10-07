@@ -8,7 +8,9 @@ import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
  */
 public class State extends GameEntity
 {
+	@IgnoreInRails
 	private String cur;
+	@IgnoreInRails
 	private String reg;
 	@ManyToOne(mapIdTo = "cur")
 	@IgnoreInRails

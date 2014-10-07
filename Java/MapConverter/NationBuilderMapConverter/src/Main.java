@@ -25,10 +25,10 @@ import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-        //RubyContext context = new RubyContextFactory().createRubyContext();
+        RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
-        //Filler filler = new Filler(context);
-        //filler.testFill();
+        Filler filler = new Filler(context);
+        filler.testFill();
       //  filler.Fill();
 
 		//TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();

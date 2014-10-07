@@ -50,6 +50,26 @@ public class Filler {
 
 	public void testFill()
 	{
+
+		State state = context.createRubyModel(State.class);
+
+		Currency currency = context.createRubyModel(Currency.class);
+		currency.setName("Gulden");
+		currency.setConvertable(true);
+		state.setMotto("Voor volk en vaderland");
+		state.setName("Nederland");
+		//state.setCurrency(currency);
+
+		try
+		{
+			currency.Save("/currencies/");
+			state.Save("/states/");
+		}
+		catch (RubyException e)
+		{
+			Log.write(e, LogType.ERROR);
+		}
+
       /*  MapTile mt1 = createMapTile();
         EnergyBuildingType ebt1 =   createEnergyBuildingType("test plant",100,"Beer");
         EnergyBuilding eb1 = createEnergyBuilding("Ijssel centrale");
@@ -59,7 +79,7 @@ public class Filler {
         ebt1.Save("/energy_building_types");
         eb1.Save("/energy_buildings");
         */
-		User u1 = userFiller.createUser("test","test","test");
+		/*User u1 = userFiller.createUser("test","test","test");
 		try
 		{
 			u1.Save("/users/");
@@ -67,7 +87,7 @@ public class Filler {
 		catch (RubyException e)
 		{
 			Log.write(e,LogType.ERROR);
-		}
+		}*/
 	}
 
 

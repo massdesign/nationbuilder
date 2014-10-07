@@ -11,10 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930153927) do
+ActiveRecord::Schema.define(version: 20141007134946) do
 
-  create_table "destroys", force: true do |t|
-    t.string   "Users"
+  create_table "currencies", force: true do |t|
+    t.string   "name"
+    t.string   "status"
+    t.string   "convertable"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,6 +81,13 @@ ActiveRecord::Schema.define(version: 20140930153927) do
     t.string   "name"
     t.string   "location"
     t.boolean  "regenerating"
+  end
+
+  create_table "states", force: true do |t|
+    t.string   "motto"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "terraintypes", force: true do |t|

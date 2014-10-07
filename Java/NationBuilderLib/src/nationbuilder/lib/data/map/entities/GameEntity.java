@@ -12,7 +12,29 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
  */
 public class GameEntity extends BaseRubyModel
 {
+
 	private String name;
+
 	@IgnoreInRails
 	private User ruledBy;
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
+	public User getRuledBy()
+	{
+		return ruledBy;
+	}
+
+	public void setRuledBy(User ruledBy)
+	{
+		this.ruledBy = ruledBy;
+	}
+
 }
