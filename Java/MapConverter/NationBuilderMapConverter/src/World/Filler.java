@@ -22,14 +22,20 @@ public class Filler {
 
     private RubyContext context;
     private ArrayList<BaseRubyModel> rubyModels;
-    private List<EnergyBuildingType> energyBuildingTypes;
+
 	private UserFiller userFiller;
+	private RegimeFiller regimeFiller;
+	private ReligionFiller religionFiller;
+	private EnergyBuildingFiller energyBuildingFiller;
     public Filler(RubyContext context)
     {
         this.context = context;
         this.rubyModels = new ArrayList<BaseRubyModel>();
-        this.energyBuildingTypes = new ArrayList<EnergyBuildingType>();
+
 		this.userFiller = new UserFiller(context);
+		this.regimeFiller = new RegimeFiller(context);
+		this.religionFiller = new ReligionFiller(context);
+		this.energyBuildingFiller = new EnergyBuildingFiller(context);
     }
 
     public void Fill()
@@ -39,8 +45,6 @@ public class Filler {
         fillResourceTypes();
 
 
-		fillEnergyBuildingTypes();
-		fillEnergyBuildings();
         this.save();
     }
 
@@ -86,38 +90,6 @@ public class Filler {
         this.rubyModels.add(createTerrainType("COAST"));
         this.rubyModels.add(createTerrainType("NONE"));
     }
-	private void fillEnergyBuildingTypes()
-	{
-		this.rubyModels.add(createEnergyBuildingType("Nuclear power plant MK 1", 400, "Nuclear"));
-		this.rubyModels.add(createEnergyBuildingType("Nuclear power plant MK 2", 1000, "Nuclear"));
-		this.rubyModels.add(createEnergyBuildingType("Nuclear power plant MK 3", 3550, "Nuclear"));
-		this.rubyModels.add(createEnergyBuildingType("Nuclear power plant MK 4", 6520, "Nuclear"));
-		this.rubyModels.add(createEnergyBuildingType("Nuclear power plant MK 5", 7100, "Nuclear"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 1", 30, "Natural gas"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 2", 100, "Natural gas"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 3", 250, "Natural gas"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 4", 450, "Natural gas"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 5", 682, "Natural gas"));
-		this.rubyModels.add(createEnergyBuildingType("Gas Turbine Generator MK 6", 782, "Natural gas"));
-
-        this.rubyModels.add(createEnergyBuildingType("Coal Power Station MK 1", 800, "Coal"));
-        this.rubyModels.add(createEnergyBuildingType("Coal Power Station MK 2", 1600, "Coal"));
-        this.rubyModels.add(createEnergyBuildingType("Coal Power Station MK 3", 2000, "Coal"));
-        this.rubyModels.add(createEnergyBuildingType("Coal Power Station MK 4", 4000, "Coal"));
-        this.rubyModels.add(createEnergyBuildingType("Coal Power Station MK 5", 5600, "Coal"));
-
-        this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 1", 100, "Biomass"));
-        this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 2", 225, "Biomass"));
-        this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 3", 450, "Biomass"));
-        this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 4", 600, "Biomass"));
-        this.rubyModels.add(createEnergyBuildingType("Biomass Power Station MK 5", 760, "Biomass"));
-      //  this.rubyModels.add(createEnergyBuildingType("Geothermal Power Station MK 1",))
-	}
-    private void fillEnergyBuildings()
-    {
-        this.rubyModels.add(createEnergyBuilding("IjsselCentrale"));
-        this.rubyModels.add(createEnergyBuilding("MoerdijkCentrale"));
-    }
 
 
 	/*private User createUser(String loginName,String screenName,String password)
@@ -150,27 +122,7 @@ public class Filler {
         result.setXposition(4);
         return result;
     }
-    private EnergyBuilding createEnergyBuilding(String name)
-    {
-        Random rand = new Random();
 
-        int next = rand.nextInt(this.energyBuildingTypes.size()-1);
-
-        EnergyBuilding result = this.context.createRubyModel(EnergyBuilding.class);
-        result.setName(name);
-        result.setBuildingType(this.energyBuildingTypes.get(next));
-
-        return result;
-    }
-	private EnergyBuildingType createEnergyBuildingType(String name, int outputinMW, String energysource)
-	{
-		EnergyBuildingType result = this.context.createRubyModel(EnergyBuildingType.class);
-		result.setPowerOutput(outputinMW);
-		result.setName(name);
-		result.setEnergySource(energysource);
-        this.energyBuildingTypes.add(result);
-		return result;
-	}
     private TerrainType createTerrainType(String name)
     {
         TerrainType result = context.createRubyModel(TerrainType.class);

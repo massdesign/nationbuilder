@@ -7,7 +7,7 @@ import nationbuilder.lib.Ruby.RubyContext;
 /**
  * Created by patrick on 10/1/14.
  */
-public class BaseFiller
+public abstract class BaseFiller
 {
 	private RubyContext context;
 
@@ -38,4 +38,6 @@ public class BaseFiller
 	{
 		this.rubyModels = rubyModels;
 	}
+
+	public abstract void Fill();
 }
