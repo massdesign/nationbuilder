@@ -1,7 +1,11 @@
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 import World.Filler;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
@@ -21,11 +25,16 @@ import nationbuilder.lib.data.map.xml.Property;
 import nationbuilder.lib.data.map.xml.Tile;
 import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
+import nationbuilder.lib.http.HttpRequest;
+
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-        RubyContext context = new RubyContextFactory().createRubyContext();
+		//HttpRequest.sendPostRequest("http://localhost	:8090/ZCD/gws/recieve","testje","text/xml");
+
+
+       // RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
         filler.testFill();
