@@ -25,7 +25,9 @@ class StatesController < ApplicationController
   def create
     @state = State.new(state_params)
     if params[:cur] != nil
-    @currency = Currency.find(param[:cur])
+    @currency = Currency.find(params[:cur])
+    
+    @currency.states << @state
     end
       respond_to do |format|
       if @state.save

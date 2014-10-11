@@ -52,19 +52,30 @@ public class Filler {
 	{
 
 		State state = context.createRubyModel(State.class);
-
 		Currency currency = context.createRubyModel(Currency.class);
+		User user = context.createRubyModel(User.class);
+
+		user.setEmailadres("patrickekkel@gmail.com");
+		user.setLoginname("Patrick");
+		user.setPaswordhash("nab");
+		user.setScreenname("Dictator of the Soviet State of the Netherlands");
+
 		currency.setName("Gulden");
 		currency.setConvertable(true);
 		state.setMotto("Voor volk en vaderland");
 		state.setName("Nederland");
         state.setCurrency(currency);
+
+		user.setGameEntity(state);
+		//state.setRuledBy(user);
+
 		//state.setCurrency(currency);
 
 		try
 		{
 			currency.Save("/currencies/");
 			state.Save("/states/");
+			user.Save("/users/");
 		}
 		catch (RubyException e)
 		{

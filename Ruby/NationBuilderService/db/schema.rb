@@ -86,8 +86,10 @@ ActiveRecord::Schema.define(version: 20141007134946) do
   create_table "states", force: true do |t|
     t.string   "motto"
     t.string   "name"
+    t.string   "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "user_id"
   end
 
   create_table "terraintypes", force: true do |t|

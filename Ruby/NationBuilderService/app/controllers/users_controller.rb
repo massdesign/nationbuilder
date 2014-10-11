@@ -23,6 +23,10 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    if params[:ge] != nil
+  	 	@state = State.find(params[:ge])
+    	@user.state = @state
+    end
    respond_to do |format|
 		if @user.save
 			format.json { render action: 'id', status: :created, location: @user }
@@ -56,6 +60,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:screenname, :loginname, :passwordhash, :registerdate, :emailadres)
+      params.require(:user).permit(:screenname, :loginname, :passwordhash, :registerdate, :emailadres,:ge)
     end
 end

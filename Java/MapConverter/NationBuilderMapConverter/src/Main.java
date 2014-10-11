@@ -35,7 +35,7 @@ public class Main {
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
         filler.testFill();
-        filler.Fill();
+        //	filler.Fill();
 
 		//TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 		//	TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
