@@ -24,7 +24,9 @@ class StatesController < ApplicationController
   # POST /states
   def create
     @state = State.new(state_params)
-
+    if params[:cur] != nil
+    @currency = Currency.find(param[:cur])
+    end
       respond_to do |format|
       if @state.save
         format.html { redirect_to @state, notice: 'Image was successfully created.' }

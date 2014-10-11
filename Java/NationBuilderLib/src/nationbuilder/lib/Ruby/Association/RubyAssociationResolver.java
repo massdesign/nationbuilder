@@ -4,6 +4,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
@@ -109,10 +111,15 @@ public class RubyAssociationResolver
 		{
 			Annotation annotationInstance = field.getAnnotation(annotationType);
 			String fieldidentifier = "";
+            // OneToOne and many to one relationships are threated as the same at the moment.. in the future this may change
 			if(annotationInstance instanceof OneToOne)
 			{
 			  fieldidentifier =	((OneToOne)annotationInstance).mapIdTo();
 			}
+            else if(annotationInstance instanceof ManyToOne)
+            {
+                fieldidentifier = ((ManyToOne) annotationInstance).mapIdTo();
+            }
 			else if(annotationInstance instanceof OneToMany)
 			{
 				fieldidentifier =  ((OneToMany)annotationInstance).mapIdTo();

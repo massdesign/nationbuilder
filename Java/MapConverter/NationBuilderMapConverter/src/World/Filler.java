@@ -58,6 +58,7 @@ public class Filler {
 		currency.setConvertable(true);
 		state.setMotto("Voor volk en vaderland");
 		state.setName("Nederland");
+        state.setCurrency(currency);
 		//state.setCurrency(currency);
 
 		try

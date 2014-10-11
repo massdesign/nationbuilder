@@ -31,14 +31,11 @@ import nationbuilder.lib.http.HttpRequest;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-		//HttpRequest.sendPostRequest("http://localhost	:8090/ZCD/gws/recieve","testje","text/xml");
-
-
-       // RubyContext context = new RubyContextFactory().createRubyContext();
+        RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
         Filler filler = new Filler(context);
         filler.testFill();
-      //  filler.Fill();
+        filler.Fill();
 
 		//TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 		//	TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
