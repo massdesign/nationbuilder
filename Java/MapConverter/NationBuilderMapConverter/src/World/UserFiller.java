@@ -7,6 +7,8 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Secure.PasswordHash;
+import nationbuilder.lib.data.map.entities.Currency;
+import nationbuilder.lib.data.map.entities.State;
 import nationbuilder.lib.data.map.entities.User;
 
 /**
@@ -36,13 +38,45 @@ public class UserFiller extends BaseFiller
 		{
 			Log.write(ex, LogType.ERROR);
 		}
+
+
+
 		return result;
 
 	}
+	public Currency createCurrency(String name)
+	{
+		Currency result = this.getContext().createRubyModel(Currency.class);
+		result.setName(name);
+
+		return  result;
+	}
+	public State createState(String name)
+	{
+		State result = this.getContext().createRubyModel(State.class);
+
+		result.setName(name);
+		result.setMotto("Kill em all!");
+		return  result;
+	}
+
 	@Override
 	public void Fill()
 	{
-		this.getRubyModels().add(createUser("test", "Henk de tester", "test"));
-	}
+		User user1 = createUser("test", "Henk de tester", "test");
+		User user2 = createUser("patrick","Patrick de player","Test1234");
+		Currency currency1 = createCurrency("Dollar");
+		State state1 = createState("Soviet Netherlands");
+		State state2 = createState("New Germany");
+		state1.setCurrency(currency1);
+		state2.setCurrency(currency1);
+		user1.setGameEntity(state1);
+		user2.setGameEntity(state2);
 
+		this.getRubyModels().add(user1);
+		this.getRubyModels().add(user2);
+		this.getRubyModels().add(currency1);
+		this.getRubyModels().add(state1);
+		this.getRubyModels().add(state2);
+	}
 }

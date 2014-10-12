@@ -41,10 +41,9 @@ public class Filler {
     public void Fill()
     {
 		userFiller.Fill();
+       	// TODO: refactor these models also in the new BaseFiller model
         fillTerrainTypes();
         fillResourceTypes();
-
-
         this.save();
     }
 
@@ -123,27 +122,6 @@ public class Filler {
         this.rubyModels.add(createTerrainType("NONE"));
     }
 
-
-	/*private User createUser(String loginName,String screenName,String password)
-	{
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar cal = Calendar.getInstance();
-		User result = this.context.createRubyModel(User.class);
-		result.setLoginname(loginName);
-		result.setScreenname(screenName);
-		result.setEmailadres("henk@henk.nl");
-		result.setRegisterdate(dateFormat.format(cal.getTime()));
-		try
-		{
-			result.setPaswordhash(PasswordHash.createHash(password));
-		}
-		catch (Exception ex)
-		{
-			Log.write(ex, LogType.ERROR);
-		}
-		return result;
-
-	}*/
     private MapTile createMapTile()
     {
         MapTile result = this.context.createRubyModel(MapTile.class);
@@ -172,6 +150,12 @@ public class Filler {
     }
     private void save()
     {
+
+		this.userFiller.Save(Currency.class,"/currencies/");
+		this.userFiller.Save(State.class,"/states/");
+		this.userFiller.Save(User.class,"/users/");
+
+
         String resourceTypeUrl = "/resourcetypes";
         String terrainTypeUrl = "/terraintypes";
         String energyBuildingTypeUrl = "/energy_building_types";
