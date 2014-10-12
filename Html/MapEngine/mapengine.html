@@ -2,6 +2,8 @@
 <html lang="en" ng-app="nationbuilderApp">
 <head>
 <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+<!-- https://github.com/yahoo/pure/releases/tag/v0.5.0   -->
+<link rel="stylesheet" type="text/css" href="pure-min.css">
     <script type="text/JavaScript" src="lib/jquery-1.11.0.js"></script>
     <script type="text/JavaScript" src="services/baseservice.js"></script>
     <script type="text/Javascript" src="services/mapservice.js"></script>
@@ -42,71 +44,72 @@
 <label>Welcome: {{userData.screenname}} </label><br/>
 <label>State: {{userData.state.name}}</label>
 </div>
+
+
+    			<!-- <ul>
+        			<li ng-repeat="resource in mapData.clickedTile.resourcetypes">
+            		{{resource.resourcetype.name}}
+        			</li>
+    			 </ul> -->
 <div class="zoomcontrols">
     <button type="button" class="zoombutton" ng-click="zoomIn($event)">+</button>
     <button type="button" class="zoombutton" ng-click="zoomOut($event)">-</button>
 
 </div>
+  
+
 <div class="scrollcontrols">
 	<button type="button" class="scrollleftbutton"  ng-click="scrollleft($event)" >L</button>
 	<button type="button" class="scrollupbutton"    ng-click="scrollup($event)">U</button>
 	<button type="button" class="scrolldownbutton"  ng-click="scrolldown($event)">D</button>
 	<button type="button" class="scrollrightbutton" ng-click="scrollright($event)">R</button>
 </div>
-
+<div class="selectedinfo">
+ <b><label>Selected Object Info:</label></b><br/>
+ <label>X: {{mapData.clickedTile.tiles[0].tile.xposition}}</label> <label>Y: {{mapData.clickedTile.tiles[0].tile.yposition}}</label><br/>	
+ <label>Owner: ? </label><br/>
+ <label>Type: ? </label><br/><br/>
+ &nbsp;<button title="Available actions" ng-click="availableactions($event)" class="pure-button">A</button>
+</div>
 <div id="container"></div>
 
-
+<!--  TODO: tileinfo nog even hernoemen naar iets anders... want het is geen tileinfo meer -->
 <div class="tileinfo" >
 <ul class="tabs">
         <li>
           <input type="radio" checked name="tabs" id="tab1">
-          <label for="tab1">tab 1</label>
+          <label for="tab1" title="">Military</label>
           <div id="tab-content1" class="tab-content animated fadeIn">
-    			<label>X: {{mapData.clickedTile.tiles[0].tile.xposition}}</label>
-    			<label>Y: {{mapData.clickedTile.tiles[0].tile.yposition}}</label>
+			  <button class="pure-button" title="Deploy forward  base">DFB</button><br/>
+			  <button class="pure-button" title="Lay claim on territory">LCT</button>
           </div>
         </li>
         <li>
           <input type="radio" name="tabs" id="tab2">
-          <label for="tab2">tab 2</label>
+          <label for="tab2" title="">Civilian</label>
           <div id="tab-content2" class="tab-content animated fadeIn">
-
-  				  <ul>
-        			<li ng-repeat="resource in mapData.clickedTile.resourcetypes">
-            		{{resource.resourcetype.name}}
-        			</li>
-    			 </ul>
           </div>
         </li>
         <li>
           <input type="radio" name="tabs" id="tab3">
-          <label for="tab3">tab 3</label>
+          <label for="tab3">Industry</label>
           <div id="tab-content3" class="tab-content animated fadeIn">
-            ...
+            <button class="pure-button" title="Steel industry">SI</button><br/>
           </div>
         </li>
         <li>
           <input type="radio" name="tabs" id="tab4">
-          <label for="tab4">tab 4</label>
+          <label for="tab4">Government</label>
           <div id="tab-content3" class="tab-content animated fadeIn">
             ...
           </div>
         </li>
         <li>
           <input type="radio" name="tabs" id="tab5">
-          <label for="tab5">tab 5</label>
+          <label for="tab5">Special</label>
           <div id="tab-content3" class="tab-content animated fadeIn">
             ...
           </div>
-        </li>
-        <li>
-          <input type="radio" name="tabs" id="tab6">
-          <label for="tab6">tab 6</label>
-          <div id="tab-content3" class="tab-content animated fadeIn">
-            ...
-          </div>
-        </li>
 </ul>
 </div>
 

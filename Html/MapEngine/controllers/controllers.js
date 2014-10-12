@@ -37,6 +37,10 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
     
+    $scope.availableactions  = function(event)   {
+    	console.log("bladiebloe")
+    }
+    
     $scope._scroll = function(x,y,width,height) {
     	
  		  map.getMapData().setviewportPosition(x,y);

@@ -1,8 +1,16 @@
 
+		  .selectedinfo  { 
+		  		position:relative;
+		  		left:375px;
+		  		width:190px;
+		  		height: 150px;
+		  		bottom: 20px;
+		  		background-color: #F3F4F6
+		  }
         .zoomcontrols {
             position: relative;
             left:322px;
-            bottom: -85px;
+            bottom: -184px;
             width:20px;
         }
         .scrollcontrols {
@@ -11,13 +19,14 @@
        	height:45px;
        	bottom: 40px;
         }
+        
         .tileinfo { 
 			position:relative;
 			left:370px;        
-			width:490px;
+			width:535px;
 			top:-400px;
-			height: 400px;
-			background-color: #2E8B57;
+			height: 320px;
+			background-color: #EBF1FF;
         }
         
         .zoombutton {
