@@ -19,23 +19,32 @@ class Cacheservice:
         print("MapsService started")
 
     def saveFile(self, filename, data):
-        print("File saved: " + self.cachedir + "/" + filename)
-        with open(self.cachedir + "/" + filename, 'wb') as out_file:
-            for chunk in data.iter_content(1024):
-                out_file.write(chunk)
+    	 filepath = self.cachedir + "/" + filename
+    	 f = open(filepath,'w')
+    	 f.write(data)
+    	 f.close()
 
     def saveImagePNG(self, filename, image):
         filepath = self.cachedir + "/" + filename
         log.loginfo("writing file: " + filepath)
         image.save(self.cachedir + "/" + filename, "png")
-
+    def isRequestInCache(self,request):
+    	if request:
+    		request = request.replace('/','_');
+    		print(request)
+    		return  self.isFileInCache(request)
+    	else:
+    		return True
     def isFileInCache(self, filename):
         return os.path.isfile(self.fullpath + "/" + self.cachedir + "/" + filename)
 
     def getImageFile(self, filename):
         filepath = self.cachedir + "/" + filename
         return Image.open(filepath)
-
+    def getRequest(self,request):
+    	filepath = self.cachedir + "/" + request
+    	f = open(filepath,'r')
+    	return f.read()
     def getFilePath(self, filename):
         return self.cachedir + "/" + filename
 

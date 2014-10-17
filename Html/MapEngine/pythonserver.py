@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import http.server
 import socketserver
+from urllib.request import urlopen
 from localMapService import mapservice
 from localMapService import cacheservice
 from localMapService import tileset
@@ -38,9 +39,27 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 	 		return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 		else:
-			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+			protocol  = "http"
+			dbserver = "localhost:3000"
+			dbrequest = protocol + "://" + dbserver + self.path
+			cservice = cacheservice.Cacheservice()
+			content = ""
+			if not cservice.isRequestInCache(self.path):
+			 html = urlopen(dbrequest)
+			 content = html.read()
+			 cservice.saveFile(self.path.replace('/','_'),content.decode())
+
+			else:
+				content = cservice.getRequest(self.path.replace('/','_'))
+				content = bytes(content,'utf-8')
+
+			self.send_response(200)
+			self.send_header("Content-type", "text/html")
+			self.send_header("Content-length", len(content))
+			self.end_headers()
+			self.wfile.write(content)
 
 Handler = MyRequestHandler
-server = socketserver.TCPServer(('0.0.0.0', 8083), Handler)
+server = socketserver.TCPServer(('0.0.0.0', 8085), Handler)
 
 server.serve_forever()
