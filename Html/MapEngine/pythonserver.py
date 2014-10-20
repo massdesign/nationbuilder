@@ -17,7 +17,7 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			image = 'nan'
 			if not cservice.isFileInCache("ts_" + element['name']):
 				image = mservice.getImageFile(element['url'])
-				cservice.saveFile("ts_" + element['name'],image)
+				cservice.saveBinaryFile("ts_" + element['name'],image)
 			else:
 				image = cservice.getImageFile("ts_" + element['name'])	
 
@@ -44,22 +44,27 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			dbrequest = protocol + "://" + dbserver + self.path
 			cservice = cacheservice.Cacheservice()
 			content = ""
+			if self.path.endswith("js") or ("ncache" in self.path):
+				print("non cacheable resource requested")
+				return http.server.SimpleHTTPRequestHandler.do_GET(self)
+            
 			if not cservice.isRequestInCache(self.path):
+			 print("resource not found in cache")
 			 html = urlopen(dbrequest)
 			 content = html.read()
-			 cservice.saveFile(self.path.replace('/','_'),content.decode())
+			 cservice.saveStringFile(self.path.replace('/','_'),content.decode())
 
 			else:
 				content = cservice.getRequest(self.path.replace('/','_'))
 				content = bytes(content,'utf-8')
 
 			self.send_response(200)
-			self.send_header("Content-type", "text/html")
+			self.send_header("Content-type", "application/json")
 			self.send_header("Content-length", len(content))
 			self.end_headers()
 			self.wfile.write(content)
 
 Handler = MyRequestHandler
-server = socketserver.TCPServer(('0.0.0.0', 8085), Handler)
+server = socketserver.TCPServer(('0.0.0.0', 8083), Handler)
 
 server.serve_forever()

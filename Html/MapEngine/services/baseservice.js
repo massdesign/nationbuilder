@@ -4,12 +4,11 @@ function BaseService() {
 
 //this._server = "192.168.1.6";
 this._server = "localhost";
-this._port = "3000"
+this._port = "8083"
 this.doGetRequest = function(path,callback) {
                 $.ajax({
                     type: 'GET',
-                    url: 'http://' + this._server +  ':' + this._port +   path + '.json?callback=?',
-                    dataType: 'jsonp',
+                    url: 'http://' + this._server +  ':' + this._port +   path + ".json",
                     success: callback,
                     error : function(xhr, status, error) 
                      { 
@@ -17,7 +16,6 @@ this.doGetRequest = function(path,callback) {
   							 alert(error);
 
                      },
-                    jsonp: 'json'
                 });
              }
 }
