@@ -1,7 +1,7 @@
 NB-2: javascript refactor*
 NB-3: mapresources feature branch*
 NB-4: AngularJs integration with frontend to represent resources datail*
-NB-5: Unit tests for the backend 
+NB-5: Opzet voor unittests in de backend, hierbij de Tiles entity alvast uitwerken 
 NB-6: Overall game design * 
 NB-7: inzoomen,uitzoomeni*
 NB-8: importer off by one error bugfixi*
