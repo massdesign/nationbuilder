@@ -1,8 +1,12 @@
 import java.util.List;
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.Tile;
+import nationbuilder.lib.http.HttpRequest;
+import nationbuilder.lib.http.data.HttpData;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -10,18 +14,24 @@ import org.junit.Test;
  */
 public class BackedTilesTest
 {
+	RubyContext context;
+	@Before
+	public void setup()
+	{
+		context  =new RubyContextFactory().createRubyContext();
+		HttpData resultCode = HttpRequest.sendGetRequest("http://locahlost:8085/resetdb");
+		if(resultCode.getResponseCode() == 200)
+		{
+			Log.writeInfo("database reset successfull");
+		}
+	}
 	@Test
 	public void testGetAllTiles()
 	{
-		RubyContext context = new RubyContextFactory().createRubyContext();
+
 
 	    RubyObjectFactory<Tile> mapTileFactory =  context.<Tile>createRubyObjectFacory(Tile.class,Tile[].class);
-
 		//List<Tile> tiles = mapTileFactory.getAll();
-
-		Tile tile = mapTileFactory.get(1);
-
-
-
+		//Tile tile = mapTileFactory.get(1);
 	}
 }
