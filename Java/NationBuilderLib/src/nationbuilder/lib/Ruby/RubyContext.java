@@ -5,6 +5,7 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.HttpData;
@@ -57,6 +58,14 @@ public class RubyContext {
         return null;
     }
 
+	// TODO: deze constructor moet nog een keer anders.. het is lelijk om 2 keer hetzelfde te moeten definieren
+	public <T extends RubyModel> RubyObjectFactory createRubyObjectFacory(Class<T> clazz,Class<?> clazzArray)
+	{
+			RubyObjectFactory result = new RubyObjectFactoryImpl<T>(clazz,clazzArray);
+			result.setRubyContext(this);
+			return result;
+	}
+
     public boolean SaveObject(RubyModel object,String resourceUrl) throws ObjectPersistanceFailedException
 	{
         Gson gson = new Gson();
@@ -76,7 +85,7 @@ public class RubyContext {
         resultObject.setType(object.getClass().getName());
         object.setId(resultObject);
 
-        this.rubyStore.registerRubyModel((RubyModel)object);
+        this.rubyStore.registerRubyModel(object);
 
         return resultObject != null ? true : false;
 
@@ -90,11 +99,6 @@ public class RubyContext {
             Log.write(e,LogType.ERROR);
             return  false;
         }
-    }
-    public RubyModel getModel(ID id, Class<?> clazz)
-    {
-        // TODO: implement when needed
-        return null;
     }
     public<T extends RubyModel> List<T> getModels(Class<?> clazz)
     {

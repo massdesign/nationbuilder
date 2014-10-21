@@ -13,12 +13,12 @@ public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
     ArrayList<MapImage> mapImages;
-    ArrayList<MapTile> mapTiles;
+    ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
     MapMap map;
     HashMap<String,MapLayer> mapLayers;
     RubyContext rubyContext;
-    private HashMap<Integer,Tile> tilesWithterrainTypes;
+    private HashMap<Integer,XmlTile> tilesWithterrainTypes;
 
 
     public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
@@ -30,7 +30,7 @@ public class TiledMapConverter {
     public TiledMapConverter()
     {
         this.mapLayers = new HashMap<String,MapLayer>();
-        this.tilesWithterrainTypes = new HashMap<Integer, Tile>();
+        this.tilesWithterrainTypes = new HashMap<Integer, XmlTile>();
     }
     public MapMap convertMap(TiledXmlMap map)
     {
@@ -41,9 +41,9 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
-    private void addtilesToterrainTypeS(ArrayList<Tile> tiles)
+    private void addtilesToterrainTypeS(ArrayList<XmlTile> tiles)
     {
-        for(Tile tile : tiles)
+        for(XmlTile tile : tiles)
         {
             if(!this.tilesWithterrainTypes.containsKey(tile.getGID()))
             {
@@ -90,9 +90,9 @@ public class TiledMapConverter {
         return resources;
     }
 
-    public MapTile convertTile(Tile tile)
+    public Tile convertTile(XmlTile tile)
     {
-        MapTile result = this.rubyContext.createRubyModel(MapTile.class);
+        Tile result = this.rubyContext.createRubyModel(Tile.class);
         result.setGidtag(tile.getGID());
          // TODO: volgens mij kan deze code ook wel een stukje korter.. maak unit test voor dit ding en refactor hem dan
         if(this.mapTileSetImage(result, tile.getGID()))
@@ -158,7 +158,7 @@ public class TiledMapConverter {
        List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
        return result.get(index);
     }
-    private boolean mapTileImageOffset(MapTile newTile,int tile_gid)
+    private boolean mapTileImageOffset(Tile newTile,int tile_gid)
     {
 
         boolean result = true;
@@ -190,7 +190,7 @@ public class TiledMapConverter {
         return result;
 
     }
-    private boolean mapTileSetImage(MapTile newtile,int gid)
+    private boolean mapTileSetImage(Tile newtile,int gid)
     {
         boolean result = false;
         for(int x=0;x<mapImages.size();x++)
@@ -221,23 +221,23 @@ public class TiledMapConverter {
         return result;
     }
 
-    public ArrayList<MapTile> convertLayer(ArrayList<Layer> layers)
+    public ArrayList<Tile> convertLayer(ArrayList<Layer> layers)
     {
-        ArrayList<MapTile> result = new ArrayList<MapTile>();
+        ArrayList<Tile> result = new ArrayList<Tile>();
         int zindex = 0;
         try {
             for(Layer layer : layers)
             {
-                ArrayList<Tile> tiles = layer.getTiles();
+                ArrayList<XmlTile> tiles = layer.getTiles();
                 int tilepositionx = 0;
                 int tilepositiony = 0;
 
-                for(Tile tile : tiles)
+                for(XmlTile tile : tiles)
                 {
                     if(tile.getGID() != 0)
                     {
 
-                        MapTile newTile = this.convertTile(tile);
+                        Tile newTile = this.convertTile(tile);
 
                         if(this.mapLayers.containsKey(layer.getName()))
                         {

@@ -2,22 +2,11 @@
 import java.io.IOException;
 
 import World.Filler;
-import java.util.Map;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.MapDataset;
 import nationbuilder.lib.data.map.converter.TiledMapConverter;
-import nationbuilder.lib.data.map.entities.MapImage;
-import nationbuilder.lib.data.map.entities.MapMap;
-import nationbuilder.lib.data.map.entities.MapTile;
-import nationbuilder.lib.data.map.entities.Resource;
-import nationbuilder.lib.data.map.entities.ResourceType;
-import nationbuilder.lib.data.map.entities.TerrainType;
-import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
-import nationbuilder.lib.data.map.xml.Image;
-import nationbuilder.lib.data.map.xml.Property;
-import nationbuilder.lib.data.map.xml.Tile;
 import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 
@@ -36,7 +25,7 @@ public class Main {
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Git/nationbuilder/Tiled/Maps/demo_small.tmx");
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap("/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/demo_small.tmx");
 
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();

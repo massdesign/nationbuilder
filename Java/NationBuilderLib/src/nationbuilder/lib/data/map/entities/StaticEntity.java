@@ -9,16 +9,16 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
 public class StaticEntity extends BaseRubyModel
 {
     @OneToOne(mapIdTo = "loid")
-	private MapTile locatedOn;
+	private Tile locatedOn;
 
     private String loid;
 
-	public MapTile getLocatedOn()
+	public Tile getLocatedOn()
 	{
 		return locatedOn;
 	}
 
-	public void setLocatedOn(MapTile locatedOn)
+	public void setLocatedOn(Tile locatedOn)
 	{
 		this.locatedOn = locatedOn;
 	}

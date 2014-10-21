@@ -55,6 +55,13 @@ public class JsonServiceConnector implements RubyService {
 		HttpData data = HttpRequest.sendPostRequest(this.serverUrl + resourceUrl,json);
 		return data;	
 	}
+
+	public HttpData getObject(String resourceUrl)
+	{
+		Log.writeInfo("Request url: " + resourceUrl);
+		HttpData data = HttpRequest.sendGetRequest(this.serverUrl +  resourceUrl + ".json");
+		return data;
+	}
 	public int postFile(String fileLocation,String resourceUrl) throws IOException
 	{
 		File file = new File(fileLocation);

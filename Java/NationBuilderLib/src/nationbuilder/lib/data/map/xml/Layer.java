@@ -26,9 +26,9 @@ public class Layer {
 		return Integer.parseInt(this.element.getAttribute("height"));
 	}
 	
-	public ArrayList<Tile> getTiles()
+	public ArrayList<XmlTile> getTiles()
 	{
-		ArrayList<Tile> result = new ArrayList<Tile>();
+		ArrayList<XmlTile> result = new ArrayList<XmlTile>();
 		
 		ArrayList<Element> elements = XmlHelper.getElements("data", this.element);
 		
@@ -36,7 +36,7 @@ public class Layer {
 	    
 	    for(Element element : elements)
 	    {
-	    	result.add(new Tile(element));
+	    	result.add(new XmlTile(element));
 	    }
 		
 		return result;

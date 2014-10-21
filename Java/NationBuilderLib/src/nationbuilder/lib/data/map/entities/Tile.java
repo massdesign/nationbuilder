@@ -3,7 +3,7 @@ package nationbuilder.lib.data.map.entities;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
-public class MapTile extends BaseRubyModel {
+public class Tile extends BaseRubyModel {
 
 	
 	private int xposition;
@@ -66,11 +66,11 @@ public class MapTile extends BaseRubyModel {
 	}
     public int getGidtag() {  return gidtag;  }
     public void setGidtag(int resource_id) { this.gidtag = resource_id;  }
-	public MapTile()
+	public Tile()
 	{
 		
 	}
-	public MapTile(int xposition, int yposition, int xoffset, int yoffset) {
+	public Tile(int xposition, int yposition, int xoffset, int yoffset) {
 		super();
 		this.xposition = xposition;
 		this.yposition = yposition;

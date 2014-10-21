@@ -14,5 +14,6 @@ public interface RubyService {
     public HttpData postObject(Object objectToPost,String resourceUrl) throws IOException;
     public int postFile(String fileLocation,String resourceUrl) throws IOException;
     public int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
+	public HttpData getObject(String resourceUrl);
 
 }

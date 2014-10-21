@@ -7,7 +7,7 @@ public class MapDataset {
 
 	
 	private ArrayList<MapImage> mapImages;
-	private ArrayList<MapTile> mapTiles;
+	private ArrayList<Tile> mapTiles;
 	private HashMap<String,MapLayer> mapLayers;
 
     private ArrayList<Resource> resources;
@@ -33,10 +33,10 @@ public class MapDataset {
 	public void setMapImages(ArrayList<MapImage> mapImages) {
 		this.mapImages = mapImages;
 	}
-	public ArrayList<MapTile> getMapTiles() {
+	public ArrayList<Tile> getMapTiles() {
 		return mapTiles;
 	}
-	public void setMapTiles(ArrayList<MapTile> mapTiles) {
+	public void setMapTiles(ArrayList<Tile> mapTiles) {
 		this.mapTiles = mapTiles;
 	}
     public ArrayList<Resource> getResources() {

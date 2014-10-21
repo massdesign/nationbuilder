@@ -1,12 +1,10 @@
 package nationbuilder.lib.data.map.mapservice;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
@@ -15,8 +13,6 @@ import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.http.JsonServiceConnector;
-import nationbuilder.lib.http.data.HttpData;
-import nationbuilder.lib.http.data.ID;
 
 public class MapServiceConnector {
 
@@ -120,7 +116,7 @@ public class MapServiceConnector {
             this.addLayer(li.previous());
         }
 
-		for(MapTile tile : dataset.getMapTiles())
+		for(Tile tile : dataset.getMapTiles())
 		{
 			try
 			{

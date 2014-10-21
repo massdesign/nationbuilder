@@ -35,7 +35,7 @@ public class Filler {
 
 	public void testFill()
 	{
-        MapTile mt1 = createMapTile();
+        Tile mt1 = createMapTile();
         EnergyBuildingType ebt1 =   createEnergyBuildingType("test plant",100,"Beer");
         EnergyBuilding eb1 = createEnergyBuilding("Ijssel centrale");
         eb1.setBuildingType(ebt1);
@@ -95,9 +95,9 @@ public class Filler {
         this.rubyModels.add(createEnergyBuilding("IjsselCentrale"));
         this.rubyModels.add(createEnergyBuilding("MoerdijkCentrale"));
     }
-    private MapTile createMapTile()
+    private Tile createMapTile()
     {
-        MapTile result = this.context.createRubyModel(MapTile.class);
+        Tile result = this.context.createRubyModel(Tile.class);
         result.setXoffset(1);
         result.setYoffset(1);
         result.setGidtag(2);
