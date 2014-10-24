@@ -39,13 +39,13 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 	 		return http.server.SimpleHTTPRequestHandler.do_GET(self)
 		elif self.path == '/resetdb':
 			self.path = '/resetdb.html'
-			call(["cd ../../Ruby/NationBuilderService/ && rake db:reset", "-l"])
+			call(["./resetdb.sh"])
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 		
 		else:
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 Handler = MyRequestHandler
-server = socketserver.TCPServer(('0.0.0.0', 8085), Handler)
+server = socketserver.TCPServer(('0.0.0.0', 8083), Handler)
 
 server.serve_forever()
