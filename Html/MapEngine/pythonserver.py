@@ -41,7 +41,14 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			self.path = '/resetdb.html'
 			call(["./resetdb.sh"])
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
-		
+		elif self.path == '/createdb':
+			self.path = '/createdb.html'
+			call(["./createdb.sh"])
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+		elif self.path == '/deploydb':
+			self.path = '/deploydb.html'
+			call(["./deploydb.sh"])
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 		else:
 			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 

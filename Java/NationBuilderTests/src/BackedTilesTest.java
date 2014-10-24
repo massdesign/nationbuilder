@@ -19,7 +19,9 @@ public class BackedTilesTest
 	public void setup()
 	{
 		context  =new RubyContextFactory().createRubyContext();
-		HttpData resultCode = HttpRequest.sendGetRequest("http://localhost:8083/resetdb");
+		HttpData resultCode = null;
+
+		resultCode = HttpRequest.sendGetRequest("http://localhost:8083/resetdb");
 		if(resultCode.getResponseCode() == 200)
 		{
 			Log.writeInfo("database reset successfull");
