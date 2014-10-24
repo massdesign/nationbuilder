@@ -14,13 +14,13 @@ public class Tile extends BaseRubyModel {
 	@OneToOne(mapIdTo = "imd")
 	private MapImage image;
 	@OneToOne(mapIdTo = "lmd")
-	private MapLayer layer;
+	private Layer layer;
 	@OneToOne(mapIdTo = "rid")
     private Resource resource;
-	public MapLayer getLayer() {
+	public Layer getLayer() {
 		return layer;
 	}
-	public void setLayer(MapLayer layer) {
+	public void setLayer(Layer layer) {
 		this.layer = layer;
 	}
 	// image id copied to local instance

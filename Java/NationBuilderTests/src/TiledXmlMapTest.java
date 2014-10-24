@@ -32,7 +32,7 @@ public class TiledXmlMapTest {
 		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
 
 		// when
-		ArrayList<Layer> layers = this.map.getLayers();
+		ArrayList<XmlLayer> layers = this.map.getLayers();
 		
 		if(layers.size() > 0)
 		{
@@ -116,7 +116,7 @@ public class TiledXmlMapTest {
 		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
 
 		// when
-		ArrayList<Layer> layers = this.map.getLayers();
+		ArrayList<XmlLayer> layers = this.map.getLayers();
 		String expectedString = "Water";
 		String actualString = layers.get(0).getName();
 		int expectedInt = 40;

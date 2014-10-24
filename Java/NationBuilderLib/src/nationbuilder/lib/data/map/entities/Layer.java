@@ -5,7 +5,7 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ID;
 
-public class MapLayer extends BaseRubyModel {
+public class Layer extends BaseRubyModel {
 
 	
 	private String name;

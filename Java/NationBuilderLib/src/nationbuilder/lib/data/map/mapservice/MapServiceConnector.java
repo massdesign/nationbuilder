@@ -77,7 +77,7 @@ public class MapServiceConnector {
             Log.write(e,LogType.ERROR);
         }
     }
-	public void addLayer(MapLayer layer)
+	public void addLayer(Layer layer)
 	{
         try {
             context.SaveObject(layer, "/layers/");
@@ -101,15 +101,15 @@ public class MapServiceConnector {
 		}
         Iterator it = dataset.getMapLayers().entrySet().iterator();
 
-        ArrayList<MapLayer> mapLayer = new ArrayList<MapLayer>();
+        ArrayList<Layer> mapLayer = new ArrayList<Layer>();
 
 		while(it.hasNext())
 		{
-			Map.Entry<String, MapLayer> pair = (Map.Entry<String, MapLayer>)it.next();
+			Map.Entry<String, Layer> pair = (Map.Entry<String, Layer>)it.next();
             mapLayer.add(pair.getValue());
 		}
 
-        ListIterator<MapLayer> li = mapLayer.listIterator(mapLayer.size());
+        ListIterator<Layer> li = mapLayer.listIterator(mapLayer.size());
 
         while(li.hasPrevious())
         {

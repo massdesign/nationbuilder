@@ -16,7 +16,7 @@ public class TiledMapConverter {
     ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
     MapMap map;
-    HashMap<String,MapLayer> mapLayers;
+    HashMap<String,Layer> mapLayers;
     RubyContext rubyContext;
     private HashMap<Integer,XmlTile> tilesWithterrainTypes;
 
@@ -29,7 +29,7 @@ public class TiledMapConverter {
     }
     public TiledMapConverter()
     {
-        this.mapLayers = new HashMap<String,MapLayer>();
+        this.mapLayers = new HashMap<String,Layer>();
         this.tilesWithterrainTypes = new HashMap<Integer, XmlTile>();
     }
     public MapMap convertMap(TiledXmlMap map)
@@ -221,12 +221,12 @@ public class TiledMapConverter {
         return result;
     }
 
-    public ArrayList<Tile> convertLayer(ArrayList<Layer> layers)
+    public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
     {
         ArrayList<Tile> result = new ArrayList<Tile>();
         int zindex = 0;
         try {
-            for(Layer layer : layers)
+            for(XmlLayer layer : layers)
             {
                 ArrayList<XmlTile> tiles = layer.getTiles();
                 int tilepositionx = 0;
@@ -248,7 +248,7 @@ public class TiledMapConverter {
                         }
                         else
                         {
-                            MapLayer newLayer = this.rubyContext.createRubyModel(MapLayer.class);
+                            Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
                             newLayer.setZindex(zindex);
                             newLayer.setMap(this.map);
                             newLayer.setName(layer.getName());

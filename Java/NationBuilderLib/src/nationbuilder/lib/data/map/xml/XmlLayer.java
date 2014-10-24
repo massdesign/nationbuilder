@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 import org.w3c.dom.Element;
 
-public class Layer {
+public class XmlLayer
+{
 	
 	Element element; 
 
-	public Layer(Element element)
+	public XmlLayer(Element element)
 	{
 		this.element = element;
 	}

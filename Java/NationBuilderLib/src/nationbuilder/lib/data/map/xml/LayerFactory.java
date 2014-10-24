@@ -10,9 +10,9 @@ public class LayerFactory {
 	{
 		
 	}
-	public Layer createLayer(Element element)
+	public XmlLayer createLayer(Element element)
 	{
-		Layer result = new Layer(element);
+		XmlLayer result = new XmlLayer(element);
 		return result;
 	}
 }
