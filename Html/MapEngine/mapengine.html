@@ -8,6 +8,7 @@
     <script type="text/JavaScript" src="services/baseservice.js"></script>
     <script type="text/Javascript" src="services/mapservice.js"></script>
     <script type="text/Javascript" src="services/userservice.js"></script>
+    <script type="text/Javascript" src="services/territoryservice.js"></script>
     <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script>
     <script type="text/JavaScript" src="lib/angular13.min.js"></script>
     <script type="text/JavaScript" src="engine/mapdata.js"></script>
@@ -74,6 +75,7 @@
 <div id="container"></div>
 
 <!--  TODO: tileinfo nog even hernoemen naar iets anders... want het is geen tileinfo meer -->
+<!-- TODO: alle acties in een aparte controller opnemen, dit een keer doen als er een aantal acties geimplementeerd zijn -->
 <div class="tileinfo" >
 <ul class="tabs">
         <li>
@@ -81,7 +83,8 @@
           <label for="tab1" title="">Military</label>
           <div id="tab-content1" class="tab-content animated fadeIn">
 			  <button class="pure-button" title="Deploy forward  base">DFB</button><br/>
-			  <button class="pure-button" title="Lay claim on territory">LCT</button>
+			  <!-- military acties zijn afgekort met mil_ -->
+			  <button class="pure-button" title="Lay claim on territory" ng-click="mil_lct($event)">LCT</button>
           </div>
         </li>
         <li>

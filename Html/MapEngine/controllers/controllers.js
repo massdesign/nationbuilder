@@ -5,6 +5,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
     var s = new MapService(); 
     var u = new UserService();
+    var t = new TerritoryService();
     $scope.zoomIn = function(event) {
         map.zoomIn();
     }
@@ -30,6 +31,15 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
+		// alle militaire acties zijn afgekort met mil_    
+    	$scope.mil_lct = function(event) {
+    		
+    		var markers = [{ "position": "128.3657142857143", "markerPosition": "7" },
+               { "position": "235.1944023323615", "markerPosition": "19" },
+               { "position": "42.5978231292517", "markerPosition": "-3" }];
+    		t.doPostRequest(markers)
+    	
+    	}
       $scope.scrollright = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();
 		   var scrollValueX =  map.getMapData().getViewportX()+1;
