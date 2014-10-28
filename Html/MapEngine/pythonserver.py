@@ -24,6 +24,8 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 			tset = tileset.TileSet(cservice.getFilePath("ts_" + element['name']),cservice)
 			tset.unpack()
+	def do_POST(self):
+		print("bladiebloe")
 	def do_GET(self):
 		if self.path == '/install':
 			self.path = '/install.html'
@@ -56,7 +58,7 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			dbrequest = protocol + "://" + dbserver + self.path
 			cservice = cacheservice.Cacheservice()
 			content = ""
-			if self.path.endswith("js") or ("ncache" in self.path):
+			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css"):
 				print("non cacheable resource requested")
 				return http.server.SimpleHTTPRequestHandler.do_GET(self)
             
