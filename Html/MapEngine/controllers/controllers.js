@@ -33,11 +33,11 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     }
 		// alle militaire acties zijn afgekort met mil_    
     	$scope.mil_lct = function(event) {
-    		
-    		var markers = [{ "position": "128.3657142857143", "markerPosition": "7" },
-               { "position": "235.1944023323615", "markerPosition": "19" },
-               { "position": "42.5978231292517", "markerPosition": "-3" }];
-    		t.doPostRequest(markers)
+    		// by wijze van test een terraintype posten omdat het lekker kort is
+    		var terraintype = {}
+    		terraintype.name = "WATER"
+    		console.log(JSON.stringify(terraintype))
+    		t.doPostRequest(terraintype)
     	
     	}
       $scope.scrollright = function (event) {

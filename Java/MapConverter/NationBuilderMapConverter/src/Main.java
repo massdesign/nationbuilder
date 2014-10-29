@@ -24,6 +24,7 @@ public class Main {
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
 		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
+
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();
