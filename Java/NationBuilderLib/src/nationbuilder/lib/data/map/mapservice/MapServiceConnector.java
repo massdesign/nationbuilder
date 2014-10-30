@@ -9,7 +9,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
@@ -64,7 +66,7 @@ public class MapServiceConnector {
 			context.SaveObject(map, "/maps/");
 
 		}
-		catch (ObjectPersistanceFailedException e)
+		catch (RubyException e)
 		{
 			Log.write(e, LogType.ERROR);
 		}
@@ -76,7 +78,7 @@ public class MapServiceConnector {
         {
             context.SaveObject(resource,"/resources/");
         }
-		catch (ObjectPersistanceFailedException e)
+		catch (RubyException e)
         {
             Log.write(e,LogType.ERROR);
         }
@@ -86,7 +88,7 @@ public class MapServiceConnector {
         try {
             context.SaveObject(layer, "/layers/");
         }
-		catch (ObjectPersistanceFailedException e) {
+		catch (RubyException e) {
             Log.write(e,LogType.ERROR);
         }
 	}
@@ -126,7 +128,7 @@ public class MapServiceConnector {
 			{
 				context.SaveObject(tile,"/tiles/");
 			}
-			catch (ObjectPersistanceFailedException e)
+			catch (RubyException e)
 			{
 				Log.write(e,LogType.ERROR);
 			}
@@ -138,8 +140,15 @@ public class MapServiceConnector {
 	{
 			image.getImageFile();
 			//image.fetchIDs();
-            image.Save("/images/");
-            image.getImageFile().Save("/uploads/");
+		try
+		{
+			image.Save("/images/");
+		}
+		catch (RubyException e)
+		{
+		  Log.write(e,LogType.ERROR);
+		}
+		image.getImageFile().Save("/uploads/");
 	}
 
 }

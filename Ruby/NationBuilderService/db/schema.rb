@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923213955) do
+ActiveRecord::Schema.define(version: 20141007134946) do
+
+  create_table "currencies", force: true do |t|
+    t.string   "name"
+    t.string   "status"
+    t.string   "convertable"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "energy_building_types", force: true do |t|
     t.string   "energySource"
@@ -75,6 +83,15 @@ ActiveRecord::Schema.define(version: 20140923213955) do
     t.boolean  "regenerating"
   end
 
+  create_table "states", force: true do |t|
+    t.string   "motto"
+    t.string   "name"
+    t.string   "currency_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "user_id"
+  end
+
   create_table "terraintypes", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -92,6 +109,16 @@ ActiveRecord::Schema.define(version: 20140923213955) do
     t.integer  "layer_id"
     t.integer  "image_id"
     t.integer  "resource_id"
+  end
+
+  create_table "users", force: true do |t|
+    t.string   "screenname"
+    t.string   "loginname"
+    t.string   "passwordhash"
+    t.string   "registerdate"
+    t.string   "emailadres"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

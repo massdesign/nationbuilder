@@ -4,6 +4,7 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
     var s = new MapService(); 
+    var u = new UserService();
     $scope.zoomIn = function(event) {
         map.zoomIn();
     }
@@ -52,13 +53,22 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
         },x,y,width,height);
 	   
     }
+   	u.getUserById(1,function(modelData) {
+   		
+   		$scope.$apply(function () {
+   		
+   		console.log(modelData)
+   		$scope.userData = modelData;
+   			
+   		})	
+   	}); 
     // NOTE: hacky way to integreate jquery with angularjs.. this way we can use the already written mapService
-    s.getTileByXY(2,1,function(modelData) { 
+    /*s.getTileByXY(2,1,function(modelData) { 
     
 		$scope.$apply(function() {
 		
 		$scope.modelData = modelData;
 		});        
-    });
+    });*/
 
 });

@@ -41,7 +41,7 @@ import com.google.common.io.ByteStreams;
 public class HttpRequest {
 
 	private final static String USER_AGENT = "Mozilla/5.0";
-	public static HttpData sendPostRequest(String url,String urlParameters) throws IOException
+	public static HttpData sendPostRequest(String url,String urlParameters,String contentType) throws IOException
 	{
 		HttpData result = new HttpData();
 		
@@ -50,8 +50,8 @@ public class HttpRequest {
 		con.setRequestMethod("POST");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-		con.setRequestProperty("Content-Type","application/json");
-		con.setRequestProperty("Accept","application/json");
+		con.setRequestProperty("Content-Type",contentType);
+		con.setRequestProperty("Accept",contentType);
 		
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
@@ -69,6 +69,10 @@ public class HttpRequest {
 		result.setBody(sb.toString());  
 		in.close();		
 		return result;
+	}
+	public static HttpData sendPostRequest(String url,String urlParameters) throws IOException
+	{
+		return sendPostRequest(url,urlParameters,"application/json");
 	}
 	public static int sendPostUploadRequest(String urlString,File fileLocation) throws IOException
 	{

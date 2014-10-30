@@ -4,6 +4,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
@@ -35,6 +38,12 @@ public class RubyAssociationResolver
                         HandleOneToOneRelation(mappedField, model, field);
                         continue;
                     }
+					mappedField = getMappedField(ManyToOne.class, field, currentClass);
+					if(mappedField != null){
+						HandleOneToOneRelation(mappedField, model, field);
+						continue;
+
+					}
                     mappedField = getMappedField(OneToMany.class, field, currentClass);
                     if (mappedField != null) {
                         HandleOneToManyRelation(mappedField, field, model);
@@ -109,10 +118,16 @@ public class RubyAssociationResolver
 		{
 			Annotation annotationInstance = field.getAnnotation(annotationType);
 			String fieldidentifier = "";
+			MappedBy mappedBy = MappedBy.SELF;
+            // OneToOne and many to one relationships are threated as the same at the moment.. in the future this may change
 			if(annotationInstance instanceof OneToOne)
 			{
 			  fieldidentifier =	((OneToOne)annotationInstance).mapIdTo();
 			}
+            else if(annotationInstance instanceof ManyToOne)
+            {
+                fieldidentifier = ((ManyToOne) annotationInstance).mapIdTo();
+            }
 			else if(annotationInstance instanceof OneToMany)
 			{
 				fieldidentifier =  ((OneToMany)annotationInstance).mapIdTo();
@@ -126,11 +141,18 @@ public class RubyAssociationResolver
 			{
 				e.printStackTrace();
 			}
+			// if annotation is foreign we will ignore the property and return null
+			if(mappedBy == MappedBy.FOREIGN)
+			{
+				result = null;
+			}
+
 		}
 		if(result != null)
 		{
 			result.setAccessible(true);
 		}
+
 		return result;
 	}
 	// NOTE: workaround to create something that works for now

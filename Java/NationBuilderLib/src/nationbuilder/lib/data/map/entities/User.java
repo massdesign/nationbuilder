@@ -1,16 +1,90 @@
 package nationbuilder.lib.data.map.entities;
 
-import java.util.Date;
+import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.BaseRubyModel;
 
 /**
  * Created by patrick on 9/18/14.
  */
-public class User
+public class User extends BaseRubyModel
 {
-	private String screenName;
-	private String loginName;
-	private String paswordHash;
-	private String emailAdres;
-	private Date registerDate;
+
+	@IgnoreInRails
+	@OneToOne(mapIdTo = "ge")
+	private GameEntity gameEntity;
+
+	private String screenname;
+	@IgnoreInRails
+	private String ge;
+	private String loginname;
+
+	private String paswordhash;
+
+	private String emailadres;
+
+	private String registerdate;
+
+	public String getLoginname()
+	{
+		return loginname;
+	}
+
+	public void setLoginname(String loginname)
+	{
+		this.loginname = loginname;
+	}
+
+	public String getScreenname()
+	{
+		return screenname;
+	}
+
+	public void setScreenname(String screenname)
+	{
+		this.screenname = screenname;
+	}
+
+	public String getPaswordhash()
+	{
+		return paswordhash;
+	}
+
+	public void setPaswordhash(String paswordhash)
+	{
+		this.paswordhash = paswordhash;
+	}
+
+	public String getEmailadres()
+	{
+		return emailadres;
+	}
+
+	public void setEmailadres(String emailadres)
+	{
+		this.emailadres = emailadres;
+	}
+
+	public String getRegisterdate()
+	{
+		return registerdate;
+	}
+
+	public void setRegisterdate(String registerdate)
+	{
+		this.registerdate = registerdate;
+	}
+
+	public GameEntity getGameEntity()
+	{
+		return gameEntity;
+	}
+
+	public void setGameEntity(GameEntity gameEntity)
+	{
+		this.gameEntity = gameEntity;
+	}
+
+
 
 }
