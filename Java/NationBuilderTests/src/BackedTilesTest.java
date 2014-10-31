@@ -1,4 +1,5 @@
 import java.util.List;
+import nationbuilder.lib.Ruby.Exceptions.ObjectFetchFailedException;
 import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.Resource;
 import nationbuilder.lib.data.map.xml.XmlLayer;
@@ -20,11 +21,13 @@ public class BackedTilesTest
 {
 	RubyContext context;
 	RubyObjectFactory<Tile> mapTileFactory;
+	RubyObjectFactory<Resource> resourceFactory;
 	@Before
 	public void setup()
 	{
 		context  =new RubyContextFactory().createRubyContext();
-		mapTileFactory= context.<Tile>createRubyObjectFacory(Tile.class, Tile[].class);
+		mapTileFactory= context.createRubyObjectFacory(Tile.class, Tile[].class);
+		resourceFactory = context.createRubyObjectFacory(Resource.class,Resource[].class);
 
 	}
 	private void loadTestDatabase()
@@ -83,6 +86,21 @@ public class BackedTilesTest
 		Assert.assertEquals(expected.getYoffset(), current.getYoffset());
 		Assert.assertEquals(expected.getXposition(), current.getXposition());
 		Assert.assertEquals(expected.getYposition(), current.getYposition());
+	}
+	@Test
+	public void testFindTile() throws ObjectFetchFailedException
+	{
+		loadTestDatabase();
+
+
+			List<Resource> tiles = this.resourceFactory.get("find","4","5");
+
+
+
+	}
+	public void testgetScreen()
+	{
+
 	}
 
 }
