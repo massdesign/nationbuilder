@@ -1,9 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.BaseRubyModel;
-import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.http.data.ID;
 
 import java.io.File;
 
@@ -21,7 +18,7 @@ public class BaseRubyResourceModel extends BaseRubyModel {
     {
         this.resource = resource;
     }
-    private MapTile maptile;
+    private Tile maptile;
 
     @Override
     public boolean Save(String resourceUrl)

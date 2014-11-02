@@ -6,6 +6,7 @@ from localMapService import mapservice
 from localMapService import cacheservice
 from localMapService import tileset
 from localMapService import log
+from subprocess import call
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
 	def createMapCache(self):
@@ -37,7 +38,18 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 		elif self.path == '/test':
 	 		self.path = '/test.html'
 	 		return http.server.SimpleHTTPRequestHandler.do_GET(self)
-
+		elif self.path == '/resetdb':
+			self.path = '/resetdb.html'
+			call(["./resetdb.sh"])
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+		elif self.path == '/createdb':
+			self.path = '/createdb.html'
+			call(["./createdb.sh"])
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
+		elif self.path == '/deploydb':
+			self.path = '/deploydb.html'
+			call(["./deploydb.sh"])
+			return http.server.SimpleHTTPRequestHandler.do_GET(self)
 		else:
 			protocol  = "http"
 			dbserver = "localhost:3000"

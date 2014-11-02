@@ -133,7 +133,7 @@ public class RubyScaffoldGenerator
 	}
 	private List<String> getParameters(Class<?> clazz)
 	{
-		List<String> result = new ArrayList<>();
+		List<String> result = new ArrayList<String>();
 
 
 

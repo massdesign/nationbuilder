@@ -55,15 +55,15 @@ public class TileSet {
 		 return result;
     }
 
-    public ArrayList<Tile> getTiles()
+    public ArrayList<XmlTile> getTiles()
     {
-        ArrayList<Tile> result = new ArrayList<Tile>();
+        ArrayList<XmlTile> result = new ArrayList<XmlTile>();
 
         ArrayList<Element> elements = XmlHelper.getElements("tile",element);
 
         for(Element element : elements)
         {
-            Tile tile = new Tile(element);
+            XmlTile tile = new XmlTile(element);
             result.add(tile);
         }
         return result;

@@ -1,19 +1,14 @@
 package World;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Secure.PasswordHash;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 /**
  * Created by patrick on 7/14/14.
@@ -49,7 +44,6 @@ public class Filler {
 
 	public void testFill()
 	{
-
 		State state = context.createRubyModel(State.class);
 		Currency currency = context.createRubyModel(Currency.class);
 		User user = context.createRubyModel(User.class);
@@ -122,9 +116,9 @@ public class Filler {
         this.rubyModels.add(createTerrainType("NONE"));
     }
 
-    private MapTile createMapTile()
+    private Tile createMapTile()
     {
-        MapTile result = this.context.createRubyModel(MapTile.class);
+        Tile result = this.context.createRubyModel(Tile.class);
         result.setXoffset(1);
         result.setYoffset(1);
         result.setGidtag(2);

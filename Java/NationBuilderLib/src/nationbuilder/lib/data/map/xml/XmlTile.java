@@ -6,10 +6,11 @@ import org.w3c.dom.Element;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class Tile {
+public class XmlTile
+{
 
 	Element element;
-	public Tile(Element element)
+	public XmlTile(Element element)
 	{
 		this.element = element;
 	}

@@ -1,12 +1,10 @@
 package nationbuilder.lib.data.map.mapservice;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.Map;
 
-import com.google.gson.Gson;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
@@ -17,8 +15,6 @@ import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.http.JsonServiceConnector;
-import nationbuilder.lib.http.data.HttpData;
-import nationbuilder.lib.http.data.ID;
 
 public class MapServiceConnector {
 
@@ -83,7 +79,7 @@ public class MapServiceConnector {
             Log.write(e,LogType.ERROR);
         }
     }
-	public void addLayer(MapLayer layer)
+	public void addLayer(Layer layer)
 	{
         try {
             context.SaveObject(layer, "/layers/");
@@ -107,22 +103,22 @@ public class MapServiceConnector {
 		}
         Iterator it = dataset.getMapLayers().entrySet().iterator();
 
-        ArrayList<MapLayer> mapLayer = new ArrayList<MapLayer>();
+        ArrayList<Layer> mapLayer = new ArrayList<Layer>();
 
 		while(it.hasNext())
 		{
-			Map.Entry<String, MapLayer> pair = (Map.Entry<String, MapLayer>)it.next();
+			Map.Entry<String, Layer> pair = (Map.Entry<String, Layer>)it.next();
             mapLayer.add(pair.getValue());
 		}
 
-        ListIterator<MapLayer> li = mapLayer.listIterator(mapLayer.size());
+        ListIterator<Layer> li = mapLayer.listIterator(mapLayer.size());
 
         while(li.hasPrevious())
         {
             this.addLayer(li.previous());
         }
 
-		for(MapTile tile : dataset.getMapTiles())
+		for(Tile tile : dataset.getMapTiles())
 		{
 			try
 			{

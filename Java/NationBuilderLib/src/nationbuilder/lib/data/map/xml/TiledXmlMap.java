@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class TiledXmlMap {
 
@@ -62,14 +60,14 @@ public class TiledXmlMap {
 		}
 		return result;
 	}
-	public ArrayList<Layer> getLayers()
+	public ArrayList<XmlLayer> getLayers()
 	{
 		ArrayList<Element> elements = XmlHelper.getElements("layer",this.doc);
-		ArrayList<Layer> result = new ArrayList<Layer>();
+		ArrayList<XmlLayer> result = new ArrayList<XmlLayer>();
 		for(Element element : elements)
 		{
 			
-			result.add(new Layer(element));
+			result.add(new XmlLayer(element));
 		}
 		return result;
 	} 
