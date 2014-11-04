@@ -1,5 +1,7 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :claims
+
   resources :currencies
 
   resources :states

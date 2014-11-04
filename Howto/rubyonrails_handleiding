@@ -1,0 +1,6 @@
+ManyToMany relations
+To generate a many to many migration.. do the following 
+
+rails generate migration states_tiles tile_id:integer state_id:integer
+
+this will generate a join table between the two entities

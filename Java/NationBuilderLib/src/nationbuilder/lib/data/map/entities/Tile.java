@@ -3,6 +3,8 @@ package nationbuilder.lib.data.map.entities;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
+import java.util.List;
+
 public class Tile extends BaseRubyModel {
 
 	
@@ -11,6 +13,9 @@ public class Tile extends BaseRubyModel {
     private int gidtag;
 	private int xoffset;
 	private int yoffset;
+
+    private List<GameEntity> claimedBy;
+    private GameEntity owner;
 	@OneToOne(mapIdTo = "imd")
 	private MapImage image;
 	@OneToOne(mapIdTo = "lmd")
@@ -83,6 +88,22 @@ public class Tile extends BaseRubyModel {
 
     public void setResources(Resource resources) {
         this.resource = resources;
+    }
+
+    public GameEntity getOwner() {
+        return owner;
+    }
+
+    public void setOwner(GameEntity owner) {
+        this.owner = owner;
+    }
+
+    public List<GameEntity> getClaimedBy() {
+        return claimedBy;
+    }
+
+    public void setClaimedBy(List<GameEntity> claimedBy) {
+        this.claimedBy = claimedBy;
     }
 
 }

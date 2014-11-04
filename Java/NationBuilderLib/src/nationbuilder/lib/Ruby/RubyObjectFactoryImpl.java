@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Exceptions.ObjectFetchFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.http.data.HttpData;
+import nationbuilder.lib.http.data.ID;
 
 /**
  * Created by patrick on 10/21/14.
@@ -47,6 +48,13 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		if(data != null)
 		{
 		 result  = 	(T)gson.fromJson(data.getBody(),this.clazz);
+
+         if(result != null)
+         {
+             ID refID = new ID();
+             refID.setId(Integer.toString(id));
+            result.setId(refID);
+         }
 		}
 		return result;
 	}

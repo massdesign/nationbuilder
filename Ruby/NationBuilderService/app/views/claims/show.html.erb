@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Tile:</strong>
+  <%= @claim.tile_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @claim.state_id %>
+</p>
+
+<%= link_to 'Edit', edit_claim_path(@claim) %> |
+<%= link_to 'Back', claims_path %>
