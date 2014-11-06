@@ -15,5 +15,5 @@ NB-15: Basic caching mechanisme implementeren voor json calls in de python clien
 NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop
 NB-17: Javascript map.js verplaatsen en refactoren van angularjs controller en dode code opruimen 
 NB-18: De basis van de mapgenerator, mapgenerator moet een map kunnen genereren van een willekeurige grootte met alleen maar zeewater erin 
-NB-19: Optimize the filler to keep track of changes to speed up the process of filleing, also make bulk import possible
+NB-19: Optimize the filler, because it takes to long to fill a new map which is bigger than 10x10 
 NB-20: De grootte van de map aanpassen naar 20x20, ook het zo maken dat het makkelijker om te zetten i
