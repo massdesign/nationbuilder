@@ -108,6 +108,9 @@ public class Filler {
 
         this.rubyModels.add(createTerrainType("WATER"));
         this.rubyModels.add(createTerrainType("SEA"));
+		this.rubyModels.add(createTerrainType("INLANDCOAST"));
+		this.rubyModels.add(createTerrainType("INLANDSEA"));
+		this.rubyModels.add(createTerrainType("RIVER"));
         this.rubyModels.add(createTerrainType("FOREST"));
         this.rubyModels.add(createTerrainType("URBAN"));
         this.rubyModels.add(createTerrainType("MOUNTAIN"));

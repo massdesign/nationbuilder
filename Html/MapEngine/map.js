@@ -22,7 +22,7 @@ function Map(javascript_console,applicationName)
     	
     	this.layers.push(new TileLayer(this,javascript_console));
     	this.layers.push(new SelectLayer(this,javascript_console));
-    	this.layers.push(new GridLayer(this,javascript_console));
+    //	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
