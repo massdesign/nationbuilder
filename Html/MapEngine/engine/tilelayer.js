@@ -11,6 +11,7 @@ function TileLayer(parentMap,loginstance)
    	
 	this.render = function(imagedata,data)
 	{
+
 		var imagenames = Array();
    	var imgs = [];
     	var imagePos = [];

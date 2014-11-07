@@ -3,6 +3,9 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
+	 setInterval(function() {
+	 	console.log("pulse")
+	 	}, 3000);
     var s = new MapService(); 
     var u = new UserService();
     $scope.zoomIn = function(event) {
