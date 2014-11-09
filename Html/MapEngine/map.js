@@ -1,6 +1,7 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
+		this._mapDataBroker = new  MapDataBroker();
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -116,8 +117,13 @@ function Map(javascript_console,applicationName)
     	    width: 320,
      	   height: 320
    	 });
-
-
+		
+		var currentContext = this;
+		this._mapDataBroker.getMapData(0,0,9,9,function(imageData,data) {
+		 currentContext.setImageData(imageData,data);
+       currentContext.render();
+		console.log("callback called")		
+		});
       this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
@@ -128,7 +134,7 @@ function Map(javascript_console,applicationName)
    // temp method to facilitate the proof of concept
    this.move = function () {
    
-		this.layers[0].doAnimation()  
+		this.layers[0].move()
    }
    this.render = function() {
 
@@ -142,4 +148,4 @@ function Map(javascript_console,applicationName)
 }
 // param1 console handle
 // param2 name of the application to bind with angularJs framework ng-app tag
-var map = new Map(console,"nationbuilderApp");
+//var map = new Map(console,"nationbuilderApp");

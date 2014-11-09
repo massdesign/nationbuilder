@@ -17,7 +17,7 @@ function TileLayer(parentMap,loginstance)
    	var imgs = [];
     	//var imagePos = [];
     	var imageURLs=[];
-
+		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
    	for(var i=0;i<imagedata.length;i++)
     	{
 			imagenames[imagedata[i].id] = imagedata[i].name     	  
@@ -50,7 +50,7 @@ function TileLayer(parentMap,loginstance)
     	this.loadAllImages(imgs,this.imagePos,imageURLs);   			
 		
 	}
-	 this.doAnimation = function() { 
+	 this.move = function() { 
 	    var currentContext = this;
 
 		 var anim = new Kinetic.Animation(function(frame) {
@@ -86,9 +86,7 @@ function TileLayer(parentMap,loginstance)
             for (var i = 0; i < data.length; i++) {
      	
                 if(data[i].layer.zindex == currentIndex)
-                {
-                    console.log("found currentIndex is: " + currentIndex)
-                    
+                {                 
                     result[currentCounter] = data[i];
                     currentIndex++;
                     currentCounter++;
@@ -96,7 +94,6 @@ function TileLayer(parentMap,loginstance)
                 }
             }
             if(result.length == data.length) {
-                console.log("done")
                 done = true
             }
             else  {

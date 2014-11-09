@@ -2,12 +2,14 @@
 <html lang="en" ng-app="nationbuilderApp">
 <head>
     <script type="text/JavaScript" src="lib/jquery-1.11.0.js"></script>
+    <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script>
+    <script type="text/JavaScript" src="lib/angular13.min.js"></script>
     <script type="text/JavaScript" src="services/baseservice.js"></script>
     <script type="text/Javascript" src="services/mapservice.js"></script>
     <script type="text/Javascript" src="services/userservice.js"></script>
-    <script type="text/JavaScript" src="lib/kinetic-v5.1.0.min.js"></script>
-    <script type="text/JavaScript" src="lib/angular13.min.js"></script>
+
     <script type="text/JavaScript" src="engine/mapdata.js"></script>
+    <script type="text/Javascript" src="engine/mapdatabroker.js"></script>
     <script type="text/JavaScript" src="engine/angularbridge.js"></script>
     <script type="text/JavaScript" src="engine/tilelayer.js"></script>
     <script type="text/JavaScript" src="engine/gridlayer.js"></script>
@@ -68,28 +70,7 @@
 
     </style>
 </head>
-<script>
-    javascript_console = console;
-
-    $(document).ready(function()
-    {
-        var s = new MapService();
-        s.getMap(function (mapData) {
-            images  = Array();
-            var	data = mapData[0]['layers'];
-            map.init();
-            s.getImages(function(imagedata)
-            {
-                map.setImageData(imagedata,data);
-               	 map.render();
-            });
-
-        },0,0,9,9);
-
-    });
-
-</script>
-<body ng-controller="ClickdataCtrl">
+<body ng-controller="ClickdataCtrl" data-ng-init="init()">
 <div>
 <label>Welcome: {{userData.screenname}} </label><br/>
 <label>State: {{userData.state.name}}</label>

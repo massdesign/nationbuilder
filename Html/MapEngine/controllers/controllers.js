@@ -62,16 +62,50 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 				
         },x,y,width,height);*/
 	   
-    }
+    }    
+    //$scope.init = function() {
+    	
+    	/*
+	 var s = new MapService();
+	     javascript_console = console;
+	 var map = new Map(console,"nationbuilderApp");
+        s.getMap(function (mapData) {
+            images  = Array();
+            var	data = mapData[0]['layers'];
+            map.init();
+            s.getImages(function(imagedata)
+            {
+                map.setImageData(imagedata,data);
+               	 map.render();
+            });
+
+        },0,0,9,9); */
+	 //alert('test')    
+   // }
    	u.getUserById(1,function(modelData) {
    		
    		$scope.$apply(function () {
-   		
-   		console.log(modelData)
    		$scope.userData = modelData;
    			
    		})	
    	}); 
+   	javascript_console = console;
+	   var map = new Map(console,"nationbuilderApp");
+	   map.init()
+	   /*
+   	var s = new MapService();
+        s.getMap(function (mapData) {
+            images  = Array();
+            var	data = mapData[0]['layers'];
+            map.init();
+            s.getImages(function(imagedata)
+            {
+                map.setImageData(imagedata,data);
+               	 map.render();
+            });
+
+        },0,0,9,9); 
+        */
     // NOTE: hacky way to integreate jquery with angularjs.. this way we can use the already written mapService
     /*s.getTileByXY(2,1,function(modelData) { 
     
