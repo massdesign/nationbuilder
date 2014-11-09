@@ -4,7 +4,9 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
 	 setInterval(function() {
-	 	console.log("pulse")
+	 	
+	 	
+	 	
 	 	}, 3000);
     var s = new MapService(); 
     var u = new UserService();
@@ -43,6 +45,11 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     $scope._scroll = function(x,y,width,height) {
     	
  		  map.getMapData().setviewportPosition(x,y);
+ 		  map.move();
+ 		 
+ 		 // map.init();c
+ 		  //map.render();
+ 		  /*
  		  s.getMap(function (mapData) {
             images  = Array();
             var	data = mapData[0]['layers'];
@@ -53,7 +60,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
                 map.render();
             });
 				
-        },x,y,width,height);
+        },x,y,width,height);*/
 	   
     }
    	u.getUserById(1,function(modelData) {

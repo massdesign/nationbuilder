@@ -7,8 +7,8 @@ this._viewportx = 0;
 this._viewporty = 0;
 this.clickedTile = function() {
 // TODO: this seems obsolete?? Maybe delete it?
-	this.x = -1;
-	this.y = -1;
+	//this.x = -1;
+	//this.y = -1;
 }
 
 this.setviewportPosition = function(x,y) { 

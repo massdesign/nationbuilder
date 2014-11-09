@@ -21,7 +21,7 @@ function Map(javascript_console,applicationName)
         this._data = isNaN;
     	
     	this.layers.push(new TileLayer(this,javascript_console));
-    	this.layers.push(new SelectLayer(this,javascript_console));
+    	//this.layers.push(new SelectLayer(this,javascript_console));
     //	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
@@ -124,6 +124,11 @@ function Map(javascript_console,applicationName)
 			this.stage.add(this.layers[i].getLayer());
 		}   	
  		//var currentObject = this;
+   }
+   // temp method to facilitate the proof of concept
+   this.move = function () {
+   
+		this.layers[0].doAnimation()  
    }
    this.render = function() {
 
