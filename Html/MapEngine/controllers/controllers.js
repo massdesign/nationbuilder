@@ -54,7 +54,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
             images  = Array();
             var	data = mapData[0]['layers'];
             map.init();
-            s.getImages(function(imagedata)
+            s.getImages(function(imagedata)	
             {
                 map.setImageData(imagedata,data);
                 map.render();

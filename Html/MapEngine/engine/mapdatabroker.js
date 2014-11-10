@@ -12,6 +12,19 @@ this._mapservice.getMap(function(mapData) {
 
 var data = mapData[0]['layers'];
 currentContext._mapservice.getImages(function(imagedata) {
+
+// if there is something on the left that is worth loading do it 
+if(x >= 5 && y >=5)
+{
+ 
+}
+else 
+{
+ console.log("don't load tiles to the left")	
+}
+
+	
+	
 callback(imagedata,data)
 }
 );

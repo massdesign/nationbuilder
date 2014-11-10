@@ -119,7 +119,7 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getMapData(0,0,9,9,function(imageData,data) {
+		this._mapDataBroker.getMapData(1,1,9,9,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext.render();
 		console.log("callback called")		
