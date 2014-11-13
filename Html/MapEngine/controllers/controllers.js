@@ -18,13 +18,13 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     }
     
     $scope.scrollup = function (event) {
-		   var scrollValueY =  map.getMapData().getViewportY()+1;
+		   var scrollValueY =  map.getMapData().getViewportY()-1;
 		   var scrollValueX =  map.getMapData().getViewportX();
 			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
      $scope.scrolldown = function (event) {
-		   var scrollValueY =  map.getMapData().getViewportY()-1;
+		   var scrollValueY =  map.getMapData().getViewportY()+1;
 		   var scrollValueX =  map.getMapData().getViewportX();
 			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)

@@ -65,8 +65,8 @@ function TileLayer(parentMap,loginstance)
 	    					 //currentContext.imagePos[2][0] =  currentContext.imagePos[2][0]
 	    					 var newX =  currentContext.imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
 	    					 var newY =  currentContext.imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
-	    					 newX = newX + (viewportX*currentContext.parentMap.getRelativeTilesize())
-	    					 newY = newY + (viewportY*currentContext.parentMap.getRelativeTilesize())
+	    					 newX = newX - (viewportX*currentContext.parentMap.getRelativeTilesize())
+	    					 newY = newY - (viewportY*currentContext.parentMap.getRelativeTilesize())
        					 currentContext._imagegrid[i].setX(newX);
        				    currentContext._imagegrid[i].setY(newY);
        					 }

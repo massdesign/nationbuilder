@@ -119,7 +119,7 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getMapData(0,1,1,9,9,function(imageData,data) {
+		this._mapDataBroker.getMapData(0,0,0,2,2,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext.render();
 		console.log("callback called")		
@@ -133,7 +133,7 @@ function Map(javascript_console,applicationName)
    }
    // temp method to facilitate the proof of concept
    this.move = function () {
-				this._mapDataBroker.getMapData(100,1,1,9,9,function(imageData,data) {
+				this._mapDataBroker.getMapData(1,this.getMapData().getViewportX(),this.getMapData().getViewportY(),2,2,function(imageData,data) {
 		 			//currentContext.setImageData(imageData,data);
        		//	currentContext.render();
 					console.log("callback called")		
