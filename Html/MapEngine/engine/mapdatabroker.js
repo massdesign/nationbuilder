@@ -2,11 +2,13 @@
 function MapDataBroker(parent) {
 	
 	this._mapservice = new MapService();
-	
+	this._cacheSize = 2;
 	this.mapData = []
 	this._parent = parent
 	this.xCounter = 0;
 	this.yCounter = 0;
+	this.xOuter = 0;
+	this.yOuter = 0;
 	this.imageData = [];
 	this.data = [];
 	
@@ -47,19 +49,34 @@ this._getCurrentScrollOffset = function(move,prevmove,current) {
 		  }  
 		  return c;
 }
-this.getMapData = function (treshold,x,y,width,height,callback) {
-		/*
-		console.log("current treshold: " + treshold)
-	    console.log("xcounter: " + this.xCounter + " ycounter" + this.yCounter)
-	    console.log("x: " + x)
-		console.log("y: " + y)
+/*
+Delivers the mapdata without any caching (besides the standard cachning that is defined in cachesize)
+*/
+this.getVanillaMapData = function(x,y,width,height,callback) {
 
-		console.log("width: " + width)
-		console.log("height: " + height)
-		*/
-	console.log("x: " + x)
-	console.log("y: " + y)
-	 	var currentContext = this
+	var x1 = width * this._cacheSize;
+	var y1 = height * this._cacheSize;
+
+	var currentContext = this;
+
+	this._mapservice.getMap(function (mapData) {
+		var data = mapData[0]['layers'];
+		//this.xOuter += width-1;
+	//	this.yOuter += height-1;
+
+		currentContext.data = data;
+		currentContext._mapservice.getImages(function (imagedata) {
+				currentContext.imageData = imagedata;
+				callback(currentContext.imageData, currentContext.data)
+			}
+		);
+
+	}, x,y, x1, y1);
+}
+this.getMapData = function (treshold,x,y,width,height,callback) {
+
+
+	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
  
 		var xmove = this._parent.getMapData().getViewportX();
@@ -67,49 +84,69 @@ this.getMapData = function (treshold,x,y,width,height,callback) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
 
+			x1load = x;
+			y1load = y;
+		
 
 
  	    
  	    if(this.xCounter == treshold || this.yCounter == treshold)
  	    {
-			//console.log("treshold reached, fetching data from server ")
-			// if there is something on the left that is worth loading do it 
-			if(x >= width*2 && y >=height*2)	
-			{
-			// the window that we need to prefetch goes also left (-x) and up (-y)			
-			}
-			else 
-			{
- 				//console.log("hier komt ie nooit")
-  				x2load=width*2;
-  				y2load=height*2;
-			}
+ 	    		if(currentContext.xOuter == 0 && this.xCounter > 0) {
+					 currentContext.xOuter = width * this._cacheSize;		
+	 				console.log("initial set x")	
+	 				 currentContext.xCounter = 0;
+				   }
+				   
+				else if(currentContext.yOuter == 0 && this.yCounter > 0) {
+					 currentContext.yOuter = height * this._cacheSize;
+					 console.log("initial set y")
+					 		currentContext.yCounter = 0;
+					}
+				else 	if(currentContext.xCounter == treshold)
+				{
+				   currentContext.xOuter += width*currentContext._cacheSize;
+				   console.log("xouter set again")
+			
+				}
+				else if(currentContext.yCounter == treshold)
+				{
+					
+					currentContext.yOuter += height*currentContext._cacheSize;		
+				}
+			x2load = width * this._cacheSize;
+			y2load = height * this._cacheSize;
 
 
 			this._mapservice.getMap(function(mapData) {
  				//	console.log("width: " + width)
  					//console.log("height: " + height)
 					var data = mapData[0]['layers'];
-				var xy = x + y;
-
-				console.log("x+y=" + xy )
-				console.log(data)
-				console.log(data[0].layer.tiles[xy])
-
-
-
+	
+				//console.log(data)
+				//console.log("xposition: " + data[0].layer.tiles[0].tile.xposition)
+				//console.log("yposition: " + data[0].layer.tiles[0].tile.yposition)
+				//if(currentContext.xCounter == treshold)
+				//{
+				//   currentContext.xOuter += width*currentContext._cacheSize;
+				///   console.log("xouter set again")
+			
+				//}
+				//else if(currentContext.yCounter == treshold)
+			//	{
+					
+			//		currentContext.yOuter += height*currentContext._cacheSize;		
+			//	}
 					currentContext.data = data;
 					currentContext._mapservice.getImages(function(imagedata) {
 							currentContext.imageData = imagedata;
-						//		console.log(imagedata)
- 				//		console.log(data)
 						callback(currentContext.imageData,currentContext.data)
 					    currentContext.xCounter = 0;
 						currentContext.yCounter = 0;
 					}
 				);
 
-			},x,y,x2load,y2load);
+			},this.xOuter,this.yOuter,x2load,y2load);
 
 		}
 		else 
