@@ -34,8 +34,8 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()
-    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()
+    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
+    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
     			image_id = tile.image_id
     			
    		    tilesize = this.parentMap.getRelativeTilesize();

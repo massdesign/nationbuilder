@@ -8,10 +8,10 @@ this._viewporty = 0;
 this._prevviewportx = 0;
 this._prevviewporty = 0;
 
+this._startPositionX = 0;
+this._startPositionY = 0;
+
 this.clickedTile = function() {
-// TODO: this seems obsolete?? Maybe delete it?
-	//this.x = -1;
-	//this.y = -1;
 }
 
 this.getPrevViewportX = function() {
@@ -28,6 +28,19 @@ this.setviewportPosition = function(x,y) {
 	this.setPrevViewport(this._viewportx,this._viewporty)
 	this._viewportx = x;
 	this._viewporty = y;
+}
+
+this.getStartPositionX = function() {
+	return this._startPositionX;	
+}
+this.getStartPositionY = function() {
+	return this._startPositionY;
+}
+this.setStartPositionX = function(x) {
+	this._startPositionX = x;
+}
+this.setStartPositionY = function(y) {
+	this._startPositionY = y;
 }
 
 this.getViewportX = function() {

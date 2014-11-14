@@ -9,6 +9,8 @@ function MapDataBroker(parent) {
 	this.yCounter = 0;
 	this.xOuter = 0;
 	this.yOuter = 0;
+	this.xStartPosition = 0;
+	this.yStartPosition = 0;
 	this.imageData = [];
 	this.data = [];
 	
@@ -49,13 +51,18 @@ this._getCurrentScrollOffset = function(move,prevmove,current) {
 		  }  
 		  return c;
 }
+// TODO: getInitialMapData and GetMapData are dependend on each other, consider loose coupling between the two or integrate more
+
 /*
-Delivers the mapdata without any caching (besides the standard cachning that is defined in cachesize)
+Get the initialscreen from where the user can scroll left or right
 */
-this.getVanillaMapData = function(x,y,width,height,callback) {
+this.getInitialMapData = function(x,y,width,height,callback) {
 
 	var x1 = width * this._cacheSize;
 	var y1 = height * this._cacheSize;
+	
+	this.xStartPosition = x;
+	this.yStartPosition = y;
 
 	var currentContext = this;
 
@@ -72,8 +79,14 @@ this.getVanillaMapData = function(x,y,width,height,callback) {
 		);
 
 	}, x,y, x1, y1);
+	
+	this.xOuter = x;
+	this.yOuter = y;
 }
-this.getMapData = function (treshold,x,y,width,height,callback) {
+/*
+Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
+*/
+this.getMapData = function (treshold,width,height,callback) {
 
 
 	 	var currentContext = this;
@@ -83,23 +96,18 @@ this.getMapData = function (treshold,x,y,width,height,callback) {
    	 	var ymove = this._parent.getMapData().getViewportY();
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
-
-			x1load = x;
-			y1load = y;
-		
-
-
+	
  	    
  	    if(this.xCounter == treshold || this.yCounter == treshold)
  	    {
- 	    		if(currentContext.xOuter == 0 && this.xCounter > 0) {
-					 currentContext.xOuter = width * this._cacheSize;		
+ 	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
+					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
 	 				console.log("initial set x")	
 	 				 currentContext.xCounter = 0;
 				   }
 				   
-				else if(currentContext.yOuter == 0 && this.yCounter > 0) {
-					 currentContext.yOuter = height * this._cacheSize;
+				else if(currentContext.yOuter == this.yStartPosition && this.yCounter > 0) {
+					 currentContext.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
 					 console.log("initial set y")
 					 		currentContext.yCounter = 0;
 					}
@@ -112,31 +120,14 @@ this.getMapData = function (treshold,x,y,width,height,callback) {
 				else if(currentContext.yCounter == treshold)
 				{
 					
-					currentContext.yOuter += height*currentContext._cacheSize;		
+					currentContext.yOuter += height*currentContext._cacheSize;
 				}
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
 
 
 			this._mapservice.getMap(function(mapData) {
- 				//	console.log("width: " + width)
- 					//console.log("height: " + height)
 					var data = mapData[0]['layers'];
-	
-				//console.log(data)
-				//console.log("xposition: " + data[0].layer.tiles[0].tile.xposition)
-				//console.log("yposition: " + data[0].layer.tiles[0].tile.yposition)
-				//if(currentContext.xCounter == treshold)
-				//{
-				//   currentContext.xOuter += width*currentContext._cacheSize;
-				///   console.log("xouter set again")
-			
-				//}
-				//else if(currentContext.yCounter == treshold)
-			//	{
-					
-			//		currentContext.yOuter += height*currentContext._cacheSize;		
-			//	}
 					currentContext.data = data;
 					currentContext._mapservice.getImages(function(imagedata) {
 							currentContext.imageData = imagedata;

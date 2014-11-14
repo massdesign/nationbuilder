@@ -1,6 +1,7 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
+		
 		this._mapDataBroker = new  MapDataBroker(this);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -16,7 +17,8 @@ function Map(javascript_console,applicationName)
         this._g_tilesize = 32;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
-        this._zoomlevel = 1;
+      this._zoomlevel = 1;
+
 
         this._imagedata = isNaN;
         this._data = isNaN;
@@ -112,6 +114,8 @@ function Map(javascript_console,applicationName)
 
 	this.init = function()
 	{
+	   this.getMapData().setStartPositionX(2);
+		this.getMapData().setStartPositionY(2);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 320,
@@ -119,7 +123,7 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getVanillaMapData(0,0,4,4,function(imageData,data) {
+		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),4,4,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext.render();
 		console.log("callback called")		
@@ -133,7 +137,7 @@ function Map(javascript_console,applicationName)
    }
    // temp method to facilitate the proof of concept
    this.move = function () {
-				this._mapDataBroker.getMapData(3,this.getMapData().getViewportX(),this.getMapData().getViewportY(),4,4,function(imageData,data) {
+				this._mapDataBroker.getMapData(3,4,4,function(imageData,data) {
 		 			//currentContext.setImageData(imageData,data);
        		//	currentContext.render();
 					console.log("callback called")		
