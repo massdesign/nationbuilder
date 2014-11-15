@@ -88,7 +88,8 @@ Checks if the mapbroker needs to fetch new data, it does this by checking how mu
 */
 this.getMapData = function (treshold,width,height,callback) {
 
-
+		console.log(this.xCounter)
+		console.log(this.yCounter)
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
  
@@ -98,7 +99,7 @@ this.getMapData = function (treshold,width,height,callback) {
    		var prevymove = this._parent.getMapData().getPrevViewportY();
 	
  	    
- 	    if(this.xCounter == treshold || this.yCounter == treshold)
+ 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold)
  	    {
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
@@ -111,16 +112,27 @@ this.getMapData = function (treshold,width,height,callback) {
 					 console.log("initial set y")
 					 		currentContext.yCounter = 0;
 					}
-				else 	if(currentContext.xCounter == treshold)
+				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter > 0)
 				{
 				   currentContext.xOuter += width*currentContext._cacheSize;
 				   console.log("xouter set again")
 			
 				}
-				else if(currentContext.yCounter == treshold)
+				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
 				{
 					
 					currentContext.yOuter += height*currentContext._cacheSize;
+				}
+				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
+				{
+				   currentContext.xOuter -= width*currentContext._cacheSize;
+				   console.log("xouter set again")
+			
+				}
+				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter < 0)
+				{
+					
+					currentContext.yOuter -= height*currentContext._cacheSize;
 				}
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;

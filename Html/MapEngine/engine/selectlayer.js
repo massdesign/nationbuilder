@@ -40,7 +40,6 @@ this._createBackgroundRect = function(c_width,c_height)
 		var currentContext = this;
     	this.parentMap.getStage().addEventListener('click', function (evt) {	
     	       
-    
        var mouseXY = currentContext.parentMap.getStage().getPointerPosition();
     	 var canvasX = mouseXY.x;
     	 var canvasY = mouseXY.y;

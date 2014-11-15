@@ -24,8 +24,8 @@ function Map(javascript_console,applicationName)
         this._data = isNaN;
     	
     	this.layers.push(new TileLayer(this,javascript_console));
-    	//this.layers.push(new SelectLayer(this,javascript_console));
-    //	this.layers.push(new GridLayer(this,javascript_console));
+    	this.layers.push(new SelectLayer(this,javascript_console));
+    	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -114,8 +114,8 @@ function Map(javascript_console,applicationName)
 
 	this.init = function()
 	{
-	   this.getMapData().setStartPositionX(2);
-		this.getMapData().setStartPositionY(2);
+	   this.getMapData().setStartPositionX(20);
+		this.getMapData().setStartPositionY(20);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 320,
