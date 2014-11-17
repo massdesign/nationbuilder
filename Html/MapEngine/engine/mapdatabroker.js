@@ -140,7 +140,20 @@ this.getMapData = function (treshold,width,height,callback) {
 
 			this._mapservice.getMap(function(mapData) {
 					var data = mapData[0]['layers'];
-					currentContext.data = data;
+					for(i=0;i<currentContext.data.length;i++) {
+						var currentLayer = currentContext.data[i].layer;
+						if(data.length > i){
+							var newLayer = data[i].layer;
+							//console.log(newLayer.tiles)
+							//console.log("previouslength" + currentLayer.tiles.length)
+							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
+							//console.log("currentlength" + currentLayer.tiles.length)
+							}
+											
+						}
+						console.log(currentContext.data)			
+					//console.log(currentContext.data[0].layer.tiles)					
+					//currentContext.data = data;
 					currentContext._mapservice.getImages(function(imagedata) {
 							currentContext.imageData = imagedata;
 						callback(currentContext.imageData,currentContext.data)

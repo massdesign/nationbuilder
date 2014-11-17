@@ -114,8 +114,8 @@ function Map(javascript_console,applicationName)
 
 	this.init = function()
 	{
-	   this.getMapData().setStartPositionX(20);
-		this.getMapData().setStartPositionY(20);
+	   this.getMapData().setStartPositionX(0);
+		this.getMapData().setStartPositionY(0);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 320,
@@ -137,9 +137,10 @@ function Map(javascript_console,applicationName)
    }
    // temp method to facilitate the proof of concept
    this.move = function () {
-				this._mapDataBroker.getMapData(3,4,4,function(imageData,data) {
-		 			//currentContext.setImageData(imageData,data);
-       		//	currentContext.render();
+   			var currentContext = this;
+				this._mapDataBroker.getMapData(12,4,4,function(imageData,data) {
+		 			currentContext.setImageData(imageData,data);
+       			currentContext.render();
 					console.log("callback called")		
 		});
 		this.layers[0].move()
