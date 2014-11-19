@@ -6,7 +6,7 @@ function TerritoryService() {
   this.doPostRequest = function(data) {
   // this._baseService.doPostJsonRequest("/tiles",function() {},0);
   // ff tijdelijk voor test naar terraintype posten
-   this._baseService.doPostJsonRequest("/terraintypes.json",function() {},data);
+   this._baseService.doPostJsonRequest("/claims.json",function() {},data);
   
   }
 }

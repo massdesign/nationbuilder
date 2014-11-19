@@ -34,10 +34,14 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 		// alle militaire acties zijn afgekort met mil_    
     	$scope.mil_lct = function(event) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
-    		var terraintype = {}
-    		terraintype.name = "WATER"
-    		console.log(JSON.stringify(terraintype))
-    		t.doPostRequest(terraintype)
+    	//	var terraintype = {}
+    	var newClaim = {}
+    	newClaim.state_id = 1;
+    	newClaim.tile_id = 2;
+    //		terraintype.name = "WATER"
+    		console.log(JSON.stringify(newClaim))
+    		console.log(map.getMapData().getClickedTile());
+    		t.doPostRequest(newClaim)
     	
     	}
       $scope.scrollright = function (event) {

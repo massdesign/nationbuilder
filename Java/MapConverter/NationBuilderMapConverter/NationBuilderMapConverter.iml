@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="NationBuilderLib" />
+    <orderEntry type="module" module-name="NationBuilderLib" />
   </component>
 </module>
-
