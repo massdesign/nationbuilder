@@ -11,6 +11,11 @@ this._prevviewporty = 0;
 this._startPositionX = 0;
 this._startPositionY = 0;
 
+this._renderOffset = [];
+this._imageGrids = [];
+this._imagePositions = [];
+//this._renderOffsetY = 0;
+
 this.clickedTile = function() {
 }
 
@@ -49,11 +54,51 @@ this.getViewportX = function() {
 this.getViewportY = function() {
 	return this._viewporty;
 }
+this.setRenderOffset = function(x,layerId) {
+
+this._renderOffset[layerId] = x;
+}
+this.getRenderOffset = function (i) { 
+
+console.log(this._renderOffset)
+return this._renderOffset[i];
+
+}
+/*this.setRenderOffsetY = function (y) {
+this._renderOffsetY = y;
+} */
 
 this.setClickedTile = function(tile) {
 
 this.clickedTile = tile;
 
 }
+// TODO: rename this method
+this.getImageGrid = function () {
+	return this._imageGrids;
+}
 
+this.getImagePosition = function() {
+	return this._imagePositions;
+}
+this.addImagePosition = function(imagePos,pos) {
+if(pos == "PRE") {
+this._imagePositions =  imagePos.concat(this._imagePositions)
+}
+else if(pos == "POST") {
+
+	this._imagePositions = this._imageGrids.concat(imagePos)
+}
+}
+this.addImageGrid = function(imagePos,pos) {
+
+if(pos == "PRE")
+{
+	this._imageGrids = imagePos.concat(this._imageGrids);	
+}
+else if(pos == "POST")
+{
+	this._imageGrids =  this._imageGrids.concat(imagePos)
+}
+}
 }

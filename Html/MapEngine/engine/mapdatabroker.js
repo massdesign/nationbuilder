@@ -88,8 +88,6 @@ Checks if the mapbroker needs to fetch new data, it does this by checking how mu
 */
 this.getMapData = function (treshold,width,height,callback) {
 
-		console.log(this.xCounter)
-		console.log(this.yCounter)
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
  
@@ -144,17 +142,12 @@ this.getMapData = function (treshold,width,height,callback) {
 						var currentLayer = currentContext.data[i].layer;
 						if(data.length > i){
 							var newLayer = data[i].layer;
-							//console.log(newLayer.tiles)
-							//console.log("previouslength" + currentLayer.tiles.length)
+							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length,i);
 							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
-							//console.log("currentlength" + currentLayer.tiles.length)
 							}
 											
-						}
-						console.log(currentContext.data)			
-					//console.log(currentContext.data[0].layer.tiles)					
-					//currentContext.data = data;
-					currentContext._mapservice.getImages(function(imagedata) {
+						}	
+						currentContext._mapservice.getImages(function(imagedata) {
 							currentContext.imageData = imagedata;
 						callback(currentContext.imageData,currentContext.data)
 					    currentContext.xCounter = 0;

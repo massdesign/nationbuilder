@@ -2,20 +2,67 @@ function TileLayer(parentMap,loginstance)
 {
   this.parentMap = parentMap
   this.loginstance = loginstance;
-  // TODO: get rid of arrays that are not much of use anymore
-  // array that keeps track of all loaded kineticjs objects
-  this._imagegrid = [];
-  this. imagePos = []
 	this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
    }
    	
+   	
+   
+	// do a partial render
+	
+	this.partialRender = function (imagedata,data) {
+	
+		var imagenames = Array();
+   	var imgs = [];
+    	var imagePos = [];
+    	var imageURLs=[];
+		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
+   	for(var i=0;i<imagedata.length;i++)
+    	{
+			imagenames[imagedata[i].id] = imagedata[i].name     	  
+    	}
+       	 data = this._sort(data);
+    	for(var i=0;i<data.length;i++) {
+   		var tileLayer = data[i].layer;
+		//console.log(this.parentMap.getMapData().getRenderOffset(i))
+			var currentOffset = 0;
+			console.log(i)
+    		if (typeof(this.parentMap.getMapData().getRenderOffset(i)) != "undefined")
+    		{
+    			console.log(this.parentMap.getMapData())
+    			currentOffset = this.parentMap.getMapData().getRenderOffset(i);
+    		}
+   		 var tileLayertiles = tileLayer.tiles;
+    		for(var t=currentOffset;t<tileLayertiles.length;t++)
+    		{
+    			var tiles = tileLayer.tiles;
+    			var tile = tiles[t].tile //+this.parentMap.getMapData().getRenderOffset(i)].tile
+    			xoffset = tile.xoffset
+    			yoffset = tile.yoffset
+    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
+    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
+    			image_id = tile.image_id
+    			
+   		    tilesize = this.parentMap.getRelativeTilesize();
+    			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
+    			source = "http://localhost:8083/ncache/" + tilerequest;
+  	  	 		imageURLs.push(source);  	  	 		
+  	  	 		imagePos.push([xposition,yposition]);
+    		}	
+    	}
+    	
+
+    	this.loadAllImages(imgs,imagePos,imageURLs);   	
+	
+	}   
+   
+   // do full render of the screen
 	this.render = function(imagedata,data)
 	{
 		var imagenames = Array();
    	var imgs = [];
-    	//var imagePos = [];
+    	var imagePos = [];
     	var imageURLs=[];
 		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
    	for(var i=0;i<imagedata.length;i++)
@@ -42,12 +89,11 @@ function TileLayer(parentMap,loginstance)
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://localhost:8083/ncache/" + tilerequest;
   	  	 		imageURLs.push(source);  	  	 		
-  	  	 		this.imagePos.push([xposition,yposition]);
+  	  	 		imagePos.push([xposition,yposition]);
     		}	
     	}
-    	
-
-    	this.loadAllImages(imgs,this.imagePos,imageURLs);   			
+ 		this.parentMap.getMapData().addImagePosition(imagePos,"POST");
+    	this.loadAllImages(imgs,imagePos,imageURLs);   			
 		
 	}
 	 this.move = function() { 
@@ -55,20 +101,21 @@ function TileLayer(parentMap,loginstance)
 
 		 var anim = new Kinetic.Animation(function(frame) {
 		 	
-		 			
-
-							for(i=0;i<currentContext._imagegrid.length;i++) {	
+		 					var imageGrid = currentContext.parentMap.getMapData().getImageGrid();
+		 					var imagePos = currentContext.parentMap.getMapData().getImagePosition();
+							console.log(imagePos.length)
+							for(i=0;i<imageGrid.length;i++) {	
 							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
-	    					 var currentX = currentContext._imagegrid[i].getX();
-	    					 var currentY = currentContext._imagegrid[i].getY();
+	    					 var currentX = imageGrid[i].getX();
+	    					 var currentY = imageGrid[i].getY();
 	    					 //currentContext.imagePos[2][0] =  currentContext.imagePos[2][0]
-	    					 var newX =  currentContext.imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
-	    					 var newY =  currentContext.imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
+	    					 var newX =  imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
+	    					 var newY =  imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
 	    					 newX = newX - (viewportX*currentContext.parentMap.getRelativeTilesize())
 	    					 newY = newY - (viewportY*currentContext.parentMap.getRelativeTilesize())
-       					 currentContext._imagegrid[i].setX(newX);
-       				    currentContext._imagegrid[i].setY(newY);
+       					 imageGrid[i].setX(newX);
+       				    imageGrid[i].setY(newY);
        					 }
        					this.stop()
      						 }, currentContext._layer);					 
@@ -110,6 +157,8 @@ function TileLayer(parentMap,loginstance)
     }
 
 	this.loadAllImages =   function(imgs,imagePos,imageURLs){
+		
+			var imageGrid = [];
         for (var i=0; i<imageURLs.length; i++) {
             var img = new Image();
             imgs.push(img);
@@ -135,9 +184,11 @@ function TileLayer(parentMap,loginstance)
                 	 	image:imgs[i],
                 	 	draggable:false
            			 });
-           			 currentContext._imagegrid[i] = img
+           			 imageGrid[i] = img;
+           			 //currentContext._imagegrid[i] = img
             		currentContext._layer.add(img);
         			}
+        			 currentContext.parentMap.getMapData().addImageGrid(imageGrid,"POST");
         			currentContext._layer.draw();
                 }
             };
