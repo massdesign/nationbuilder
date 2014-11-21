@@ -1,4 +1,4 @@
-
+	
 // MapData object for communication with Mapengine and the rest of the application
 function MapData() {
 
@@ -14,11 +14,26 @@ this._startPositionY = 0;
 this._renderOffset = [];
 this._imageGrids = [];
 this._imagePositions = [];
+this._xMovement = 0;
+this._yMovement = 0;
+
 //this._renderOffsetY = 0;
 
 this.clickedTile = function() {
 }
 
+this.getXMovement = function () {
+	return this._xMovement;
+}
+this.getYMovement = function () {
+	return this._yMovement;
+}
+this.setXMovement = function (x) {
+this._xMovement = x;
+}
+this.setYMovement = function (y) {
+this._yMovement = y;
+}
 this.getPrevViewportX = function() {
 	return this._prevviewportx;
 }
@@ -60,7 +75,6 @@ this._renderOffset[layerId] = x;
 }
 this.getRenderOffset = function (i) { 
 
-console.log(this._renderOffset)
 return this._renderOffset[i];
 
 }
@@ -87,7 +101,11 @@ this._imagePositions =  imagePos.concat(this._imagePositions)
 }
 else if(pos == "POST") {
 
-	this._imagePositions = this._imageGrids.concat(imagePos)
+	for(i=0;i<imagePos.length;i++)
+	{
+		this._imagePositions.push([imagePos[i][0],imagePos[i][1]]);
+	}
+	this._imagePositions = this._imagePositions.concat(imagePos)
 }
 }
 this.addImageGrid = function(imagePos,pos) {

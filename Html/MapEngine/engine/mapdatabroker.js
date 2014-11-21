@@ -88,10 +88,11 @@ Checks if the mapbroker needs to fetch new data, it does this by checking how mu
 */
 this.getMapData = function (treshold,width,height,callback) {
 
+	
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
  
-		var xmove = this._parent.getMapData().getViewportX();
+	 	   var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
@@ -101,7 +102,6 @@ this.getMapData = function (treshold,width,height,callback) {
  	    {
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
-	 				console.log("initial set x")	
 	 				 currentContext.xCounter = 0;
 				   }
 				   
@@ -150,6 +150,9 @@ this.getMapData = function (treshold,width,height,callback) {
 						currentContext._mapservice.getImages(function(imagedata) {
 							currentContext.imageData = imagedata;
 						callback(currentContext.imageData,currentContext.data)
+						  var xmov =  currentContext._parent.getMapData().getXMovement()+currentContext.xCounter;
+						  console.log("xmov = " + currentContext)
+						  currentContext._parent.getMapData().setXMovement(xmov);
 					    currentContext.xCounter = 0;
 						currentContext.yCounter = 0;
 					}
@@ -160,10 +163,10 @@ this.getMapData = function (treshold,width,height,callback) {
 		}
 		else 
 		{
-
 			//console.log("values within treshold, don't get new data from the server")
 			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
 			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
+				console.log("xCounter" + this.xCounter)
 		}
 
 	}

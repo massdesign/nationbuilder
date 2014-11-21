@@ -23,7 +23,7 @@ public class Main {
 
 		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.NB14Map);
+		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.ChunkingDemo);
 		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
 		converter.Convert();
 		MapDataset dataset = converter.GetMapDataset();

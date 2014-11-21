@@ -13,6 +13,8 @@ function TileLayer(parentMap,loginstance)
 	
 	this.partialRender = function (imagedata,data) {
 	
+	//	console.log("data that will be rendered")
+	//	console.log(data)
 		var imagenames = Array();
    	var imgs = [];
     	var imagePos = [];
@@ -27,12 +29,11 @@ function TileLayer(parentMap,loginstance)
    		var tileLayer = data[i].layer;
 		//console.log(this.parentMap.getMapData().getRenderOffset(i))
 			var currentOffset = 0;
-			console.log(i)
-    		if (typeof(this.parentMap.getMapData().getRenderOffset(i)) != "undefined")
-    		{
-    			console.log(this.parentMap.getMapData())
+			if (typeof(this.parentMap.getMapData().getRenderOffset(i)) != "undefined")
+    		{    		
     			currentOffset = this.parentMap.getMapData().getRenderOffset(i);
     		}
+    		console.log("the current offset is" + currentOffset)
    		 var tileLayertiles = tileLayer.tiles;
     		for(var t=currentOffset;t<tileLayertiles.length;t++)
     		{
@@ -40,7 +41,10 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile //+this.parentMap.getMapData().getRenderOffset(i)].tile
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
+    			var xStartPosition = this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX();
+    			var xMovement = this.parentMap.getMapData().getXMovement();
+    			console.log("xmovement =" + xMovement)
+    			xposition = tile.xposition - xStartPosition + xMovement;
     			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
     			image_id = tile.image_id
     			
@@ -50,9 +54,8 @@ function TileLayer(parentMap,loginstance)
   	  	 		imageURLs.push(source);  	  	 		
   	  	 		imagePos.push([xposition,yposition]);
     		}	
-    	}
-    	
-
+    	} 	
+		this.parentMap.getMapData().addImagePosition(imagePos,"POST");
     	this.loadAllImages(imgs,imagePos,imageURLs);   	
 	
 	}   
@@ -100,22 +103,31 @@ function TileLayer(parentMap,loginstance)
 	    var currentContext = this;
 
 		 var anim = new Kinetic.Animation(function(frame) {
-		 	
+		 					
 		 					var imageGrid = currentContext.parentMap.getMapData().getImageGrid();
 		 					var imagePos = currentContext.parentMap.getMapData().getImagePosition();
-							console.log(imagePos.length)
+							console.log(imagePos)
 							for(i=0;i<imageGrid.length;i++) {	
 							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
 	    					 var currentX = imageGrid[i].getX();
-	    					 var currentY = imageGrid[i].getY();
+	    					 var currentY = imageGrid[i].getY();	
 	    					 //currentContext.imagePos[2][0] =  currentContext.imagePos[2][0]
-	    					 var newX =  imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
-	    					 var newY =  imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
-	    					 newX = newX - (viewportX*currentContext.parentMap.getRelativeTilesize())
-	    					 newY = newY - (viewportY*currentContext.parentMap.getRelativeTilesize())
-       					 imageGrid[i].setX(newX);
-       				    imageGrid[i].setY(newY);
+	    					 if(imagePos[i] === undefined)
+	    					 {
+	    					 	console.log("undefined at " + i)
+	    					 	
+	    					 }
+	    					 else 
+	    					 {
+	    					  var newX =  imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
+	    					  var newY =  imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
+	    					 
+	    					 	newX = newX - (viewportX*currentContext.parentMap.getRelativeTilesize())
+	    					 	newY = newY - (viewportY*currentContext.parentMap.getRelativeTilesize())
+       					 	imageGrid[i].setX(newX);
+       				    	imageGrid[i].setY(newY);
+       				    }
        					 }
        					this.stop()
      						 }, currentContext._layer);					 
