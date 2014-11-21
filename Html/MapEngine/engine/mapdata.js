@@ -16,12 +16,18 @@ this._imageGrids = [];
 this._imagePositions = [];
 this._xMovement = 0;
 this._yMovement = 0;
-
+this._tiles = [];
 //this._renderOffsetY = 0;
 
 this.clickedTile = function() {
 }
-
+this.getTiles = function() {
+	return this._tiles;
+}
+this.setTiles = function(tiles)	 {
+	console.log("de tiles " + tiles)
+	this._tiles = tiles;
+}
 this.getXMovement = function () {
 	return this._xMovement;
 }
