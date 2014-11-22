@@ -2,7 +2,7 @@
 function MapDataBroker(parent) {
 	
 	this._mapservice = new MapService();
-	this._cacheSize = 2;
+	this._cacheSize = 1;
 	this.mapData = []
 	this._parent = parent
 	this.xCounter = 0;
@@ -91,7 +91,7 @@ this.getMapData = function (treshold,width,height,callback) {
 	
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
- 
+	
 	 	   var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
@@ -100,6 +100,9 @@ this.getMapData = function (treshold,width,height,callback) {
  	    
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold)
  	    {
+ 	    		var currentTreshold = this._parent.getMapData().getTreshold()
+			   this._parent.getMapData().setTreshold(currentTreshold+treshold)
+ 
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
 	 				 currentContext.xCounter = 0;
@@ -151,7 +154,6 @@ this.getMapData = function (treshold,width,height,callback) {
 							currentContext.imageData = imagedata;
 						callback(currentContext.imageData,currentContext.data)
 						  var xmov =  currentContext._parent.getMapData().getXMovement()+currentContext.xCounter;
-						  console.log("xmov = " + currentContext)
 						  currentContext._parent.getMapData().setXMovement(xmov);
 					    currentContext.xCounter = 0;
 						currentContext.yCounter = 0;
@@ -166,7 +168,6 @@ this.getMapData = function (treshold,width,height,callback) {
 			//console.log("values within treshold, don't get new data from the server")
 			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
 			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
-				console.log("xCounter" + this.xCounter)
 		}
 
 	}

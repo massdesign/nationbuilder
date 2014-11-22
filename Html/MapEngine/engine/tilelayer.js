@@ -12,14 +12,12 @@ function TileLayer(parentMap,loginstance)
 	// do a partial render
 	
 	this.partialRender = function (imagedata,data) {
-	
-	//	console.log("data that will be rendered")
-	//	console.log(data)
-		var imagenames = Array();
+	var imagenames = Array();
    	var imgs = [];
     	var imagePos = [];
     	var imageURLs=[];
-		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
+		var renderList = [];
+		
    	for(var i=0;i<imagedata.length;i++)
     	{
 			imagenames[imagedata[i].id] = imagedata[i].name     	  
@@ -27,36 +25,51 @@ function TileLayer(parentMap,loginstance)
        	 data = this._sort(data);
     	for(var i=0;i<data.length;i++) {
    		var tileLayer = data[i].layer;
-		//console.log(this.parentMap.getMapData().getRenderOffset(i))
-			var currentOffset = 0;
-			if (typeof(this.parentMap.getMapData().getRenderOffset(i)) != "undefined")
-    		{    		
-    			currentOffset = this.parentMap.getMapData().getRenderOffset(i);
-    		}
-    		console.log("the current offset is" + currentOffset)
+			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
    		 var tileLayertiles = tileLayer.tiles;
+
     		for(var t=currentOffset;t<tileLayertiles.length;t++)
     		{
     			var tiles = tileLayer.tiles;
-    			var tile = tiles[t].tile //+this.parentMap.getMapData().getRenderOffset(i)].tile
+    			var tile = tiles[t].tile
+
+
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			var xStartPosition = this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX();
-    			var xMovement = this.parentMap.getMapData().getXMovement();
-    			xposition = tile.xposition - xStartPosition + xMovement;
-    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
+    			xposition = tile.xposition // - this.parentMap.getMapData().getTreshold()
+    			console.log("xposition newly rendered" + xposition)
+    			yposition = tile.yposition;
     			image_id = tile.image_id
     			
-   		    tilesize = this.parentMap.getRelativeTilesize();
+   		   tilesize = this.parentMap.getRelativeTilesize();
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://localhost:8083/ncache/" + tilerequest;
-  	  	 		imageURLs.push(source);  	  	 		
-  	  	 		imagePos.push([xposition,yposition]);
+
+
+				tile.setImageUrl = function (imageUrl) {
+					this.imageUrl = imageUrl;
+				}
+				tile.getImageUrl = function() {
+					return this.imageUrl;
+				}
+				tile.setPosition = function(xposition,yposition) {
+					this.xposition = xposition;
+					this.yposition = yposition;
+				}
+				tile.getXPosition = function() {
+					return this.xposition;
+				}
+				tile.getYPosition = function() {
+					return this.yposition;
+				}
+				tile.setImageUrl(source)
+				tile.setPosition(xposition,yposition);
+				renderList.push(tile);
     		}	
-    	} 	
-		this.parentMap.getMapData().addImagePosition(imagePos,"POST");
-    	this.loadAllImages(imgs,imagePos,imageURLs);   	
-	
+    	}
+    	//console.log(renderList)
+    	this.loadAllImages(renderList);
+    			
 	}   
    
    // do full render of the screen
@@ -118,45 +131,98 @@ function TileLayer(parentMap,loginstance)
     		}	
     	}
  		this.parentMap.getMapData().addImagePosition(imagePos,"POST");
-    	this.loadAllImages(imgs,imagePos,imageURLs,renderList);
+    	this.loadAllImages(renderList);
 		
 	}
 	 this.move = function() {
 
-
-	   		var currentContext = this;
-			//var tile = currentContext.parentMap.getMapData().getTiles()[0];
-		 //	console.log(tile)
-		 var anim = new Kinetic.Animation(function(frame) {
+		   		var currentContext = this;
+		var anim = new Kinetic.Animation(function(frame) {
 		 					
-		 					//var imageGrid = currentContext.parentMap.getMapData().getImageGrid();
-		 					//var imagePos = currentContext.parentMap.getMapData().getImagePosition();
-							//console.log(imageGrid)
-			 				var tiles = currentContext.parentMap.getMapData().getTiles();
+		 	 				var tiles = currentContext.parentMap.getMapData().getTiles();
+		 	 				var prevViewportX = currentContext.parentMap.getMapData().getPrevViewportX();
+		 	 				var prevViewportY = currentContext.parentMap.getMapData().getPrevViewportY();
+		 	 				var viewportX = currentContext.parentMap.getMapData().getViewportX();
+	    					var viewportY = currentContext.parentMap.getMapData().getViewportY();
+	    					
+                     var tilesize = currentContext.parentMap.getRelativeTilesize()
+					
+		 	 			
+		 	 			///	for(i=0;i<tiles.length;i++) {
+		 	 				//  var currentX =  tiles[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
+	    					  //var currentY =  tiles[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
+	    					  //var viewportX = currentContext.parentMap.getMapData().getViewportX();
+	    					  //var viewportY = currentContext.parentMap.getMapData().getViewportY();
+					
+							// console.log("viewportX =" + viewportX)
+						//	 console.log("viewportY =" + viewportY)
+							// console.log("tileXPosition = " + tiles[i].getXPosition())
+							// console.log("tileYPosition = " + tiles[i].getYPosition())	    					
+	    					// console.log("currentX = " + currentX)
+	    					// console.log("currentY = " + currentY)
+	    					// console.log("loaded tiles length = " + tiles.length)
+	    					// var	newX = currentX - (viewportX*currentContext.parentMap.getRelativeTilesize())
+	    					// var 	newY = currentY - (viewportY*currentContext.parentMap.getRelativeTilesize())
 
+						//	console.log("newX = " + newX)
+	    				//	 console.log("newY = " + newY)
+	    				
+	    		
 			 				for(i=0;i<tiles.length;i++) {
 							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
+	    					 
+	    					
 						//	 var currentX = 0;
 						//	 var currentY = 0;
 
-	    					 var currentX = tiles[i].getTileImage().getX();
-	    					 var currentY = tiles[i].getTileImage().getY();
+	    					// var currentX = tiles[i].getTileImage().getX();
+	    					// var currentY = tiles[i].getTileImage().getY();
+	    				
 	    					  //currentContext.imagePos[2][0] =  currentContext.imagePos[2][0]
 
-	    					  var newX =  tiles[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
+	    					  var currentX = tiles[i].getTileImage().getX() //  tiles[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
 	    					  //var newX =  imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
-	    					  var newY =  tiles[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
+	    					  var currentY = tiles[i].getTileImage().getY() //tiles[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
+	    						  //console.log("newX = " + newX)
+	    					  //console.log("newY = " + newY)
 	    					//  var newY =  imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
-
-	    					 	newX = newX - (viewportX*currentContext.parentMap.getRelativeTilesize())
-	    					 	newY = newY - (viewportY*currentContext.parentMap.getRelativeTilesize())
-			    			tiles[i].getTileImage().setX(newX);
-						    tiles[i].getTileImage().setY(newY);
+						//	 var	newX = currentX - (viewportX*currentContext.parentMap.getRelativeTilesize())
+							var newX = 0;
+							var newY = 0;							
+							if(prevViewportX > viewportX) {
+								newX = currentX + tilesize;		
+								tiles[i].getTileImage().setX(newX);					 	 				
+		 	 				}
+		 	 				else if(prevViewportY < viewportX)
+		 	 				{
+		 	 					newX = currentX - tilesize;	
+		 	 					tiles[i].getTileImage().setX(newX);							 	 					
+		 	 				} 
+		 	 				
+							if(prevViewportY > viewportY) {
+								newY = currentY + tilesize;
+								 tiles[i].getTileImage().setY(newY);
+							}		 	 		
+							else if(prevViewportY < viewportY) {
+								newY = currentY - tilesize;		
+								 tiles[i].getTileImage().setY(newY);					
+							}		
+		 	 				
+	    					
+							 console.log("currentX = " + currentX)
+	    								    			
+			    			 
+						   
        				   // 	imageGrid[i].setX(newX);
        				   // 	imageGrid[i].setY(newY);
 
        					 }
+				 			for(i=0;i<tiles.length;i++)
+	    					{
+								console.log("getX()" + tiles[i].getTileImage().getX())	    						
+	    					
+	    					}
        					this.stop()
      						 }, currentContext._layer);
 		anim.start()
@@ -196,13 +262,14 @@ function TileLayer(parentMap,loginstance)
        
     }
 
-	this.loadAllImages =   function(imgs,imagePos,imageURLs,renderList){
+	this.loadAllImages =   function(renderList){
 
 
 		//var imageGrid = [];
 		var imagesOK = 0;
 		var imUrlsLength = renderList.length;
 		var currentContext = this;
+		
 		for(var i=0;i<renderList.length;i++) {
 			var img = new Image();
 			renderList[i].setTileHtmlImage = function(img) {
@@ -213,8 +280,8 @@ function TileLayer(parentMap,loginstance)
 				return this._htmlImage;
 			}
 			renderList[i].setTileHtmlImage(img);
-
-			console.log(renderList[i])
+		//	console.log("retrieved tiles list")
+		//	console.log(renderList[i])
 			img.onload = function () {
 				imagesOK++;
 
@@ -223,7 +290,8 @@ function TileLayer(parentMap,loginstance)
 					for (var i = 0; i < renderList.length; i++) {
 						xpos = renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
 						ypos = renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
-
+						//console.log("real x position: " + xpos)
+					//	console.log("real y position: " + ypos)
 						var img = new Kinetic.Image({
 							x: xpos,
 							y: ypos,
@@ -239,12 +307,29 @@ function TileLayer(parentMap,loginstance)
 						  return this._kineticImage;
 						}
 						renderList[i].setTileImage(img)
-
-					//	imageGrid[i] = img;
-						//currentContext._imagegrid[i] = img
+						var currentX = renderList[i].getTileImage().getX();
+						var currentY = renderList[i].getTileImage().getY();
+						
+						var prevViewportX = currentContext.parentMap.getMapData().getPrevViewportX();
+						var prevViewportY = currentContext.parentMap.getMapData().getPrevViewportY();
+						
+						var viewportX = currentContext.parentMap.getMapData().getViewportX();
+						var viewportY = currentContext.parentMap.getMapData().getViewportY();
+						// gone right.. add treshold to X
+						var tresholdX = 0;
+						var tresholdY = 0;
+						if(viewportX > prevViewportX)
+						{
+							tresholdX = currentContext.parentMap.getMapData().getTreshold()*currentContext.parentMap.getRelativeTilesize();	
+							renderList[i].getTileImage().setX(currentX - (tresholdX))	
+						}
+						if(viewportY > prevViewportY)
+						{
+						 	 tresholdY = currentContext.parentMap.getMapData().getTreshold()*currentContext.parentMap.getRelativeTilesize();
+						 	 renderList[i].getTileImage().setY(currentY - (tresholdY))
+						}
 						currentContext._layer.add(img);
 					}
-					//currentContext.parentMap.getMapData().addImageGrid(imageGrid, "POST");
 					currentContext._layer.draw();
 				}
 			};
@@ -254,47 +339,14 @@ function TileLayer(parentMap,loginstance)
 			renderList[i].getTileHtmlImage().crossOrigin = "anonymous";
 			renderList[i].getTileHtmlImage().src = renderList[i].getImageUrl();
 		}
-		this.parentMap.getMapData().setTiles(renderList)
-
-
-     /*   for (var i=0; i<imageURLs.length; i++) {
-            var img = new Image();
-            imgs.push(img);
-            var imUrlsLength = imageURLs.length;
-            var currentContext = this;
-            var imagesOK = 0;
-
-            var currentContext = this
-
-            img.onload = function(){ 
-                imagesOK++; 
-              
-                if (imagesOK>=imUrlsLength) {
-              	 
-      	 		 for(var i=0;i<imgs.length;i++){
-          		 	  xpos = imagePos[i][0]*currentContext.parentMap.getRelativeTilesize();
-          		 	  ypos = imagePos[i][1]*currentContext.parentMap.getRelativeTilesize();
-           			 var img=new Kinetic.Image({
-                	 	x:xpos,
-                   	y:ypos,
-                   	width:currentContext.parentMap.getRelativeTilesize(),
-                	 	height:currentContext.parentMap.getRelativeTilesize(),
-                	 	image:imgs[i],
-                	 	draggable:false
-           			 });
-           			 imageGrid[i] = img;
-           			 //currentContext._imagegrid[i] = img
-            		currentContext._layer.add(img);
-        			}
-        			 currentContext.parentMap.getMapData().addImageGrid(imageGrid,"POST");
-        			currentContext._layer.draw();
-                }
-            };
-            img.onerror=function(){  console.log("image load failed");} 
-            img.crossOrigin="anonymous";
-            img.src =imageURLs[i];
-        }*/
-
+		var oldRenderlist = this.parentMap.getMapData().getTiles();
+		for(i=0;i<renderList.length;i++)
+		{
+			oldRenderlist.push(renderList[i])
+		}
+		this.parentMap.getMapData().setTiles(oldRenderlist)
+	   			var tiles = this.parentMap.getMapData().getTiles();
+		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
     }
 	this.getLayer = function()
 	{

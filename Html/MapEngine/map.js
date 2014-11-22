@@ -138,7 +138,7 @@ function Map(javascript_console,applicationName)
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(2,2,2,function(imageData,data) {    			
-       			//currentContext.layers[0].partialRender(imageData,data);
+       			currentContext.layers[0].partialRender(imageData,data);
 		});
 		this.layers[0].move()
    }
