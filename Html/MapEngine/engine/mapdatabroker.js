@@ -13,6 +13,8 @@ function MapDataBroker(parent) {
 	this.yStartPosition = 0;
 	this.imageData = [];
 	this.data = [];
+
+	this.requestCache = [];
 	
 
 this._hasChanged = function(move,prevmove) {
@@ -60,17 +62,19 @@ this.getInitialMapData = function(x,y,width,height,callback) {
 
 	var x1 = width * this._cacheSize;
 	var y1 = height * this._cacheSize;
-	
+
 	this.xStartPosition = x;
 	this.yStartPosition = y;
 
 	var currentContext = this;
+	if (!this.isAlreadyFetched(x, y, x1, y1)) {
 
 	this._mapservice.getMap(function (mapData) {
 		var data = mapData[0]['layers'];
 		//this.xOuter += width-1;
-	//	this.yOuter += height-1;
-
+		//	this.yOuter += height-1;
+		console.log("initial array that is loaded")
+		console.log(data)
 		currentContext.data = data;
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
@@ -78,10 +82,15 @@ this.getInitialMapData = function(x,y,width,height,callback) {
 			}
 		);
 
-	}, x,y, x1, y1);
+	}, x, y, x1, y1);
+}
 	
 	this.xOuter = x;
 	this.yOuter = y;
+}
+this.isAlreadyFetched = function(x1,y1,x2,y2) {
+
+	return false;
 }
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
@@ -92,13 +101,13 @@ this.getMapData = function (treshold,width,height,callback) {
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
 	
-	 	   var xmove = this._parent.getMapData().getViewportX();
+		var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
 	
  	    
- 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold)
+ 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
  	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
  	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
@@ -140,29 +149,53 @@ this.getMapData = function (treshold,width,height,callback) {
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
 
-
-			this._mapservice.getMap(function(mapData) {
+			if(!this.isAlreadyFetched(this.xOuter, this.yOuter, x2load, y2load)) {
+				this._mapservice.getMap(function (mapData) {
 					var data = mapData[0]['layers'];
-					for(i=0;i<currentContext.data.length;i++) {
-						var currentLayer = currentContext.data[i].layer;
-						if(data.length > i){
-							var newLayer = data[i].layer;
-							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length,i);
-							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
-							}
-											
-						}	
-						currentContext._mapservice.getImages(function(imagedata) {
-							currentContext.imageData = imagedata;
-						callback(currentContext.imageData,currentContext.data)
-						  var xmov =  currentContext._parent.getMapData().getXMovement()+currentContext.xCounter;
-						  currentContext._parent.getMapData().setXMovement(xmov);
-					    currentContext.xCounter = 0;
-						currentContext.yCounter = 0;
-					}
-				);
+					console.log("old data length: " + data.length)
+					for (i = 0; i < data.length; i++) {
 
-			},this.xOuter,this.yOuter,x2load,y2load);
+
+						// we are missing a layer.. add it to the list of layers that are already in cache
+						if (typeof currentContext.data[i] == 'undefined') {
+							console.log("new layer found, adding it to the pool")
+							console.log("layername " + data[i].layer.name)
+							currentContext.data.push(data[i]);
+							currentContext._parent.getMapData().setRenderOffset(0, i);
+							console.log("the current state of the array")
+							console.log(currentContext.data)
+							//console.log(currentContext.data)
+						}
+						else {
+							var currentLayer = currentContext.data[i].layer;
+							var newLayer = data[i].layer;
+							console.log(currentLayer)
+							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length, i);
+							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
+							for (ii = 0; ii < currentLayer.tiles.length; ii++) {
+								if (ii == 25 || ii == 26) {
+									console.log("current  tile=" + ii)
+									console.log(currentLayer.tiles[ii].tile)
+								}
+							}
+						}
+
+
+						//	}
+
+					}
+					currentContext._mapservice.getImages(function (imagedata) {
+							currentContext.imageData = imagedata;
+							callback(currentContext.imageData, currentContext.data)
+							var xmov = currentContext._parent.getMapData().getXMovement() + currentContext.xCounter;
+							currentContext._parent.getMapData().setXMovement(xmov);
+							currentContext.xCounter = 0;
+							currentContext.yCounter = 0;
+						}
+					);
+
+				}, this.xOuter, this.yOuter, x2load, y2load);
+			}
 
 		}
 		else 

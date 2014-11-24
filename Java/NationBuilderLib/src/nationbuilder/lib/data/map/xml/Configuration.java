@@ -13,5 +13,6 @@ public class Configuration {
 	public static String SmallDemoMap = "/home/patrick/Git/nationbuilder/Tiled/Maps/demo_small.tmx";
 	public static String NB14Map = "/home/patrick/Thuis/Git/nationbuilder/Tiled/Maps/NB14.tmx";
     public static String ChunkingDemo = "/home/patrick/Git/nationbuilder/Tiled/Maps/demo_chunking.tmx";
+	public static String MultilayerChunkingLayer = "/home/patrick/Git/nationbuilder/Tiled/Maps/demo_chunking_multilayer.tmx";
 
 }

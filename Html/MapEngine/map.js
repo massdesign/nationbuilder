@@ -137,7 +137,7 @@ function Map(javascript_console,applicationName)
    // temp method to facilitate the proof of concept
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(2,2,2,function(imageData,data) {    			
+				this._mapDataBroker.getMapData(2,2,2,function(imageData,data) {
        			currentContext.layers[0].partialRender(imageData,data);
 		});
 		this.layers[0].move()
