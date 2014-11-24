@@ -100,33 +100,45 @@ this.getMapData = function (treshold,width,height,callback) {
  	    
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold)
  	    {
- 	    		var currentTreshold = this._parent.getMapData().getTreshold()
-			   this._parent.getMapData().setTreshold(currentTreshold+treshold)
+ 	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
+ 	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
+ 	    		
+			 
  
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
 	 				 currentContext.xCounter = 0;
-				   }
+	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold)
+	 			   }
 				   
 				else if(currentContext.yOuter == this.yStartPosition && this.yCounter > 0) {
 					 currentContext.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
-					 console.log("initial set y")
-					 		currentContext.yCounter = 0;
+			       currentContext.yCounter = 0;
+			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold)
 					}
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter > 0)
 				{
 				   currentContext.xOuter += width*currentContext._cacheSize;
-				   console.log("xouter set again")
+				   
+				   //console.log("xouter set again")
 			
 				}
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
 				{
 					
 					currentContext.yOuter += height*currentContext._cacheSize;
+		        	this._parent.getMapData().setTresholdY(currentTresholdX+treshold)
+	
+		
 				}
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
 				{
 				   currentContext.xOuter -= width*currentContext._cacheSize;
+				
+				   
+			
+				   
+
 				   console.log("xouter set again")
 			
 				}

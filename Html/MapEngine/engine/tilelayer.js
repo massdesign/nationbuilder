@@ -37,7 +37,6 @@ function TileLayer(parentMap,loginstance)
     			xoffset = tile.xoffset
     			yoffset = tile.yoffset
     			xposition = tile.xposition // - this.parentMap.getMapData().getTreshold()
-    			console.log("xposition newly rendered" + xposition)
     			yposition = tile.yposition;
     			image_id = tile.image_id
     			
@@ -146,83 +145,40 @@ function TileLayer(parentMap,loginstance)
 	    					var viewportY = currentContext.parentMap.getMapData().getViewportY();
 	    					
                      var tilesize = currentContext.parentMap.getRelativeTilesize()
-					
-		 	 			
-		 	 			///	for(i=0;i<tiles.length;i++) {
-		 	 				//  var currentX =  tiles[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
-	    					  //var currentY =  tiles[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
-	    					  //var viewportX = currentContext.parentMap.getMapData().getViewportX();
-	    					  //var viewportY = currentContext.parentMap.getMapData().getViewportY();
-					
-							// console.log("viewportX =" + viewportX)
-						//	 console.log("viewportY =" + viewportY)
-							// console.log("tileXPosition = " + tiles[i].getXPosition())
-							// console.log("tileYPosition = " + tiles[i].getYPosition())	    					
-	    					// console.log("currentX = " + currentX)
-	    					// console.log("currentY = " + currentY)
-	    					// console.log("loaded tiles length = " + tiles.length)
-	    					// var	newX = currentX - (viewportX*currentContext.parentMap.getRelativeTilesize())
-	    					// var 	newY = currentY - (viewportY*currentContext.parentMap.getRelativeTilesize())
-
-						//	console.log("newX = " + newX)
-	    				//	 console.log("newY = " + newY)
-	    				
-	    		
+					   		
 			 				for(i=0;i<tiles.length;i++) {
 							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
 	    					 
-	    					
-						//	 var currentX = 0;
-						//	 var currentY = 0;
-
-	    					// var currentX = tiles[i].getTileImage().getX();
-	    					// var currentY = tiles[i].getTileImage().getY();
-	    				
-	    					  //currentContext.imagePos[2][0] =  currentContext.imagePos[2][0]
-
-	    					  var currentX = tiles[i].getTileImage().getX() //  tiles[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();
-	    					  //var newX =  imagePos[i][0] * currentContext.parentMap.getRelativeTilesize();
-	    					  var currentY = tiles[i].getTileImage().getY() //tiles[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();
-	    						  //console.log("newX = " + newX)
-	    					  //console.log("newY = " + newY)
-	    					//  var newY =  imagePos[i][1] * currentContext.parentMap.getRelativeTilesize();
-						//	 var	newX = currentX - (viewportX*currentContext.parentMap.getRelativeTilesize())
-							var newX = 0;
+	 
+	    					  var currentX = tiles[i].getTileImage().getX() 
+	    					  var currentY = tiles[i].getTileImage().getY()
+	  						var newX = 0;
 							var newY = 0;							
 							if(prevViewportX > viewportX) {
 								newX = currentX + tilesize;		
-								tiles[i].getTileImage().setX(newX);					 	 				
+								tiles[i].getTileImage().setX(newX);	
+								console.log("go right")				 	 				
 		 	 				}
-		 	 				else if(prevViewportY < viewportX)
+		 	 				else if(prevViewportX < viewportX)
 		 	 				{
 		 	 					newX = currentX - tilesize;	
-		 	 					tiles[i].getTileImage().setX(newX);							 	 					
+		 	 					tiles[i].getTileImage().setX(newX);			
+		 	 					console.log("go left")				 	 					
 		 	 				} 
 		 	 				
 							if(prevViewportY > viewportY) {
 								newY = currentY + tilesize;
 								 tiles[i].getTileImage().setY(newY);
+								 console.log("go down")
 							}		 	 		
 							else if(prevViewportY < viewportY) {
 								newY = currentY - tilesize;		
-								 tiles[i].getTileImage().setY(newY);					
-							}		
-		 	 				
-	    					
-							 console.log("currentX = " + currentX)
-	    								    			
-			    			 
-						   
-       				   // 	imageGrid[i].setX(newX);
-       				   // 	imageGrid[i].setY(newY);
-
+								 tiles[i].getTileImage().setY(newY);
+								 console.log("go up")					
+							}
        					 }
-				 			for(i=0;i<tiles.length;i++)
-	    					{
-								console.log("getX()" + tiles[i].getTileImage().getX())	    						
-	    					
-	    					}
+				 
        					this.stop()
      						 }, currentContext._layer);
 		anim.start()
@@ -320,14 +276,21 @@ function TileLayer(parentMap,loginstance)
 						var tresholdY = 0;
 						if(viewportX > prevViewportX)
 						{
-							tresholdX = currentContext.parentMap.getMapData().getTreshold()*currentContext.parentMap.getRelativeTilesize();	
+							console.log("loading tiles to right")
+							console.log("X treshold: " + currentContext.parentMap.getMapData().getTresholdX())
+							tresholdX = currentContext.parentMap.getMapData().getTresholdX()*currentContext.parentMap.getRelativeTilesize();	
 							renderList[i].getTileImage().setX(currentX - (tresholdX))	
+						
 						}
 						if(viewportY > prevViewportY)
 						{
-						 	 tresholdY = currentContext.parentMap.getMapData().getTreshold()*currentContext.parentMap.getRelativeTilesize();
+							 console.log("loading tiles down")
+							 console.log("Y treshold: " + currentContext.parentMap.getMapData().getTresholdY())
+			
+						 	 tresholdY = currentContext.parentMap.getMapData().getTresholdY()*currentContext.parentMap.getRelativeTilesize();
 						 	 renderList[i].getTileImage().setY(currentY - (tresholdY))
 						}
+						console.log("renderlength: " + renderList.length)
 						currentContext._layer.add(img);
 					}
 					currentContext._layer.draw();

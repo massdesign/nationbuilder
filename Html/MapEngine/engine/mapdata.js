@@ -17,7 +17,8 @@ this._imagePositions = [];
 this._xMovement = 0;
 this._yMovement = 0;
 this._tiles = [];
-this._treshold = 0;
+this._tresholdX = 0;
+this._tresholdY = 0;
 //this._renderOffsetY = 0;
 
 this.clickedTile = function() {
@@ -44,12 +45,17 @@ this._xMovement = x;
 this.setYMovement = function (y) {
 this._yMovement = y;
 }
-this.setTreshold = function (treshold) {
-	
-this._treshold = treshold;
+this.setTresholdX = function (treshold) {
+this._tresholdX = treshold;
 }
-this.getTreshold = function () {
-return this._treshold;
+this.setTresholdY = function (treshold) {
+this._tresholdY = treshold;
+}
+this.getTresholdX = function () {
+return this._tresholdX;
+}
+this.getTresholdY = function () {
+return this._tresholdY;
 }
 this.getPrevViewportX = function() {
 	return this._prevviewportx;
