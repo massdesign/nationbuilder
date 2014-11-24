@@ -119,26 +119,16 @@ this.getMapData = function (treshold,width,height,callback) {
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter > 0)
 				{
 				   currentContext.xOuter += width*currentContext._cacheSize;
-				   
-				   //console.log("xouter set again")
-			
+					this._parent.getMapData().setTresholdX(currentTresholdX + treshold)
 				}
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
 				{
-					
 					currentContext.yOuter += height*currentContext._cacheSize;
-		        	this._parent.getMapData().setTresholdY(currentTresholdX+treshold)
-	
-		
+		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold)
 				}
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
 				{
 				   currentContext.xOuter -= width*currentContext._cacheSize;
-				
-				   
-			
-				   
-
 				   console.log("xouter set again")
 			
 				}
