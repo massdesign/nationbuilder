@@ -90,7 +90,19 @@ this.getInitialMapData = function(x,y,width,height,callback) {
 }
 this.isAlreadyFetched = function(x1,y1,x2,y2) {
 
-	return false;
+	var found = false;
+	for(i=0;i<this.requestCache.length;i++) {
+
+		if(this.requestCache[i].getX1() == x1 && this.requestCache[i].getY1() == y1
+			&& this.requestCache[i].getX2() == x2 && this.requestCache[i].getY2() == y2)
+		{
+			found = true;
+			break;
+		}
+
+	}
+
+	return found;
 }
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
