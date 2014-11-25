@@ -23,7 +23,6 @@ function TileLayer(parentMap,loginstance)
     	for(var i=0;i<data.length;i++) {
    		var tileLayer = data[i].layer;
 			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
-			 console.log("current renderoffset =" + currentOffset);
    		 var tileLayertiles = tileLayer.tiles;
 
     		for(var t=currentOffset;t<tileLayertiles.length;t++)

@@ -73,8 +73,6 @@ this.getInitialMapData = function(x,y,width,height,callback) {
 		var data = mapData[0]['layers'];
 		//this.xOuter += width-1;
 		//	this.yOuter += height-1;
-		console.log("initial array that is loaded")
-		console.log(data)
 		currentContext.data = data;
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
@@ -89,19 +87,67 @@ this.getInitialMapData = function(x,y,width,height,callback) {
 	this.yOuter = y;
 }
 this.isAlreadyFetched = function(x1,y1,x2,y2) {
-
+	x2 += x1
+	y2 += y1
 	var found = false;
+	// check if we go out of bounds.. if so return that we already found this set of tiles and don't need to fetch it
+	if(x1 >= 0 && y1 >= 0 ) 
+	{
+		console.log("request is in acceptable range")
+		
+	
 	for(i=0;i<this.requestCache.length;i++) {
 
 		if(this.requestCache[i].getX1() == x1 && this.requestCache[i].getY1() == y1
 			&& this.requestCache[i].getX2() == x2 && this.requestCache[i].getY2() == y2)
 		{
 			found = true;
+			console.log("tiles already fetched")
 			break;
 		}
 
 	}
+	
+	if(!found) {
+	
+	var RequestEntry = function (x1,y1,x2,y2) {
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;		
+		console.log("storing request" + x1 + " " + y1 + " " + x2 + " " + y2)
+		this.getX1 = function () {
+			return this.x1;
+		}	
+		this.getY1 = function () {
+			return this.y1;
+		}
+		this.getX2 = function () {
+			return this.x2;	
+		}
+		this.getY2 = function () {
+			return this.y2;	
+		}
+		this.setX1 = function (x1) {
+			this.x1 = x1;	
+		}
+		this.setX2 = function (x2) {
+			this.x2 = x2;	
+		}
+		this.setY1 = function (y1) {
+			this.y1 = y1;	
+		}
+		this.setY2 = function (y2) {
+		this.y2 = y2;	
+		}
+	 }
+	 	this.requestCache.push(new RequestEntry(x1,y1,x2,y2))		
+	}
 
+}
+else {
+	found = true;
+}
 	return found;
 }
 /*
@@ -150,13 +196,14 @@ this.getMapData = function (treshold,width,height,callback) {
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
 				{
 				   currentContext.xOuter -= width*currentContext._cacheSize;
-				   console.log("xouter set again")
+				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold)
 			
 				}
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter < 0)
 				{
 					
 					currentContext.yOuter -= height*currentContext._cacheSize;
+					this._parent.getMapData().setTresholdY(currentTresholdY-treshold)
 				}
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
@@ -164,7 +211,6 @@ this.getMapData = function (treshold,width,height,callback) {
 			if(!this.isAlreadyFetched(this.xOuter, this.yOuter, x2load, y2load)) {
 				this._mapservice.getMap(function (mapData) {
 					var data = mapData[0]['layers'];
-					console.log("old data length: " + data.length)
 					for (i = 0; i < data.length; i++) {
 
 
@@ -181,7 +227,6 @@ this.getMapData = function (treshold,width,height,callback) {
 						else {
 							var currentLayer = currentContext.data[i].layer;
 							var newLayer = data[i].layer;
-							console.log(currentLayer)
 							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length, i);
 							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
 							for (ii = 0; ii < currentLayer.tiles.length; ii++) {
@@ -207,6 +252,11 @@ this.getMapData = function (treshold,width,height,callback) {
 					);
 
 				}, this.xOuter, this.yOuter, x2load, y2load);
+			}
+			else {
+			console.log("not fetching new tiles")	
+			this.xCounter = 0;
+			this.yCounter = 0;		
 			}
 
 		}
