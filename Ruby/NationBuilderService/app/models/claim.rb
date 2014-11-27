@@ -1,5 +1,5 @@
+
 class Claim < ActiveRecord::Base
-has_one :tile
-has_one :state
-has_many :claims
+belongs_to:state
+belongs_to:tile
 end

@@ -16,31 +16,27 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     $scope.scrollup = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY()+1;
 		   var scrollValueX =  map.getMapData().getViewportX();
-			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
      $scope.scrolldown = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY()-1;
 		   var scrollValueX =  map.getMapData().getViewportX();
-			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
       $scope.scrollleft = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();
 		   var scrollValueX =  map.getMapData().getViewportX()-1;
-			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
 		// alle militaire acties zijn afgekort met mil_    
     	$scope.mil_lct = function(event) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
-    	//	var terraintype = {}
-    	var newClaim = {}
-    	newClaim.state_id = 1;
-    	newClaim.tile_id = 2;
-    //		terraintype.name = "WATER"
+    		var newClaim = {}
+    		newClaim.state_id = 1;
     		console.log(JSON.stringify(newClaim))
-    		console.log(map.getMapData().getClickedTile());
+			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
+			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
+			newClaim.state_id = $scope.userData.state.id;
     		t.doPostRequest(newClaim)
     	
     	}
@@ -77,16 +73,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    		
    		console.log(modelData)
    		$scope.userData = modelData;
-   			
    		})	
-   	}); 
-    // NOTE: hacky way to integreate jquery with angularjs.. this way we can use the already written mapService
-    /*s.getTileByXY(2,1,function(modelData) { 
-    
-		$scope.$apply(function() {
-		
-		$scope.modelData = modelData;
-		});        
-    });*/
+   	});
 
 });
