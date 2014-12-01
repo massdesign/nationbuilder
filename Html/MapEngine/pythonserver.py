@@ -11,6 +11,7 @@ from localMapService import log
 from subprocess import call
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
+
 	def createMapCache(self):
 		mservice = mapservice.MapsService()
 		print(mservice)
@@ -27,6 +28,7 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			tset = tileset.TileSet(cservice.getFilePath("ts_" + element['name']),cservice)
 			tset.unpack()
 	def do_POST(self):
+
 		content_len = int(self.headers['content-length'])
 		post_body = self.rfile.read(content_len)
 		protocol  = "http"
@@ -46,6 +48,7 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 		print(dbrequest)
 		#return http.server.SimpleHTTPRequestHandler.do_POST(self)
 	def do_GET(self):
+		disableCache = True
 		if self.path == '/install':
 			self.path = '/install.html'
 			self.createMapCache()
@@ -80,13 +83,15 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css"):
 				print("non cacheable resource requested")
 				return http.server.SimpleHTTPRequestHandler.do_GET(self)
-            
-			if not cservice.isRequestInCache(self.path):
+			if disableCache:
+				print("cacheservice disabled")
+				html = urlopen(dbrequest)
+				content = html.read()
+			elif not cservice.isRequestInCache(self.path):
 			 print("resource not found in cache")
 			 html = urlopen(dbrequest)
 			 content = html.read()
 			 cservice.saveStringFile(self.path.replace('/','_'),content.decode())
-
 			else:
 				content = cservice.getRequest(self.path.replace('/','_'))
 				content = bytes(content,'utf-8')
