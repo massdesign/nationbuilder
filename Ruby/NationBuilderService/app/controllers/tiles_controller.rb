@@ -31,8 +31,10 @@ class TilesController < ApplicationController
   def find 
   #TODO: find out if we can do this in one query.. we are doing 2 querys here.. first search for the tile then join the result together
   @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
-  @claims = Claim.where(tile_id: @tile.id)
-  
+  #@claims = Claim.where(tile_id: @tile.id)
+  if (defined?(@tile.claims)).nil?  
+	@tile.claims = Array.new
+  end
   @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
 
    respond_to do |format|

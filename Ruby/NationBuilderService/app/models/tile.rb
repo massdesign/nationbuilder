@@ -3,5 +3,4 @@ class Tile < ActiveRecord::Base
  has_one :image
  has_one :resource
  has_many :claims
-
 end

@@ -15,11 +15,15 @@ end
 object @resource
 child :tiles do
 attributes :id,:xposition,:yposition,:xoffset,:yoffset
-child :claims do
-	child :state do
-		attributes :id,:name,:motto
+ #if !@resource.tiles.claims.nil
+ if !(defined?(:tiles:claims)).nil?
+ 	#if :tiles.respond_to?(:claims)
+ 	child :claims do
+		child :state do
+			attributes :id,:name,:motto
+		end
 	end
-	end
+end
 end
 
 
