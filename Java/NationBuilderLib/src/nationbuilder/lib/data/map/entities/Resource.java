@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
@@ -26,6 +27,8 @@ public class Resource extends BaseRubyModel {
     }
 
     public void setTerrainType(TerrainType terrainType) {
+
+        Log.writeInfo("Teraintype: " + terrainType.getName());
         this.terrainType = terrainType;
     }
 

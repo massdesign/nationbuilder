@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.*;
@@ -41,23 +42,30 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
-    private void addtilesToterrainTypeS(ArrayList<XmlTile> tiles)
+    private void addtilesToterrainTypeS(TileSet tileSet)
     {
+        ArrayList<XmlTile> tiles = tileSet.getTiles();
+
+
+        // TODO: deze manier van id's mappen is fout, in Tiled tiles zijn alleen uniek binnen tileset
         for(XmlTile tile : tiles)
         {
-            if(!this.tilesWithterrainTypes.containsKey(tile.getGID()))
+            int calculatedGid =  tileSet.getFirstGid()+tile.getGID();
+            if(!this.tilesWithterrainTypes.containsKey(calculatedGid))
             {
-                this.tilesWithterrainTypes.put(tile.getGID(),tile);
+                this.tilesWithterrainTypes.put(calculatedGid,tile);
+                Log.writeInfo(tile.toString());
             }
         }
 
+      //  System.out.println("some random crap to put a breakpoint on");
     }
     private ArrayList<MapImage> convertTilesets(ArrayList<TileSet> tilesets)
     {
         ArrayList<MapImage> mapImages = new ArrayList<MapImage>();
         for(TileSet tileset : tilesets)
         {
-            addtilesToterrainTypeS(tileset.getTiles());
+            addtilesToterrainTypeS(tileset);
             Image image =	tileset.getImage();
 
             MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
