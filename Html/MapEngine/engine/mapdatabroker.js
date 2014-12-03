@@ -158,6 +158,7 @@ this.getMapData = function (treshold,width,height,callback) {
 	
 	 	var currentContext = this;
 		var x1load,y1load,x2load,y2load
+
 	
 		var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
@@ -169,77 +170,86 @@ this.getMapData = function (treshold,width,height,callback) {
  	    {
  	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
  	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
- 	    		
+ 	    		 	    		
 			 
  
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
+					 currentContext.xOuter += 1;
 	 				 currentContext.xCounter = 0;
-	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold)
+	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold+1)
 	 			   }
 				   
 				else if(currentContext.yOuter == this.yStartPosition && this.yCounter > 0) {
 					 currentContext.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
 			       currentContext.yCounter = 0;
-			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold)
+			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
+			       	currentContext.yOuter += 1;
 					}
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter > 0)
 				{
-				   currentContext.xOuter += width*currentContext._cacheSize;
-					this._parent.getMapData().setTresholdX(currentTresholdX + treshold)
+				   currentContext.xOuter += width*currentContext._cacheSize
+				   currentContext.xOuter += 1;
+					this._parent.getMapData().setTresholdX(currentTresholdX + treshold+1)
 				}
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
 				{
-					currentContext.yOuter += height*currentContext._cacheSize;
-		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold)
+					currentContext.yOuter += height*currentContext._cacheSize
+					console.log("desbetreffende functie wordt aangeroepen")
+					currentContext.yOuter += 1;
+			
+		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
 				}
 				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
 				{
 				   currentContext.xOuter -= width*currentContext._cacheSize;
-				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold)
+				   currentContext.xOuter -= 1
+				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold-1)
 			
 				}
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter < 0)
 				{
 					
 					currentContext.yOuter -= height*currentContext._cacheSize;
-					this._parent.getMapData().setTresholdY(currentTresholdY-treshold)
+					currentContext.yOuter -= 1;
+					this._parent.getMapData().setTresholdY(currentTresholdY-treshold-1)
 				}
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
 
 			if(!this.isAlreadyFetched(this.xOuter, this.yOuter, x2load, y2load)) {
 				this._mapservice.getMap(function (mapData) {
-					var data = mapData[0]['layers'];
-					for (i = 0; i < data.length; i++) {
-
+					var newData = mapData[0]['layers'];
+					for (i = 0; i < newData.length; i++) {
 
 						// we are missing a layer.. add it to the list of layers that are already in cache
 						if (typeof currentContext.data[i] == 'undefined') {
 							console.log("new layer found, adding it to the pool")
-							console.log("layername " + data[i].layer.name)
-							currentContext.data.push(data[i]);
+							console.log("layername " + newData[i].layer.name)
+							currentContext.data.push(newData[i]);
 							currentContext._parent.getMapData().setRenderOffset(0, i);
+				
 							console.log("the current state of the array")
 							console.log(currentContext.data)
 							//console.log(currentContext.data)
 						}
 						else {
 							var currentLayer = currentContext.data[i].layer;
-							var newLayer = data[i].layer;
+							var newLayer = newData[i].layer;
 							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length, i);
-							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
-							for (ii = 0; ii < currentLayer.tiles.length; ii++) {
-								if (ii == 25 || ii == 26) {
-									console.log("current  tile=" + ii)
-									console.log(currentLayer.tiles[ii].tile)
-								}
+							//console.log("newLayer content")
+							for (ii = 0; ii < newLayer.tiles.length; ii++) {
+								//console.log(newLayer.tiles[ii].tile.id)
+
 							}
+							//console.log("oldLayer content")
+				
+							for (ii = 0; ii < currentLayer.tiles.length; ii++) {
+								//console.log(currentLayer.tiles[ii].tile.id)
+							}
+							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
+
 						}
-
-
-						//	}
-
 					}
 					currentContext._mapservice.getImages(function (imagedata) {
 							currentContext.imageData = imagedata;
