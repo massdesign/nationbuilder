@@ -17,7 +17,6 @@ function TileLayer(parentMap,loginstance)
    	for(var i=0;i<imagedata.length;i++)
     	{
 			imagenames[imagedata[i].id] = imagedata[i].name
-		//	console.log(imagedata[i])
     	}
        	 data = this._sort(data);
     	for(var i=0;i<data.length;i++) {
@@ -25,16 +24,7 @@ function TileLayer(parentMap,loginstance)
 			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
    		 var tileLayertiles = tileLayer.tiles;
    		 
-   		 console.log("current Render offset" + currentOffset + "layer name: " + tileLayer.name)
-			for(var t=0;t<tileLayertiles.length;t++)
-    		{
-    			var tiles = tileLayer.tiles;
-    			var tile = tiles[t].tile
-    					if(tile.id == 2677) {
-							console.log("gevonden in partial render op positie " + t)	
-							console.log(tiles)					
-						}
-    		}
+  		
     		for(var t=currentOffset;t<tileLayertiles.length;t++)
     		{
     			var tiles = tileLayer.tiles;
@@ -46,14 +36,11 @@ function TileLayer(parentMap,loginstance)
 				xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()
 				yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()
     			image_id = tile.image_id
-    				if(tile.id == 2677) {
-							console.log("xposition partial: " + xposition)					
-							console.log("yposition partial: " + yposition)					
-						}
-   			    tilesize = this.parentMap.getRelativeTilesize();
+
+ 			   tilesize = this.parentMap.getRelativeTilesize();
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://localhost:8083/ncache/" + tilerequest;
-				//console.log(tilerequest)
+
 
 				tile.setImageUrl = function (imageUrl) {
 					this.imageUrl = imageUrl;
@@ -83,7 +70,9 @@ function TileLayer(parentMap,loginstance)
 				tile.setPosition(xposition,yposition);
 				tile.setLayer(tileLayer)
 				renderList.push(tile);
-    		}	
+    		}
+    		this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
+    			
     	}
 		//console.log("length: " + renderList.length)
     	this.loadAllImages(renderList);
@@ -119,12 +108,9 @@ function TileLayer(parentMap,loginstance)
    		   tilesize = this.parentMap.getRelativeTilesize();
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://localhost:8083/ncache/" + tilerequest;
+    			
+    			
 
-
-  				if(tile.id == 2677) {
-							console.log("xposition: " + xposition)					
-							console.log("yposition: " + yposition)					
-						}
 
 				tile.setImageUrl = function (imageUrl) {
 					this.imageUrl = imageUrl;
@@ -160,7 +146,7 @@ function TileLayer(parentMap,loginstance)
 		
 	}
 	 this.move = function() {
-
+					var c = 0;
 		   		var currentContext = this;
 		var anim = new Kinetic.Animation(function(frame) {
 		 					
@@ -169,9 +155,9 @@ function TileLayer(parentMap,loginstance)
 		 	 				var prevViewportY = currentContext.parentMap.getMapData().getPrevViewportY();
 		 	 				var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					var viewportY = currentContext.parentMap.getMapData().getViewportY();
+		    					
 	    					
-          		           var tilesize = currentContext.parentMap.getRelativeTilesize()
-					   		
+          		      var tilesize = currentContext.parentMap.getRelativeTilesize()
 			 				for(i=0;i<tiles.length;i++) {
 							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
 	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
@@ -179,8 +165,12 @@ function TileLayer(parentMap,loginstance)
 	 
 	    					  var currentX = tiles[i].getTileImage().getX() 
 	    					  var currentY = tiles[i].getTileImage().getY()
+	    					  
+	    					  
 	  						var newX = 0;
-							var newY = 0;							
+							var newY = 0;		
+							
+										
 							if(prevViewportX > viewportX) {
 								newX = currentX + tilesize;		
 								tiles[i].getTileImage().setX(newX);	
@@ -279,24 +269,7 @@ function TileLayer(parentMap,loginstance)
 						tresholdY = currentContext.parentMap.getMapData().getTresholdY() * currentContext.parentMap.getRelativeTilesize();		
 						xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdX;
 						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdY;
-							
-							
-						if(renderList[i].id == 2677) {
-							 console.log("id gevonden")						
-						}							
-							
-						if(renderList[i].getLayer().name == "Water"  && renderList[i].getXPosition() == 2)//&& renderList[i].getYPosition() == 1)
-						{
-						//	console.log("Raak! op Water")
-							//console.log(renderList[i].id)
-						//	console.log(renderList[i])
-						}
-						if(renderList[i].getLayer().name == "coast" && renderList[i].getXPosition() == 2 && renderList[i].getYPosition() == 3)
-						{
-							console.log("Raak! op Land")
-							console.log(renderList[i].id)
-							console.log(renderList[i])
-						}
+																
 						var img = new Kinetic.Image({
 							x: xpos,
 							y: ypos,

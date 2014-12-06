@@ -115,7 +115,9 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	   this.getMapData().setStartPositionX(20);
+	  // this.getMapData().setStartPositionX(20);
 		this.getMapData().setStartPositionY(30);
+		//this.getMapData().setStartPositionY(26);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 320,
@@ -123,7 +125,7 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),3,3,function(imageData,data) {
+		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),4,4,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext.render();	
 		});
@@ -137,7 +139,7 @@ function Map(javascript_console,applicationName)
    // temp method to facilitate the proof of concept
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,3,3,function(imageData,data) {
+				this._mapDataBroker.getMapData(1,4,4,function(imageData,data) {
        			currentContext.layers[0].partialRender(imageData,data);
 		});
 		this.layers[0].move()

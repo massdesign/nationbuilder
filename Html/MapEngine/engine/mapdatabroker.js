@@ -92,17 +92,13 @@ this.isAlreadyFetched = function(x1,y1,x2,y2) {
 	var found = false;
 	// check if we go out of bounds.. if so return that we already found this set of tiles and don't need to fetch it
 	if(x1 >= 0 && y1 >= 0 ) 
-	{
-		console.log("request is in acceptable range")
-		
-	
+	{	
 	for(i=0;i<this.requestCache.length;i++) {
 
 		if(this.requestCache[i].getX1() == x1 && this.requestCache[i].getY1() == y1
 			&& this.requestCache[i].getX2() == x2 && this.requestCache[i].getY2() == y2)
 		{
 			found = true;
-			console.log("tiles already fetched")
 			break;
 		}
 
@@ -115,7 +111,6 @@ this.isAlreadyFetched = function(x1,y1,x2,y2) {
 		this.y1 = y1;
 		this.x2 = x2;
 		this.y2 = y2;		
-		console.log("storing request" + x1 + " " + y1 + " " + x2 + " " + y2)
 		this.getX1 = function () {
 			return this.x1;
 		}	
@@ -220,34 +215,32 @@ this.getMapData = function (treshold,width,height,callback) {
 			if(!this.isAlreadyFetched(this.xOuter, this.yOuter, x2load, y2load)) {
 				this._mapservice.getMap(function (mapData) {
 					var newData = mapData[0]['layers'];
+						
+							
 					for (i = 0; i < newData.length; i++) {
-
 						// we are missing a layer.. add it to the list of layers that are already in cache
 						if (typeof currentContext.data[i] == 'undefined') {
 							console.log("new layer found, adding it to the pool")
 							console.log("layername " + newData[i].layer.name)
 							currentContext.data.push(newData[i]);
 							currentContext._parent.getMapData().setRenderOffset(0, i);
+							
+							/*for(ii=0;ii<newData[i.length;ii++) {
+							
+							  if(currentLayer.tiles[i].id == 2689) {	
+									console.log("tile found in mapbroker")								
+								}						
+							} */
 				
-							console.log("the current state of the array")
 							console.log(currentContext.data)
-							//console.log(currentContext.data)
 						}
 						else {
+							
 							var currentLayer = currentContext.data[i].layer;
+							
 							var newLayer = newData[i].layer;
 							currentContext._parent.getMapData().setRenderOffset(currentLayer.tiles.length, i);
-							//console.log("newLayer content")
-							for (ii = 0; ii < newLayer.tiles.length; ii++) {
-								//console.log(newLayer.tiles[ii].tile.id)
-
-							}
-							//console.log("oldLayer content")
-				
-							for (ii = 0; ii < currentLayer.tiles.length; ii++) {
-								//console.log(currentLayer.tiles[ii].tile.id)
-							}
-							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)
+							currentLayer.tiles = currentLayer.tiles.concat(newLayer.tiles)							
 
 						}
 					}
