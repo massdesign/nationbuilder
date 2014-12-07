@@ -1,13 +1,14 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
-		
+		this._tileLayer = new TileLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
 		this._context = null;
 		this.jsconsole = javascript_console
+		 	
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
 	  	this._g_mapWidth = 12;
     	this._g_mapHeight = 12;
@@ -23,7 +24,7 @@ function Map(javascript_console,applicationName)
         this._imagedata = isNaN;
         this._data = isNaN;
     	
-    	this.layers.push(new TileLayer(this,javascript_console));
+    	this.layers.push(this._tileLayer);
     	this.layers.push(new SelectLayer(this,javascript_console));
     	this.layers.push(new GridLayer(this,javascript_console));
 		this._createArray = function(x,y) {	
@@ -125,22 +126,21 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),4,4,function(imageData,data) {
+		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),3,3,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
-       currentContext.render();	
+       currentContext._tileLayer.renderTiles(imageData,data,true)
 		});
       this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   	
- 		//var currentObject = this;
    }
-   // temp method to facilitate the proof of concept
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,4,4,function(imageData,data) {
-       			currentContext.layers[0].partialRender(imageData,data);
+				this._mapDataBroker.getMapData(1,3,3,function(imageData,data) {
+					currentContext._tileLayer.renderTiles(imageData,data,false)
+       			
 		});
 		this.layers[0].move()
    }
@@ -154,6 +154,3 @@ function Map(javascript_console,applicationName)
    	return this._context;
    }   
 }
-// param1 console handle
-// param2 name of the application to bind with angularJs framework ng-app tag
-//var map = new Map(console,"nationbuilderApp");

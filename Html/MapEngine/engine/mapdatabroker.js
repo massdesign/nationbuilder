@@ -145,6 +145,52 @@ else {
 }
 	return found;
 }
+
+this._calculateMovement = function (width,height,treshold) {
+	
+	var currentTresholdX = this._parent.getMapData().getTresholdX()
+ 	var currentTresholdY = this._parent.getMapData().getTresholdY()
+	if(this.xOuter == this.xStartPosition && this.xCounter > 0) {
+					 this.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
+					 this.xOuter += 1;
+	 				 this.xCounter = 0;
+	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold+1)
+	 			   }
+				   
+				else if(this.yOuter == this.yStartPosition && this.yCounter > 0) {
+					 this.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
+			       this.yCounter = 0;
+			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
+			       	this.yOuter += 1;
+					}
+				else 	if(Math.abs(this.xCounter) == treshold && this.xCounter > 0)
+				{
+				   this.xOuter += width*this._cacheSize
+				   this.xOuter += 1;
+					this._parent.getMapData().setTresholdX(currentTresholdX + treshold+1)
+				}
+				else if(Math.abs(this.yCounter) == treshold && this.yCounter > 0)
+				{
+					this.yOuter += height*this._cacheSize
+					this.yOuter += 1;
+			
+		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
+				}
+				else 	if(Math.abs(this.xCounter) == treshold && this.xCounter < 0)
+				{
+				   this.xOuter -= width*this._cacheSize;
+				   this.xOuter -= 1
+				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold-1)
+			
+				}
+				else if(Math.abs(this.yCounter) == treshold && this.yCounter < 0)
+				{
+					
+					this.yOuter -= height*this._cacheSize;
+					this.yOuter -= 1;
+					this._parent.getMapData().setTresholdY(currentTresholdY-treshold-1)
+				}
+}
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
@@ -166,8 +212,8 @@ this.getMapData = function (treshold,width,height,callback) {
  	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
  	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
  	    		 	    		
-			 
- 
+			 	this._calculateMovement(width,height,treshold)
+ 				/*
  	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
 					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
 					 currentContext.xOuter += 1;
@@ -190,7 +236,6 @@ this.getMapData = function (treshold,width,height,callback) {
 				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
 				{
 					currentContext.yOuter += height*currentContext._cacheSize
-					console.log("desbetreffende functie wordt aangeroepen")
 					currentContext.yOuter += 1;
 			
 		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
@@ -208,7 +253,7 @@ this.getMapData = function (treshold,width,height,callback) {
 					currentContext.yOuter -= height*currentContext._cacheSize;
 					currentContext.yOuter -= 1;
 					this._parent.getMapData().setTresholdY(currentTresholdY-treshold-1)
-				}
+				}*/
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
 
@@ -220,18 +265,9 @@ this.getMapData = function (treshold,width,height,callback) {
 					for (i = 0; i < newData.length; i++) {
 						// we are missing a layer.. add it to the list of layers that are already in cache
 						if (typeof currentContext.data[i] == 'undefined') {
-							console.log("new layer found, adding it to the pool")
-							console.log("layername " + newData[i].layer.name)
 							currentContext.data.push(newData[i]);
 							currentContext._parent.getMapData().setRenderOffset(0, i);
-							
-							/*for(ii=0;ii<newData[i.length;ii++) {
-							
-							  if(currentLayer.tiles[i].id == 2689) {	
-									console.log("tile found in mapbroker")								
-								}						
-							} */
-				
+									
 							console.log(currentContext.data)
 						}
 						else {
@@ -247,8 +283,6 @@ this.getMapData = function (treshold,width,height,callback) {
 					currentContext._mapservice.getImages(function (imagedata) {
 							currentContext.imageData = imagedata;
 							callback(currentContext.imageData, currentContext.data)
-							var xmov = currentContext._parent.getMapData().getXMovement() + currentContext.xCounter;
-							currentContext._parent.getMapData().setXMovement(xmov);
 							currentContext.xCounter = 0;
 							currentContext.yCounter = 0;
 						}
@@ -257,7 +291,6 @@ this.getMapData = function (treshold,width,height,callback) {
 				}, this.xOuter, this.yOuter, x2load, y2load);
 			}
 			else {
-			console.log("not fetching new tiles")	
 			this.xCounter = 0;
 			this.yCounter = 0;		
 			}

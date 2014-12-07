@@ -1,6 +1,7 @@
 function TileLayer(parentMap,loginstance)
 {
   this.parentMap = parentMap
+  this._host = "localhost:8083"
   this.loginstance = loginstance;
 	this.init = function()
 	{
@@ -8,11 +9,9 @@ function TileLayer(parentMap,loginstance)
    }
    	
    	
-   
-	// do a partial render
-	
-	this.partialRender = function (imagedata,data) {
-	var imagenames = Array();
+   this.renderTiles = function (imagedata,data,first) {
+   	
+   	var imagenames = Array();
   		var renderList = [];
    	for(var i=0;i<imagedata.length;i++)
     	{
@@ -22,153 +21,70 @@ function TileLayer(parentMap,loginstance)
     	for(var i=0;i<data.length;i++) {
    		var tileLayer = data[i].layer;
 			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
+			 if (typeof currentOffset == 'undefined') {
+				 currentOffset = 0;		 
+			 }
    		 var tileLayertiles = tileLayer.tiles;
-   		 
-  		
-    		for(var t=currentOffset;t<tileLayertiles.length;t++)
-    		{
+
+   		 for(var t=currentOffset;t<tileLayertiles.length;t++)
+    		 {
     			var tiles = tileLayer.tiles;
     			var tile = tiles[t].tile
-
-
-    			xoffset = tile.xoffset
+				xoffset = tile.xoffset
     			yoffset = tile.yoffset
-				xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()
-				yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()
-    			image_id = tile.image_id
-
- 			   tilesize = this.parentMap.getRelativeTilesize();
-    			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
-    			source = "http://localhost:8083/ncache/" + tilerequest;
-
-
-				tile.setImageUrl = function (imageUrl) {
-					this.imageUrl = imageUrl;
+				if(first) {
+						
+    					xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
+    					yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
+    					image_id = tile.image_id
 				}
-				tile.getImageUrl = function() {
-					return this.imageUrl;
+				else {
+					
+    					xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()
+						yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()
+    								
 				}
-				tile.setPosition = function(xposition,yposition) {
-					this.xposition = xposition;
-					this.yposition = yposition;
-				}
-				tile.getXPosition = function() {
-					return this.xposition;
-				}
-				tile.getYPosition = function() {
-					return this.yposition;
-				}
-				// NOTE: only for debugging purposes
-				tile.setLayer = function (layer) {
-					this.layer = layer;				
-				}
-				// NOTE: only for debugging purposes
-				tile.getLayer = function () {
-					return this.layer;	
-				}
-				tile.setImageUrl(source)
-				tile.setPosition(xposition,yposition);
-				tile.setLayer(tileLayer)
-				renderList.push(tile);
-    		}
+						image_id = tile.image_id	
+ 			   		tilesize = this.parentMap.getRelativeTilesize();
+    					tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
+    					source = "http://" + this._host + "/ncache/" + tilerequest;
+    					// tot aan hier
+						var newTile  = new Tile(tile)
+    			
+    			newTile.setImageUrl(source)
+    			newTile.setPosition(xposition,yposition);
+				renderList.push(newTile);
+    		}	
+   		 
+   		 
     		this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
     			
     	}
-		//console.log("length: " + renderList.length)
-    	this.loadAllImages(renderList);
-    			
-	}   
-   
-   // do full render of the screen
-	this.render = function(imagedata,data)
-	{
-		var imagenames = Array();
-		var renderList = [];
-		// TODO: twee for loopjes kunnen met elkaar gecombineerd worden
-  	 	for(var i=0;i<imagedata.length;i++)
-    	{
-			imagenames[imagedata[i].id] = imagedata[i].name     	  
-    	}
-       	 data = this._sort(data);
-    	for(var i=0;i<data.length;i++) {
-   		var tileLayer = data[i].layer;
-   		 var tileLayertiles = tileLayer.tiles;
-    		for(var t=0;t<tileLayertiles.length;t++)
-    		{
-    			var tiles = tileLayer.tiles;
-    			var tile = tiles[t].tile
-
-
-    			xoffset = tile.xoffset
-    			yoffset = tile.yoffset
-    			xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
-    			yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
-    			image_id = tile.image_id
-    			
-   		   tilesize = this.parentMap.getRelativeTilesize();
-    			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
-    			source = "http://localhost:8083/ncache/" + tilerequest;
-    			
-    			
-
-
-				tile.setImageUrl = function (imageUrl) {
-					this.imageUrl = imageUrl;
-				}
-				tile.getImageUrl = function() {
-					return this.imageUrl;
-				}
-				tile.setPosition = function(xposition,yposition) {
-					this.xposition = xposition;
-					this.yposition = yposition;
-				}
-				tile.getXPosition = function() {
-					return this.xposition;
-				}
-				tile.getYPosition = function() {
-					return this.yposition;
-				}
-				// NOTE: only for debugging purposes
-				tile.setLayer = function (layer) {
-					this.layer = layer;				
-				}
-				// NOTE: only for debugging purposes
-				tile.getLayer = function () {
-					return this.layer;	
-				}
-				tile.setImageUrl(source)
-				tile.setLayer(tileLayer)
-				tile.setPosition(xposition,yposition);
-				renderList.push(tile);
-    		}	
-    	}
     	this.loadAllImages(renderList);
 		
-	}
+		}   	
 	 this.move = function() {
 					var c = 0;
 		   		var currentContext = this;
 		var anim = new Kinetic.Animation(function(frame) {
 		 					
+		 	 				
+		 	 				var mapData = currentContext.parentMap.getMapData();
 		 	 				var tiles = currentContext.parentMap.getMapData().getTiles();
-		 	 				var prevViewportX = currentContext.parentMap.getMapData().getPrevViewportX();
-		 	 				var prevViewportY = currentContext.parentMap.getMapData().getPrevViewportY();
-		 	 				var viewportX = currentContext.parentMap.getMapData().getViewportX();
-	    					var viewportY = currentContext.parentMap.getMapData().getViewportY();
+		 	 				var prevViewportX = mapData.getPrevViewportX();
+		 	 				var prevViewportY = mapData.getPrevViewportY();
+		 	 				var viewportX = mapData.getViewportX();
+	    					var viewportY = mapData.getViewportY();
 		    					
 	    					
           		      var tilesize = currentContext.parentMap.getRelativeTilesize()
 			 				for(i=0;i<tiles.length;i++) {
-							 var viewportX = currentContext.parentMap.getMapData().getViewportX();
-	    					 var viewportY = currentContext.parentMap.getMapData().getViewportY();
-	    					 
-	 
-	    					  var currentX = tiles[i].getTileImage().getX() 
-	    					  var currentY = tiles[i].getTileImage().getY()
-	    					  
-	    					  
-	  						var newX = 0;
-							var newY = 0;		
+							 
+	    					 var currentX = tiles[i].getTileImage().getX() 
+	    					 var currentY = tiles[i].getTileImage().getY()
+	    					   
+	  						 var newX = 0;
+							 var newY = 0;		
 							
 										
 							if(prevViewportX > viewportX) {
@@ -239,21 +155,9 @@ function TileLayer(parentMap,loginstance)
 		var imagesOK = 0;
 		var imUrlsLength = renderList.length;
 		var currentContext = this;
-		for(i=0;i<renderList.length;i++)
-		{
-
-		}
-
 
 		for(var i=0;i<renderList.length;i++) {
 			var img = new Image();
-			renderList[i].setTileHtmlImage = function(img) {
-				this._htmlImage = img;
-
-			}
-			renderList[i].getTileHtmlImage = function() {
-				return this._htmlImage;
-			}
 			renderList[i].setTileHtmlImage(img);
 			img.onload = function () {
 				imagesOK++;
@@ -278,12 +182,6 @@ function TileLayer(parentMap,loginstance)
 							image: renderList[i].getTileHtmlImage(),
 							draggable: false
 						});
-						renderList[i].setTileImage = function(image) {
-							this._kineticImage = image;
-						}
-						renderList[i].getTileImage = function () {
-						  return this._kineticImage;
-						}
 						renderList[i].setTileImage(img)
 						currentContext._layer.add(img);
 					}
@@ -302,7 +200,7 @@ function TileLayer(parentMap,loginstance)
 			oldRenderlist.push(renderList[i])
 		}
 		this.parentMap.getMapData().setTiles(oldRenderlist)
-	   	//		var tiles = this.parentMap.getMapData().getTiles();
+	   	
     }
 	this.getLayer = function()
 	{
