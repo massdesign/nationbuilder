@@ -7,8 +7,8 @@ function Map(javascript_console,applicationName)
 		this._context = null;
 		this.jsconsole = javascript_console
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 12;
-    	this._g_mapHeight = 12;
+	  	this._g_mapWidth = 20;
+    	this._g_mapHeight = 20;
         // TODO: replace width/height with tilesize we only support symmetrical tiles
     	this._g_tileWidth = 32;
     	this._g_tileHeight = 32;
