@@ -21,13 +21,12 @@ function GridLayer(parentMap,loginstance)
 		 var currentx = 0;
 		 var currenty = 0;
 						
-		for(var x=0;x<this.parentMap.getMapWidth();x++)
+		for(var x=1;x<this.parentMap.getMapWidth()+1;x++)
 		{
 			currenty = 0;
-					
-				
-			for(var y=0;y<this.parentMap.getMapHeight()-1;y++)
+			for(var y=1;y<this.parentMap.getMapHeight()+1;y++)
 			{
+
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset()
 				, currentx+this.parentMap.getXOffset(),currenty+this.parentMap.getRelativeTilesize()+this.parentMap.getYOffset()];
 				  var blackLine = new Kinetic.Line({
@@ -49,9 +48,9 @@ function GridLayer(parentMap,loginstance)
 		
 		 var currentx = 0;
 		 var currenty = 0;
-		for(var y=0;y<this.parentMap.getMapHeight();y++)
+		for(var y=0;y<this.parentMap.getMapHeight()+1;y++)
 		{
-			for(var x=0;x<this.parentMap.getMapWidth()-2;x++)
+			for(var x=0;x<this.parentMap.getMapWidth()+1;x++)
 			{
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset(),
 				currentx+this.parentMap.getRelativeTilesize()+this.parentMap.getXOffset(),currenty+this.parentMap.getYOffset()];
