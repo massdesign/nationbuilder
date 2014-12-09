@@ -1,6 +1,7 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
+		this._gridLayer = new GridLayer(this, javascript_console);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -22,7 +23,7 @@ function Map(javascript_console,applicationName)
     	
     	this.layers.push(new TileLayer(this,javascript_console));
     	this.layers.push(new SelectLayer(this,javascript_console));
-    	this.layers.push(new GridLayer(this,javascript_console));
+    	this.layers.push(this._gridLayer);
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -39,6 +40,12 @@ function Map(javascript_console,applicationName)
     this.getStage = function() {
 	 return this.stage;    
     }
+	this.enableGrid = function() {
+		this._gridLayer.enableGrid();
+	}
+	this.disableGrid = function() {
+		this._gridLayer.disableGrid();
+	}
     this.getTileValue = function(x,y,axis)
     { 
     	return this._g_tileValues[x][y][axis];
