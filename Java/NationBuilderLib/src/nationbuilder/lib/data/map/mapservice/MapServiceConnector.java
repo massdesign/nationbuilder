@@ -36,24 +36,6 @@ public class MapServiceConnector {
 		this.jsonServiceConnector = new JsonServiceConnector(location);
         this.context = context;
 	}
-/*
-	public void addTile(MapTile tile)
-	{
-		try
-		{
-			Gson gson = new Gson();
-
-			//tile.fetchIDs();
-			HttpData data = this.jsonServiceConnector.postObject(tile, "/tiles/");
-
-		    ID resultObject =	gson.fromJson(data.getBody(), ID.class);
-
-		    tile.setId(resultObject);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}*/
     public void addMap(MapMap map)
     {
 
