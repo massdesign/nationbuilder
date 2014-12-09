@@ -7,8 +7,8 @@ function Map(javascript_console,applicationName)
 		this._context = null;
 		this.jsconsole = javascript_console
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 12;
-    	this._g_mapHeight = 12;
+	  	this._g_mapWidth = 20;
+    	this._g_mapHeight = 20;
         // TODO: replace width/height with tilesize we only support symmetrical tiles
     	this._g_tileWidth = 32;
     	this._g_tileHeight = 32;
@@ -111,14 +111,15 @@ function Map(javascript_console,applicationName)
 
 	this.init = function()
 	{
+	 var currentContext = this;
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
-    	    width: 320,
-     	   height: 320
+    	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
+     	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
 
 
-      this._g_tileValues = this._createArray(this._g_mapWidth,this._g_mapHeight);
+      this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
