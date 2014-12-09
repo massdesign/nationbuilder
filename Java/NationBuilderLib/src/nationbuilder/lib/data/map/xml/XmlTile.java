@@ -14,8 +14,10 @@ public class XmlTile
 	{
 		this.element = element;
 	}
-	
-	public int getGID()
+
+
+
+    public int getGID()
 	{
         int result = -1;
         try {
@@ -33,8 +35,7 @@ public class XmlTile
         {
             result =  XmlHelper.getInt(this.element,"id");
             // count +1 because tiled somehow keeps track of another way of counting when doing properties
-            result++;
-
+           // result++;
             return result;
         }
         catch (NumberFormatException ex)
@@ -62,5 +63,15 @@ public class XmlTile
 
         return properties;
     }
-	
+
+    @Override
+    public String toString() {
+       StringBuilder sb = new StringBuilder();
+        for(Property property : getProperties())
+        {
+           sb.append(property.toString());
+        }
+        return "{Gid  " + this.getGID() +", Properties: " + sb.toString();
+    }
+
 }

@@ -165,6 +165,10 @@ public class RubyScaffoldGenerator
 		{
 			result = "string";
 		}
+        else if(type.equals("int"))
+        {
+            result = "integer";
+        }
 		else
 		{
 			result = "string";

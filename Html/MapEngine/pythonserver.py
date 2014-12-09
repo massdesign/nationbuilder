@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import http.server
 import socketserver
+import cgi
+from urllib.request import Request
 from urllib.request import urlopen
 from localMapService import mapservice
 from localMapService import cacheservice
@@ -9,6 +11,7 @@ from localMapService import log
 from subprocess import call
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
+
 	def createMapCache(self):
 		mservice = mapservice.MapsService()
 		print(mservice)
@@ -24,7 +27,28 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 			tset = tileset.TileSet(cservice.getFilePath("ts_" + element['name']),cservice)
 			tset.unpack()
+	def do_POST(self):
+
+		content_len = int(self.headers['content-length'])
+		post_body = self.rfile.read(content_len)
+		protocol  = "http"
+		dbserver = "localhost:3000"
+		dbrequest = protocol + "://" + dbserver + self.path
+		postrequest = Request(dbrequest,post_body)
+		postrequest.get_method = lambda: 'POST'
+		postrequest.add_header("Content-type", "application/json")
+		
+		requestresponse = urlopen(postrequest)
+		content = requestresponse.read()
+		self.send_response(requestresponse.getcode())
+		self.send_header("Content-type", "application/json")
+		self.send_header("Content-length", len(content))
+		self.end_headers()
+		self.wfile.write(content)
+		print(dbrequest)
+		#return http.server.SimpleHTTPRequestHandler.do_POST(self)
 	def do_GET(self):
+		disableCache = True
 		if self.path == '/install':
 			self.path = '/install.html'
 			self.createMapCache()
@@ -56,16 +80,18 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			dbrequest = protocol + "://" + dbserver + self.path
 			cservice = cacheservice.Cacheservice()
 			content = ""
-			if self.path.endswith("js") or ("ncache" in self.path):
+			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css"):
 				print("non cacheable resource requested")
 				return http.server.SimpleHTTPRequestHandler.do_GET(self)
-            
-			if not cservice.isRequestInCache(self.path):
+			if disableCache:
+				print("cacheservice disabled")
+				html = urlopen(dbrequest)
+				content = html.read()
+			elif not cservice.isRequestInCache(self.path):
 			 print("resource not found in cache")
 			 html = urlopen(dbrequest)
 			 content = html.read()
 			 cservice.saveStringFile(self.path.replace('/','_'),content.decode())
-
 			else:
 				content = cservice.getRequest(self.path.replace('/','_'))
 				content = bytes(content,'utf-8')

@@ -32,7 +32,6 @@ class TilesController < ApplicationController
   #TODO: find out if we can do this in one query.. we are doing 2 querys here.. first search for the tile then join the result together
   @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
   @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
-  #@resource =	Resource.joins(:tiles).where(id: @tile.resource_id).take
 
    respond_to do |format|
  		format.json { render action: 'find', status: :created, location: @resource }

@@ -1,8 +1,5 @@
 import nationbuilder.lib.Ruby.Generation.RubyScaffoldGenerator;
-import nationbuilder.lib.data.map.entities.Currency;
-import nationbuilder.lib.data.map.entities.GameEntity;
-import nationbuilder.lib.data.map.entities.State;
-import nationbuilder.lib.data.map.entities.Test;
+import nationbuilder.lib.data.map.entities.*;
 
 /**
  * Created by patrick on 10/1/14.
@@ -13,9 +10,9 @@ public class Generator
 	public static void main(String[] args)
 	{
 		RubyScaffoldGenerator scaffoldGenerator = new RubyScaffoldGenerator();
-		String scaffoldcmd = scaffoldGenerator.createScaffold(Currency.class);
-		scaffoldGenerator.writeRablidFileToTemp(Currency.class);
-		String cpcmd = scaffoldGenerator.createCpcommand(Currency.class);
+		String scaffoldcmd = scaffoldGenerator.createScaffold(Claim.class);
+		scaffoldGenerator.writeRablidFileToTemp(Claim.class);
+		String cpcmd = scaffoldGenerator.createCpcommand(Claim.class);
 	//	scaffoldGenerator.writeControllerToFile(Test.class);
 		print(scaffoldcmd);
 		print(cpcmd);

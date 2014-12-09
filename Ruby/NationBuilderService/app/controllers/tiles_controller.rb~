@@ -31,8 +31,12 @@ class TilesController < ApplicationController
   def find 
   #TODO: find out if we can do this in one query.. we are doing 2 querys here.. first search for the tile then join the result together
   @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
+  #@claims = Claim.where(tile_id: @tile.id)
+  if (defined?(@tile.claims)).nil?  
+	@tile.claims = Array.new
+  end
   @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
-  #@resource =	Resource.joins(:tiles).where(id: @tile.resource_id).take
+
    respond_to do |format|
  		format.json { render action: 'find', status: :created, location: @resource }
 	 end
@@ -52,15 +56,22 @@ class TilesController < ApplicationController
 ActionController::Parameters.permit_all_parameters = true
     @tile = Tile.new(tile_params)
 
-    @image = Image.find(params[:imd])
-    @layer = Layer.find(params[:lmd])
-    if params[:rid] != 0
+    if params[:imd] != nil
+      @image = Image.find(params[:imd])
+      @image.tiles << @tile
+    end
+    if params[:lmd] != nil
+      @layer = Layer.find(params[:lmd])
+      @layer.tiles << @tile
+    end
+
+    if params[:rid] != nil
     	@resource = Resource.find(params[:rid])
 	   @resource.tiles << @tile
 	 end 
     #@tile.image = @image
-    @image.tiles << @tile 
-    @layer.tiles << @tile
+
+
     
 Rails.logger.debug "tile params: " + params[:imd].to_s
   

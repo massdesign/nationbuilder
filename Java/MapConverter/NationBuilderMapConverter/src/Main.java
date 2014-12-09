@@ -1,7 +1,8 @@
 
 import java.io.IOException;
 
-import World.Filler;
+import World.PreFiller;
+import World.WorldLoader;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -17,18 +18,25 @@ public class Main {
 
         RubyContext context = new RubyContextFactory().createRubyContext();
         // first run the filler to create all the essential datbase stuff
-        Filler filler = new Filler(context);
-       // filler.testFill();
-        filler.Fill();
+       // PreFiller filler = new PreFiller(context);
+      //  filler.testFill();
+      //  filler.Fill();
 
-		TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
+	//	TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
 
-		TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
-		TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
-		converter.Convert();
-		MapDataset dataset = converter.GetMapDataset();
-		MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
-		mapsServiceConnector.addDataset(dataset);
+	//	TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
+
+	//	TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
+	//	converter.Convert();
+	//	MapDataset dataset = converter.GetMapDataset();
+		//MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
+		//mapsServiceConnector.addDataset(dataset);
+      //  PreFiller f = new PreFiller(new RubyContextFactory().createRubyContext());
+       // f.testFill();
+
+
+        WorldLoader worldLoader = new WorldLoader(context);
+        worldLoader.Run();
    	  }
 	}
 	

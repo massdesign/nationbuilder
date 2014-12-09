@@ -1,0 +1,28 @@
+* branches of to seperate menu structure
+
+Military (tile status neutral)
+	-Deploy forward base*
+	-Engage enemy troops (only available if tile is occupied by ememy forces)*
+	-Annex territory by use of military force*
+	-Lay claim on territory*
+	-Construct permanent military base*
+Civilian
+	-Build settlement*
+	-Build infrastructure*
+	-Build facility*
+Industry
+	-Steel industry
+	-Wood  industry
+	-Chemical industry
+	-Energy industry
+	-Transport industry
+Government
+	-Taxes
+	-Development plan
+	
+Special
+	-Land Development
+	-Research
+	-?
+	
+	

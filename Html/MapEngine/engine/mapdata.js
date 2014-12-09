@@ -23,10 +23,37 @@ this.getViewportY = function() {
 	return this._viewporty;
 }
 
-this.setClickedTile = function(tile) {
+this.setClickedTile = function(tile,newX,newY) {
 
-this.clickedTile = tile;
+var ClickedTile = function (tile,newX,newY) { 
+this.tile = tile;
+this.newX = newX;
+this.newY = newY;
 
+this.getNewX = function() {
+
+	return this.newX;
+	} 
+this.getNewY = function () {
+
+	return this.newY;
+	}
+}
+ this.clickedTile = new ClickedTile(tile,newX,newY)
+}
+this.getClickedTile = function() {
+
+return this.clickedTile;
 }
 
+this.getNewY = function () {
+	return this.newY;
 }
+
+this.getClickedTile = function() { 
+
+return this.clickedTile;
+
+}
+}
+
