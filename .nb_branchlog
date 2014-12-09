@@ -8,14 +8,16 @@ NB-8: importer off by one error bugfixi*
 NB-9: Basic scrolling from left,right up and down* 
 NB-10: Gebruikerslogin. Het Mogelijk maken om een account aan te maken binnen nationbuilder*
 NB-11: Refactoren van de Javacode die interfaced met Ruby(fetchIDs wegrefactored uitde pojos), daarnaast nog wat entities toevoegen tbv het plaatsen van gebouwen(eerste opzet)*
-NB-12: problemen en inconssstensies fixen in de json response van de verschillende ruby controllers.. alles veranderen naar prefixloze json. 
+NB-12: problemen en inconssstensies fixen in de json response van de verschillende ruby controllers.. alles veranderen naar prefixloze json. (unmerged)
+
 NB-13: Connections beschikbaar maken in de tiled editor en map maken met verbinding tussen 2 energybuildings en dit ook tonen in mapengine 
 NB-14: Performance problemen met scrollen oplossen
 NB-15: Basic caching mechanisme implementeren voor json calls in de python client*
-NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop
+NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop (unmerged)
+
 NB-17: Javascript map.js verplaatsen en refactoren van angularjs controller en dode code opruimen 
 NB-18: De basis van de mapgenerator, mapgenerator moet een map kunnen genereren van een willekeurige grootte met alleen maar zeewater erin 
 NB-19: Optimize the filler, because it takes to long to fill a new map which is bigger than 10x10 
-NB-20: De grootte van de map aanpassen naar 20x20, ook het zo maken dat het makkelijker om te zetten 
-NB-21: Debug grid moet aan en uit gezet kunnen worden
+NB-20: De grootte van de map aanpassen naar 20x20, ook het zo maken dat het makkelijker om te zetten (umerged) 
+NB-21: Debug grid moet aan en uit gezet kunnen worden (unmerged)
 NB-22: afhankelijkheden tussen bestanden moet geregeld worden op een onderhoudbare manier, denk aan iets als requirejs om dit netjes te doen
