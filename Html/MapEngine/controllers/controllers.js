@@ -36,7 +36,18 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 			//alert(scrollValue)		  
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
-    
+
+    $scope.showgrid = function(event) {
+        if(event.target.checked) {
+
+            map.enableGrid()
+        }
+        else
+        {
+            map.disableGrid()
+        }
+      //  alert('even een testje doen of dit werkt')
+    }
     $scope._scroll = function(x,y,width,height) {
     	
  		  map.getMapData().setviewportPosition(x,y);

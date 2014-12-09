@@ -95,6 +95,9 @@
 <label>State: {{userData.state.name}}</label>
 </div>
 <div>
+Show grid <input type="checkbox" name="gridcontrol" value="showgrid" ng-click="showgrid($event)" checked="true"></br>
+</div>
+<div>
     <label>X:</label>{{mapData.clickedTile.tiles[0].tile.xposition}}<br/>
     <label>Y:</label>{{mapData.clickedTile.tiles[0].tile.yposition}}
 </div>

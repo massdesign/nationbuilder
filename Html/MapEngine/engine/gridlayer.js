@@ -2,7 +2,9 @@ function GridLayer(parentMap,loginstance)
 {
   this.parentMap = parentMap
   this.loginstance = loginstance;
-	
+  this._lines = [];
+  this._layer = null;
+
 	this.init = function()
 	{
 		this._createGrid();
@@ -14,6 +16,21 @@ function GridLayer(parentMap,loginstance)
 	this.getLayer = function()
 	{
 		return this._layer;
+	}
+	this.enableGrid = function() {
+
+		for(i=0;i<this._lines.length;i++) {
+
+			this._lines[i].show()
+		}
+		this._layer.draw();
+	}
+	this.disableGrid = function() {
+		for (i = 0; i < this._lines.length; i++) {
+
+			this._lines[i].hide()
+		}
+		this._layer.draw();
 	}
 	 this._createGrid = function ()
     {
@@ -37,7 +54,8 @@ function GridLayer(parentMap,loginstance)
        					 lineJoin: 'round'
      					 });
 
-   		 	this._layer.add(blackLine);
+   		 	  this._layer.add(blackLine);
+			  this._lines.push(blackLine)
 			  this.parentMap.setTileValue(x,y,0,currentx + this.parentMap.getXOffset());
 			  this.parentMap.setTileValue(x,y,1,currenty + this.parentMap.getYOffset());
 			  currenty = y*this.parentMap.getRelativeTilesize();
@@ -62,6 +80,7 @@ function GridLayer(parentMap,loginstance)
        					 lineJoin: 'round'
      					 });
      		  	this._layer.add(blackLine);
+				this._lines.push(blackLine)
 			  currentx = x*this.parentMap.getRelativeTilesize();
             }
 			 currenty = y*this.parentMap.getRelativeTilesize();
