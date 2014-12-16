@@ -7,12 +7,15 @@ import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyBackendConnectionFailed;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
+import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
+import nationbuilder.lib.Ruby.Interfaces.RubyFetchService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.connectors.JsonObjectBuilder;
+import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
-import nationbuilder.lib.http.data.HttpData;
-import nationbuilder.lib.http.data.ID;
+import nationbuilder.lib.http.data.HttpResponseData;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -27,18 +30,23 @@ public class RubyContext {
     public RubyService getRubyService() {
         return rubyService;
     }
-        Gson gson = new Gson();
+       Gson gson = new Gson();
     public void setRubyService(RubyService rubyService) {
         this.rubyService = rubyService;
     }
 
     private RubyService rubyService;
+
+    private RubyFetchService fetchService;
+    private RubyCreateService createService;
     private RubyStore rubyStore;
+    private ObjectBuilder objectBuilder;
     public RubyContext(RubyService service)
     {
      this.rubyService = service;
       // NOTE: maybe in the future we want to have this passed trough the constructor
      this.rubyStore = new RubyStore();
+     this.objectBuilder = new JsonObjectBuilder();
     }
 
     public<T extends RubyModel> T createRubyModel(Class<?> clazz)
@@ -71,9 +79,9 @@ public class RubyContext {
 	}
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
 	{
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
 		object.FetchIDs();
-		HttpData data = null;
+		HttpResponseData data = null;
 		try
 		{
 			data = this.rubyService.postObject(object,resourceUrl);
@@ -86,7 +94,9 @@ public class RubyContext {
 		{
 			throw new ObjectPersistanceFailedException(object,e);
 		}
-		ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
+		//ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
+
+        ID resultObject = (ID)this.objectBuilder.createObjectFromString(data.getBody(),ID.class);
         resultObject.setType(object.getClass().getName());
         object.setId(resultObject);
 

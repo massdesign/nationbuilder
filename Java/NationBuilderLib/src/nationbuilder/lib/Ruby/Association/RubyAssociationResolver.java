@@ -1,7 +1,6 @@
 package nationbuilder.lib.Ruby.Association;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -13,9 +12,8 @@ import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.List;
-import nationbuilder.lib.http.data.ID;
+import nationbuilder.lib.Ruby.ID;
 
 /**
  * Created by patrick on 7/23/14.

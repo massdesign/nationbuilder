@@ -5,6 +5,7 @@ import World.PreFiller;
 import World.WorldLoader;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
+import nationbuilder.lib.Ruby.RubyContextType;
 import nationbuilder.lib.data.map.entities.MapDataset;
 import nationbuilder.lib.data.map.converter.TiledMapConverter;
 import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
@@ -16,7 +17,7 @@ import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 public class Main {
 	public static void main(String[] args) throws IOException {
 
-        RubyContext context = new RubyContextFactory().createRubyContext();
+        RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
         // first run the filler to create all the essential datbase stuff
        // PreFiller filler = new PreFiller(context);
       //  filler.testFill();
