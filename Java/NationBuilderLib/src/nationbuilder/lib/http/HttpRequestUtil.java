@@ -1,7 +1,6 @@
 package nationbuilder.lib.http;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,13 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 
-import nationbuilder.lib.http.data.HttpData;
+import nationbuilder.lib.http.data.HttpResponseData;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -24,26 +20,23 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 
 import com.google.common.io.ByteStreams;
 
 
-public class HttpRequest {
+public class HttpRequestUtil
+{
 
 	private final static String USER_AGENT = "Mozilla/5.0";
-	public static HttpData sendPostRequest(String url,String urlParameters,String contentType) throws IOException
+	public static HttpResponseData sendPostRequest(String url,String urlParameters,String contentType) throws IOException
 	{
-		HttpData result = new HttpData();
+		HttpResponseData result = new HttpResponseData();
 		
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -70,7 +63,7 @@ public class HttpRequest {
 		in.close();		
 		return result;
 	}
-	public static HttpData sendPostRequest(String url,String urlParameters) throws IOException
+	public static HttpResponseData sendPostRequest(String url,String urlParameters) throws IOException
 	{
 		return sendPostRequest(url,urlParameters,"application/json");
 	}
@@ -152,9 +145,9 @@ public class HttpRequest {
 		}
 		return result;
 	}
-	public static HttpData sendGetRequest(String url) 
+	public static HttpResponseData sendGetRequest(String url)
 	{
-		HttpData result = new HttpData();
+		HttpResponseData result = new HttpResponseData();
 			
 		CloseableHttpClient client= HttpClientBuilder.create().build();
 		ResponseHandler<String> handler = new BasicResponseHandler();

@@ -1,17 +1,15 @@
 import java.util.List;
 import nationbuilder.lib.Ruby.Exceptions.ObjectFetchFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.Resource;
-import nationbuilder.lib.data.map.xml.XmlLayer;
 import org.junit.Assert;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.data.map.entities.Tile;
-import nationbuilder.lib.http.HttpRequest;
-import nationbuilder.lib.http.data.HttpData;
+import nationbuilder.lib.http.HttpRequestUtil;
+import nationbuilder.lib.http.data.HttpResponseData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,16 +24,16 @@ public class BackedTilesTest
 	@Before
 	public void setup()
 	{
-		context  =new RubyContextFactory().createRubyContext();
+		context  =new RubyContextFactory().createDefaultRubyContext();
 		mapTileFactory= context.createRubyObjectFacory(Tile.class, Tile[].class);
 		resourceFactory = context.createRubyObjectFacory(Resource.class,Resource[].class);
 
 	}
 	private void loadTestDatabase()
 	{
-		HttpData resultCode = null;
+		HttpResponseData resultCode = null;
 
-		resultCode = HttpRequest.sendGetRequest("http://localhost:8083/deploydb");
+		resultCode = HttpRequestUtil.sendGetRequest("http://localhost:8083/deploydb");
 		if (resultCode.getResponseCode() == 200)
 		{
 			Log.writeInfo("database deploy successfull");
@@ -43,9 +41,9 @@ public class BackedTilesTest
 	}
 	private void createEmpyDatabase()
 	{
-		HttpData resultCode = null;
+		HttpResponseData resultCode = null;
 
-		resultCode = HttpRequest.sendGetRequest("http://localhost:8083/resetdb");
+		resultCode = HttpRequestUtil.sendGetRequest("http://localhost:8083/resetdb");
 		if (resultCode.getResponseCode() == 200)
 		{
 			Log.writeInfo("database reset successfull");

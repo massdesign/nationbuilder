@@ -22,18 +22,18 @@ public class MapServiceConnector {
 	private String location;
 	private RubyService jsonServiceConnector;
     private RubyContext context;
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+	//public String getLocation() {
+	//	return location;
+	//}
+	//public void setLocation(String location) {
+	//	this.location = location;
+	//}
 
 
 	public MapServiceConnector(RubyContext context)
 	{
         this.location =  RubyConfiguration.RubyBackend + ":" + RubyConfiguration.RubyBackendPort;
-		this.jsonServiceConnector = new JsonServiceConnector(location);
+		//this.jsonServiceConnector = new JsonServiceConnector(location);
         this.context = context;
 	}
     public void addMap(MapMap map)

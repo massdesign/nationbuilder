@@ -1,7 +1,6 @@
 package nationbuilder.lib.Ruby;
 
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.http.data.ID;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,6 +1,7 @@
 package nationbuilder.lib.http.data;
 
-public class HttpData {
+public class HttpResponseData implements ResponseData
+{
 private int responseCode;
 private String body;
 public int getResponseCode() {

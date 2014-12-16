@@ -1,6 +1,5 @@
 package nationbuilder.lib.Ruby;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +10,9 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.http.data.HttpData;
 import nationbuilder.lib.http.data.ID;
+import nationbuilder.lib.connectors.JsonObjectBuilder;
+import nationbuilder.lib.connectors.ObjectBuilder;
+import nationbuilder.lib.http.data.HttpResponseData;
 
 /**
  * Created by patrick on 10/21/14.
@@ -21,12 +23,14 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	RubyContext context;
 	Class<T> clazz;
 	Class<?> clazzArray;
-	Gson gson;
+	private ObjectBuilder objectBuilder;
+	//Gson gson;
 	public RubyObjectFactoryImpl(Class<T> clazz,Class<?> clazzArray)
 	{
 		this.clazz = clazz;
 		this.clazzArray = clazzArray;
-		this.gson = new Gson();
+		this.objectBuilder = new JsonObjectBuilder();
+		//this.gson = new Gson();
 	}
 	private String getRequestUrl(Class<?> t)
 	{
@@ -44,10 +48,10 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	{
 		T result = null;
 
-		HttpData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/" + id);
+		HttpResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/" + id);
 		if(data != null)
 		{
-		 result  = 	(T)gson.fromJson(data.getBody(),this.clazz);
+		result = (T)this.objectBuilder.createObjectFromString(data.getBody(), this.clazz);
 
          if(result != null)
          {
@@ -64,10 +68,11 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	{
 		List<T> result = new ArrayList<T>();
 	    String requestUrl =  getRequestUrl(clazz);
-		HttpData data =  this.context.getRubyService().getObject("/" + requestUrl);
+		HttpResponseData data =  this.context.getRubyService().getObject("/" + requestUrl);
 		if(data != null)
 		{
-			T[] resultArray = (T[]) gson.fromJson(data.getBody(), clazzArray);
+			//T[] resultArray = (T[]) gson.fromJson(data.getBody(), clazzArray);
+			T[] resultArray = (T[])objectBuilder.createObjectFromString(data,clazzArray);
 			for (int i = 0; i < resultArray.length; i++)
 			{
 				resultArray[i].setRubyContext(this.context);
@@ -89,7 +94,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		}
 		String requestUrl = getRequestUrl(clazz);
 		String actionUrl = "/" + requestUrl + "/" + action + "/" + query.substring(0,query.length()-1);
-	    HttpData resultSet =	this.context.getRubyService().getObject(actionUrl);
+	    HttpResponseData resultSet =	this.context.getRubyService().getObject(actionUrl);
 
 		if(resultSet.getResponseCode() == 200 || resultSet.getResponseCode() == 201)
 		{
@@ -98,7 +103,8 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 			try
 			{
 			// TODO: write code that adds the results of the array to the resultList
-			 resultArray = (T[]) gson.fromJson(resultSet.getBody(), clazzArray);
+			// resultArray = (T[]) gson.fromJson(resultSet.getBody(), clazzArray);
+				resultArray = (T[])objectBuilder.createObjectFromString(resultSet.getBody(),clazzArray);
 			}
 			catch (JsonSyntaxException ex)
 			{
@@ -109,7 +115,9 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 			{
 				try
 				{
-					resultObject = (T) gson.fromJson(resultSet.getBody(), this.clazz);
+					//resultObject = (T) gson.fromJson(resultSet.getBody(), this.clazz);
+
+					resultObject = (T)objectBuilder.createObjectFromString(resultSet.getBody(),this.clazz);
 				}
 				catch (JsonSyntaxException ex)
 				{
