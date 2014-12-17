@@ -1,4 +1,6 @@
 import java.util.List;
+
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectFetchFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.data.map.entities.Resource;
@@ -50,8 +52,7 @@ public class BackedTilesTest
 		}
 	}
 	@Test
-	public void testGetAllTiles()
-	{
+	public void testGetAllTiles() throws ObjectConversionFailedException {
 		loadTestDatabase();
 		List<Tile> tiles = mapTileFactory.getAll();
 
@@ -60,8 +61,7 @@ public class BackedTilesTest
 		Assert.assertEquals(current, expected);
 	}
 	@Test
-	public void testGetTile()
-	{
+	public void testGetTile() throws ObjectConversionFailedException {
 		loadTestDatabase();
 		Tile tile = mapTileFactory.get(3);
 		Assert.assertNotNull(tile);

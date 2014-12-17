@@ -96,7 +96,7 @@ public class RubyContext {
 		}
 		//ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
 
-        ID resultObject = (ID)this.objectBuilder.createObjectFromString(data.getBody(),ID.class);
+        ID resultObject = (ID)this.objectBuilder.createObjectFromString(data,ID.class);
         resultObject.setType(object.getClass().getName());
         object.setId(resultObject);
 

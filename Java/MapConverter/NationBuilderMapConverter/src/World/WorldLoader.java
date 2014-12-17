@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.converter.TiledMapConverter;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -42,14 +43,12 @@ public class WorldLoader {
         MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
         mapsServiceConnector.addDataset(mapDataset);
     }
-    public void PostFiller()
-    {
+    public void PostFiller() throws ObjectConversionFailedException {
         this.postFiller.setMapDataset(mapDataset);
         this.postFiller.Fill();
     }
 
-    public void Run()
-    {
+    public void Run() throws ObjectConversionFailedException {
         this.PreFiller();
         this.ConvertMap();
         this.PostFiller();

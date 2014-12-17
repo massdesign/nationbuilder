@@ -2,6 +2,7 @@ package nationbuilder.lib.http;
 
 import java.io.IOException;
 import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -31,8 +32,7 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		return null;
 	}
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException
-	{
+	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws PostRequestFailedException {
 		String json = objectBuilder.createStringFromObject(objectToPost);
 		//	String json = gson.toJson(objectToPost);
 		Log.writeInfo("Json object" + json.toString());

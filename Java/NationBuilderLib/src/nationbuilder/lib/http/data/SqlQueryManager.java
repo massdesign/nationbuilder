@@ -1,9 +1,7 @@
 package nationbuilder.lib.http.data;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 
@@ -16,11 +14,13 @@ public class SqlQueryManager
 	String userName;
 	String password;
 	String serverLocation = "jdbc:mysql://";
-
+    String database  = "";
+    // Ruby ORM assets DB
+    String rorm_assets = "rorm_assets";
 	Statement stmt = null;
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	public SqlQueryManager(String userName,String password,String serverLocation) {
+	public SqlQueryManager(String userName,String password,String serverLocation,String database) {
 
 		this.userName = userName;
 		this.password = password;
@@ -35,11 +35,29 @@ public class SqlQueryManager
 		}
 	}
 
-	private Connection createConnection() {
+
+    public int getNextID() throws SQLException {
+
+        int nextint = 0;
+        Connection conn = this.createConnection(this.rorm_assets);
+
+        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO object_count VALUES()",
+                Statement.RETURN_GENERATED_KEYS);
+            insertStmt.executeUpdate();
+            ResultSet gks = insertStmt.getGeneratedKeys();
+            gks.next();
+            nextint = gks.getInt(1);
+
+        conn.close();
+        return nextint;
+    }
+
+
+	private Connection createConnection(String database) {
 
 		try
 		{
-			Connection	conn = DriverManager.getConnection(serverLocation, userName, password);
+			Connection	conn = DriverManager.getConnection(serverLocation + "/" + database, userName, password);
 			return conn;
 		}
 		catch (SQLException e)
@@ -50,7 +68,7 @@ public class SqlQueryManager
 	}
 	public void executeInsert(String sql)
 	{
-		Connection conn = createConnection();
+		Connection conn = createConnection(this.database);
 		try
 		{
 			conn.close();
@@ -64,7 +82,7 @@ public class SqlQueryManager
 	}
 	public void executeUpdate(String sql)
 	{
-		Connection conn = createConnection();
+		Connection conn = createConnection(this.database);
 		try
 		{
 			conn.close();
@@ -76,7 +94,7 @@ public class SqlQueryManager
 	}
 	public HttpResponseData executeSelect(String sql)
 	{
-		Connection conn = createConnection();
+		Connection conn = createConnection(this.database);
 		try
 		{
 			conn.close();
@@ -93,9 +111,11 @@ public class SqlQueryManager
 	public ResponseData executeBulkInsert(String sql) throws SQLException
 	{
 		ResponseData responseData = new SqlResponseData();
-		Connection conn = createConnection();
-		Statement stmt = conn.createStatement();
-		int rowsAffected  = stmt.executeUpdate(sql);
+		Connection conn = createConnection(this.database);
+
+
+		//Statement stmt = conn.createStatement();
+		//int rowsAffected  = stmt.executeUpdate(sql);
 		conn.close();
 		return responseData;
 	}

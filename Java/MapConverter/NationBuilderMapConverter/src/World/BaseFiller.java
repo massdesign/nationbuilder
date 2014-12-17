@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
@@ -43,7 +44,7 @@ public abstract class BaseFiller
 		this.rubyModels = rubyModels;
 	}
 
-	public abstract void Fill();
+	public abstract void Fill() throws ObjectConversionFailedException;
 
 	public  void Save(Class<?> clazz,String url)
 	{
