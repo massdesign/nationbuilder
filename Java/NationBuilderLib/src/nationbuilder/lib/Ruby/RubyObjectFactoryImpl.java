@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectFetchFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
-import nationbuilder.lib.http.data.HttpData;
-import nationbuilder.lib.http.data.ID;
 import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -44,14 +43,13 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	}
 
 	@Override
-	public T get(int id)
-	{
+	public T get(int id) throws ObjectConversionFailedException {
 		T result = null;
 
 		HttpResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/" + id);
 		if(data != null)
 		{
-		result = (T)this.objectBuilder.createObjectFromString(data.getBody(), this.clazz);
+		result = (T)this.objectBuilder.createObjectFromString(data, this.clazz);
 
          if(result != null)
          {
@@ -64,8 +62,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	}
 
 	@Override
-	public List<T> getAll()
-	{
+	public List<T> getAll() throws ObjectConversionFailedException {
 		List<T> result = new ArrayList<T>();
 	    String requestUrl =  getRequestUrl(clazz);
 		HttpResponseData data =  this.context.getRubyService().getObject("/" + requestUrl);
@@ -83,8 +80,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	}
 
 	@Override // TODO: add ObjectFetchFailedException to all methods
-	public List get(String action, String... args) throws ObjectFetchFailedException
-	{
+	public List get(String action, String... args) throws ObjectFetchFailedException, ObjectConversionFailedException {
 		List<T> result = new ArrayList<T>();
 		String query = "";
 		// construct query
@@ -104,7 +100,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 			{
 			// TODO: write code that adds the results of the array to the resultList
 			// resultArray = (T[]) gson.fromJson(resultSet.getBody(), clazzArray);
-				resultArray = (T[])objectBuilder.createObjectFromString(resultSet.getBody(),clazzArray);
+				resultArray = (T[])objectBuilder.createObjectFromString(resultSet,clazzArray);
 			}
 			catch (JsonSyntaxException ex)
 			{
@@ -117,7 +113,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 				{
 					//resultObject = (T) gson.fromJson(resultSet.getBody(), this.clazz);
 
-					resultObject = (T)objectBuilder.createObjectFromString(resultSet.getBody(),this.clazz);
+					resultObject = (T)objectBuilder.createObjectFromString(resultSet,this.clazz);
 				}
 				catch (JsonSyntaxException ex)
 				{

@@ -15,4 +15,5 @@ public class RubyConfiguration {
 	public static String mySqlUsername = "root";
 	public static String mySqlPassword = "defcon1986";
 	public static String mySqlServer = "localhost";
+    public static String mySqlDatabase  = "NationBuilder";
 }

@@ -17,7 +17,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	ObjectBuilder objectBuilder;
 	public BulkSqlCreateServiceConnector(ObjectBuilder objectBuilder)
 	{
-		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer);
+		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase);
 		this.objectBuilder = objectBuilder;
 	}
 

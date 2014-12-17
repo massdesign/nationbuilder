@@ -9,8 +9,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
+import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.http.data.HttpResponseData;
 
 import org.apache.http.HttpResponse;
@@ -34,12 +37,14 @@ public class HttpRequestUtil
 {
 
 	private final static String USER_AGENT = "Mozilla/5.0";
-	public static HttpResponseData sendPostRequest(String url,String urlParameters,String contentType) throws IOException
-	{
+	public static HttpResponseData sendPostRequest(String url,String urlParameters,String contentType) throws PostRequestFailedException {
 		HttpResponseData result = new HttpResponseData();
-		
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        URL obj = null;
+        try {
+            obj = new URL(url);
+
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -62,9 +67,15 @@ public class HttpRequestUtil
 		result.setBody(sb.toString());  
 		in.close();		
 		return result;
-	}
-	public static HttpResponseData sendPostRequest(String url,String urlParameters) throws IOException
-	{
+        } catch (MalformedURLException e) {
+            throw new PostRequestFailedException("Failed to complete the post request because of this: ",e);
+        } catch (ProtocolException e) {
+            throw new PostRequestFailedException("Failed to complete the post request because of this: ",e);
+        } catch (IOException e) {
+            throw new PostRequestFailedException("Failed to complete the post request because of this: ",e);
+        }
+    }
+	public static HttpResponseData sendPostRequest(String url,String urlParameters) throws PostRequestFailedException {
 		return sendPostRequest(url,urlParameters,"application/json");
 	}
 	public static int sendPostUploadRequest(String urlString,File fileLocation) throws IOException
@@ -83,8 +94,9 @@ public class HttpRequestUtil
 		
 		return response.getStatusLine().getStatusCode();
 	}
-	public static int sendPostUploadRequest(String urlString,File filelocation,String name) 
-	{
+	public static int sendPostUploadRequest(String urlString,File filelocation,String name) throws PostRequestFailedException {
+
+        try {
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(urlString);
 
@@ -96,20 +108,14 @@ public class HttpRequestUtil
 		builder.addPart(name, fileBody);
 		httpPost.setEntity(builder.build());
 		HttpResponse response;
-		try {
+
 			response = httpclient.execute(httpPost);
 			return response.getStatusLine().getStatusCode();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new PostRequestFailedException("Failed to complete the post request because of this: ",e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new PostRequestFailedException("Failed to complete the post request because of this: ",e);
 		}
-		
-		return 0;
-		
-		
 	}
 	
 	

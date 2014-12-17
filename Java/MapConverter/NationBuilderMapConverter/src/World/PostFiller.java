@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.Claim;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -19,8 +20,7 @@ public class PostFiller {
         this.claimFiller = new ClaimFiller(context);
     }
 
-    public void Fill()
-    {
+    public void Fill() throws ObjectConversionFailedException {
         this.claimFiller.Fill();
         this.save();
 

@@ -17,7 +17,7 @@ public class SqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException
+	public HttpResponseData postObject(Object objectToPost, String resourceUrl)
 	{
 		return null;
 	}

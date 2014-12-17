@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
@@ -27,7 +28,7 @@ public class ClaimFiller extends BaseFiller {
 
     private MapDataset mapDataset;
     @Override
-    public void Fill() {
+    public void Fill() throws ObjectConversionFailedException {
 
       State state =  this.stateObjectFactory.get(1);
 
