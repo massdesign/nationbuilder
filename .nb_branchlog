@@ -21,3 +21,23 @@ NB-19: Optimize the filler, because it takes to long to fill a new map which is 
 NB-20: De grootte van de map aanpassen naar 20x20, ook het zo maken dat het makkelijker om te zetten* 
 NB-21: Debug grid moet aan en uit gezet kunnen worden* 
 NB-22: afhankelijkheden tussen bestanden moet geregeld worden op een onderhoudbare manier, denk aan iets als requirejs om dit netjes te doen
+
+NB-23: Inzoomen en uitzoomen laten samenwerken met de chunkloading dat geimplementeerd is NB-14 
+NB-24: Minimap tonen die ver uitgezoomde versie van de map laat zien 
+NB-25: Performance probleem met images query oplossen (query duurt nu 500+ms)
+NB-26: Seamless scrollen mogelijk maken 
+NB-27: Pixel clustering maken om de uitzoom limiet te vergroten 
+NB-28: Productiewaardige omgeving regelen op de demo VPS
+NB-29: Turn based mechanisme ontwerpen op basis van de RubyDI
+NB-30: Mogelijk maken gebouw te plaatsen op een tile
+NB-31: Mogelijk maken om een stad te bouwen op een tile
+NB-32: City screen ontwerp maken 
+NB-33: Mogelijk maken een militaire basis te plaatsen op een tile
+NB-34: Military deployment screen ontwerp maken
+NB-35: Als een tile bezet is door een miltaire eenheid icoontje toevoegen
+NB-36: Een tool in python schrijven die het mogelijk maakt om tickets bij te houden zoals NB-1 NB-2 NB-3 etc
+NB-37: Het concept stad toevoegen aan het model
+NB-38: Ontwerp maken en implementeren hoe belastingen worden berekend in het spel
+NB-39: AI ontwerpen die een fabriek draaiende kan houden met verschillende strategien,
+NB-40: De database compleet maken wat betreft grondstoffen die in het spel verwerkt kunnen worden
+
