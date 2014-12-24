@@ -56,11 +56,11 @@ public class PreFiller {
 
         try {
             tile.Save("/tiles/");
-            state.Save("/states/");
-            claim.setClaimedTile(tile);
-            claim.setClaimedBy(state);
+            //state.Save("/states/");
+            //claim.setClaimedTile(tile);
+            //claim.setClaimedBy(state);
 
-            claim.Save("/claims/");
+           // claim.Save("/claims/");
         } catch (RubyException e) {
             e.printStackTrace();
         }

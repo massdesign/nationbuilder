@@ -53,6 +53,10 @@ public class WorldLoader {
         this.ConvertMap();
         this.PostFiller();
     }
+    public void TestRun()
+    {
+        this.preFiller.testFill();
+    }
 
 
 }

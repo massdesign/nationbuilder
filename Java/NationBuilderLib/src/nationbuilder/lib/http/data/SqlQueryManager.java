@@ -1,9 +1,18 @@
 package nationbuilder.lib.http.data;
 
-import java.sql.*;
+import java.io.InputStream;
+import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.Connection;
 
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.sql.Column;
+import nationbuilder.lib.sql.TableData;
+import org.apache.commons.io.IOUtils;
 
 
 /**
@@ -36,7 +45,8 @@ public class SqlQueryManager
 	}
 
 
-    public int getNextID() throws SQLException {
+    public int getNextID() throws SQLException
+	{
 
         int nextint = 0;
         Connection conn = this.createConnection(this.rorm_assets);
@@ -57,7 +67,7 @@ public class SqlQueryManager
 
 		try
 		{
-			Connection	conn = DriverManager.getConnection(serverLocation + "/" + database, userName, password);
+			Connection	conn = (Connection)DriverManager.getConnection(serverLocation + "/" + database, userName, password);
 			return conn;
 		}
 		catch (SQLException e)
@@ -92,6 +102,25 @@ public class SqlQueryManager
 			Log.write(e, LogType.ERROR);
 		}
 	}
+	public TableData getTableStructure(String tableName) throws SQLException
+	{
+		Connection conn = createConnection(this.database);
+		Statement statement = (Statement) conn.createStatement();
+		ResultSet rs = stmt.executeQuery("DECRIBE " + tableName);
+		TableData result = new TableData();
+		result.setTable(tableName);
+		// TODO: handle field name
+		while (rs.next()) {
+			String fieldName = rs.getString("Field");
+			String type = rs.getString("Type");
+
+			result.addColumn(new Column(fieldName,type));
+
+		}
+		conn.close();
+
+		return result;
+	}
 	public HttpResponseData executeSelect(String sql)
 	{
 		Connection conn = createConnection(this.database);
@@ -107,15 +136,34 @@ public class SqlQueryManager
 
 		return responseData;
 	}
-	// NOTE: created two methods because i don't know if we need to handle bulk inserts differently than normal inserts
 	public ResponseData executeBulkInsert(String sql) throws SQLException
 	{
 		ResponseData responseData = new SqlResponseData();
 		Connection conn = createConnection(this.database);
 
+	    Statement statement  = (Statement) conn.createStatement();
+		statement.execute("SET UNIQUE_CHECKS=0;");
+		// bij wijze van concept eerst de tiles tabel proberen te inserten
+		statement.execute("ALTER TABLE tiles DISABLE KEYS");
 
+		String query = "LOAD DATA LOCAL INFILE 'file.txt' " +
+								"INTO TABLE tiles" +
+								"(name, value) " +
+								" SET owner_id = " + "<TODO>" + ", " +
+								" version = 0; ";
+
+		// Create StringBuilder to String that will become stream
+		StringBuilder builder = new StringBuilder();
+		InputStream is = IOUtils.toInputStream(builder.toString());
+
+		// Setup our input stream as the source for the local infile
+		statement.setLocalInfileInputStream(is);
 		//Statement stmt = conn.createStatement();
 		//int rowsAffected  = stmt.executeUpdate(sql);
+
+		// Turn the checks back on
+		statement.execute("ALTER TABLE affinity ENABLE KEYS");
+		statement.execute("SET UNIQUE_CHECKS=1; ");
 		conn.close();
 		return responseData;
 	}
