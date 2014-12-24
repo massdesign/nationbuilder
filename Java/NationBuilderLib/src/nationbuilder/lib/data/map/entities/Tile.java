@@ -1,10 +1,13 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 import java.util.List;
 
+
+@Entity(tableName = "tiles")
 public class Tile extends BaseRubyModel {
 
 	

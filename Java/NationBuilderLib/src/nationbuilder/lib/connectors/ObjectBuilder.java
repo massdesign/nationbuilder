@@ -1,5 +1,6 @@
 package nationbuilder.lib.connectors;
 
+import java.sql.SQLException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.http.data.ResponseData;
 
@@ -9,5 +10,5 @@ import nationbuilder.lib.http.data.ResponseData;
 public interface ObjectBuilder
 {
 	public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException;
-	String createStringFromObject(Object object);
+	String createStringFromObject(Object object) throws SQLException, ObjectConversionFailedException;
 }
