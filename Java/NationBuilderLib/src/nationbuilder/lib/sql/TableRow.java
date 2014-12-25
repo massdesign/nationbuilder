@@ -40,4 +40,37 @@ public class TableRow {
             }
         }
     }
+
+    public String createInsertStatement()
+    {
+        // TODO: implement
+        return "";
+    }
+    public String createSelectStatement()
+    {
+        // TODO: implement
+        return "";
+    }
+    public String createBulkInsertStatement()
+    {
+        String result = "";
+        for(ColumnValue value : this.row)
+        {
+          if(value != null) {
+              result += value.getValue();
+              result += ",";
+          }
+          else
+          {
+              result += "null";
+              result += ",";
+          }
+        }
+        return  result;
+    }
+    public String createUpdateStatement()
+    {
+        // TODO: implement
+        return "";
+    }
 }
