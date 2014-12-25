@@ -13,5 +13,5 @@ import nationbuilder.lib.http.data.HttpResponseData;
 public interface RubyCreateService
 {
 	HttpResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException;
-	HttpResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, SQLException, ObjectConversionFailedException;
+	HttpResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException;
 }

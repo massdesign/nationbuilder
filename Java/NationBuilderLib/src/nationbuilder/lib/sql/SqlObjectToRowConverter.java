@@ -8,8 +8,8 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
  */
 public class SqlObjectToRowConverter
 {
-	private static String STRING_TYPE = "string";
-	private static String INT_TYPE = "int";
+	public static String STRING_TYPE = "string";
+	public static String INT_TYPE = "int";
 
 	public ObjectMap createObjectMap(RubyModel model)
 	{

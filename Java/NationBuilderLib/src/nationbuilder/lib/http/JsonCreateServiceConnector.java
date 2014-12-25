@@ -34,7 +34,7 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		return null;
 	}
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws PostRequestFailedException, SQLException, ObjectConversionFailedException
+	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws PostRequestFailedException, ObjectConversionFailedException
 	{
 		String json = objectBuilder.createStringFromObject(objectToPost);
 		//	String json = gson.toJson(objectToPost);

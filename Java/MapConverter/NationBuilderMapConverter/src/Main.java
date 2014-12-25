@@ -6,7 +6,6 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.Ruby.RubyContextType;
-
 public class Main {
 	public static void main(String[] args) throws IOException, RubyException
     {
@@ -14,6 +13,7 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
 
         worldLoader.Run();
+
 	}
 }
 	

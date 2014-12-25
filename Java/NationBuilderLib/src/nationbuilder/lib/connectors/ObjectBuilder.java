@@ -10,5 +10,5 @@ import nationbuilder.lib.http.data.ResponseData;
 public interface ObjectBuilder
 {
 	public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException;
-	String createStringFromObject(Object object) throws SQLException, ObjectConversionFailedException;
+	String createStringFromObject(Object object) throws ObjectConversionFailedException;
 }
