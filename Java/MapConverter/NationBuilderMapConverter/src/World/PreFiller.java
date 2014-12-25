@@ -59,6 +59,11 @@ public class PreFiller {
 
         state.setName("henk");
 
+        tile.setXoffset(232);
+        tile.setYoffset(900);
+        tile.setXposition(392);
+        tile.setYposition(32);
+
         try {
             tile.Save("/tiles/");
             //state.Save("/states/");

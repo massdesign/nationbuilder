@@ -2,6 +2,7 @@ package nationbuilder.lib.http;
 
 import java.io.IOException;
 
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
@@ -40,7 +41,7 @@ public class SqlServiceConnector extends BaseServiceConnector
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException {
+	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
 		return getCreateService().postObject(objectToPost, resourceUrl);
 	}
 

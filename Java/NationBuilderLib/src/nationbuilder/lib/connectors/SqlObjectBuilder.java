@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ResponseData;
@@ -39,8 +40,7 @@ public class SqlObjectBuilder implements ObjectBuilder
     }
 
     @Override
-    public String createStringFromObject(Object object) throws ObjectConversionFailedException
-    {
+    public String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException {
         RubyModel model = (RubyModel)object;
         ObjectMap objectMap = sqlObjectToRowConverter.createObjectMap(model);
         String result = "";
@@ -75,13 +75,8 @@ public class SqlObjectBuilder implements ObjectBuilder
                     String key =  (String)pair.getKey();
                     Object value = pair.getValue();
                     newRow.setColumn(key, value);
-
-
                 }
-
-                System.out.println("even testen hoor");
-
-
+                return newRow.createBulkInsertStatement();
             }
             catch (SQLException e)
             {
@@ -92,8 +87,7 @@ public class SqlObjectBuilder implements ObjectBuilder
         }
         else
         {
-            // TODO: throw some error about annotation missing on the class
+            throw new MissingAnnotationException("Missing Entity annotation on " + object.getClass().getSimpleName());
         }
-        return "";
     }
 }

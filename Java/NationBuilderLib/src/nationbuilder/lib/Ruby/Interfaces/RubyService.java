@@ -1,5 +1,6 @@
 package nationbuilder.lib.Ruby.Interfaces;
 
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 public interface RubyService {
 
     public HttpResponseData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException;
-    public HttpResponseData postObject(Object objectToPost,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException;
+    public HttpResponseData postObject(Object objectToPost,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException;
     public int postFile(String fileLocation,String resourceUrl) throws IOException;
     public int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
 	public HttpResponseData getObject(String resourceUrl);

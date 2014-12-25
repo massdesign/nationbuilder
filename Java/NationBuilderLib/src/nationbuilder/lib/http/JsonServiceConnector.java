@@ -3,6 +3,7 @@ package nationbuilder.lib.http;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
@@ -23,7 +24,7 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 	{
 		return this.getCreateService().postObject(objectToPost,resourceUrl,rootValue);
 	}
-	public HttpResponseData postObject(Object objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException {
+	public HttpResponseData postObject(Object objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
 		return this.getCreateService().postObject(objectToPost,resourceUrl);
 	}
 
