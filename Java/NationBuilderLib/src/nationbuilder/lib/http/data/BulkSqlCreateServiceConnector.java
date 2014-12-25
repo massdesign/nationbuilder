@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
@@ -36,8 +38,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	}
 	// TODO: RubyModel als parameter toevoegen, nu is alles Object dit kan zorgen voor bugs
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException
-	{
+	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException {
 		try
 		{
 			String sql = this.objectBuilder.createStringFromObject(objectToPost);

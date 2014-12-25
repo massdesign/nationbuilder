@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
-import nationbuilder.lib.sql.Column;
-import nationbuilder.lib.sql.TableData;
+import nationbuilder.lib.sql.ColumnMetaData;
+import nationbuilder.lib.sql.TableMetaData;
 import org.apache.commons.io.IOUtils;
 
 
@@ -34,6 +34,7 @@ public class SqlQueryManager
 		this.userName = userName;
 		this.password = password;
 		this.serverLocation += serverLocation;
+        this.database = database;
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -102,20 +103,19 @@ public class SqlQueryManager
 			Log.write(e, LogType.ERROR);
 		}
 	}
-	public TableData getTableStructure(String tableName) throws SQLException
+	public TableMetaData getTableStructure(String tableName) throws SQLException
 	{
 		Connection conn = createConnection(this.database);
-		Statement statement = (Statement) conn.createStatement();
-		ResultSet rs = stmt.executeQuery("DECRIBE " + tableName);
-		TableData result = new TableData();
+		Statement stmt = (Statement) conn.createStatement();
+		ResultSet rs = stmt.executeQuery("DESCRIBE " + tableName);
+		TableMetaData result = new TableMetaData();
 		result.setTable(tableName);
 		// TODO: handle field name
 		while (rs.next()) {
 			String fieldName = rs.getString("Field");
 			String type = rs.getString("Type");
 
-			result.addColumn(new Column(fieldName,type));
-
+			result.addColumn(new ColumnMetaData(fieldName,type));
 		}
 		conn.close();
 

@@ -2,24 +2,15 @@
 import java.io.IOException;
 import java.sql.SQLException;
 
-import World.PreFiller;
 import World.WorldLoader;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.Ruby.RubyContextType;
-import nationbuilder.lib.data.map.entities.MapDataset;
-import nationbuilder.lib.data.map.converter.TiledMapConverter;
 import nationbuilder.lib.data.map.entities.Tile;
-import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
-import nationbuilder.lib.data.map.xml.Configuration;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
-import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 import nationbuilder.lib.http.data.SqlQueryManager;
-import nationbuilder.lib.sql.ObjectMap;
 import nationbuilder.lib.sql.SqlObjectToRowConverter;
-import nationbuilder.lib.sql.TableData;
 
 
 public class Main {
@@ -36,7 +27,7 @@ public class Main {
 
         SqlObjectToRowConverter converter = new SqlObjectToRowConverter();
 
-        TableData tableData = manager.getTableStructure("tiles");
+        //TableMetaData tableData = manager.getTableStructure("tiles");
 
 
 
@@ -53,8 +44,7 @@ public class Main {
 
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
         WorldLoader worldLoader = new WorldLoader(context);
-
-     //   worldLoader.TestRun();
+        worldLoader.TestRun();
    	  }
 	}
 	

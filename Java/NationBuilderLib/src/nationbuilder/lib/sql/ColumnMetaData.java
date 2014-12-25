@@ -3,7 +3,7 @@ package nationbuilder.lib.sql;
 /**
  * Created by patrick on 12/23/14.
  */
-public class Column
+public class ColumnMetaData
 {
 	private String columnName;
 	private String columnType;
@@ -17,7 +17,7 @@ public class Column
 	{
 		this.columnType = columnType;
 	}
-	public Column(String columnName,String columnType)
+	public ColumnMetaData(String columnName, String columnType)
 	{
 		this.columnName = columnName;
 		this.columnType = columnType;
