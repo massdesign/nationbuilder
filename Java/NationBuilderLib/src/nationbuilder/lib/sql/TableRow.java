@@ -62,11 +62,11 @@ public class TableRow {
           }
           else
           {
-              result += "null";
+              result += "0";
               result += ",";
           }
         }
-        return  result;
+        return  result.substring(0,result.length()-1);
     }
     public String createUpdateStatement()
     {
