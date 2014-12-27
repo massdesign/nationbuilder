@@ -1,9 +1,12 @@
 package nationbuilder.lib.http.data;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import com.mysql.jdbc.Statement;
 import com.mysql.jdbc.Connection;
 
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -138,7 +141,23 @@ public class SqlQueryManager
 	}
 	public ResponseData executeBulkInsert(String sql) throws SQLException
 	{
-		ResponseData responseData = new SqlResponseData();
+        String filename = "import.sql";
+        String path = "/home/patrick/Git/nationbuilder/Temp/";
+
+        String filepath = path + filename;
+
+
+        try {
+            PrintWriter writer = new PrintWriter(filepath,"UTF-8");
+            writer.println(sql);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        ResponseData responseData = new SqlResponseData();
 		Connection conn = createConnection(this.database);
 
 	    Statement statement  = (Statement) conn.createStatement();
@@ -146,12 +165,12 @@ public class SqlQueryManager
 		// bij wijze van concept eerst de tiles tabel proberen te inserten
 		statement.execute("ALTER TABLE tiles DISABLE KEYS");
 
-		String query = "LOAD DATA LOCAL INFILE 'file.txt' " +
+		String query = "LOAD DATA LOCAL INFILE '" + filepath + "' " +
 								"INTO TABLE tiles" +
-								"(name, value) " +
-								" SET owner_id = " + "<TODO>" + ", " +
-								" version = 0; ";
+                                " FIELDS TERMINATED BY ','" +
+                                "  (id,gidtag,xposition,yposition,xoffset,yoffset,created_at,updated_at,layer_id,image_id,resource_id)";
 
+        statement.execute(query);
 		// Create StringBuilder to String that will become stream
 		StringBuilder builder = new StringBuilder();
 		InputStream is = IOUtils.toInputStream(builder.toString());
@@ -162,7 +181,7 @@ public class SqlQueryManager
 		//int rowsAffected  = stmt.executeUpdate(sql);
 
 		// Turn the checks back on
-		statement.execute("ALTER TABLE affinity ENABLE KEYS");
+		statement.execute("ALTER TABLE tiles ENABLE KEYS");
 		statement.execute("SET UNIQUE_CHECKS=1; ");
 		conn.close();
 		return responseData;
