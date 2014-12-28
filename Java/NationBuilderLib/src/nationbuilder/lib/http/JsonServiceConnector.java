@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.BaseServiceConnector;
 import nationbuilder.lib.http.data.HttpResponseData;
+import nationbuilder.lib.http.data.ResponseData;
 
 public class JsonServiceConnector extends BaseServiceConnector  {
 
@@ -20,11 +21,11 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 		this.setFetchService(new JsonFetchServiceConnector(serverUrl,objectBuilder));
 		this.setCreateService(new JsonCreateServiceConnector(serverUrl,objectBuilder));
 	}
-	public HttpResponseData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException
+	public ResponseData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException
 	{
-		return this.getCreateService().postObject(objectToPost,resourceUrl,rootValue);
+        return this.getCreateService().postObject(objectToPost,resourceUrl,rootValue);
 	}
-	public HttpResponseData postObject(Object objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
+	public ResponseData postObject(Object objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
 		return this.getCreateService().postObject(objectToPost,resourceUrl);
 	}
 

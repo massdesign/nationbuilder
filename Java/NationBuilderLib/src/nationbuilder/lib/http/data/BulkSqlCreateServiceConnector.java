@@ -33,22 +33,28 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
 	// TODO: RubyModel als parameter toevoegen, nu is alles Object dit kan zorgen voor bugs
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException {
-		try
-		{
+	public ResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException {
+		//try
+	//	{
+            SqlResponseData responseData = new SqlResponseData();
 			String sql = this.objectBuilder.createStringFromObject(objectToPost);
-			sqlQueryManager.executeBulkInsert(sql);
-		}
-		catch (SQLException e)
-		{
-			throw new ObjectPersistanceFailedException((RubyModel)objectToPost,e);
-		}
-		return null;
+            responseData.setSql(sql);
+          //  responseData.s
+
+          //  responseData.setBody(String.valueOf(id));
+			//sqlQueryManager.executeBulkInsert(sql);
+
+	//	}
+	//	catch (SQLException e)
+	//	{
+	//		throw new ObjectPersistanceFailedException((RubyModel)objectToPost,e);
+	//	}
+		return responseData;
 	}
 }

@@ -12,6 +12,8 @@ import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.HttpResponseData;
+import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.json.data.HttpResult;
 
 /**
  * Created by patrick on 10/21/14.
@@ -46,7 +48,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	public T get(int id) throws ObjectConversionFailedException {
 		T result = null;
 
-		HttpResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/" + id);
+		ResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/" + id);
 		if(data != null)
 		{
 		result = (T)this.objectBuilder.createObjectFromString(data, this.clazz);
@@ -65,7 +67,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	public List<T> getAll() throws ObjectConversionFailedException {
 		List<T> result = new ArrayList<T>();
 	    String requestUrl =  getRequestUrl(clazz);
-		HttpResponseData data =  this.context.getRubyService().getObject("/" + requestUrl);
+		ResponseData data =  this.context.getRubyService().getObject("/" + requestUrl);
 		if(data != null)
 		{
 			//T[] resultArray = (T[]) gson.fromJson(data.getBody(), clazzArray);
@@ -90,49 +92,40 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		}
 		String requestUrl = getRequestUrl(clazz);
 		String actionUrl = "/" + requestUrl + "/" + action + "/" + query.substring(0,query.length()-1);
-	    HttpResponseData resultSet =	this.context.getRubyService().getObject(actionUrl);
+	    ResponseData responseData =	this.context.getRubyService().getObject(actionUrl);
+        // TODO: need to solve this another way
+        if(responseData instanceof HttpResponseData)
+        {
+           HttpResponseData resultSet = (HttpResponseData)responseData;
 
-		if(resultSet.getResponseCode() == 200 || resultSet.getResponseCode() == 201)
-		{
-			T[] resultArray = null;
-			T resultObject = null;
-			try
-			{
-			// TODO: write code that adds the results of the array to the resultList
-			// resultArray = (T[]) gson.fromJson(resultSet.getBody(), clazzArray);
-				resultArray = (T[])objectBuilder.createObjectFromString(resultSet,clazzArray);
-			}
-			catch (JsonSyntaxException ex)
-			{
-				Log.write(ex, LogType.WARNING);
-			}
-			// it is not an array so try to create an object from it
-			if(resultArray == null)
-			{
-				try
-				{
-					//resultObject = (T) gson.fromJson(resultSet.getBody(), this.clazz);
+		    if(resultSet.getResponseCode() == 200 || resultSet.getResponseCode() == 201) {
+                T[] resultArray = null;
+                T resultObject = null;
+               try {
+                  // TODO: write code that adds the results of the array to the resultList
+                 resultArray = (T[]) objectBuilder.createObjectFromString(resultSet, clazzArray);
+               } catch (JsonSyntaxException ex) {
+                 Log.write(ex, LogType.WARNING);
+              }
+            // it is not an array so try to create an object from it
+            if (resultArray == null) {
+                try {
+                    resultObject = (T) objectBuilder.createObjectFromString(resultSet, this.clazz);
+                } catch (JsonSyntaxException ex) {
+                    Log.write(ex, LogType.WARNING);
+                }
 
-					resultObject = (T)objectBuilder.createObjectFromString(resultSet,this.clazz);
-				}
-				catch (JsonSyntaxException ex)
-				{
-					Log.write(ex, LogType.WARNING);
-				}
-
-				// if objects creation fails than we might not get the object we want back from the stream.
-				if (resultObject == null)
-				{
-					String errorMessage =
-					 "Failed to retrieve the object from the returned JSON stream, request contents: " + resultSet
-					  .getBody();
-					throw new ObjectFetchFailedException(errorMessage);
-				}
-				else
-				{
-					result.add(resultObject);
-				}
-			}
+                // if objects creation fails than we might not get the object we want back from the stream.
+                if (resultObject == null) {
+                    String errorMessage =
+                            "Failed to retrieve the object from the returned JSON stream, request contents: " + resultSet
+                                    .getBody();
+                    throw new ObjectFetchFailedException(errorMessage);
+                } else {
+                    result.add(resultObject);
+                }
+            }
+        }
 		}
 		return  result;
 	}
