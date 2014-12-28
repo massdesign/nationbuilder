@@ -8,9 +8,11 @@ import java.util.Map;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
+import nationbuilder.lib.Ruby.ID;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.ResponseData;
 import nationbuilder.lib.http.data.SqlQueryManager;
+import nationbuilder.lib.http.data.SqlResponseData;
 import nationbuilder.lib.sql.TableMetaData;
 import nationbuilder.lib.sql.ObjectMap;
 import nationbuilder.lib.sql.SqlObjectToRowConverter;
@@ -36,12 +38,34 @@ public class SqlObjectBuilder implements ObjectBuilder
 
     @Override
     public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException {
-        return null;
+
+        Object result = null;
+        // make exception for ID type
+        if(clazz.getSimpleName().equals("ID"))
+        {
+
+            if(data instanceof SqlResponseData)
+            {
+               String sqlString =   ((SqlResponseData) data).getSql();
+
+               String id =  sqlString.split(",")[0];
+
+                 result = new ID();
+                 ((ID)result).setId(id);
+            }
+            else
+            {
+                // TODO: throw nasty exception that SqlResponseData is the only way
+            }
+        }
+        return result;
     }
 
     @Override
     public String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException {
         RubyModel model = (RubyModel)object;
+
+
         ObjectMap objectMap = sqlObjectToRowConverter.createObjectMap(model);
         String result = "";
 
@@ -73,7 +97,15 @@ public class SqlObjectBuilder implements ObjectBuilder
                     Map.Entry pair = (Map.Entry)omi.next();
 
                     String key =  (String)pair.getKey();
-                    Object value = pair.getValue();
+                    Object value;
+                    if(key.equals("id"))
+                    {
+                        value = this.queryManager.getNextID();
+                    }
+                    else
+                    {
+                        value = pair.getValue();
+                    }
                     newRow.setColumn(key, value);
                 }
                 return newRow.createBulkInsertStatement();

@@ -11,6 +11,7 @@ import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.BaseServiceConnector;
 import nationbuilder.lib.http.data.BulkSqlCreateServiceConnector;
 import nationbuilder.lib.http.data.HttpResponseData;
+import nationbuilder.lib.http.data.ResponseData;
 
 /**
  * Created by patrick on 12/15/14.
@@ -35,13 +36,13 @@ public class SqlServiceConnector extends BaseServiceConnector
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
 	{
 		return getCreateService().postObject(objectToPost,resourceUrl,rootValue);
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
+	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
 		return getCreateService().postObject(objectToPost, resourceUrl);
 	}
 

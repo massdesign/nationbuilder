@@ -24,7 +24,7 @@ public class RubyContextFactory {
         String serverUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
         ObjectBuilder objectBuilder = new JsonObjectBuilder();
         RubyService service = new JsonServiceConnector(serverUrl,objectBuilder);
-        RubyContext result = new RubyContext(service);
+        RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }
     public RubyContext createRubyContext(RubyContextType contextType) {
@@ -51,7 +51,7 @@ public class RubyContextFactory {
         String serverUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
         ObjectBuilder objectBuilder = new JsonObjectBuilder();
         RubyService service = new JsonServiceConnector(serverUrl, objectBuilder);
-        RubyContext result = new RubyContext(service);
+        RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }
 
@@ -61,7 +61,7 @@ public class RubyContextFactory {
         String serverUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
         ObjectBuilder objectBuilder = new SqlObjectBuilder(queryManagerManager);
         RubyService service = new SqlServiceConnector(serverUrl,contextType, objectBuilder);
-        RubyContext result = new RubyContext(service);
+        RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }
 }

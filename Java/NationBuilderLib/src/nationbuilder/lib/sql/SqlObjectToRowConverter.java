@@ -15,6 +15,7 @@ public class SqlObjectToRowConverter
 	{
 		ObjectMap result = new ObjectMap();
 
+        result.addEntry("id","");
 		Class currentClass = model.getClass();
 
 		for(Field field : currentClass.getDeclaredFields())

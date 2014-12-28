@@ -16,6 +16,7 @@ import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.HttpResponseData;
+import nationbuilder.lib.http.data.ResponseData;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -41,12 +42,12 @@ public class RubyContext {
     private RubyCreateService createService;
     private RubyStore rubyStore;
     private ObjectBuilder objectBuilder;
-    public RubyContext(RubyService service)
+    public RubyContext(RubyService service,ObjectBuilder objectBuilder)
     {
      this.rubyService = service;
       // NOTE: maybe in the future we want to have this passed trough the constructor
      this.rubyStore = new RubyStore();
-     this.objectBuilder = new JsonObjectBuilder();
+     this.objectBuilder = objectBuilder;
     }
 
     public<T extends RubyModel> T createRubyModel(Class<?> clazz)
@@ -79,12 +80,19 @@ public class RubyContext {
 	}
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
 	{
-        //Gson gson = new Gson();
 		object.FetchIDs();
-		HttpResponseData data = null;
+		ResponseData data = null;
 		try
 		{
 			data = this.rubyService.postObject(object,resourceUrl);
+
+            //if(data == null) return  false;
+
+            ID resultObject = (ID)this.objectBuilder.createObjectFromString(data,ID.class);
+            resultObject.setType(object.getClass().getName());
+            object.setId(resultObject);
+            this.rubyStore.registerRubyModel(object);
+            return resultObject != null ? true : false;
 		}
 		catch (ConnectException e)
 		{
@@ -94,15 +102,7 @@ public class RubyContext {
 		{
 			throw new ObjectPersistanceFailedException(object,e);
 		}
-		//ID resultObject  =  gson.fromJson(data.getBody(),ID.class);
 
-        ID resultObject = (ID)this.objectBuilder.createObjectFromString(data,ID.class);
-        resultObject.setType(object.getClass().getName());
-        object.setId(resultObject);
-
-        this.rubyStore.registerRubyModel(object);
-
-        return resultObject != null ? true : false;
 
     }
     public boolean SaveResource(BaseRubyResourceModel object,String resourceUrl)

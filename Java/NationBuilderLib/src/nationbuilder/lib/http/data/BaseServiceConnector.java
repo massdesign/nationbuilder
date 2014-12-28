@@ -39,13 +39,13 @@ public class BaseServiceConnector implements RubyService
 		this.serverUrl = serverUrl;
 	}
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public HttpResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
+	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
 		return null;
 	}
 

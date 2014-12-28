@@ -15,14 +15,17 @@ public class TableRow {
     public void setColumn(String columnName, Object value)
     {
         String resultValue = "";
-        if(value instanceof  Integer)
+
+        if(value != null && value instanceof  Integer)
         {
            resultValue =  String.valueOf((int)value);
         }
-        else if(value instanceof String)
+        else if(value != null &&  value instanceof String)
         {
             resultValue = (String)value;
         }
+
+
 
         for(int i=0;i<this.tableMetaData.getSortedColumns().size();i++)
         {
