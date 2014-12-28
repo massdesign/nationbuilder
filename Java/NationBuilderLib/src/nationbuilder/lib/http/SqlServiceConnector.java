@@ -2,10 +2,7 @@ package nationbuilder.lib.http;
 
 import java.io.IOException;
 
-import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
-import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
+import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.RubyContextType;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.BaseServiceConnector;
@@ -18,9 +15,9 @@ import nationbuilder.lib.http.data.ResponseData;
  */
 public class SqlServiceConnector extends BaseServiceConnector
 {
-	public SqlServiceConnector(String serverUrl,RubyContextType contextType,ObjectBuilder objectBuilder)
+	public SqlServiceConnector(String serverUrl,RubyContextType contextType,ObjectBuilder objectBuilder,boolean transacted)
 	{
-		super(serverUrl);
+		super(serverUrl,transacted);
 		switch (contextType)
 		{
 			case BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT:
@@ -43,7 +40,12 @@ public class SqlServiceConnector extends BaseServiceConnector
 
 	@Override
 	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
+
 		return getCreateService().postObject(objectToPost, resourceUrl);
 	}
+    @Override
+    public void commit() throws RubyException {
+        getCreateService().commit();
+    }
 
 }

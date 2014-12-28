@@ -31,15 +31,15 @@ public class RubyContext {
     public RubyService getRubyService() {
         return rubyService;
     }
-       Gson gson = new Gson();
+    //Gson gson = new Gson();
     public void setRubyService(RubyService rubyService) {
         this.rubyService = rubyService;
     }
 
     private RubyService rubyService;
 
-    private RubyFetchService fetchService;
-    private RubyCreateService createService;
+   // private RubyFetchService fetchService;
+   // private RubyCreateService createService;
     private RubyStore rubyStore;
     private ObjectBuilder objectBuilder;
     public RubyContext(RubyService service,ObjectBuilder objectBuilder)
@@ -81,14 +81,12 @@ public class RubyContext {
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
 	{
 		object.FetchIDs();
-		ResponseData data = null;
+		ResponseData data;
 		try
 		{
 			data = this.rubyService.postObject(object,resourceUrl);
 
-            //if(data == null) return  false;
-
-            ID resultObject = (ID)this.objectBuilder.createObjectFromString(data,ID.class);
+            ID resultObject = (ID)this.objectBuilder.createObjectFromString(data, ID.class);
             resultObject.setType(object.getClass().getName());
             object.setId(resultObject);
             this.rubyStore.registerRubyModel(object);
@@ -104,6 +102,9 @@ public class RubyContext {
 		}
 
 
+    }
+    public void commit() throws RubyException {
+        this.rubyService.commit();
     }
     public boolean SaveResource(BaseRubyResourceModel object,String resourceUrl)
     {

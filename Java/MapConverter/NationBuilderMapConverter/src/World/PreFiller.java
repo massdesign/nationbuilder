@@ -61,6 +61,8 @@ public class PreFiller {
 
         try {
             tile.Save("/tiles/");
+
+            this.context.commit();
             //state.Save("/states/");
             //claim.setClaimedTile(tile);
             //claim.setClaimedBy(state);

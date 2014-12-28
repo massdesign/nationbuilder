@@ -42,4 +42,9 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		HttpResponseData data = HttpRequestUtil.sendPostRequest(this.serverUrl + resourceUrl, json);
 		return data;
 	}
+
+    @Override
+    public void commit() {
+        // Do nothing
+    }
 }

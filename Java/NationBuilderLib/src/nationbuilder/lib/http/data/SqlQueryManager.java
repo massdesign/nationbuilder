@@ -11,6 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.sql.ColumnMetaData;
@@ -139,7 +141,7 @@ public class SqlQueryManager
 
 		return responseData;
 	}
-	public ResponseData executeBulkInsert(String sql) throws SQLException
+	public ResponseData executeBulkInsert(List<String> rows) throws SQLException
 	{
         String filename = "import.sql";
         String path = "/home/patrick/Git/nationbuilder/Temp/";
@@ -149,7 +151,11 @@ public class SqlQueryManager
 
         try {
             PrintWriter writer = new PrintWriter(filepath,"UTF-8");
-            writer.println(sql);
+            for(String sql : rows)
+            {
+                writer.println(sql);
+            }
+
             writer.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

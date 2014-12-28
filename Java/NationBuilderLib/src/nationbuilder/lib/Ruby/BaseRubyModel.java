@@ -19,6 +19,9 @@ public class BaseRubyModel implements RubyModel {
     @Expose
 	@IgnoreInRails
     protected RubyContext context;
+
+    boolean committed;
+
     @Override
     public ID getId() {
         return id;
@@ -63,5 +66,15 @@ public class BaseRubyModel implements RubyModel {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isCommitted() {
+        return this.committed;
+    }
+
+    @Override
+    public void setCommitted(boolean committed) {
+        this.committed = committed;
     }
 }

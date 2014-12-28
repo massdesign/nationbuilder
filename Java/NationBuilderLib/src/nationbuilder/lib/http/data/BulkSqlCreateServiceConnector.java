@@ -2,12 +2,9 @@ package nationbuilder.lib.http.data;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
+import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyConfiguration;
@@ -22,14 +19,14 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 {
 	SqlQueryManager sqlQueryManager;
 	ObjectBuilder objectBuilder;
-	List<ObjectMap> persistedObjects;
+	HashMap<RubyModel,String> persistedObjects;
 //	SqlObjectToRowConverter sqlObjectToRowConverter;
 	public BulkSqlCreateServiceConnector(ObjectBuilder objectBuilder)
 	{
 		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase);
 		this.objectBuilder = objectBuilder;
-		this.persistedObjects = new ArrayList<>();
-	//	this.sqlObjectToRowConverter = new SqlObjectToRowConverter();
+		this.persistedObjects = new HashMap<>();
+
 	}
 
 	@Override
@@ -40,21 +37,36 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	// TODO: RubyModel als parameter toevoegen, nu is alles Object dit kan zorgen voor bugs
 	@Override
 	public ResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException {
-		//try
-	//	{
-            SqlResponseData responseData = new SqlResponseData();
-			String sql = this.objectBuilder.createStringFromObject(objectToPost);
-            responseData.setSql(sql);
-          //  responseData.s
-
-          //  responseData.setBody(String.valueOf(id));
-			//sqlQueryManager.executeBulkInsert(sql);
-
-	//	}
-	//	catch (SQLException e)
-	//	{
-	//		throw new ObjectPersistanceFailedException((RubyModel)objectToPost,e);
-	//	}
+        SqlResponseData responseData = new SqlResponseData();
+		String sql = this.objectBuilder.createStringFromObject(objectToPost);
+        this.persistedObjects.put((RubyModel)objectToPost,sql);
+        responseData.setSql(sql);
 		return responseData;
 	}
+
+    @Override
+    public void commit() throws RubyException {
+
+        Iterator it = this.persistedObjects.entrySet().iterator();
+        List<String> rows = new ArrayList<>();
+        while(it.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)it.next();
+
+            RubyModel model = (RubyModel)pair.getKey();
+            String sqlString = (String)pair.getValue();
+            model.setCommitted(true);
+            rows.add(sqlString);
+        }
+
+
+        try {
+            if(rows.size() > 0) {
+                this.sqlQueryManager.executeBulkInsert(rows);
+            }
+        } catch (SQLException e) {
+            throw new BulkInsertFailedException(e.getMessage());
+        }
+
+    }
 }

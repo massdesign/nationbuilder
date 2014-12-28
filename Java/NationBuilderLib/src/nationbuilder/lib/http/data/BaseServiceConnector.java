@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
-import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
+import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyFetchService;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
@@ -22,13 +19,21 @@ public class BaseServiceConnector implements RubyService
 	private RubyFetchService fetchService;
 	private RubyCreateService createService;
 	private String serverUrl;
+    private boolean transacted;
 
 
-	public BaseServiceConnector(String serverUrl)
+	public BaseServiceConnector(String serverUrl,boolean transacted)
 	{
 		this.serverUrl = serverUrl;
+        this.transacted = transacted;
 	}
+    public boolean isTransacted() {
+        return transacted;
+    }
 
+    public void setTransacted(boolean transacted) {
+        this.transacted = transacted;
+    }
 	public String getServerUrl()
 	{
 		return serverUrl;
@@ -71,7 +76,12 @@ public class BaseServiceConnector implements RubyService
 		return null;
 	}
 
-	public RubyFetchService getFetchService()
+    @Override
+    public void commit() throws RubyException {
+
+    }
+
+    public RubyFetchService getFetchService()
 	{
 		return fetchService;
 	}
