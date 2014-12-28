@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
@@ -47,22 +48,42 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
     @Override
     public void commit() throws RubyException {
 
-        Iterator it = this.persistedObjects.entrySet().iterator();
-        List<String> rows = new ArrayList<>();
-        while(it.hasNext())
-        {
-            Map.Entry pair = (Map.Entry)it.next();
+        Iterator poit = this.persistedObjects.entrySet().iterator();
+        HashMap<String,List<String>> rows = new HashMap<>();
 
+
+
+        while(poit.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)poit.next();
             RubyModel model = (RubyModel)pair.getKey();
+            Entity entity =  model.getClass().getAnnotation(Entity.class);
             String sqlString = (String)pair.getValue();
+
+            if(rows.containsKey(entity.tableName()))
+            {
+                rows.get(entity.tableName()).add(sqlString);
+            }
+            else
+            {
+                List<String> newList = new ArrayList<>();
+                newList.add(sqlString);
+                rows.put(entity.tableName(),newList);
+            }
             model.setCommitted(true);
-            rows.add(sqlString);
         }
 
 
         try {
             if(rows.size() > 0) {
-                this.sqlQueryManager.executeBulkInsert(rows);
+                Iterator rit = rows.entrySet().iterator();
+                while(rit.hasNext())
+                {
+                    Map.Entry pair = (Map.Entry)rit.next();
+                    List<String> tablerows = (List<String>)pair.getValue();
+                    this.sqlQueryManager.executeBulkInsert(tablerows,(String)pair.getKey());
+                }
+
             }
         } catch (SQLException e) {
             throw new BulkInsertFailedException(e.getMessage());

@@ -141,9 +141,9 @@ public class SqlQueryManager
 
 		return responseData;
 	}
-	public ResponseData executeBulkInsert(List<String> rows) throws SQLException
+	public ResponseData executeBulkInsert(List<String> rows,String tableName) throws SQLException
 	{
-        String filename = "import.sql";
+        String filename =  tableName + "_import.sql";
         String path = "/home/patrick/Git/nationbuilder/Temp/";
 
         String filepath = path + filename;
@@ -169,10 +169,10 @@ public class SqlQueryManager
 	    Statement statement  = (Statement) conn.createStatement();
 		statement.execute("SET UNIQUE_CHECKS=0;");
 		// bij wijze van concept eerst de tiles tabel proberen te inserten
-		statement.execute("ALTER TABLE tiles DISABLE KEYS");
+		statement.execute("ALTER TABLE " + tableName + " DISABLE KEYS");
 
 		String query = "LOAD DATA LOCAL INFILE '" + filepath + "' " +
-								"INTO TABLE tiles" +
+								"INTO TABLE " + tableName +
                                 " FIELDS TERMINATED BY ','" +
                                 "  (id,gidtag,xposition,yposition,xoffset,yoffset,created_at,updated_at,layer_id,image_id,resource_id)";
 
@@ -187,7 +187,7 @@ public class SqlQueryManager
 		//int rowsAffected  = stmt.executeUpdate(sql);
 
 		// Turn the checks back on
-		statement.execute("ALTER TABLE tiles ENABLE KEYS");
+		statement.execute("ALTER TABLE " + tableName + " ENABLE KEYS");
 		statement.execute("SET UNIQUE_CHECKS=1; ");
 		conn.close();
 		return responseData;
