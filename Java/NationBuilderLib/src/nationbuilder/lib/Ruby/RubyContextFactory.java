@@ -60,7 +60,7 @@ public class RubyContextFactory {
         SqlQueryManager queryManagerManager = new SqlQueryManagerFactory().createQueryManager();
         String serverUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
         ObjectBuilder objectBuilder = new SqlObjectBuilder(queryManagerManager);
-        RubyService service = new SqlServiceConnector(serverUrl,contextType, objectBuilder);
+        RubyService service = new SqlServiceConnector(serverUrl,contextType, objectBuilder,true);
         RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }

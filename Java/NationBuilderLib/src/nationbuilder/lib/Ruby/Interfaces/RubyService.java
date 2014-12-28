@@ -1,9 +1,6 @@
 package nationbuilder.lib.Ruby.Interfaces;
 
-import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
-import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
+import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.HttpResponseData;
 import nationbuilder.lib.http.data.ResponseData;
@@ -21,5 +18,6 @@ public interface RubyService {
     public int postFile(String fileLocation,String resourceUrl) throws IOException;
     public int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
 	public ResponseData getObject(String resourceUrl);
+    public void commit() throws RubyException;
 
 }

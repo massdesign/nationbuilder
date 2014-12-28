@@ -22,4 +22,9 @@ public class SqlCreateServiceConnector implements RubyCreateService
 
 		return null;
 	}
+
+    @Override
+    public void commit() {
+
+    }
 }

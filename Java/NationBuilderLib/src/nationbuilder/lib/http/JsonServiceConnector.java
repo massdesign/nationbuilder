@@ -17,7 +17,7 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 
 	public JsonServiceConnector(String serverUrl,ObjectBuilder objectBuilder)
 	{
-		super(serverUrl);
+		super(serverUrl,false);
 		this.setFetchService(new JsonFetchServiceConnector(serverUrl,objectBuilder));
 		this.setCreateService(new JsonCreateServiceConnector(serverUrl,objectBuilder));
 	}
