@@ -26,6 +26,11 @@ public class ObjectMap
 
 	public void addEntry(String key,Object value)
 	{
+        // Convert null value to empty values
+        if(value == null)
+        {
+            value = "";
+        }
 		this.kvMap.put(key,value);
 	}
 

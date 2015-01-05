@@ -109,6 +109,22 @@ public class RubyAssociationResolver
 			e.printStackTrace();
 		}
 	}
+    public static Field getMappedField(Field field,Class currentClass)
+    {
+        Field result = null;
+
+        result = getMappedField(OneToOne.class, field, currentClass);
+        if(result == null)
+        {
+            result =  getMappedField(ManyToOne.class, field, currentClass);
+            if(result == null)
+            {
+                result = getMappedField(OneToMany.class, field, currentClass);
+            }
+        }
+
+        return result;
+    }
 	private static Field getMappedField(Class annotationType,Field field,Class currentClass)
 	{
 		Field result = null;
