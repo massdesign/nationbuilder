@@ -7,14 +7,11 @@ import java.util.Map;
 
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
-import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
-import nationbuilder.lib.http.JsonServiceConnector;
 
 public class MapServiceConnector {
 
@@ -79,7 +76,7 @@ public class MapServiceConnector {
             this.addResource(resource);
         }
 
-		for(MapImage image : dataset.getMapImages())
+		for(Image image : dataset.getMapImages())
 		{
 			this.addImage(image);
 		}
@@ -114,7 +111,7 @@ public class MapServiceConnector {
 
 
 	}
-	public void addImage(MapImage image)
+	public void addImage(Image image)
 	{
 			image.getImageFile();
 			//image.fetchIDs();

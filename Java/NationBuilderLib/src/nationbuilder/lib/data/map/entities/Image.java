@@ -1,11 +1,9 @@
 package nationbuilder.lib.data.map.entities;
 
-import java.io.File;
-
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
-public class MapImage extends BaseRubyModel {
+public class Image extends BaseRubyModel {
 		
 	@Override
 	public String toString() {
@@ -39,7 +37,7 @@ public class MapImage extends BaseRubyModel {
 
 
 	
-	public MapImage()
+	public Image()
 	{
 	}
 

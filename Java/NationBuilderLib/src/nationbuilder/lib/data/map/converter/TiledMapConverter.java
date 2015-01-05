@@ -8,12 +8,13 @@ import java.util.List;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
+import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.xml.*;
 
 public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
-    ArrayList<MapImage> mapImages;
+    ArrayList<Image> mapImages;
     ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
     MapMap map;
@@ -60,15 +61,15 @@ public class TiledMapConverter {
 
       //  System.out.println("some random crap to put a breakpoint on");
     }
-    private ArrayList<MapImage> convertTilesets(ArrayList<TileSet> tilesets)
+    private ArrayList<Image> convertTilesets(ArrayList<TileSet> tilesets)
     {
-        ArrayList<MapImage> mapImages = new ArrayList<MapImage>();
+        ArrayList<Image> mapImages = new ArrayList<Image>();
         for(TileSet tileset : tilesets)
         {
             addtilesToterrainTypeS(tileset);
-            Image image =	tileset.getImage();
+            nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
 
-            MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
+            Image mapImage = rubyContext.createRubyModel(Image.class);
             MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
             mapImage.setMap(this.map);
             mapImageFile.setResource(new File(image.getFileLocation()));
