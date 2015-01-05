@@ -1,6 +1,11 @@
 package nationbuilder.lib.sql;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+
+import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 /**
@@ -40,8 +45,14 @@ public class SqlObjectToRowConverter
 
                             // we have a hit and we should map this value in the row
                            // System.out.println("object name: " + field.getType().getSimpleName());
+                            Annotation annotation = null;
+                            Field mappedField =   RubyAssociationResolver.getMappedField(field,currentClass);
                             String field_id = field.getType().getSimpleName().toLowerCase() + "_id";
-                            result.addEntry(field_id,"");
+                            // assuming the mappedField is always of type String
+
+                            String fieldValue =  (String)mappedField.get(model);
+
+                            result.addEntry(field_id,fieldValue);
                         }
                     }
                     // if it is not string or int it must be object (at least for now)
