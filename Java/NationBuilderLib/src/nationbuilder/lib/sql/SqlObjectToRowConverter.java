@@ -10,6 +10,7 @@ public class SqlObjectToRowConverter
 {
 	public static String STRING_TYPE = "string";
 	public static String INT_TYPE = "int";
+    public static String LIST_TYPE = "list";
 
 	public ObjectMap createObjectMap(RubyModel model)
 	{
@@ -29,6 +30,22 @@ public class SqlObjectToRowConverter
 					field.setAccessible(true);
 					result.addEntry(field.getName(), field.get(model));
 				}
+                else
+                {
+                    // TODO: lousy implementation.. also check what kind of annotations are present
+                    if(field.getAnnotations().length > 0) {
+                        if (fieldType.toLowerCase().equals(LIST_TYPE)) {
+                            // TODO: implement list specific operations
+                        } else {
+
+                            // we have a hit and we should map this value in the row
+                           // System.out.println("object name: " + field.getType().getSimpleName());
+                            String field_id = field.getType().getSimpleName().toLowerCase() + "_id";
+                            result.addEntry(field_id,"");
+                        }
+                    }
+                    // if it is not string or int it must be object (at least for now)
+                }
 			}
 			catch (IllegalAccessException e)
 			{

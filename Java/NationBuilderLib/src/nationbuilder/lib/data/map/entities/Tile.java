@@ -20,7 +20,7 @@ public class Tile extends BaseRubyModel {
     private List<GameEntity> claimedBy;
     private GameEntity owner;
 	@OneToOne(mapIdTo = "imd")
-	private MapImage image;
+	private Image image;
 	@OneToOne(mapIdTo = "lmd")
 	private Layer layer;
 	@OneToOne(mapIdTo = "rid")
@@ -42,10 +42,10 @@ public class Tile extends BaseRubyModel {
 		return  Integer.parseInt(this.image.getId().getId());
 	}
 
-	public MapImage getImage() {
+	public Image getImage() {
 		return image;
 	}
-	public void setImage(MapImage image) {
+	public void setImage(Image image) {
 		this.image = image;
 	}
 	public int getXposition() {
