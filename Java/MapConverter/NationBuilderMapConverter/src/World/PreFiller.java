@@ -54,17 +54,24 @@ public class PreFiller {
 	public void testFill()
 	{
         Tile tile = this.context.createRubyModel(Tile.class);
-        Claim claim = this.context.createRubyModel(Claim.class);
-        State state = this.context.createRubyModel(State.class);
+        Image image = this.context.createRubyModel(Image.class);
 
-        state.setName("henk");
+        image.setName("Crazy images");
+        image.setTileHeight(32);
+        image.setTileWidth(32);
+      //  tile.setImage(image);
+       // Claim claim = this.context.createRubyModel(Claim.class);
+        //State state = this.context.createRubyModel(State.class);
 
+        //state.setName("henk");
+        tile.setImage(image);
         tile.setXoffset(232);
         tile.setYoffset(900);
         tile.setXposition(392);
         tile.setYposition(32);
 
         try {
+            image.Save("/images/");
             tile.Save("/tiles/");
 
             this.context.commit();

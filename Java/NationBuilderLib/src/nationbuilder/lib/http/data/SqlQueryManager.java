@@ -1,12 +1,10 @@
 package nationbuilder.lib.http.data;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+
 import com.mysql.jdbc.Statement;
 import com.mysql.jdbc.Connection;
 
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -150,6 +148,10 @@ public class SqlQueryManager
 
 
         try {
+            File importFile = new File(filepath);
+            if(!importFile.exists()) {
+                importFile.createNewFile();
+            }
             PrintWriter writer = new PrintWriter(filepath,"UTF-8");
             for(String sql : rows)
             {
@@ -157,9 +159,7 @@ public class SqlQueryManager
             }
 
             writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
