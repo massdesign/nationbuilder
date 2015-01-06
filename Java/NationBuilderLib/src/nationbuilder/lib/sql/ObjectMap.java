@@ -29,7 +29,7 @@ public class ObjectMap
         // Convert null value to empty values
         if(value == null)
         {
-            value = "";
+            value = "0";
         }
 		this.kvMap.put(key,value);
 	}
