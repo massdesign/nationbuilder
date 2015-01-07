@@ -75,44 +75,54 @@ public class SqlObjectBuilder implements ObjectBuilder
         {
            String tableName =    annotation.tableName();
 
-            try
+            if(tableName != null && !tableName.equals(""))
             {
-                TableMetaData currentTable = null;
-                if(this.sortedTables.containsKey(tableName))
+
+                try
                 {
-                    currentTable = this.sortedTables.get(tableName);
-                }
-                else
-                {
-                    currentTable = this.queryManager.getTableStructure(tableName);
-                    this.sortedTables.put(tableName,currentTable);
-                }
-
-                TableRow newRow = currentTable.createnewRow();
-
-                Iterator omi  =objectMap.getKvMap().entrySet().iterator();
-
-                while(omi.hasNext())
-                {
-                    Map.Entry pair = (Map.Entry)omi.next();
-
-                    String key =  (String)pair.getKey();
-                    Object value;
-                    if(key.equals("id"))
+                    TableMetaData currentTable = null;
+                    if (this.sortedTables.containsKey(tableName))
                     {
-                        value = this.queryManager.getNextID();
+                        currentTable = this.sortedTables.get(tableName);
                     }
                     else
                     {
-                        value = pair.getValue();
+                        currentTable = this.queryManager.getTableStructure(tableName);
+                        this.sortedTables.put(tableName, currentTable);
                     }
-                    newRow.setColumn(key, value);
+
+                    TableRow newRow = currentTable.createnewRow();
+
+                    Iterator omi = objectMap.getKvMap().entrySet().iterator();
+
+                    while (omi.hasNext())
+                    {
+                        Map.Entry pair = (Map.Entry) omi.next();
+
+                        String key = (String) pair.getKey();
+                        Object value;
+                        if (key.equals("id"))
+                        {
+                            value = this.queryManager.getNextID();
+                        }
+                        else
+                        {
+                            value = pair.getValue();
+                        }
+                        newRow.setColumn(key, value);
+                    }
+                    return newRow.createBulkInsertStatement();
                 }
-                return newRow.createBulkInsertStatement();
+                catch (SQLException e)
+                {
+                    throw new ObjectConversionFailedException(
+                     "Object conversion failed for " + object.getClass().getSimpleName() + " because of " + e
+                      .getMessage());
+                }
             }
-            catch (SQLException e)
+            else
             {
-                throw new ObjectConversionFailedException("Object conversion failed for" + object.getClass().getSimpleName() + " because of " + e.getMessage());
+                throw new MissingAnnotationException("Tablename is empty on  " + object.getClass().getSimpleName());
             }
 
 

@@ -106,6 +106,7 @@ public class MapServiceConnector {
 			catch (RubyException e)
 			{
 				Log.write(e,LogType.ERROR);
+				break;
 			}
 		}
 

@@ -1,10 +1,12 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 /**
  * Created by patrick on 5/11/14.
  */
+@Entity(tableName = "maps")
 public class MapMap extends BaseRubyModel {
 
     private int tileWidth;

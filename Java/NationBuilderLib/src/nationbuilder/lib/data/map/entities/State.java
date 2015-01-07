@@ -1,11 +1,13 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 
 /**
  * Created by patrick on 9/18/14.
  */
+@Entity(tableName = "states")
 public class State extends GameEntity
 {
 	@IgnoreInRails
