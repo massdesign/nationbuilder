@@ -50,7 +50,7 @@ public class RubyContextFactory {
     {
         String serverUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
         ObjectBuilder objectBuilder = new JsonObjectBuilder();
-        RubyService service = new JsonServiceConnector(serverUrl, objectBuilder);
+        RubyService service = new JsonServiceConnector(serverUrl,objectBuilder);
         RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }
@@ -58,9 +58,11 @@ public class RubyContextFactory {
     private RubyContext createBulkInsertSqlJsonUpdateDeleteSelectRubyContext(RubyContextType contextType)
     {
         SqlQueryManager queryManagerManager = new SqlQueryManagerFactory().createQueryManager();
-        String serverUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
+        String databaseServerUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
+        String blobServiceUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
+
         ObjectBuilder objectBuilder = new SqlObjectBuilder(queryManagerManager);
-        RubyService service = new SqlServiceConnector(serverUrl,contextType, objectBuilder,true);
+        RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType, objectBuilder,true);
         RubyContext result = new RubyContext(service,objectBuilder);
         return result;
     }
