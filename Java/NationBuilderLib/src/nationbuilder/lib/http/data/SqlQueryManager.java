@@ -173,9 +173,7 @@ public class SqlQueryManager
 
 		String query = "LOAD DATA LOCAL INFILE '" + filepath + "' " +
 								"INTO TABLE " + tableName +
-                                " FIELDS TERMINATED BY ','" +
-                                "  (id,gidtag,xposition,yposition,xoffset,yoffset,created_at,updated_at,layer_id,image_id,resource_id)";
-
+                                " FIELDS TERMINATED BY ','";
         statement.execute(query);
 		// Create StringBuilder to String that will become stream
 		StringBuilder builder = new StringBuilder();
