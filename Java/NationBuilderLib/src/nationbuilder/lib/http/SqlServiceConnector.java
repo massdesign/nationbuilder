@@ -18,13 +18,13 @@ import nationbuilder.lib.http.data.StandardFileBlobService;
  */
 public class SqlServiceConnector extends BaseServiceConnector
 {
-	public SqlServiceConnector(String serverUrl,RubyContextType contextType,ObjectBuilder objectBuilder,boolean transacted)
+	public SqlServiceConnector(String databaseServerUrl,String blobServerUrl,RubyContextType contextType,ObjectBuilder objectBuilder,boolean transacted)
 	{
-		super(serverUrl,transacted);
+		super(databaseServerUrl,transacted);
 		switch (contextType)
 		{
 			case BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT:
-				this.setFetchService(new JsonFetchServiceConnector(serverUrl,objectBuilder));
+				this.setFetchService(new JsonFetchServiceConnector(databaseServerUrl,objectBuilder));
 				this.setCreateService(new BulkSqlCreateServiceConnector(objectBuilder));
 			break;
 			default:
@@ -33,7 +33,7 @@ public class SqlServiceConnector extends BaseServiceConnector
 				this.setCreateService(new SqlCreateServiceConnector());
 		}
 
-		this.setBlobService(new StandardFileBlobService(serverUrl));
+		this.setBlobService(new StandardFileBlobService(blobServerUrl));
 
 	}
 

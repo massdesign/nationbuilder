@@ -19,12 +19,12 @@ import nationbuilder.lib.http.data.StandardFileBlobService;
 public class JsonServiceConnector extends BaseServiceConnector  {
 
 
-	public JsonServiceConnector(String serverUrl,ObjectBuilder objectBuilder)
+	public JsonServiceConnector(String databaseServerUrl,ObjectBuilder objectBuilder)
 	{
-		super(serverUrl,false);
-		this.setFetchService(new JsonFetchServiceConnector(serverUrl,objectBuilder));
-		this.setCreateService(new JsonCreateServiceConnector(serverUrl,objectBuilder));
-		this.setBlobService(new StandardFileBlobService(serverUrl));
+		super(databaseServerUrl,false);
+		this.setFetchService(new JsonFetchServiceConnector(databaseServerUrl,objectBuilder));
+		this.setCreateService(new JsonCreateServiceConnector(databaseServerUrl,objectBuilder));
+		this.setBlobService(new StandardFileBlobService(databaseServerUrl));
 	}
 	public ResponseData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException
 	{

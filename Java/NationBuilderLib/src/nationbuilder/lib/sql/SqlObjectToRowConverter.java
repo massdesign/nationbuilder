@@ -4,9 +4,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.RubyPluralizer;
 
 /**
  * Created by patrick on 12/19/14.
@@ -17,8 +20,7 @@ public class SqlObjectToRowConverter
 	public static String INT_TYPE = "int";
     public static String LIST_TYPE = "list";
 
-	public ObjectMap createObjectMap(RubyModel model)
-	{
+	public ObjectMap createObjectMap(RubyModel model) throws MissingAnnotationException {
 		ObjectMap result = new ObjectMap();
 
         result.addEntry("id","");
@@ -47,12 +49,24 @@ public class SqlObjectToRowConverter
                            // System.out.println("object name: " + field.getType().getSimpleName());
                             Annotation annotation = null;
                             Field mappedField =   RubyAssociationResolver.getMappedField(field,currentClass);
-                            String field_id = field.getType().getSimpleName().toLowerCase() + "_id";
+
+                            Entity fieldEntityAnnotation = field.getType().getAnnotation(Entity.class);
+
+                            if(fieldEntityAnnotation != null)
+                            {
+                                String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
+                                String fieldValue =  (String)mappedField.get(model);
+                                result.addEntry(field_id,fieldValue);
+                            }
+                            else
+                            {
+                               throw new MissingAnnotationException("missing Entity annotation on " + field.getType().getSimpleName());
+                            }
+
+
                             // assuming the mappedField is always of type String
 
-                            String fieldValue =  (String)mappedField.get(model);
 
-                            result.addEntry(field_id,fieldValue);
                         }
                     }
                     // if it is not string or int it must be object (at least for now)
