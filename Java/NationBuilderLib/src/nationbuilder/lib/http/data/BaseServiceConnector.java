@@ -1,23 +1,20 @@
 package nationbuilder.lib.http.data;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-
-import nationbuilder.lib.Ruby.Exceptions.*;
+import nationbuilder.lib.Ruby.Interfaces.RubyBlobService;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyFetchService;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
-import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
-import nationbuilder.lib.http.HttpRequestUtil;
+
 
 /**
  * Created by patrick on 12/12/14.
  */
-public class BaseServiceConnector implements RubyService
+public abstract class BaseServiceConnector implements RubyService
 {
 	private RubyFetchService fetchService;
 	private RubyCreateService createService;
+
+	private RubyBlobService blobService;
 	private String serverUrl;
     private boolean transacted;
 
@@ -43,43 +40,7 @@ public class BaseServiceConnector implements RubyService
 	{
 		this.serverUrl = serverUrl;
 	}
-	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
-	{
-		return null;
-	}
-
-	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
-		return null;
-	}
-
-	// TODO: resources worden nog even apart behandeld, het is nog niet nodig om dit mechanmisme generiek te maken
-	public int postFile(String fileLocation, String resourceUrl) throws IOException
-	{
-		File file = new File(fileLocation);
-
-		int status_code = HttpRequestUtil.sendPostUploadRequest(this.getServerUrl() + resourceUrl, file);
-
-		return status_code;
-	}
-
-	public int postFile(BaseRubyResourceModel model, String resourceUrl) throws IOException
-	{
-		int status_code = HttpRequestUtil.sendPostUploadRequest(this.getServerUrl() + resourceUrl, model.getResource());
-		return status_code;
-	}
-
-	@Override
-	public HttpResponseData getObject(String resourceUrl)
-	{
-		return null;
-	}
-
-    @Override
-    public void commit() throws RubyException {
-
-    }
+	
 
     public RubyFetchService getFetchService()
 	{
@@ -100,4 +61,16 @@ public class BaseServiceConnector implements RubyService
 	{
 		this.createService = createService;
 	}
+
+	public RubyBlobService getBlobService()
+	{
+		return blobService;
+	}
+
+	public void setBlobService(RubyBlobService blobService)
+	{
+		this.blobService = blobService;
+	}
+
+
 }

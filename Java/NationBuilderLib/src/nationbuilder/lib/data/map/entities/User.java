@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
@@ -7,6 +8,7 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
 /**
  * Created by patrick on 9/18/14.
  */
+@Entity(tableName = "users")
 public class User extends BaseRubyModel
 {
 
