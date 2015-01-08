@@ -49,23 +49,34 @@ public class SqlObjectToRowConverter
                            // System.out.println("object name: " + field.getType().getSimpleName());
                             Annotation annotation = null;
                             Field mappedField =   RubyAssociationResolver.getMappedField(field,currentClass);
-
-                            Entity fieldEntityAnnotation = field.getType().getAnnotation(Entity.class);
-
-                            if(fieldEntityAnnotation != null)
+                            field.setAccessible(true);
+                            Object fieldDereferencedValue = field.get(model);
+                            if (fieldDereferencedValue != null)
                             {
-                                String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
-                                String fieldValue =  (String)mappedField.get(model);
-                                result.addEntry(field_id,fieldValue);
+                                fieldDereferencedValue.getClass().getAnnotation(Entity.class);
+
+                                Entity fieldEntityAnnotation = fieldDereferencedValue.getClass().getAnnotation(Entity.class);
+
+                                if (fieldEntityAnnotation != null)
+                                {
+                                    String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
+                                    String fieldValue = (String) mappedField.get(model);
+                                    result.addEntry(field_id, fieldValue);
+                                }
+                                else
+                                {
+                                    field.setAccessible(true);
+                                    Object fieldValue = field.get(model);
+                                    if (fieldValue != null)
+                                    {
+                                        String realType = fieldValue.getClass().getName();
+                                        fieldValue.getClass().getAnnotation(Entity.class);
+
+                                    }
+
+                                    throw new MissingAnnotationException("missing Entity annotation on field " + field.getType().getSimpleName());
+                                }
                             }
-                            else
-                            {
-                               throw new MissingAnnotationException("missing Entity annotation on " + field.getType().getSimpleName());
-                            }
-
-
-                            // assuming the mappedField is always of type String
-
 
                         }
                     }
