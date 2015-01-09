@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
-import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
@@ -132,7 +131,7 @@ public class RubyAssociationResolver
 		{
 			Annotation annotationInstance = field.getAnnotation(annotationType);
 			String fieldidentifier = "";
-			MappedBy mappedBy = MappedBy.SELF;
+			//MappedBy mappedBy = MappedBy.SELF;
             // OneToOne and many to one relationships are threated as the same at the moment.. in the future this may change
 			if(annotationInstance instanceof OneToOne)
 			{
@@ -156,10 +155,11 @@ public class RubyAssociationResolver
 				e.printStackTrace();
 			}
 			// if annotation is foreign we will ignore the property and return null
-			if(mappedBy == MappedBy.FOREIGN)
+
+			/*if(mappedBy == MappedBy.FOREIGN)
 			{
 				result = null;
-			}
+			}*/
 
 		}
 		if(result != null)

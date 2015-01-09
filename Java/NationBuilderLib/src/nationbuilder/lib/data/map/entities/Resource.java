@@ -29,7 +29,10 @@ public class Resource extends BaseRubyModel {
     }
 
     public void setTerrainType(TerrainType terrainType) {
-
+        if(terrainType == null)
+        {
+            System.out.println("biertje");
+        }
         Log.writeInfo("Teraintype: " + terrainType.getName());
         this.terrainType = terrainType;
     }

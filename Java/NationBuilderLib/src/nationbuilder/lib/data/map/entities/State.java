@@ -10,6 +10,9 @@ import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 @Entity(tableName = "states")
 public class State extends GameEntity
 {
+
+	//private GameEntity user;
+
 	@IgnoreInRails
 	private String cur;
 	@IgnoreInRails
