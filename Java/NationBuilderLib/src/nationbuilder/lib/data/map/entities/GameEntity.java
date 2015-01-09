@@ -5,7 +5,6 @@ package nationbuilder.lib.data.map.entities;
  */
 
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
-import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
@@ -19,8 +18,7 @@ public class GameEntity extends BaseRubyModel
 	@IgnoreInRails
 	private String rby;
 	@IgnoreInRails
-	@OneToOne(mapIdTo = "rby",mappedBy = MappedBy.FOREIGN)
-
+	@OneToOne(mapIdTo = "rby")
 	private User ruledBy;
 	public String getName()
 	{

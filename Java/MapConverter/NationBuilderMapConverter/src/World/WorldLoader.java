@@ -54,7 +54,7 @@ public class WorldLoader {
         this.PreFiller();
         this.ConvertMap();
         this.PostFiller();
-        //this.context.commit();
+        this.context.commit();
     }
     public void TestRun()
     {

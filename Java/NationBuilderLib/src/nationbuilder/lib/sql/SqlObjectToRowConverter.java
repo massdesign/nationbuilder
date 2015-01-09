@@ -26,6 +26,31 @@ public class SqlObjectToRowConverter
 	public static String INT_TYPE = "int";
     public static String LIST_TYPE = "list";
 
+    private List<String> systemFields;
+
+    public SqlObjectToRowConverter()
+    {
+        // TODO: dit op een centrale plek regelen als het een keer nodig moet zijn
+        this.systemFields  = new ArrayList<>();
+
+        this.systemFields.add("rubycontext");
+    }
+
+    private boolean isSystemfield(Field field)
+    {
+        boolean result = false;
+        if(field != null)
+        {
+            for (String s : this.systemFields)
+            {
+                if (s.equals(field.getType().getSimpleName().toLowerCase()))
+                {
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
 
     private HashMap<Class,Field[]> getAllFieldsFromInstance(RubyModel rubyModel)
     {
@@ -48,45 +73,46 @@ public class SqlObjectToRowConverter
     private ObjectMap.ObjectMapRow createObjectMapKV(Field field,Class currentClass,RubyModel model,ObjectMap om) throws IllegalAccessException, MissingAnnotationException
     {
         ObjectMap.ObjectMapRow result = null;
-        // we have a hit and we should map this value in the row
-        // System.out.println("object name: " + field.getType().getSimpleName());
-        Field mappedField = RubyAssociationResolver.getMappedField(field, currentClass);
-        field.setAccessible(true);
-        Object fieldDereferencedValue = field.get(model);
-        if (fieldDereferencedValue != null)
+        if(!isSystemfield(field))
         {
-            fieldDereferencedValue.getClass().getAnnotation(Entity.class);
 
-            Entity fieldEntityAnnotation = fieldDereferencedValue.getClass().getAnnotation(Entity.class);
+            // we have a hit and we should map this value in the row
+            // System.out.println("object name: " + field.getType().getSimpleName());
+            Field mappedField = RubyAssociationResolver.getMappedField(field, currentClass);
+            field.setAccessible(true);
+            Object fieldDereferencedValue = field.get(model);
+            if (fieldDereferencedValue != null)
+            {
+            //    fieldDereferencedValue.getClass().getAnnotation(Entity.class);
 
-            if (fieldEntityAnnotation != null)
-            {
-                String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
-                String fieldValue = (String) mappedField.get(model);
-                result = om.createObjectMapRow(field_id,fieldValue);
-            }
-            else
-            {
-                field.setAccessible(true);
-                Object fieldValue = field.get(model);
-                if (fieldValue != null)
+                Entity fieldEntityAnnotation = fieldDereferencedValue.getClass().getAnnotation(Entity.class);
+
+                if (fieldEntityAnnotation != null)
                 {
-                    fieldValue.getClass().getAnnotation(Entity.class);
-
+                    String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
+                    String fieldValue = (String) mappedField.get(model);
+                    result = om.createObjectMapRow(field_id, fieldValue);
                 }
-                throw new MissingAnnotationException("missing Entity annotation on field " + field.getType().getSimpleName());
+                else
+                {
+                    field.setAccessible(true);
+                    Object fieldValue = field.get(model);
+                    if (fieldValue != null)
+                    {
+                        fieldValue.getClass().getAnnotation(Entity.class);
+
+                    }
+                    throw new MissingAnnotationException("missing Entity annotation on field " + field.getType().getSimpleName());
+                }
             }
         }
-
         return result;
     }
 
 	public ObjectMap createObjectMap(RubyModel model) throws MissingAnnotationException {
 
-
 		ObjectMap result = new ObjectMap();
         result.addEntry(result.createObjectMapRow("id",""));
-		Class currentClass = model.getClass();
         HashMap<Class,Field[]> fcMap = getAllFieldsFromInstance(model);
         Iterator it = fcMap.entrySet().iterator();
         while(it.hasNext())
@@ -103,7 +129,7 @@ public class SqlObjectToRowConverter
                     if (fieldType.toLowerCase().equals(STRING_TYPE) || fieldType.toLowerCase().equals(INT_TYPE))
                     {
                         field.setAccessible(true);
-                        result.addEntry(result.createObjectMapRow(field.getName(),(String)field.get(model)));
+                        result.addEntry(result.createObjectMapRow(field.getName(),field.get(model)));
                      //   result.addEntry(field.getName(), field.get(model));
                     }
                     else
@@ -117,45 +143,11 @@ public class SqlObjectToRowConverter
                             }
                             else
                             {
-                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createObjectMapKV(field, currentClass, model, result);
+                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createObjectMapKV(field, (Class)pairs.getKey(), model, result);
                                 if(newObjectMapRow != null)
                                 {
                                     result.addEntry(newObjectMapRow);
                                 }
-                                // we have a hit and we should map this value in the row
-                                // System.out.println("object name: " + field.getType().getSimpleName());
-                                /*
-                                Field mappedField = RubyAssociationResolver.getMappedField(field, currentClass);
-                                field.setAccessible(true);
-                                Object fieldDereferencedValue = field.get(model);
-                                if (fieldDereferencedValue != null)
-                                {
-                                    fieldDereferencedValue.getClass().getAnnotation(Entity.class);
-
-                                    Entity fieldEntityAnnotation = fieldDereferencedValue.getClass()
-                                     .getAnnotation(Entity.class);
-
-                                    if (fieldEntityAnnotation != null)
-                                    {
-                                        String field_id =
-                                         RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
-                                        String fieldValue = (String) mappedField.get(model);
-                                        result.addEntry(field_id, fieldValue);
-                                    }
-                                    else
-                                    {
-                                        field.setAccessible(true);
-                                        Object fieldValue = field.get(model);
-                                        if (fieldValue != null)
-                                        {
-                                            fieldValue.getClass().getAnnotation(Entity.class);
-
-                                        }
-                                        throw new MissingAnnotationException("missing Entity annotation on field " + field.getType().getSimpleName());
-                                    }
-                                }
-                                */
-
                             }
                         }
                         // if it is not string or int it must be object (at least for now)

@@ -34,7 +34,7 @@ public class ObjectMap
         }
 		this.kvMap.put(row.getKey(),row.getValue());
 	}
-	public ObjectMapRow createObjectMapRow(String key,String value)
+	public ObjectMapRow createObjectMapRow(String key,Object value)
 	{
 		return new ObjectMapRow(key,value);
 	}
@@ -42,9 +42,9 @@ public class ObjectMap
 	public class ObjectMapRow
 	{
 		private String key;
-		private String value;
+		private Object value;
 
-		public ObjectMapRow(String key,String value)
+		public ObjectMapRow(String key,Object value)
 		{
 			this.key = key;
 			this.value = value;
@@ -59,7 +59,7 @@ public class ObjectMap
 			this.key = key;
 		}
 
-		public String getValue()
+		public Object getValue()
 		{
 			return value;
 		}
