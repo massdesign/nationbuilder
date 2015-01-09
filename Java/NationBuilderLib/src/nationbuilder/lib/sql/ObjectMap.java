@@ -24,14 +24,55 @@ public class ObjectMap
 		this.kvMap = new HashMap<>();
 	}
 
-	public void addEntry(String key,Object value)
+
+	public void addEntry(ObjectMapRow row)
 	{
         // Convert null value to empty values
-        if(value == null)
+        if(row.getValue() == null)
         {
-            value = "0";
+            row.setValue("0");
         }
-		this.kvMap.put(key,value);
+		this.kvMap.put(row.getKey(),row.getValue());
+	}
+	public ObjectMapRow createObjectMapRow(String key,String value)
+	{
+		return new ObjectMapRow(key,value);
+	}
+
+	public class ObjectMapRow
+	{
+		private String key;
+		private String value;
+
+		public ObjectMapRow(String key,String value)
+		{
+			this.key = key;
+			this.value = value;
+		}
+		public String getKey()
+		{
+			return key;
+		}
+
+		public void setKey(String key)
+		{
+			this.key = key;
+		}
+
+		public String getValue()
+		{
+			return value;
+		}
+
+		public void setValue(String value)
+		{
+			this.value = value;
+		}
+
+		public ObjectMapRow()
+		{
+		}
+
 	}
 
 }
