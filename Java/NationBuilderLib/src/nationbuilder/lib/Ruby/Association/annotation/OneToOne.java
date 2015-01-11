@@ -15,5 +15,6 @@ public @interface OneToOne
 
 	String mapIdTo() default "";
 	String mappedBy() default "";
+	Class  mappedByClazz() default Object.class;
 
 }

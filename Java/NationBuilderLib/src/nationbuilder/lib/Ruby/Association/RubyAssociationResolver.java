@@ -3,16 +3,24 @@ package nationbuilder.lib.Ruby.Association;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
+import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 import nationbuilder.lib.Ruby.ID;
+import nationbuilder.lib.Ruby.ReferenceMapping;
 
 /**
  * Created by patrick on 7/23/14.
@@ -80,32 +88,74 @@ public class RubyAssociationResolver
 		}
 	}
 	private static void HandleOneToOneRelation(Field mappedField,RubyModel model,Field objectField) throws NotSavedEntityException
-	{
-		try
-		{
-			Object fieldValue = objectField.get(model);
+	{		
+		        try
+		        {
 
-			if (fieldValue instanceof RubyModel)
-			{
-				if (fieldValue != null)
-				{
-					RubyModel castedFieldValue = (RubyModel) fieldValue;
-					ID fieldId = castedFieldValue.getId();
-					if (fieldId != null)
-					{
-						mappedField.set(model, fieldId.getId());
-					}
-					else
-					{
-						throw  new NotSavedEntityException(castedFieldValue);
-					}
+                    Object fieldValue = objectField.get(model);
 
-				}
-			}
-		}
+                    if (fieldValue instanceof RubyModel)
+                    {
+                        if (fieldValue != null)
+                        {
+                            RubyModel castedFieldValue = (RubyModel) fieldValue;
+                            ID fieldId = castedFieldValue.getId();
+                            OneToOne annotation =  objectField.getAnnotation(OneToOne.class);
+					         if(annotation != null)
+                             {
+					             String mappedByVar =  annotation.mappedBy();
+					             Class refClazz = ReferenceMapping.class;
+				            	 Constructor<?> ctor = refClazz.getConstructor();
+					 
+			                     ReferenceMapping instance =  (ReferenceMapping)ctor.newInstance();
+			         
+			                    instance.setID(fieldId);
+			                    instance.setClassType(model.getClass());
+			                
+			                    Field[] fieldFields =   fieldValue.getClass().getDeclaredFields();
+			         
+			                   for(Field field : fieldFields)
+			                   {
+			                  	 if(field.getName().equals(mappedByVar) && field.getType().getSimpleName().toLowerCase().equals("referencemapping"))
+			                  	 {
+			                  		 field.setAccessible(true);
+			                  		 field.set(fieldValue, instance);
+			        	        	 break;
+			        	         }
+			                   }
+				        	}
+					        if (fieldId != null)
+				        	{
+					        	mappedField.set(model, fieldId.getId());
+				        	}
+				        	else
+				        	{
+				        		throw  new NotSavedEntityException(castedFieldValue);
+				        	}
+			        	}
+		        	}
+                    else if(fieldValue instanceof ReferenceMapping)
+                    {
+                       // ReferenceMapping castedFieldValue = (ReferenceMapping)fieldValue;
+
+                       // ID fieldId = castedFieldValue.getID();
+
+
+                    }
+		    }
 		catch (IllegalAccessException e)
 		{
-			e.printStackTrace();
+			Log.write(e, LogType.ERROR);
+		} catch (InstantiationException e) {
+			Log.write(e, LogType.ERROR);
+		} catch (IllegalArgumentException e) {
+			Log.write(e, LogType.ERROR);
+		} catch (InvocationTargetException e) {
+			Log.write(e, LogType.ERROR);
+		} catch (NoSuchMethodException e) {
+			Log.write(e, LogType.ERROR);
+		} catch (SecurityException e) {
+			Log.write(e, LogType.ERROR);
 		}
 	}
     public static Field getMappedField(Field field,Class currentClass)
@@ -136,6 +186,7 @@ public class RubyAssociationResolver
 			if(annotationInstance instanceof OneToOne)
 			{
 			  fieldidentifier =	((OneToOne)annotationInstance).mapIdTo();
+
 			}
             else if(annotationInstance instanceof ManyToOne)
             {
@@ -147,19 +198,26 @@ public class RubyAssociationResolver
 			}
 			try
 			{
-				result = currentClass.getDeclaredField(fieldidentifier);
+                if(fieldidentifier.equals(MappedBy.SELF)) {
+                    // Set ourselves as reference field
+                    result = field;
+
+                }
+                else if(!fieldidentifier.equals(""))
+                {
+                    result = currentClass.getDeclaredField(fieldidentifier);
+                }
+                else
+                {
+                    // TODO: throw exception that annotation is wrong
+                }
 
 			}
 			catch (NoSuchFieldException e)
 			{
-				e.printStackTrace();
+				Log.write(e,LogType.ERROR);
 			}
 			// if annotation is foreign we will ignore the property and return null
-
-			/*if(mappedBy == MappedBy.FOREIGN)
-			{
-				result = null;
-			}*/
 
 		}
 		if(result != null)

@@ -13,7 +13,7 @@ public class User extends BaseRubyModel
 {
 
 	@IgnoreInRails
-	@OneToOne(mapIdTo = "ge")
+	@OneToOne(mapIdTo = "ge",mappedBy="user",mappedByClazz = State.class )
 	private GameEntity gameEntity;
 
 	private String screenname;

@@ -17,7 +17,6 @@ public class MapServiceConnector {
 
 
 	private String location;
-	private RubyService jsonServiceConnector;
     private RubyContext context;
 	//public String getLocation() {
 	//	return location;

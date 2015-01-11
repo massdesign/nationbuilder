@@ -1,8 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
-import nationbuilder.lib.Ruby.Association.annotation.Entity;
-import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
-import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.*;
+import nationbuilder.lib.Ruby.ReferenceMapping;
 
 /**
  * Created by patrick on 9/18/14.
@@ -10,9 +9,8 @@ import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 @Entity(tableName = "states")
 public class State extends GameEntity
 {
-
-	//private GameEntity user;
-
+	@OneToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping user;
 	@IgnoreInRails
 	private String cur;
 	@IgnoreInRails

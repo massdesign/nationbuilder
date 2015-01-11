@@ -15,6 +15,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ReferenceMapping;
 import nationbuilder.lib.Ruby.RubyPluralizer;
 
 /**
@@ -25,6 +26,7 @@ public class SqlObjectToRowConverter
 	public static String STRING_TYPE = "string";
 	public static String INT_TYPE = "int";
     public static String LIST_TYPE = "list";
+    public static String REFERENCE_TYPE = "referencemapping";
 
     private List<String> systemFields;
 
@@ -70,6 +72,18 @@ public class SqlObjectToRowConverter
     }
 
 
+    private ObjectMap.ObjectMapRow createReferenceMappingObjectMapRow(Field field,Class currentClass,RubyModel model,ObjectMap om) throws IllegalAccessException {
+        ObjectMap.ObjectMapRow result = null;
+
+        field.setAccessible(true);
+        ReferenceMapping referenceMapping = (ReferenceMapping)field.get(model);
+        // TODO: no really nice we take the name from the type here and not from the annotation.. this needs to be fixed
+         String field_id = RubyPluralizer.DePluralize(referenceMapping.getClassType().getSimpleName().toLowerCase());
+         String fieldValue = referenceMapping.getID().getId();
+         result = om.createObjectMapRow(field_id, fieldValue);
+        return result;
+    }
+
     private ObjectMap.ObjectMapRow createObjectMapKV(Field field,Class currentClass,RubyModel model,ObjectMap om) throws IllegalAccessException, MissingAnnotationException
     {
         ObjectMap.ObjectMapRow result = null;
@@ -83,8 +97,7 @@ public class SqlObjectToRowConverter
             Object fieldDereferencedValue = field.get(model);
             if (fieldDereferencedValue != null)
             {
-            //    fieldDereferencedValue.getClass().getAnnotation(Entity.class);
-
+  
                 Entity fieldEntityAnnotation = fieldDereferencedValue.getClass().getAnnotation(Entity.class);
 
                 if (fieldEntityAnnotation != null)
@@ -126,6 +139,8 @@ public class SqlObjectToRowConverter
                 {
 
                     String fieldType = field.getType().getSimpleName();
+                    
+           
                     if (fieldType.toLowerCase().equals(STRING_TYPE) || fieldType.toLowerCase().equals(INT_TYPE))
                     {
                         field.setAccessible(true);
@@ -141,6 +156,15 @@ public class SqlObjectToRowConverter
                             {
                                 // TODO: implement list specific operations
                             }
+                            else if(fieldType.toLowerCase().equals(REFERENCE_TYPE))
+                            {
+
+                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createReferenceMappingObjectMapRow(field, (Class)pairs.getKey(), model, result);
+                                if(newObjectMapRow != null)
+                                {
+                                    result.addEntry(newObjectMapRow);
+                                }
+                            }
                             else
                             {
                                 ObjectMap.ObjectMapRow newObjectMapRow  = this.createObjectMapKV(field, (Class)pairs.getKey(), model, result);
@@ -150,6 +174,7 @@ public class SqlObjectToRowConverter
                                 }
                             }
                         }
+
                         // if it is not string or int it must be object (at least for now)
                     }
                 }
