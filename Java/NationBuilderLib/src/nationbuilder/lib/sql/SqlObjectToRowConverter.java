@@ -77,10 +77,12 @@ public class SqlObjectToRowConverter
 
         field.setAccessible(true);
         ReferenceMapping referenceMapping = (ReferenceMapping)field.get(model);
-        // TODO: no really nice we take the name from the type here and not from the annotation.. this needs to be fixed
-         String field_id = RubyPluralizer.DePluralize(referenceMapping.getClassType().getSimpleName().toLowerCase());
-         String fieldValue = referenceMapping.getID().getId();
-         result = om.createObjectMapRow(field_id, fieldValue);
+        if(referenceMapping != null) {
+            // TODO: no really nice we take the name from the type here and not from the annotation.. this needs to be fixed
+            String field_id = RubyPluralizer.DePluralize(referenceMapping.getClassType().getSimpleName().toLowerCase());
+            String fieldValue = referenceMapping.getID().getId();
+            result = om.createObjectMapRow(field_id, fieldValue);
+        }
         return result;
     }
 
@@ -156,15 +158,15 @@ public class SqlObjectToRowConverter
                             {
                                 // TODO: implement list specific operations
                             }
-                            else if(fieldType.toLowerCase().equals(REFERENCE_TYPE))
+                          /*  else if(fieldType.toLowerCase().equals(REFERENCE_TYPE))
                             {
 
-                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createReferenceMappingObjectMapRow(field, (Class)pairs.getKey(), model, result);
+                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createReferenceMappingObjectMapRow(field, (Class) pairs.getKey(), model, result);
                                 if(newObjectMapRow != null)
                                 {
                                     result.addEntry(newObjectMapRow);
                                 }
-                            }
+                            }*/
                             else
                             {
                                 ObjectMap.ObjectMapRow newObjectMapRow  = this.createObjectMapKV(field, (Class)pairs.getKey(), model, result);

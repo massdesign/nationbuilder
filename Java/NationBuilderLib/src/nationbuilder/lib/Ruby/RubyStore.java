@@ -4,6 +4,7 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,6 +31,11 @@ public class RubyStore {
             // TODO: implement when needed
         }
         return result;
+    }
+    
+    public Iterator getIterator()
+    {
+    	return this.modelHashMap.entrySet().iterator();
     }
 
     /**

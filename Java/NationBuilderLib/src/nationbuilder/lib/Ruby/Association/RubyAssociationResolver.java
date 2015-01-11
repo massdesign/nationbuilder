@@ -93,26 +93,26 @@ public class RubyAssociationResolver
 		        {
 
                     Object fieldValue = objectField.get(model);
-
+                    // NOTE: disabled the code responsable for coupling because we decided it would be unpractical to do it like this	
                     if (fieldValue instanceof RubyModel)
                     {
                         if (fieldValue != null)
                         {
                             RubyModel castedFieldValue = (RubyModel) fieldValue;
                             ID fieldId = castedFieldValue.getId();
-                            OneToOne annotation =  objectField.getAnnotation(OneToOne.class);
-					         if(annotation != null)
-                             {
-					             String mappedByVar =  annotation.mappedBy();
-					             Class refClazz = ReferenceMapping.class;
-				            	 Constructor<?> ctor = refClazz.getConstructor();
+                           // OneToOne annotation =  objectField.getAnnotation(OneToOne.class);
+					        // if(annotation != null)
+                             //{
+					             //String mappedByVar =  annotation.mappedBy();
+					            // Class refClazz = ReferenceMapping.class;
+				            	// Constructor<?> ctor = refClazz.getConstructor();
 					 
-			                     ReferenceMapping instance =  (ReferenceMapping)ctor.newInstance();
+			                    // ReferenceMapping instance =  (ReferenceMapping)ctor.newInstance();
 			         
-			                    instance.setID(fieldId);
-			                    instance.setClassType(model.getClass());
+			                   // instance.setID(fieldId);
+			                   // instance.setClassType(model.getClass());
 			                
-			                    Field[] fieldFields =   fieldValue.getClass().getDeclaredFields();
+			                    /*Field[] fieldFields =   fieldValue.getClass().getDeclaredFields();
 			         
 			                   for(Field field : fieldFields)
 			                   {
@@ -123,7 +123,8 @@ public class RubyAssociationResolver
 			        	        	 break;
 			        	         }
 			                   }
-				        	}
+			                   */
+				        	//}
 					        if (fieldId != null)
 				        	{
 					        	mappedField.set(model, fieldId.getId());
@@ -146,15 +147,19 @@ public class RubyAssociationResolver
 		catch (IllegalAccessException e)
 		{
 			Log.write(e, LogType.ERROR);
-		} catch (InstantiationException e) {
+		} 
+		//catch (InstantiationException e) {
+		//	Log.write(e, LogType.ERROR);
+		//}
+		 catch (IllegalArgumentException e) {
 			Log.write(e, LogType.ERROR);
-		} catch (IllegalArgumentException e) {
-			Log.write(e, LogType.ERROR);
-		} catch (InvocationTargetException e) {
-			Log.write(e, LogType.ERROR);
-		} catch (NoSuchMethodException e) {
-			Log.write(e, LogType.ERROR);
-		} catch (SecurityException e) {
+		 }
+		//} catch (InvocationTargetException e) {
+	//		Log.write(e, LogType.ERROR);
+		//} catch (NoSuchMethodException e) {
+	//		Log.write(e, LogType.ERROR);
+		//}
+		    catch (SecurityException e) {
 			Log.write(e, LogType.ERROR);
 		}
 	}
