@@ -146,8 +146,11 @@ else {
 	return found;
 }
 
-this._calculateMovement = function(newX,newY) {
+this._calculateMovement = function(newX,newY,treshold) {
 	
+	
+		console.log("treshold in calculatemovement: " + treshold)
+		var multiplier = treshold*2
 		result = []
 		
 	  function SectionLocation(X,Y)  {		
@@ -171,37 +174,37 @@ this._calculateMovement = function(newX,newY) {
    var prevymove = this._parent.getMapData().getPrevViewportY();
    
    if(xmove > prevxmove) {		
-		result.push(new SectionLocation(newX,newY+4))	
-		result.push(new SectionLocation(newX+4,newY))	
-		result.push(new SectionLocation(newX+4,newY+4))	
-		result.push(new SectionLocation(newX-4,newY+4))	
+		result.push(new SectionLocation(newX,newY+multiplier))	
+		result.push(new SectionLocation(newX+multiplier,newY))	
+		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
 		
    	//this._parent.getMapData().setTresholdX(currentTresholdX+1)
 		console.log("we gaan naar rechts")   
    }
 	else if(xmove < prevxmove) {
-		result.push(new SectionLocation(newX,newY+4))	
-		result.push(new SectionLocation(newX,newY-4))
-		result.push(new SectionLocation(newX+4,newY+4))
-		result.push(new SectionLocation(newX+4,newY-4))
+		result.push(new SectionLocation(newX,newY+multiplier))	
+		result.push(new SectionLocation(newX,newY-multiplier))
+		result.push(new SectionLocation(newX+multiplier,newY+multiplier))
+		result.push(new SectionLocation(newX+multiplier,newY-multiplier))
 		
 		//this._parent.getMapData().setTresholdX(currentTresholdX+1)
 		console.log("we gaan naar links")	
 	}
 	
 	if(ymove > prevymove) {
-		result.push(new SectionLocation(newX+4,newY))	
-		result.push(new SectionLocation(newX-4,newY))	
-		result.push(new SectionLocation(newX+4,newY-4))	
-		result.push(new SectionLocation(newX-4,newY-4))	
+		result.push(new SectionLocation(newX+multiplier,newY))	
+		result.push(new SectionLocation(newX-multiplier,newY))	
+		result.push(new SectionLocation(newX+multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
 
 		console.log("we gaan naar onderen")	
 	}	
 	else if(ymove < prevymove) {
-		result.push(new SectionLocation(newX+4,newY))	
-		result.push(new SectionLocation(newX-4,newY))	
-		result.push(new SectionLocation(newX+4,newY+4))	
-		result.push(new SectionLocation(newX-4,newY+4))	
+		result.push(new SectionLocation(newX+multiplier,newY))	
+		result.push(new SectionLocation(newX-multiplier,newY))	
+		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
 		console.log("we gaan naar boven")			
 	}
 	
@@ -261,6 +264,7 @@ this.getMapData = function (treshold,width,height,callback) {
 
 
 			var currentContext = this;
+			
 			var x1load,y1load,x2load,y2load	
 			var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
@@ -276,8 +280,7 @@ this.getMapData = function (treshold,width,height,callback) {
  	    	 	
  	    	 	var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2;
 			 	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2;	    		
-				// TODO: deze methode doet op het moment helemaal niks, eruit slopen zodra de kans er is
-			 	var sections = this._calculateMovement(newX,newY)
+			 	var sections = this._calculateMovement(newX,newY,treshold)
 			 	this._fetchSection(width,height,		 	
 			 	newX,
 			 	newY,callback,
