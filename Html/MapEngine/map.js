@@ -126,7 +126,7 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),6,6,function(imageData,data) {
+		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),3,3,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext._tileLayer.renderTiles(imageData,data,true)
 		});
@@ -138,7 +138,7 @@ function Map(javascript_console,applicationName)
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(2,6,6,function(imageData,data) {
+				this._mapDataBroker.getMapData(1,3,3,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data,false)
        			
 		});

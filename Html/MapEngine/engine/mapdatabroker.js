@@ -150,7 +150,7 @@ this._calculateMovement = function(newX,newY,treshold) {
 	
 	
 		console.log("treshold in calculatemovement: " + treshold)
-		var multiplier = treshold*2
+		var multiplier = 4
 		result = []
 		
 	  function SectionLocation(X,Y)  {		
