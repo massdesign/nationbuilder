@@ -19,7 +19,6 @@ this._yMovement = 0;
 this._tiles = [];
 this._tresholdX = 0;
 this._tresholdY = 0;
-//this._renderOffsetY = 0;
 
 this.clickedTile = function() {
 }
@@ -29,19 +28,6 @@ this.getTiles = function() {
 this.setTiles = function(tiles)	 {
 	this._tiles = tiles;
 }
-// TODO: obsolete method
-//this.getXMovement = function () {
-//	return this._xMovement;
-//}
-// TODO: obsolete method
-//this.getYMovement = function () {
-//	return this._yMovement;
-//}
-// TODO: obsolete method
-//this.setXMovement = function (x) {
-//this._xMovement = x;
-//}
-// TODO: obsolete method
 this.setYMovement = function (y) {
 this._yMovement = y;
 }
@@ -85,6 +71,7 @@ this.setStartPositionX = function(x) {
 this.setStartPositionY = function(y) {
 	this._startPositionY = y;
 }
+
 
 this.getViewportX = function() {
 	return this._viewportx;

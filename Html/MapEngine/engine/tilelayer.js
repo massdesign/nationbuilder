@@ -40,9 +40,9 @@ function TileLayer(parentMap,loginstance)
 				}
 				else {
 					
-    					xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()
-						yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()
-    								
+    					xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
+						yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
+    							
 				}
 						image_id = tile.image_id	
  			   		tilesize = this.parentMap.getRelativeTilesize();

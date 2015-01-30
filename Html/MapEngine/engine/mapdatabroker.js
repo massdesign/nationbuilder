@@ -146,129 +146,83 @@ else {
 	return found;
 }
 
-this._calculateMovement = function (width,height,treshold) {
+this._calculateMovement = function(newX,newY) {
 	
-	var currentTresholdX = this._parent.getMapData().getTresholdX()
- 	var currentTresholdY = this._parent.getMapData().getTresholdY()
-	if(this.xOuter == this.xStartPosition && this.xCounter > 0) {
-					 this.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
-					 this.xOuter += 1;
-	 				 this.xCounter = 0;
-	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold+1)
-	 			   }
-				   
-				else if(this.yOuter == this.yStartPosition && this.yCounter > 0) {
-					 this.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
-			       this.yCounter = 0;
-			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
-			       	this.yOuter += 1;
-					}
-				else 	if(Math.abs(this.xCounter) == treshold && this.xCounter > 0)
-				{
-				   this.xOuter += width*this._cacheSize
-				   this.xOuter += 1;
-					this._parent.getMapData().setTresholdX(currentTresholdX + treshold+1)
-				}
-				else if(Math.abs(this.yCounter) == treshold && this.yCounter > 0)
-				{
-					this.yOuter += height*this._cacheSize
-					this.yOuter += 1;
+		result = []
+		
+	  function SectionLocation(X,Y)  {		
+		this.X = X;
+		this.Y = Y;
+		console.log("X = " + X)
 			
-		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
-				}
-				else 	if(Math.abs(this.xCounter) == treshold && this.xCounter < 0)
-				{
-				   this.xOuter -= width*this._cacheSize;
-				   this.xOuter -= 1
-				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold-1)
-			
-				}
-				else if(Math.abs(this.yCounter) == treshold && this.yCounter < 0)
-				{
-					
-					this.yOuter -= height*this._cacheSize;
-					this.yOuter -= 1;
-					this._parent.getMapData().setTresholdY(currentTresholdY-treshold-1)
-				}
+		this.getX = function () {
+			return this.X;		
+		}		
+		this.getY = function () {
+			return this.Y;		
+		}
+	}	
+	
+	var currentTresholdX = Math.abs(this._parent.getMapData().getTresholdX())
+ 	var currentTresholdY = Math.abs(this._parent.getMapData().getTresholdY())
+ 	var xmove = this._parent.getMapData().getViewportX();
+   var ymove = this._parent.getMapData().getViewportY();
+   var prevxmove = this._parent.getMapData().getPrevViewportX();
+   var prevymove = this._parent.getMapData().getPrevViewportY();
+   
+   if(xmove > prevxmove) {		
+		result.push(new SectionLocation(newX,newY+4))	
+		result.push(new SectionLocation(newX+4,newY))	
+		result.push(new SectionLocation(newX+4,newY+4))	
+		result.push(new SectionLocation(newX-4,newY+4))	
+		
+   	//this._parent.getMapData().setTresholdX(currentTresholdX+1)
+		console.log("we gaan naar rechts")   
+   }
+	else if(xmove < prevxmove) {
+		result.push(new SectionLocation(newX,newY+4))	
+		result.push(new SectionLocation(newX,newY-4))
+		result.push(new SectionLocation(newX+4,newY+4))
+		result.push(new SectionLocation(newX+4,newY-4))
+		
+		//this._parent.getMapData().setTresholdX(currentTresholdX+1)
+		console.log("we gaan naar links")	
+	}
+	
+	if(ymove > prevymove) {
+		result.push(new SectionLocation(newX+4,newY))	
+		result.push(new SectionLocation(newX-4,newY))	
+		result.push(new SectionLocation(newX+4,newY-4))	
+		result.push(new SectionLocation(newX-4,newY-4))	
+
+		console.log("we gaan naar onderen")	
+	}	
+	else if(ymove < prevymove) {
+		result.push(new SectionLocation(newX+4,newY))	
+		result.push(new SectionLocation(newX-4,newY))	
+		result.push(new SectionLocation(newX+4,newY+4))	
+		result.push(new SectionLocation(newX-4,newY+4))	
+		console.log("we gaan naar boven")			
+	}
+	
+	return result;	
+	
 }
-/*
-Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
-*/
-this.getMapData = function (treshold,width,height,callback) {
 
-	
-	 	var currentContext = this;
-		var x1load,y1load,x2load,y2load
-
-	
-		var xmove = this._parent.getMapData().getViewportX();
-   	 	var ymove = this._parent.getMapData().getViewportY();
-   		var prevxmove = this._parent.getMapData().getPrevViewportX();
-   		var prevymove = this._parent.getMapData().getPrevViewportY();
-	
- 	    
- 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
- 	    {
- 	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
- 	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
- 	    		 	    		
-			 	this._calculateMovement(width,height,treshold)
- 				/*
- 	    		if(currentContext.xOuter == this.xStartPosition && this.xCounter > 0) {
-					 currentContext.xOuter = width * this._cacheSize + this._parent.getMapData().getStartPositionX();
-					 currentContext.xOuter += 1;
-	 				 currentContext.xCounter = 0;
-	 				 this._parent.getMapData().setTresholdX(currentTresholdX+treshold+1)
-	 			   }
-				   
-				else if(currentContext.yOuter == this.yStartPosition && this.yCounter > 0) {
-					 currentContext.yOuter = height * this._cacheSize + this._parent.getMapData().getStartPositionY();
-			       currentContext.yCounter = 0;
-			       	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
-			       	currentContext.yOuter += 1;
-					}
-				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter > 0)
-				{
-				   currentContext.xOuter += width*currentContext._cacheSize
-				   currentContext.xOuter += 1;
-					this._parent.getMapData().setTresholdX(currentTresholdX + treshold+1)
-				}
-				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter > 0)
-				{
-					currentContext.yOuter += height*currentContext._cacheSize
-					currentContext.yOuter += 1;
-			
-		        	this._parent.getMapData().setTresholdY(currentTresholdY+treshold+1)
-				}
-				else 	if(Math.abs(currentContext.xCounter) == treshold && currentContext.xCounter < 0)
-				{
-				   currentContext.xOuter -= width*currentContext._cacheSize;
-				   currentContext.xOuter -= 1
-				   this._parent.getMapData().setTresholdX(currentTresholdX-treshold-1)
-			
-				}
-				else if(Math.abs(currentContext.yCounter) == treshold && currentContext.yCounter < 0)
-				{
-					
-					currentContext.yOuter -= height*currentContext._cacheSize;
-					currentContext.yOuter -= 1;
-					this._parent.getMapData().setTresholdY(currentTresholdY-treshold-1)
-				}*/
+this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
+			var currentContext = this;
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
-
-			if(!this.isAlreadyFetched(this.xOuter, this.yOuter, x2load, y2load)) {
+			if(!this.isAlreadyFetched(xOuter, yOuter, x2load, y2load)) {
 				this._mapservice.getMap(function (mapData) {
+									
 					var newData = mapData[0]['layers'];
-						
-							
+										
 					for (i = 0; i < newData.length; i++) {
 						// we are missing a layer.. add it to the list of layers that are already in cache
 						if (typeof currentContext.data[i] == 'undefined') {
 							currentContext.data.push(newData[i]);
 							currentContext._parent.getMapData().setRenderOffset(0, i);
-									
-							console.log(currentContext.data)
 						}
 						else {
 							
@@ -287,13 +241,66 @@ this.getMapData = function (treshold,width,height,callback) {
 							currentContext.yCounter = 0;
 						}
 					);
+					
+					chain()
 
-				}, this.xOuter, this.yOuter, x2load, y2load);
+				}, xOuter, yOuter, x2load, y2load);
 			}
 			else {
+				console.log("section already fetched")
 			this.xCounter = 0;
-			this.yCounter = 0;		
-			}
+			this.yCounter = 0;	
+			chain()	
+			}	
+	
+}
+/*
+Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
+*/
+this.getMapData = function (treshold,width,height,callback) {
+
+
+			var currentContext = this;
+			var x1load,y1load,x2load,y2load	
+			var xmove = this._parent.getMapData().getViewportX();
+   	 	var ymove = this._parent.getMapData().getViewportY();
+   		var prevxmove = this._parent.getMapData().getPrevViewportX();
+   		var prevymove = this._parent.getMapData().getPrevViewportY();
+   		
+	
+ 	 
+ 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
+ 	    {
+ 	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
+ 	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
+ 	    	 	
+ 	    	 	var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2;
+			 	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2;	    		
+				// TODO: deze methode doet op het moment helemaal niks, eruit slopen zodra de kans er is
+			 	var sections = this._calculateMovement(newX,newY)
+			 	this._fetchSection(width,height,		 	
+			 	newX,
+			 	newY,callback,
+					function() {			 	
+   					console.log("De tweede in de ketting")
+   					currentContext._fetchSection(width,height,sections[0].getX(),sections[0].getY(),callback,function () 	{	
+							console.log("De derde in de ketting")
+							
+							currentContext._fetchSection(width,height,sections[1].getX(),sections[1].getY(),callback,function() {
+								console.log("De vierde in de ketting")
+								currentContext._fetchSection(width,height,sections[2].getX(),sections[2].getY(),callback,function() {
+									console.log("De vijfde in de ketting")
+									currentContext._fetchSection(width,height,sections[3].getX(),sections[3].getY(),callback,function() {
+										console.log("De zesde in de ketting")
+									});
+								})										
+							});
+						
+					});
+					}
+			 	);
+ 				//this._fetchSection(width,height,this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2+2,this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2,callback)			
+ 			
 
 		}
 		else 
