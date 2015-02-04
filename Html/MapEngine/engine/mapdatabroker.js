@@ -1,5 +1,5 @@
 
-function MapDataBroker(parent) {
+function MapDataBroker(parent,sectionWidth,sectionHeight) {
 	
 	this._mapservice = new MapService();
 	this._cacheSize = 1;
@@ -13,6 +13,8 @@ function MapDataBroker(parent) {
 	this.yCurrentPosition = 0;
 	this.imageData = [];
 	this.data = [];
+	this._sectionWidth = sectionWidth;
+	this._sectionHeight = sectionHeight;
 
 	this.requestCache = [];
 	
@@ -58,10 +60,10 @@ this._getCurrentScrollOffset = function(move,prevmove,current) {
 /*
 Get the initialscreen from where the user can scroll left or right
 */
-this.getInitialMapData = function(x,y,width,height,callback) {
+this.getInitialMapData = function(x,y,callback) {
 
-	var x1 = width * this._cacheSize;
-	var y1 = height * this._cacheSize;
+	var x1 = this._sectionWidth  * this._cacheSize;
+	var y1 = this._sectionHeight * this._cacheSize;
 
 	this.xStartPosition = x;
 	this.yStartPosition = y;
@@ -147,9 +149,6 @@ else {
 }
 
 this._calculateMovement = function(newX,newY,treshold) {
-	
-	
-	
 	
 		var multiplier = 4
 		result = []
@@ -238,7 +237,7 @@ this._calculateMovement = function(newX,newY,treshold) {
 	return result;	
 	
 }
-
+// TODO: width height hier ook refactoren naar this._sectionWidth en this._sectionHeight
 this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			var currentContext = this;
 			x2load = width * this._cacheSize;
@@ -287,32 +286,34 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
-this.getMapData = function (treshold,width,height,callback) {
+this.getMapData = function (treshold,callback) {
 
 
 			var currentContext = this;
-			
+			var multiplier = 2;
 			var x1load,y1load,x2load,y2load	
 			var xmove = this._parent.getMapData().getViewportX();
    	 	var ymove = this._parent.getMapData().getViewportY();
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    		
+   		console.log("xcounter = " + this.xCounter)
+   		console.log("ycounter = " + this.yCounter)
 
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
  	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
  	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
  	    	 	
- 	    	 	var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2;
-			 	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2;	    		
+ 	    	 	var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*(this._sectionWidth+1)/2;
+			 	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*(this._sectionHeight+1)/2;	    		
 			 	var sections = this._calculateMovement(newX,newY,treshold)
 			 	console.log("newX = " + newX)
 			 	console.log("newY = " + newY)
-			 	this._fetchSection(width,height,		 	
+			 	this._fetchSection(this._sectionWidth,this._sectionHeight,		 	
 			 	sections[0].getX(),
-			 	sections[0].getY(),callback,//function() {
-					function() {			 	
+			 	sections[0].getY(),callback,function() {
+					/*function() {			 	
    					//console.log("De tweede in de ketting")
    					currentContext._fetchSection(width,height,sections[1].getX(),sections[1].getY(),callback,function () 	{	
 							//console.log("De derde in de ketting")			
@@ -325,7 +326,7 @@ this.getMapData = function (treshold,width,height,callback) {
 									});
 								});										
 							});	
-					});
+					});*/
 				});
 			//});
  				//this._fetchSection(width,height,this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2+2,this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2,callback)			

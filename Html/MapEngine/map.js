@@ -2,7 +2,7 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._tileLayer = new TileLayer(this,javascript_console);
-		this._mapDataBroker = new  MapDataBroker(this);
+		this._mapDataBroker = new  MapDataBroker(this,3,3);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -126,7 +126,9 @@ function Map(javascript_console,applicationName)
    	 });
 		
 		var currentContext = this;
-		this._mapDataBroker.getInitialMapData(this.getMapData().getStartPositionX(),this.getMapData().getStartPositionY(),3,3,function(imageData,data) {
+		var startX = this.getMapData().getStartPositionX();
+		var startY = this.getMapData().getStartPositionY();
+		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
        currentContext._tileLayer.renderTiles(imageData,data,true)
 		});
@@ -138,9 +140,8 @@ function Map(javascript_console,applicationName)
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,3,3,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)
-       			
+				this._mapDataBroker.getMapData(1,function(imageData,data) {
+					currentContext._tileLayer.renderTiles(imageData,data,false)    			
 		});
 		this.layers[0].move()
    }
