@@ -175,58 +175,64 @@ this._calculateMovement = function(newX,newY,treshold) {
    var prevymove = this._parent.getMapData().getPrevViewportY();
    
    
-   if(prevxmove == xmove && prevymove != ymove ) {
+  /* if(prevxmove == xmove && prevymove != ymove ) {
 		console.log("y movement but no x movement")   
  
    }
    else if(prevymove == ymove && prevxmove != xmove){
    	console.log("x movement but no y movement")
-   }
+   }*/
    
-   console.log("new X: " + newX)
+   /*console.log("new X: " + newX)
 	console.log("new Y: " + newY)
-	console.log("old XPosition: " + this.oldXPosition)
-	console.log("old YPosition: " + this.oldYPosition)
- 
-   
-   if(xmove > prevxmove) {		
-   	
-		console.log("xCurrentPosition=" + this.xCurrentPosition)
-		console.log("yCurrentPosition=" + this.yCurrentPosition)
-   	result.push(new SectionLocation(newX-this.xCurrentPosition,newY-this.yCurrentPosition))
+ 	console.log("xCurrentPosition: " + this.xCurrentPosition)
+ 	console.log("yCurrentPositon: " +  this.yCurrentPosition)
+ 	*/
+ 	
+ 	
+   newX = newX-this.xCurrentPosition;
+	newY = newY-this.yCurrentPosition;
+	result.push(new SectionLocation(newX,newY))
+   if(xmove > prevxmove) {			
+		//console.log("xCurrentPosition=" + this.xCurrentPosition)
+		//console.log("yCurrentPosition=" + this.yCurrentPosition)
+	
+
 		result.push(new SectionLocation(newX,newY+multiplier))	
 		result.push(new SectionLocation(newX+multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
 		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
-		console.log("we gaan naar rechts")   
+		//console.log("we gaan naar rechts")   
 		this.xCurrentPosition += 2;
    }
 	else if(xmove < prevxmove) {
-		result.push(new SectionLocation(newX,newY))
+	//	result.push(new SectionLocation(newX-this.xCurrentPosition,newY-this.yCurrentPosition))
 		result.push(new SectionLocation(newX,newY+multiplier))	
 		result.push(new SectionLocation(newX,newY-multiplier))
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))
 		result.push(new SectionLocation(newX+multiplier,newY-multiplier))
-		console.log("we gaan naar links")	
+		//console.log("we gaan naar links")	
+		this.xCurrentPosition -= 2;
 	}
 	
 	if(ymove > prevymove) {
-		result.push(new SectionLocation(newX-this.xCurrentPosition,newY-this.yCurrentPosition))
+		//result.push(new SectionLocation(newX-this.xCurrentPosition,newY-this.yCurrentPosition))
 		result.push(new SectionLocation(newX+multiplier,newY))	
 		result.push(new SectionLocation(newX-multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY-multiplier))	
 		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
 		//this.xCurrentPosition = 0;
 		this.yCurrentPosition += 2;
-		console.log("we gaan naar onderen")	
+		//console.log("we gaan naar onderen")	
 	}	
 	else if(ymove < prevymove) {
-		result.push(new SectionLocation(newX,newY))
+	//	result.push(new SectionLocation(newX-this.xCurrentPosition,newY-this.yCurrentPosition))
 		result.push(new SectionLocation(newX+multiplier,newY))	
 		result.push(new SectionLocation(newX-multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
 		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
-		console.log("we gaan naar boven")			
+		this.yCurrentPosition -= 2;
+	//	console.log("we gaan naar boven")			
 	}
 	
 	return result;	
@@ -305,8 +311,8 @@ this.getMapData = function (treshold,width,height,callback) {
 			 	console.log("newY = " + newY)
 			 	this._fetchSection(width,height,		 	
 			 	sections[0].getX(),
-			 	sections[0].getY(),callback,function() {
-					/*function() {			 	
+			 	sections[0].getY(),callback,//function() {
+					function() {			 	
    					//console.log("De tweede in de ketting")
    					currentContext._fetchSection(width,height,sections[1].getX(),sections[1].getY(),callback,function () 	{	
 							//console.log("De derde in de ketting")			
@@ -317,11 +323,11 @@ this.getMapData = function (treshold,width,height,callback) {
 									currentContext._fetchSection(width,height,sections[4].getX(),sections[4].getY(),callback,function() {
 										//console.log("De zesde in de ketting")
 									});
-								})										
-							});*/
-						
-				//	});
-			});
+								});										
+							});	
+					});
+				});
+			//});
  				//this._fetchSection(width,height,this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2+2,this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2,callback)			
  			
 
