@@ -2,7 +2,7 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._tileLayer = new TileLayer(this,javascript_console);
-		this._mapDataBroker = new  MapDataBroker(this,3,3);
+		this._mapDataBroker = new  MapDataBroker(this,4,4,6);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -140,7 +140,7 @@ function Map(javascript_console,applicationName)
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,function(imageData,data) {
+				this._mapDataBroker.getMapData(2,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data,false)    			
 		});
 		this.layers[0].move()
