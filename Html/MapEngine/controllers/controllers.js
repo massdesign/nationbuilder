@@ -42,47 +42,16 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
     
+    $scope.reload = function(event) {
+		alert('test')    
+    }
+    
     $scope._scroll = function(x,y,width,height) {
     	
  		  map.getMapData().setviewportPosition(x,y);
- 		  map.move();
- 		 
- 		 // map.init();c
- 		  //map.render();
- 		  /*
- 		  s.getMap(function (mapData) {
-            images  = Array();
-            var	data = mapData[0]['layers'];
-            map.init();
-            s.getImages(function(imagedata)	
-            {
-                map.setImageData(imagedata,data);
-                map.render();
-            });
-				
-        },x,y,width,height);*/
-	   
+ 		  map.move(); 
     }    
-    //$scope.init = function() {
-    	
-    	/*
-	 var s = new MapService();
-	     javascript_console = console;
-	 var map = new Map(console,"nationbuilderApp");
-        s.getMap(function (mapData) {
-            images  = Array();
-            var	data = mapData[0]['layers'];
-            map.init();
-            s.getImages(function(imagedata)
-            {
-                map.setImageData(imagedata,data);
-               	 map.render();
-            });
-
-        },0,0,9,9); */
-	 //alert('test')    
-   // }
-   	u.getUserById(1,function(modelData) {
+      	u.getUserById(1,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;
@@ -92,27 +61,4 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    	javascript_console = console;
 	   var map = new Map(console,"nationbuilderApp");
 	   map.init()
-	   /*
-   	var s = new MapService();
-        s.getMap(function (mapData) {
-            images  = Array();
-            var	data = mapData[0]['layers'];
-            map.init();
-            s.getImages(function(imagedata)
-            {
-                map.setImageData(imagedata,data);
-               	 map.render();
-            });
-
-        },0,0,9,9); 
-        */
-    // NOTE: hacky way to integreate jquery with angularjs.. this way we can use the already written mapService
-    /*s.getTileByXY(2,1,function(modelData) { 
-    
-		$scope.$apply(function() {
-		
-		$scope.modelData = modelData;
-		});        
-    });*/
-
 });

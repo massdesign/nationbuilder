@@ -3,6 +3,9 @@ function TileLayer(parentMap,loginstance)
   this.parentMap = parentMap
   this._host = "localhost:8083"
   this.loginstance = loginstance;
+  // TODO: offset zou berekend moeten worden aan de grootte van de viewport
+  this._xOffset = 3;
+  this._yOffset = 3;
 	this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
@@ -173,6 +176,9 @@ function TileLayer(parentMap,loginstance)
 						tresholdY = currentContext.parentMap.getMapData().getTresholdY() * currentContext.parentMap.getRelativeTilesize();		
 						xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdX;
 						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdY;
+						
+						xpos += currentContext._xOffset*currentContext.parentMap.getRelativeTilesize();
+						ypos += currentContext._yOffset*currentContext.parentMap.getRelativeTilesize();
 																
 						var img = new Kinetic.Image({
 							x: xpos,

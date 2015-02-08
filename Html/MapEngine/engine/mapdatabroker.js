@@ -17,8 +17,9 @@ function MapDataBroker(parent,sectionWidth,sectionHeight,scrollAdjust) {
 	this.data = [];
 	this._sectionWidth = sectionWidth;
 	this._sectionHeight = sectionHeight;
-
 	this.requestCache = [];
+	
+	
 	
 
 this._hasChanged = function(move,prevmove) {
@@ -174,29 +175,10 @@ this._calculateMovement = function(newX,newY,treshold) {
    var ymove = this._parent.getMapData().getViewportY();
    var prevxmove = this._parent.getMapData().getPrevViewportX();
    var prevymove = this._parent.getMapData().getPrevViewportY();
-   
-   
-  /* if(prevxmove == xmove && prevymove != ymove ) {
-		console.log("y movement but no x movement")   
- 
-   }
-   else if(prevymove == ymove && prevxmove != xmove){
-   	console.log("x movement but no y movement")
-   }*/
-   
-   /*console.log("new X: " + newX)
-	console.log("new Y: " + newY)
- 	console.log("xCurrentPosition: " + this.xCurrentPosition)
- 	console.log("yCurrentPositon: " +  this.yCurrentPosition)
- 	*/
- 	
- 	console.log("xCurrentPosition: " + this.xCurrentPosition)
- 	console.log("yCurrentPositon: " +  this.yCurrentPosition)
-   
+      
    newX = newX-this.xCurrentPosition;
 	newY = newY-this.yCurrentPosition;
-	console.log("newX = " + newX)
-	console.log("newY = " + newY)
+	
 	result.push(new SectionLocation(newX,newY))
    if(xmove > prevxmove) {			
 		//console.log("xCurrentPosition=" + this.xCurrentPosition)
@@ -205,6 +187,16 @@ this._calculateMovement = function(newX,newY,treshold) {
 		result.push(new SectionLocation(newX+multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
 		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
+		result.push(new SectionLocation(newX-multiplier*2,newY))	
+		result.push(new SectionLocation(newX-multiplier*2,newY+multiplier))	
+		result.push(new SectionLocation(newX-multiplier*2,newY+multiplier))	
+		result.push(new SectionLocation(newX,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier*2,newY-multiplier))
+		result.push(new SectionLocation(newX+multiplier,newY-multiplier))	
+			
+		
 		//console.log("we gaan naar rechts")   
 		this.xCurrentPosition += this._scrollAdjust;
    }
@@ -214,6 +206,12 @@ this._calculateMovement = function(newX,newY,treshold) {
 		result.push(new SectionLocation(newX,newY-multiplier))
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))
 		result.push(new SectionLocation(newX+multiplier,newY-multiplier))
+		result.push(new SectionLocation(newX-multiplier,newY))
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))
+		result.push(new SectionLocation(newX-multiplier,newY+multiplier))
+		result.push(new SectionLocation(newX+multiplier*2,newY))
+		result.push(new SectionLocation(newX+multiplier*2,newY+multiplier))
+		result.push(new SectionLocation(newX+multiplier*2,newY-multiplier))
 		//console.log("we gaan naar links")	
 		this.xCurrentPosition -= this._scrollAdjust;
 	}
@@ -223,7 +221,15 @@ this._calculateMovement = function(newX,newY,treshold) {
 		result.push(new SectionLocation(newX+multiplier,newY))	
 		result.push(new SectionLocation(newX-multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY-multiplier))	
-		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))
+		result.push(new SectionLocation(newX,newY-multiplier*2))	
+		result.push(new SectionLocation(newX+multiplier,newY-multiplier*2))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier*2))
+		result.push(new SectionLocation(newX,newY+multiplier))	
+		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
+	
+		
 		//this.xCurrentPosition = 0;
 		this.yCurrentPosition += this._scrollAdjust;
 		//console.log("we gaan naar onderen")	
@@ -234,6 +240,12 @@ this._calculateMovement = function(newX,newY,treshold) {
 		result.push(new SectionLocation(newX-multiplier,newY))	
 		result.push(new SectionLocation(newX+multiplier,newY+multiplier))	
 		result.push(new SectionLocation(newX-multiplier,newY+multiplier))	
+		result.push(new SectionLocation(newX,newY-multiplier))	
+		result.push(new SectionLocation(newX+multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY-multiplier))	
+		result.push(new SectionLocation(newX-multiplier,newY+multiplier*2))	
+		result.push(new SectionLocation(newX,newY+multiplier*2))	
+		result.push(new SectionLocation(newX+multiplier,newY+multiplier*2))	
 		this.yCurrentPosition -= this._scrollAdjust;
 	//	console.log("we gaan naar boven")			
 	}
@@ -287,6 +299,23 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			}	
 	
 }
+
+this._fetchRecursive = function(sections,callback,pos) {
+
+var currentContext = this;
+ 	this._fetchSection(this._sectionWidth,this._sectionHeight,		 	
+			 	sections[pos].getX(),
+			 	sections[pos].getY(),callback,//function() {
+					function() {
+						console.log("pos = " + pos)
+						pos++; 	
+						if(pos < sections.length)
+						{
+							currentContext._fetchRecursive(sections,callback,pos);
+						}			
+						
+				});
+}
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
@@ -309,38 +338,22 @@ this.getMapData = function (treshold,callback) {
  	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
  	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
  	    	 	
+	   		console.log("newX= " + this._parent.getMapData().getViewportX())
+   			console.log("newY= " + this._parent.getMapData().getViewportY())
+ 	    	 	 	 	
+ 	    	 	//var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*(this._sectionWidth+1)/2;
  	    	 	var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*(this._sectionWidth+1)/2;
+			 	//var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*(this._sectionHeight+1)/2;	    		
 			 	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*(this._sectionHeight+1)/2;	    		
 			 	var sections = this._calculateMovement(newX,newY,treshold)
-			 	this._fetchSection(this._sectionWidth,this._sectionHeight,		 	
-			 	sections[0].getX(),
-			 	sections[0].getY(),callback,//function() {
-					function() {			 	
-   					//console.log("De tweede in de ketting")
-   					currentContext._fetchSection(currentContext._sectionWidth,currentContext._sectionHeight,sections[1].getX(),sections[1].getY(),callback,function () 	{	
-							//console.log("De derde in de ketting")			
-							currentContext._fetchSection(currentContext._sectionWidth,currentContext._sectionHeight,sections[2].getX(),sections[2].getY(),callback,function() {
-								//console.log("De vierde in de ketting")
-								currentContext._fetchSection(currentContext._sectionWidth,currentContext._sectionHeight,sections[3].getX(),sections[3].getY(),callback,function() {
-									//console.log("De vijfde in de ketting")
-									currentContext._fetchSection(currentContext._sectionWidth,currentContext._sectionHeight,sections[4].getX(),sections[4].getY(),callback,function() {
-										//console.log("De zesde in de ketting")
-									});
-								});										
-							});	
-					});
-				});
-			//});
- 				//this._fetchSection(width,height,this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*2+2,this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*2,callback)			
- 			
-
-		}
+			 	this._fetchRecursive(sections,callback,0)
+		 }
 		else 
 		{
 			//console.log("values within treshold, don't get new data from the server")
 			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
 			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
-		}
+		}	
 
 	}
 }
