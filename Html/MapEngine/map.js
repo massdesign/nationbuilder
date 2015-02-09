@@ -21,8 +21,8 @@ function Map(javascript_console,applicationName)
       this._zoomlevel = 1;
 
 
-        this._imagedata = isNaN;
-        this._data = isNaN;
+      this._imagedata = isNaN;
+      this._data = isNaN;
     	
     	this.layers.push(this._tileLayer);
     	this.layers.push(new SelectLayer(this,javascript_console));
