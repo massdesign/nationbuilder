@@ -1,8 +1,8 @@
 
-function MapDataBroker(parent,sectionWidth,sectionHeight,scrollAdjust) {
+function MapDataBroker(parent,sectionWidth,sectionHeight,scrollAdjust,treshold) {
 	
 	this._mapservice = new MapService();
-	
+	this._treshold = treshold;
 	this._scrollAdjust = scrollAdjust;
 	this._cacheSize = 1;
 	this.mapData = []
@@ -62,39 +62,7 @@ this._getCurrentScrollOffset = function(move,prevmove,current) {
 		  }  
 		  return c;
 }
-// TODO: getInitialMapData and GetMapData are dependend on each other, consider loose coupling between the two or integrate more
 
-/*
-Get the initialscreen from where the user can scroll left or right
-*/
-this.getInitialMapData = function(x,y,callback) {
-
-	var x1 = this._sectionWidth  * this._cacheSize;
-	var y1 = this._sectionHeight * this._cacheSize;
-
-	this.xStartPosition = x;
-	this.yStartPosition = y;
-
-	var currentContext = this;
-	if (!this.isAlreadyFetched(x, y, x1, y1)) {
-
-	this._mapservice.getMap(function (mapData) {
-		var data = mapData[0]['layers'];
-		//this.xOuter += width-1;
-		//	this.yOuter += height-1;
-		currentContext.data = data;
-		currentContext._mapservice.getImages(function (imagedata) {
-				currentContext.imageData = imagedata;
-				callback(currentContext.imageData, currentContext.data)
-			}
-		);
-
-	}, x, y, x1, y1);
-}
-	
-	this.xOuter = x;
-	this.yOuter = y;
-}
 this.isAlreadyFetched = function(x1,y1,x2,y2) {
 	x2 += x1
 	y2 += y1
@@ -161,17 +129,7 @@ this._calculateMovement = function(treshold) {
 		result = []
 		
 		
-	  function SectionLocation(X,Y)  {		
-		this.X = X;
-		this.Y = Y;
-			
-		this.getX = function () {
-			return this.X;		
-		}		
-		this.getY = function () {
-			return this.Y;		
-		}
-	}	
+
 	
 	var currentTresholdX = Math.abs(this._parent.getMapData().getTresholdX())
  	var currentTresholdY = Math.abs(this._parent.getMapData().getTresholdY())
@@ -290,6 +248,22 @@ this._calculateMovement = function(treshold) {
 	return result;	
 	
 }
+
+this._initialLoader = function (x,y) {
+
+	result = [];
+	
+	result.push(new SectionLocation(x+(this._sectionWidth+1),y));
+	result.push(new SectionLocation(x-(this._sectionWidth+1),y));
+	result.push(new SectionLocation(x,y+(this._sectionHeight+1)));
+	result.push(new SectionLocation(x,y-(this._sectionHeight+1)));
+	result.push(new SectionLocation(x+(this._sectionWidth+1),y+(this._sectionHeight+1)));
+	result.push(new SectionLocation(x-(this._sectionWidth+1),y+(this._sectionHeight+1)));
+	result.push(new SectionLocation(x-(this._sectionWidth+1),y-(this._sectionHeight+1)));
+	result.push(new SectionLocation(x+(this._sectionWidth+1),y-(this._sectionHeight+1)));
+	
+	return result;
+}
 // TODO: width height hier ook refactoren naar this._sectionWidth en this._sectionHeight
 this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			var currentContext = this;
@@ -353,6 +327,45 @@ var currentContext = this;
 						
 				});
 }
+
+// TODO: getInitialMapData and GetMapData are dependend on each other, consider loose coupling between the two or integrate more
+
+/*
+Get the initialscreen from where the user can scroll left or right
+*/
+this.getInitialMapData = function(x,y,callback) {
+
+	var x1 = this._sectionWidth  * this._cacheSize;
+	var y1 = this._sectionHeight * this._cacheSize;
+
+	this.xStartPosition = x;
+	this.yStartPosition = y;
+
+	var currentContext = this;
+	if (!this.isAlreadyFetched(x, y, x1, y1)) {
+
+	this._mapservice.getMap(function (mapData) {
+		var data = mapData[0]['layers'];
+		//this.xOuter += width-1;
+		//	this.yOuter += height-1;
+		currentContext.data = data;
+		currentContext._mapservice.getImages(function (imagedata) {
+				currentContext.imageData = imagedata;
+				var sections = currentContext._initialLoader(x,y)
+				console.log(sections)
+				currentContext._fetchRecursive(sections,callback,0)
+				callback(currentContext.imageData, currentContext.data)
+			}
+
+		);
+
+	}, x, y, x1, y1);
+}
+	
+	this.xOuter = x;
+	this.yOuter = y;
+}
+
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
@@ -370,16 +383,16 @@ this.getMapData = function (treshold,callback) {
 
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
- 	    		var currentTresholdX = this._parent.getMapData().getTresholdX()
- 	    		var currentTresholdY = this._parent.getMapData().getTresholdY()
+ 	    		//var currentTresholdX = this._parent.getMapData().getTresholdX()
+ 	    		//var currentTresholdY = this._parent.getMapData().getTresholdY()
  	    	 	
 	   	//	console.log("newX= " + 		this._parent.getMapData().getViewportX())
    		//	console.log("newY= " + 		this._parent.getMapData().getViewportY())220
    			
- 	    	 	console.log("viewportX=" + this._parent.getMapData().getViewportX())
+ 	   /* 	 	console.log("viewportX=" + this._parent.getMapData().getViewportX())
  	    	 	console.log("viewportY=" + this._parent.getMapData().getViewportY())
  	    	 	console.log("startpositionX=" + this._parent.getMapData().getStartPositionX())
- 	    	 	console.log("startpositionY=" + this._parent.getMapData().getStartPositionY())
+ 	    	 	console.log("startpositionY=" + this._parent.getMapData().getStartPositionY())*/
  	    	 	 	 	
 				 	    	 	 	 	
  	    	 	 	 	
