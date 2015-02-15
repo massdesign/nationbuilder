@@ -3,6 +3,11 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
+	/* setInterval(function() {
+	 
+	 
+	 	 	
+	 	}, 3000);*/
     var s = new MapService(); 
     var u = new UserService();
     var t = new TerritoryService();
@@ -14,12 +19,12 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     }
     
     $scope.scrollup = function (event) {
-		   var scrollValueY =  map.getMapData().getViewportY()+1;
+		   var scrollValueY =  map.getMapData().getViewportY()-1;
 		   var scrollValueX =  map.getMapData().getViewportX();
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
      $scope.scrolldown = function (event) {
-		   var scrollValueY =  map.getMapData().getViewportY()-1;
+		   var scrollValueY =  map.getMapData().getViewportY()+1;
 		   var scrollValueX =  map.getMapData().getViewportX();
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
@@ -64,26 +69,15 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     $scope._scroll = function(x,y,width,height) {
     	
  		  map.getMapData().setviewportPosition(x,y);
- 		  s.getMap(function (mapData) {
-            images  = Array();
-            var	data = mapData[0]['layers'];
-            map.init();
-            s.getImages(function(imagedata)
-            {
-                map.setImageData(imagedata,data);
-                map.render();
-            });
-				
-        },x,y,width,height);
-	   
-    }
-   	u.getUserById(1,function(modelData) {
+ 		  map.move(); 
+    }    
+      	u.getUserById(1,function(modelData) {
    		
    		$scope.$apply(function () {
-   		
-   		console.log(modelData)
    		$scope.userData = modelData;
    		})	
-   	});
-
+   	}); 
+   	javascript_console = console;
+	   var map = new Map(console,"nationbuilderApp");
+	   map.init()
 });

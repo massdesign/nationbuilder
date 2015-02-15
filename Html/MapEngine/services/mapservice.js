@@ -16,8 +16,6 @@ function MapService() {
 	}
 	
 	this.getMap = function(callback,x,y,width,height) {	
-	
-	//alert('/maps/getscreen/' + x + '/'+ y +'/' + x+width + '/' + y+height)
 			this._baseService.doGetRequest('/maps/getscreen/' + x + '/'+ y +'/' + (x+width) + '/' + (y+height),callback);
 		}
 	this.getImages = function(callback) {

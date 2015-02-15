@@ -2,11 +2,15 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._gridLayer = new GridLayer(this, javascript_console);
+		this._tileLayer = new TileLayer(this,javascript_console);
+		this._mapDataBroker = new  MapDataBroker(this,3,3,2);
+		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
 		this._context = null;
 		this.jsconsole = javascript_console
+		 	
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
 	  	this._g_mapWidth = 20;
     	this._g_mapHeight = 20;
@@ -16,12 +20,13 @@ function Map(javascript_console,applicationName)
         this._g_tilesize = 32;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
-        this._zoomlevel = 1;
+      this._zoomlevel = 1;
 
-        this._imagedata = isNaN;
-        this._data = isNaN;
+
+      this._imagedata = isNaN;
+      this._data = isNaN;
     	
-    	this.layers.push(new TileLayer(this,javascript_console));
+    	this.layers.push(this._tileLayer);
     	this.layers.push(new SelectLayer(this,javascript_console));
     	this.layers.push(this._gridLayer);
 		this._createArray = function(x,y) {	
@@ -118,20 +123,35 @@ function Map(javascript_console,applicationName)
 
 	this.init = function()
 	{
-	 var currentContext = this;
+	 	var currentContext = this;
+	   this.getMapData().setStartPositionX(20);
+		this.getMapData().setStartPositionY(30);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
 
-
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
+
+	
+		var startX = this.getMapData().getStartPositionX();
+		var startY = this.getMapData().getStartPositionY();
+		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
+		 currentContext.setImageData(imageData,data);
+       currentContext._tileLayer.renderTiles(imageData,data,true)
+		});
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   	
- 		//var currentObject = this;
+   }
+   this.move = function () {
+   			var currentContext = this;
+				this._mapDataBroker.getMapData(1,function(imageData,data) {
+					currentContext._tileLayer.renderTiles(imageData,data,false)    			
+		});
+		this.layers[0].move()
    }
    this.render = function() {
 
@@ -143,6 +163,3 @@ function Map(javascript_console,applicationName)
    	return this._context;
    }   
 }
-// param1 console handle
-// param2 name of the application to bind with angularJs framework ng-app tag
-var map = new Map(console,"nationbuilderApp");
