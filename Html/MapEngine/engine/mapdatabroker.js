@@ -1,9 +1,8 @@
 
-function MapDataBroker(parent,sectionWidth,sectionHeight,scrollAdjust,treshold) {
+function MapDataBroker(parent,sectionWidth,sectionHeight,treshold) {
 	
 	this._mapservice = new MapService();
 	this._treshold = treshold;
-	this._scrollAdjust = scrollAdjust;
 	this._cacheSize = 1;
 	this.mapData = []
 	this._parent = parent
@@ -137,17 +136,7 @@ this._calculateMovement = function(treshold) {
    var ymove = this._parent.getMapData().getViewportY();
    var prevxmove = this._parent.getMapData().getPrevViewportX();
    var prevymove = this._parent.getMapData().getPrevViewportY();
-      
-   //newX = newX-this.xCurrentPosition;
-	//newY = newY-this.yCurrentPosition;
-	
-	console.log("newX = " + this.newX)
-	console.log("newY = " + this.newY)	
-	
-	
-
-	//var newX = 0;
-	//	var newY = 0;
+     
 
 	if(this.newX == 0 && this.newY == 0)  {
 		 this.newX = this._parent.getMapData().getStartPositionX();
@@ -160,10 +149,8 @@ this._calculateMovement = function(treshold) {
    	this.newX += (this._sectionWidth+1);//this._parent.getMapData().getViewportX();
    	this.newY -= this.yCorrection;
    	this.yCorrection = 0;
-	//	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY();
-		//console.log("xCurrentPosition=" + this.xCurrentPosition)
-		//console.log("yCurrentPosition=" + this.yCurrentPosition)
-	
+
+
 		result.push(new SectionLocation(this.newX,this.newY+multiplier))	
 		result.push(new SectionLocation(this.newX+multiplier,this.newY))	
 		result.push(new SectionLocation(this.newX+multiplier,this.newY+multiplier))	
@@ -318,7 +305,6 @@ var currentContext = this;
 			 	sections[pos].getX(),
 			 	sections[pos].getY(),callback,//function() {
 					function() {
-						console.log("pos = " + pos)
 						pos++; 	
 						if(pos < sections.length)
 						{
@@ -352,7 +338,6 @@ this.getInitialMapData = function(x,y,callback) {
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
 				var sections = currentContext._initialLoader(x,y)
-				console.log(sections)
 				currentContext._fetchRecursive(sections,callback,0)
 				callback(currentContext.imageData, currentContext.data)
 			}
@@ -383,25 +368,6 @@ this.getMapData = function (treshold,callback) {
 
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
- 	    		//var currentTresholdX = this._parent.getMapData().getTresholdX()
- 	    		//var currentTresholdY = this._parent.getMapData().getTresholdY()
- 	    	 	
-	   	//	console.log("newX= " + 		this._parent.getMapData().getViewportX())
-   		//	console.log("newY= " + 		this._parent.getMapData().getViewportY())220
-   			
- 	   /* 	 	console.log("viewportX=" + this._parent.getMapData().getViewportX())
- 	    	 	console.log("viewportY=" + this._parent.getMapData().getViewportY())
- 	    	 	console.log("startpositionX=" + this._parent.getMapData().getStartPositionX())
- 	    	 	console.log("startpositionY=" + this._parent.getMapData().getStartPositionY())*/
- 	    	 	 	 	
-				 	    	 	 	 	
- 	    	 	 	 	
- 	    	 	//var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*(this._sectionWidth+1)/2;
- 	    		//var newX = this._parent.getMapData().getStartPositionX()+this._parent.getMapData().getViewportX()*(this._sectionWidth+1)/2;
-			 	//var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*(this._sectionHeight+1)/2;	    		
-			 	//	var newY = this._parent.getMapData().getStartPositionY()+this._parent.getMapData().getViewportY()*(this._sectionHeight+1)/2;	 
-			 	
-
 			 	var sections = this._calculateMovement(treshold)
 			 	this._fetchRecursive(sections,callback,0)
 		 }

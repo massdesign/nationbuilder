@@ -2,7 +2,7 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._tileLayer = new TileLayer(this,javascript_console);
-		this._mapDataBroker = new  MapDataBroker(this,5,5,2);
+		this._mapDataBroker = new  MapDataBroker(this,3,3,2);
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -116,9 +116,7 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	   this.getMapData().setStartPositionX(20);
-	  // this.getMapData().setStartPositionX(20);
 		this.getMapData().setStartPositionY(30);
-		//this.getMapData().setStartPositionY(26);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: 320,
