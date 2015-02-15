@@ -12,7 +12,6 @@ this.updateMapControllerScope = function(model) {
 	{
 		var $scope = angular.element(this._controllerContext).scope();
 		$scope.$apply(function() { 
-
 		$scope.mapData = model;	
 		});
 		

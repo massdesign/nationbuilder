@@ -86,7 +86,7 @@ this._renderOffset[layerId] = x;
 this.getRenderOffset = function (i) { 
 	
 return this._renderOffset[i];
-
+}
 this.setClickedTile = function(tile,newX,newY) {
 
 var ClickedTile = function (tile,newX,newY) { 
@@ -104,21 +104,16 @@ this.getNewY = function () {
 	}
 }
  this.clickedTile = new ClickedTile(tile,newX,newY)
+ console.log(this.clickedTile)
 }
+
+//this.getNewY = function () {
+//	return this.newY;
+//}
+//}
 this.getClickedTile = function() {
 
 return this.clickedTile;
-}
-
-this.getNewY = function () {
-	return this.newY;
-}
-
-this.getClickedTile = function() { 
-
-return this.clickedTile;
-
-}
 }
 
 }

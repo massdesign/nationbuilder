@@ -27,6 +27,7 @@ this._showSelectedTile = function showSelectedTile(x,y)
 	var new_y = y/this.parentMap.getTileHeight();
 	
    var p =	this.parentMap;
+   console.log(p)
 	this._mapService.getTileByXY(new_x,new_y,function(data)	{
 		p.getMapData().setClickedTile(data,new_x,new_y);	
 		p.getAngularBridge().updateMapControllerScope(p.getMapData());
@@ -64,7 +65,7 @@ this._createBackgroundRect = function(c_width,c_height)
  
     }
 		this._currentTilePosition = function (mousePosx,mousePosy,currentx,currenty) {
-    
+   
     	var X_AXIS = 0;
     	var Y_AXIS = 1;
     	var result = null
@@ -89,7 +90,6 @@ this._createBackgroundRect = function(c_width,c_height)
     		  { 		   
     		   	this._showSelectedTile(this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS));
   					result = [this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS)];
-
     		    	break;
     		  }
     		}
