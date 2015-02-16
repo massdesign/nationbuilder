@@ -2,3 +2,5 @@ BUG_1: type tile is not shown anymore.. this feature is lost while merging NB-9 
 BUG_2: layout master branch is now fucked because of merge with NB-16, fix asap
 BUG_3: 20x20 is niet helemaal goed geimplementeerd als er gescrolled wordt wordt het nog gedaan in het kader van 10x10 dit moet zijn 20x20
 BUG_4: selectedObject Info werkt niet meer naar behoren. AngularJs bindings moeten gerepareerd worden
+BUG_5: styling van de panels is een beetje door elkaar, moet opnieuw gelayout worden
+
