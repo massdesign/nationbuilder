@@ -3,7 +3,7 @@ function Map(javascript_console,applicationName)
 		this._mapData = new MapData();
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
-		this._mapDataBroker = new  MapDataBroker(this,3,3,2);
+		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);

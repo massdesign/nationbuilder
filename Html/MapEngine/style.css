@@ -1,18 +1,22 @@
 
 		  .selectedinfo  { 
 		  		position:relative;
-		  		left:375px;
+		  		left:700px;
 		  		width:190px;
 		  		height: 150px;
-		  		bottom: 20px;
+		  		bottom: 750px;
 		  		background-color: #F3F4F6
 		  }
         .zoomcontrols {
             position: relative;
-            left:322px;
-            bottom: -184px;
+            left:650px;
+            bottom: -80px;
             width:20px;
         }
+        .map {	
+				position: relative;
+				top:0px;			
+			}
         .scrollcontrols {
        	position: relative;
        	width:100px;
@@ -22,9 +26,9 @@
         
         .tileinfo { 
 			position:relative;
-			left:370px;        
+			left:700px;        
 			width:535px;
-			top:-400px;
+			top:-720px;
 			height: 320px;
 			background-color: #EBF1FF;
         }

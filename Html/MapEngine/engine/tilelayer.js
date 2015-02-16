@@ -4,8 +4,8 @@ function TileLayer(parentMap,loginstance)
   this._host = "localhost:8083"
   this.loginstance = loginstance;
   // TODO: offset zou berekend moeten worden aan de grootte van de viewport
-  this._xOffset = 3;
-  this._yOffset = 3;
+  this._xOffset = 7;
+  this._yOffset = 7;
 	this.init = function()
 	{
 		this._layer = new Kinetic.Layer();

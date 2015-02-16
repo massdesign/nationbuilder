@@ -48,6 +48,7 @@ Show grid <input type="checkbox" name="gridcontrol" value="showgrid" ng-click="s
 	<button type="button" class="scrolldownbutton"  ng-click="scrolldown($event)">D</button>
 	<button type="button" class="scrollrightbutton" ng-click="scrollright($event)">R</button>
 </div>
+<div id="container" class="map"></div>
 <div class="selectedinfo">
  <b><label>Selected Object Info:</label></b><br/>
  <label>X: {{mapData.clickedTile.tile.tiles[0].tile.xposition}}</label> <label>Y: {{mapData.clickedTile.tile.tiles[0].tile.yposition}}</label><br/>	
@@ -55,7 +56,7 @@ Show grid <input type="checkbox" name="gridcontrol" value="showgrid" ng-click="s
  <label>Type: ? </label><br/><br/>
  &nbsp;<button title="Available actions" ng-click="availableactions($event)" class="pure-button">A</button>
 </div>
-<div id="container"></div>
+
 
 <!--  TODO: tileinfo nog even hernoemen naar iets anders... want het is geen tileinfo meer -->
 <!-- TODO: alle acties in een aparte controller opnemen, dit een keer doen als er een aantal acties geimplementeerd zijn -->
