@@ -1,15 +1,21 @@
 package nationbuilder.lib.http.data;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.*;
 
+import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ReferenceMapping;
 import nationbuilder.lib.Ruby.RubyConfiguration;
 import nationbuilder.lib.connectors.ObjectBuilder;
+import nationbuilder.lib.connectors.SqlObjectBuilder;
 import nationbuilder.lib.sql.ObjectMap;
 import nationbuilder.lib.sql.SqlObjectToRowConverter;
 
@@ -19,10 +25,10 @@ import nationbuilder.lib.sql.SqlObjectToRowConverter;
 public class BulkSqlCreateServiceConnector implements RubyCreateService
 {
 	SqlQueryManager sqlQueryManager;
-	ObjectBuilder objectBuilder;
+	SqlObjectBuilder objectBuilder;
 	HashMap<RubyModel,String> persistedObjects;
 //	SqlObjectToRowConverter sqlObjectToRowConverter;
-	public BulkSqlCreateServiceConnector(ObjectBuilder objectBuilder)
+	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder)
 	{
 		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase);
 		this.objectBuilder = objectBuilder;
@@ -45,14 +51,72 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 		return responseData;
 	}
 
+
+
+    public void scanPersistedObjectsForRelations()
+    {
+        // TODO: tamelijk lompe manier om alle relaties in kaart te brengen. Bij grote datasets gaat dit misschien een bottleneck worden
+        Iterator poit = this.persistedObjects.entrySet().iterator();
+
+        List<MappingInfo> mappingList = new ArrayList<>();
+        while(poit.hasNext()) {
+            Map.Entry pair = (Map.Entry)poit.next();
+            RubyModel model =(RubyModel)pair.getKey();
+
+           Field[] fields =   model.getClass().getDeclaredFields();
+
+            for(Field field : fields)
+            {
+               if(field != null)
+               {
+                   if(field.getAnnotations().length > 0)
+                   {
+                       field.setAccessible(true);
+                       MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field,model);
+                       if(mappingInfo != null && mappingInfo.isForeignRelation())
+                       {
+                           mappingList.add(mappingInfo);
+                       }
+                   }
+               }
+            }
+        }
+        for(MappingInfo mappingInfo : mappingList)
+        {
+            if(mappingInfo.getField() != null)
+            {
+                try
+                {
+                   RubyModel objectToReference =  (RubyModel)mappingInfo.getField().get(mappingInfo.getInstance());
+                   Field objectReferenceField =  mappingInfo.getMappedByClazz().getDeclaredField(
+                    mappingInfo.getMappedBy());
+                   objectReferenceField.setAccessible(true);
+                   objectReferenceField.set(objectToReference,new ReferenceMapping(objectToReference.getId(),objectToReference.getClass()));
+
+                     //  mappingInfo.getMappedByClazz().cast(objectToCast);
+                 //  Object obj =   mappingInfo.getClass().cast());
+                }
+                catch (IllegalAccessException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (NoSuchFieldException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+
+    }
     @Override
     public void commit() throws RubyException {
 
         Iterator poit = this.persistedObjects.entrySet().iterator();
         HashMap<String,List<String>> rows = new HashMap<>();
 
-
-
+        scanPersistedObjectsForRelations();
         while(poit.hasNext())
         {
             Map.Entry pair = (Map.Entry)poit.next();

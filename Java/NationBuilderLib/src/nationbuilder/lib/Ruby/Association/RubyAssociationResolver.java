@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
+import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
@@ -179,6 +180,35 @@ public class RubyAssociationResolver
 
         return result;
     }
+	public static MappingInfo getMappingInfo(Field field,RubyModel instance)
+	{
+		MappingInfo result = null;
+	   Object o =  field.getAnnotation(OneToOne.class);
+		if(o != null)
+		{
+			result = new MappingInfo(((OneToOne)o).mappedBy(),((OneToOne)o).mappedByClazz(),instance,field);
+		}
+		else
+		{
+		   o =	field.getAnnotation(OneToMany.class);
+		   if(o != null)
+		   {
+			   result = null;
+			   // TODO: implement wanneer nodig
+			 //  result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToOne) o).mappedByClazz());
+		   }
+			else  {
+			   o = field.getAnnotation(ManyToOne.class);
+			   if(o != null)
+			   {
+				   // TODO: implement wanneer nodig
+				 //  result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToOne) o).mappedByClazz());
+			   }
+		   }
+
+		}
+		return result;
+	}
 	private static Field getMappedField(Class annotationType,Field field,Class currentClass)
 	{
 		Field result = null;
@@ -220,7 +250,7 @@ public class RubyAssociationResolver
 			}
 			catch (NoSuchFieldException e)
 			{
-				Log.write(e,LogType.ERROR);
+				Log.write(e, LogType.ERROR);
 			}
 			// if annotation is foreign we will ignore the property and return null
 

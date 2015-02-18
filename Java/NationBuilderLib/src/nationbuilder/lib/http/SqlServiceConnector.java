@@ -5,12 +5,15 @@ import java.io.IOException;
 
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.RubyContextType;
+import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
+import nationbuilder.lib.connectors.SqlObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.http.data.BaseServiceConnector;
 import nationbuilder.lib.http.data.BulkSqlCreateServiceConnector;
 import nationbuilder.lib.http.data.HttpResponseData;
 import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.http.data.SqlQueryManager;
 import nationbuilder.lib.http.data.StandardFileBlobService;
 
 /**
@@ -18,14 +21,14 @@ import nationbuilder.lib.http.data.StandardFileBlobService;
  */
 public class SqlServiceConnector extends BaseServiceConnector
 {
-	public SqlServiceConnector(String databaseServerUrl,String blobServerUrl,RubyContextType contextType,ObjectBuilder objectBuilder,boolean transacted)
+	public SqlServiceConnector(String databaseServerUrl,String blobServerUrl,RubyContextType contextType,boolean transacted,SqlQueryManager queryManager)
 	{
 		super(databaseServerUrl,transacted);
 		switch (contextType)
 		{
 			case BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT:
-				this.setFetchService(new JsonFetchServiceConnector(databaseServerUrl,objectBuilder));
-				this.setCreateService(new BulkSqlCreateServiceConnector(objectBuilder));
+				this.setFetchService(new JsonFetchServiceConnector(databaseServerUrl,new JsonObjectBuilder()));
+				this.setCreateService(new BulkSqlCreateServiceConnector(new SqlObjectBuilder(queryManager)));
 			break;
 			default:
 				// TODO: implement
@@ -66,6 +69,7 @@ public class SqlServiceConnector extends BaseServiceConnector
 	{
 		return null;
 	}
+
 
 	@Override
     public void commit() throws RubyException {

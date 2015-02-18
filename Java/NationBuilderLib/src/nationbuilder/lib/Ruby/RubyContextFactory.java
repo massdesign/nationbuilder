@@ -61,9 +61,8 @@ public class RubyContextFactory {
         String databaseServerUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
         String blobServiceUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
 
-        ObjectBuilder objectBuilder = new SqlObjectBuilder(queryManagerManager);
-        RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType, objectBuilder,true);
-        RubyContext result = new RubyContext(service,objectBuilder);
+        RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType,true,queryManagerManager);
+        RubyContext result = new RubyContext(service,new SqlObjectBuilder(queryManagerManager));
         return result;
     }
 }

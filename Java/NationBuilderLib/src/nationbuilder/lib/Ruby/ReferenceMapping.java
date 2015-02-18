@@ -23,7 +23,7 @@ public class ReferenceMapping {
 		this.type = type;
 	}
 	
-	public ReferenceMapping()
+	public ReferenceMapping(ID id,Class type)
 	{
 		this.id = id;
 		this.type = type;
