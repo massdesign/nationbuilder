@@ -9,12 +9,12 @@ import nationbuilder.lib.Ruby.RubyContextType;
 
 public class Main {
 
-
     public static void main(String[] args) throws IOException, RubyException {
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
     }
 }
+
 
 
