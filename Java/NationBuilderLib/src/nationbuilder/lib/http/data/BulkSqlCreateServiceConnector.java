@@ -129,6 +129,10 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                           ReferenceMapping rm =  (ReferenceMapping)refMapping;
                           resolvedSql = value.replace("<bui>" + field_id +"<eui>",rm.getID().getId());
                       }
+                      else
+                      {
+                          resolvedSql = value.replace("<bui>" + field_id + "<eui>","0");
+                      }
 
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();

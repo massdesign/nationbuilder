@@ -34,10 +34,11 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
     		var newClaim = {}
     		// TODO: this should be solved differently.. because state_id is not 1 anymore.. has something to do with the generation of id
-    		newClaim.state_id = 8617;
+    		newClaim.state_id = 19565;
     		console.log(JSON.stringify(newClaim))
 
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
+			console.log(map.getMapData().getClickedTile())
 			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
 			newClaim.state_id = $scope.userData.state.id;
     		t.doPostRequest(newClaim)
@@ -94,7 +95,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
     }    
-      	u.getUserById(8617,function(modelData) {
+      	u.getUserById(19565,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;
