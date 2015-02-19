@@ -98,10 +98,6 @@ public class SqlObjectBuilder implements ObjectBuilder
                     while (omi.hasNext())
                     {
                         Map.Entry pair = (Map.Entry) omi.next();
-                        if(pair.getKey().equals("user_id"))
-                        {
-                            System.out.println("hij is er hoor");
-                        }
                         String key = (String) pair.getKey();
                         Object value;
                         if (key.equals("id"))

@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
@@ -87,14 +90,12 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
             {
                 try
                 {
-                   RubyModel objectToReference =  (RubyModel)mappingInfo.getField().get(mappingInfo.getInstance());
+                   RubyModel objectToReference =  mappingInfo.getInstance();
+                   RubyModel foreignKeyHolder = (RubyModel)mappingInfo.getField().get(mappingInfo.getInstance());
                    Field objectReferenceField =  mappingInfo.getMappedByClazz().getDeclaredField(
                     mappingInfo.getMappedBy());
                    objectReferenceField.setAccessible(true);
-                   objectReferenceField.set(objectToReference,new ReferenceMapping(objectToReference.getId(),objectToReference.getClass()));
-
-                     //  mappingInfo.getMappedByClazz().cast(objectToCast);
-                 //  Object obj =   mappingInfo.getClass().cast());
+                   objectReferenceField.set(foreignKeyHolder,new ReferenceMapping(objectToReference.getId(),objectToReference.getClass()));
                 }
                 catch (IllegalAccessException e)
                 {
@@ -106,10 +107,50 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                 }
             }
         }
+    }
+    public String resolveUnresolvedFields(RubyModel key,String value)
+    {
+        String resolvedSql = "";
 
+        Pattern p = Pattern.compile(".bui.([_a-z-A-Z]*).eui");
+        Matcher m  = p.matcher(value);
+      //  if(m.matches()) {
+            while (m.find()) {
 
+                String field_id = m.group(1);
+                String stripped_field_id = field_id.replace("_id","");
+                try {
+                    // expecting this to be ReferenceMapping if not well we get a cast exception
+                      Field refMappingField = key.getClass().getDeclaredField(stripped_field_id); //.get(key);
+                      refMappingField.setAccessible(true);
+                      Object refMapping = refMappingField.get(key);
+                      if(refMapping != null)
+                      {
+                          ReferenceMapping rm =  (ReferenceMapping)refMapping;
+                          resolvedSql = value.replace("<bui>" + field_id +"<eui>",rm.getID().getId());
+                      }
+
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (NoSuchFieldException e) {
+                    e.printStackTrace();
+                }
+            }
+       // }
+        return resolvedSql;
 
     }
+    private boolean hasUnresolvedfields(String sqlString)
+    {
+        boolean result = false;
+
+           // TODO: char sequence in een variable zetten
+           if(sqlString.contains("<bui>")) {
+               result = true;
+           }
+        return result;
+    }
+
     @Override
     public void commit() throws RubyException {
 
@@ -117,12 +158,18 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
         HashMap<String,List<String>> rows = new HashMap<>();
 
         scanPersistedObjectsForRelations();
+
         while(poit.hasNext())
         {
             Map.Entry pair = (Map.Entry)poit.next();
             RubyModel model = (RubyModel)pair.getKey();
             Entity entity =  model.getClass().getAnnotation(Entity.class);
             String sqlString = (String)pair.getValue();
+            if(hasUnresolvedfields(sqlString))
+            {
+              sqlString =  resolveUnresolvedFields(model,sqlString);
+              pair.setValue(sqlString);
+            }
 
             if(rows.containsKey(entity.tableName()))
             {
