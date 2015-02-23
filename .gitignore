@@ -19,7 +19,7 @@
 .idea
 Java/NationBuilderLib/*.iml
 Java/.idea
-Temp
+Temp/
 Html/MapEngine/ncache
 Html/MapEngine/localMapService/__pycache__
 *~

@@ -5,6 +5,7 @@ import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.connectors.SqlObjectBuilder;
 import nationbuilder.lib.http.JsonServiceConnector;
+import nationbuilder.lib.http.RubyServiceImpl;
 import nationbuilder.lib.http.SqlServiceConnector;
 import nationbuilder.lib.http.data.SqlQueryManager;
 import nationbuilder.lib.http.data.SqlQueryManagerFactory;
@@ -60,8 +61,11 @@ public class RubyContextFactory {
         SqlQueryManager queryManagerManager = new SqlQueryManagerFactory().createQueryManager();
         String databaseServerUrl = String.format("%s/%s", RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
         String blobServiceUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
-
-        RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType,true,queryManagerManager);
+        SqlServiceConnector sqlServiceConnector = new SqlServiceConnector(databaseServerUrl, blobServiceUrl, contextType,
+         true, queryManagerManager);
+        JsonServiceConnector jsonServiceConnector = new JsonServiceConnector(blobServiceUrl,new JsonObjectBuilder());
+        RubyService service = new RubyServiceImpl(sqlServiceConnector,jsonServiceConnector);
+        //RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType,true,queryManagerManager);
         RubyContext result = new RubyContext(service,new SqlObjectBuilder(queryManagerManager));
         return result;
     }
