@@ -10,7 +10,7 @@ NationBuilderMapsService::Application.routes.draw do
 
   resources :currencies
 
-  resources :states
+  
 
   resources :users
 
@@ -38,10 +38,13 @@ NationBuilderMapsService::Application.routes.draw do
   get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile1' 
   get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles1' 
   get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1'
-  
+ 
  # get  '/militarystrongholds/getscreen/:centerpositiony/:width/:height', to: 'militarystrongholds#getscreen', as: 'militarystrongholds2'  
    
   post '/militarystrongholds/createnewbase', to: 'militarystrongholds#createnewbase', as: 'militarystrongholds1'
+  get '/states/first', to: 'states#first', as: 'states1'
+  resources :states
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

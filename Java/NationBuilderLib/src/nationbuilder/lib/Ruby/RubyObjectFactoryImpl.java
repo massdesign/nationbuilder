@@ -71,7 +71,7 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		if(data != null)
 		{
 			//T[] resultArray = (T[]) gson.fromJson(data.getBody(), clazzArray);
-			T[] resultArray = (T[])objectBuilder.createObjectFromString(data,clazzArray);
+			T[] resultArray = (T[])objectBuilder.createObjectFromString(data, clazzArray);
 			for (int i = 0; i < resultArray.length; i++)
 			{
 				resultArray[i].setRubyContext(this.context);
@@ -83,6 +83,8 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 
 	@Override // TODO: add ObjectFetchFailedException to all methods
 	public List get(String action, String... args) throws ObjectFetchFailedException, ObjectConversionFailedException {
+
+		// TODO: wat code hiervan generiek maken..
 		List<T> result = new ArrayList<T>();
 		String query = "";
 		// construct query
@@ -128,5 +130,25 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
         }
 		}
 		return  result;
+	}
+
+	@Override
+	public RubyModel getFirst() throws ObjectConversionFailedException
+	{
+		T result = null;
+
+		ResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/first");
+		if (data != null)
+		{
+			result = (T) this.objectBuilder.createObjectFromString(data, this.clazz);
+
+			if (result != null)
+			{
+				ID refID = new ID();
+			//	refID.setId(Integer.toString(result.getId()));
+				result.setId(refID);
+			}
+		}
+		return result;
 	}
 }

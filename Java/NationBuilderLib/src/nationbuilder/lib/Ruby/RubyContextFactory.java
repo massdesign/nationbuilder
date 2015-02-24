@@ -64,7 +64,7 @@ public class RubyContextFactory {
         SqlServiceConnector sqlServiceConnector = new SqlServiceConnector(databaseServerUrl, blobServiceUrl, contextType,
          true, queryManagerManager);
         JsonServiceConnector jsonServiceConnector = new JsonServiceConnector(blobServiceUrl,new JsonObjectBuilder());
-        RubyService service = new RubyServiceImpl(sqlServiceConnector,jsonServiceConnector);
+        RubyService service = new RubyServiceImpl(jsonServiceConnector,sqlServiceConnector);
         //RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType,true,queryManagerManager);
         RubyContext result = new RubyContext(service,new SqlObjectBuilder(queryManagerManager));
         return result;

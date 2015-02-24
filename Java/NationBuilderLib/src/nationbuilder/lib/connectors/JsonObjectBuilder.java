@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -49,9 +52,19 @@ public class JsonObjectBuilder implements ObjectBuilder
 	@Override
 	public Object createObjectFromString(ResponseData data,Class<?> clazz) throws ObjectConversionFailedException
 	{
+		Object result = null;
 		if(data instanceof HttpResponseData)
 		{
-			return gson.fromJson(((HttpResponseData) data).getBody(), clazz);
+
+		    String json	 =	((HttpResponseData) data).getBody();
+			Map<String, Object> map = new HashMap<>();
+			map = (Map<String, Object>) gson.fromJson(json, map.getClass());
+
+			int iValue = (int)(double)map.get("id");
+
+			result = gson.fromJson(((HttpResponseData) data).getBody(), clazz);
+
+			return result;
 		}
 		else
 		{

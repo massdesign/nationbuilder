@@ -30,7 +30,7 @@ public class ClaimFiller extends BaseFiller {
     @Override
     public void Fill() throws ObjectConversionFailedException {
 
-      State state =  this.stateObjectFactory.get(1);
+      State state =  this.stateObjectFactory.getFirst();
 
         List<Tile> rockTiles = this.getRockTiles();
         for(Tile tile : rockTiles)

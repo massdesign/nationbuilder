@@ -15,4 +15,5 @@ public interface RubyObjectFactory<T extends RubyModel>
 	public T get(int id) throws ObjectConversionFailedException;
 	public List<T> getAll() throws ObjectConversionFailedException;
 	public List<T> get(String action, String ... args) throws ObjectFetchFailedException, ObjectConversionFailedException;
+	public T getFirst() throws ObjectConversionFailedException;
 }

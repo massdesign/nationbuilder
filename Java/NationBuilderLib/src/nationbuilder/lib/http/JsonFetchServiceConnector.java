@@ -1,5 +1,6 @@
 package nationbuilder.lib.http;
 
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyFetchService;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -20,6 +21,8 @@ public class JsonFetchServiceConnector implements RubyFetchService
 	@Override
 	public HttpResponseData getObject(String resourceUrl)
 	{
-		return null;
+		Log.writeInfo("Request url: " + resourceUrl);
+		HttpResponseData data = HttpRequestUtil.sendGetRequest(this.serverUrl + resourceUrl + ".json");
+		return data;
 	}
 }
