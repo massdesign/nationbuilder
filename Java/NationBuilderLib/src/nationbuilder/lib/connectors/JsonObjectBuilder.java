@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
+import nationbuilder.lib.Ruby.ID;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.HttpResponseData;
 import nationbuilder.lib.http.data.ResponseData;
 
@@ -30,6 +32,10 @@ public class JsonObjectBuilder implements ObjectBuilder
 			public boolean shouldSkipField(FieldAttributes fieldAttributes)
 			{
 				if (fieldAttributes.getName().equals("context"))
+				{
+					return true;
+				}
+				else if(fieldAttributes.getName().equals("id"))
 				{
 					return true;
 				}
@@ -63,6 +69,14 @@ public class JsonObjectBuilder implements ObjectBuilder
 			int iValue = (int)(double)map.get("id");
 
 			result = gson.fromJson(((HttpResponseData) data).getBody(), clazz);
+
+			if(result != null  && result instanceof RubyModel)
+			{
+				ID id =  new ID();
+				id.setId(String.valueOf(iValue));
+				id.setType(result.getClass().getName());
+				((RubyModel)result).setId(id);
+			}
 
 			return result;
 		}

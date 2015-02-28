@@ -141,13 +141,6 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		if (data != null)
 		{
 			result = (T) this.objectBuilder.createObjectFromString(data, this.clazz);
-
-			if (result != null)
-			{
-				ID refID = new ID();
-			//	refID.setId(Integer.toString(result.getId()));
-				result.setId(refID);
-			}
 		}
 		return result;
 	}

@@ -4,6 +4,7 @@ Rabl.configure do |config|
 end
 object @state
 attributes :id,:motto,:name
+#attributes :motto,:name
 #child :image do
 # attributes :name, :url
 #end
