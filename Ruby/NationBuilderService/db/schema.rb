@@ -15,8 +15,11 @@ ActiveRecord::Schema.define(version: 20150302165417) do
 
   create_table "buildings", force: true do |t|
     t.string   "name"
+<<<<<<< HEAD
     t.integer  "warehouse_id"
     t.integer  "game_entity_id"
+=======
+>>>>>>> NB-37: koppelingen met de cities tabel gemaakt.. superclass relaties gemaakt.. nu building classes koppelen
     t.datetime "created_at"
     t.datetime "updated_at"
   end

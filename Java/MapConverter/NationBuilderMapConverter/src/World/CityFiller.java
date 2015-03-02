@@ -19,7 +19,6 @@ public class CityFiller extends BaseFiller
 	@Override
 	public void Fill()
 	{
-
        City city1 = createCity("Utrecht");
         city1.setPopulation(300);
        City city2 = createCity("Paris");

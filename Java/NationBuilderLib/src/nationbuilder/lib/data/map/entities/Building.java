@@ -16,7 +16,6 @@ public class Building extends StaticEntity
 	@ManyToOne(mapIdTo = "geo")
 	private GameEntity owner;
 
-
 	public String getName()
 	{
 		return name;
