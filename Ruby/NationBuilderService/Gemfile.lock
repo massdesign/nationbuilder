@@ -33,9 +33,9 @@ GEM
     coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.9.0)
+    coffee-script-source (1.9.1)
     erubis (2.7.0)
-    execjs (2.2.2)
+    execjs (2.3.0)
     hike (1.2.3)
     i18n (0.7.0)
     jquery-rails (3.1.2)
@@ -48,7 +48,7 @@ GEM
     mime-types (1.25.1)
     minitest (4.7.5)
     multi_json (1.10.1)
-    mysql2 (0.3.17)
+    mysql2 (0.3.18)
     polyglot (0.3.5)
     rabl (0.11.6)
       activesupport (>= 2.3.14)
@@ -97,8 +97,8 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (2.5.3)
       coffee-rails
-    tzinfo (0.3.42)
-    uglifier (2.7.0)
+    tzinfo (0.3.43)
+    uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
 

@@ -10,10 +10,10 @@ public class Generator
 	public static void main(String[] args)
 	{
 		RubyScaffoldGenerator scaffoldGenerator = new RubyScaffoldGenerator();
-		String scaffoldcmd = scaffoldGenerator.createScaffold(Claim.class);
-		scaffoldGenerator.writeRablidFileToTemp(Claim.class);
-		String cpcmd = scaffoldGenerator.createCpcommand(Claim.class);
-	//	scaffoldGenerator.writeControllerToFile(Test.class);
+		String scaffoldcmd = scaffoldGenerator.createScaffold(WareHouse.class);
+		scaffoldGenerator.writeRablidFileToTemp(WareHouse.class);
+		String cpcmd = scaffoldGenerator.createCpcommand(WareHouse.class);
+		//	scaffoldGenerator.writeControllerToFile(Test.class);
 		print(scaffoldcmd);
 		print(cpcmd);
 	}

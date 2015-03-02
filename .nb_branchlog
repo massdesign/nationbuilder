@@ -42,3 +42,4 @@ NB-39: AI ontwerpen die een fabriek draaiende kan houden met verschillende strat
 NB-40: De database compleet maken wat betreft grondstoffen die in het spel verwerkt kunnen worden
 NB-41: startup process van de gehele gamewereld scripten 
 NB-42: Mogelijk maken een building te plaatsen in de gamewereld vanuit de GUI
+NB-43: Energybuilding en State entities opwaarderen met het TablePerClass systeem

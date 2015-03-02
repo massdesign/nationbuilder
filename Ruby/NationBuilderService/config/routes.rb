@@ -1,5 +1,9 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :warehouses
+
+  resources :cities
+
   resources :claims
 
   resources :currencies

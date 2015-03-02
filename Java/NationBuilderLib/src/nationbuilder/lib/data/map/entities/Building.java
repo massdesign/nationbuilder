@@ -10,7 +10,6 @@ public class Building extends StaticEntity
 	private String name;
 	private Contract contract;
 
-
 	public String getName()
 	{
 		return name;

@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102213014) do
+ActiveRecord::Schema.define(version: 20150302165417) do
+
+  create_table "buildings", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cities", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "population"
+  end
 
   create_table "claims", force: true do |t|
     t.integer  "tile_id"
@@ -42,6 +54,13 @@ ActiveRecord::Schema.define(version: 20141102213014) do
     t.datetime "updated_at"
     t.integer  "energy_building_type_id"
     t.integer  "tile_id"
+  end
+
+  create_table "game_entities", force: true do |t|
+    t.string   "name"
+    t.integer  "city_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "images", force: true do |t|
@@ -124,6 +143,11 @@ ActiveRecord::Schema.define(version: 20141102213014) do
     t.string   "passwordhash"
     t.string   "registerdate"
     t.string   "emailadres"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "warehouses", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
