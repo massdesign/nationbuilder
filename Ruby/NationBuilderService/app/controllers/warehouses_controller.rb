@@ -22,8 +22,13 @@ class WarehousesController < ApplicationController
 
   # POST /warehouses
   def create
+  
+    bName = params[:name];
+	 @building = Building.create(name: bName)
+	 
     @warehouse = Warehouse.new(warehouse_params)
-
+	 @building.save
+	 @warehouse.building = @building
    respond_to do |format|
     if @warehouse.save
         format.html { redirect_to @warehouse, notice: 'City was successfully created.' }
