@@ -50,6 +50,7 @@ public class Main {
 		//city.addBuilding(energyBuilding);
 		city.setName("Utrecht");
 		city.setPopulation(1000);
+		wareHouse.setOwner(city);
 		try
 		{
 			city.Save("/cities/");

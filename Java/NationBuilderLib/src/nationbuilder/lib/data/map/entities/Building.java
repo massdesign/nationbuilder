@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 /**
@@ -7,8 +8,14 @@ import nationbuilder.lib.Ruby.BaseRubyModel;
  */
 public class Building extends StaticEntity
 {
+
+	private String geo;
+
 	private String name;
-	private Contract contract;
+	//private Contract contract;
+	@ManyToOne(mapIdTo = "geo")
+	private GameEntity owner;
+
 
 	public String getName()
 	{
@@ -20,15 +27,25 @@ public class Building extends StaticEntity
 		this.name = name;
 	}
 
-	public Contract getContract()
+	public GameEntity getOwner()
 	{
-		return contract;
+		return owner;
 	}
 
-	public void setContract(Contract contract)
+	public void setOwner(GameEntity owner)
 	{
-		this.contract = contract;
+		this.owner = owner;
 	}
+
+//	public Contract getContract()
+	//{
+	//	return contract;
+	//}
+
+	//public void setContract(Contract contract)
+	//{
+	//	this.contract = contract;
+	//}
 
 
 }

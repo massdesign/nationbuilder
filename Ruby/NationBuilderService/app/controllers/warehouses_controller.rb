@@ -24,9 +24,15 @@ class WarehousesController < ApplicationController
   def create
   
     bName = params[:name];
-	 @building = Building.create(name: bName)
-	 
+    
+	  @building = Building.create(name: bName)
+    if params[:geo] != nil      
+	  @gameentity = GameEntity.find(params[:geo])
+	  @gameentity.buildings << @building
+	 end
+  
     @warehouse = Warehouse.new(warehouse_params)
+
 	 @building.save
 	 @warehouse.building = @building
    respond_to do |format|

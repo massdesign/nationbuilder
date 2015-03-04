@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20150302165417) do
   create_table "buildings", force: true do |t|
     t.string   "name"
     t.integer  "warehouse_id"
+    t.integer  "game_entity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
