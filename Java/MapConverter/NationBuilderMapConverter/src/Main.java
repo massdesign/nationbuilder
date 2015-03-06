@@ -24,6 +24,41 @@ public class Main {
 
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
+
+	//	TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
+
+	//	TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
+
+	//	TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
+	//	converter.Convert();
+	//	MapDataset dataset = converter.GetMapDataset();
+		//MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
+		//mapsServiceConnector.addDataset(dataset);
+      //  PreFiller f = new PreFiller(new RubyContextFactory().createRubyContext());
+       // f.testFill();
+
+      //  WorldLoader worldLoader = new WorldLoader(context);
+      //  worldLoader.Run();
+
+	//	EnergyBuilding energyBuilding = context.createRubyModel(EnergyBuilding.class);
+	//	energyBuilding.setName("");
+
+		/*WareHouse wareHouse = context.createRubyModel(WareHouse.class);
+		City city = context.createRubyModel(City.class);
+		wareHouse.setName("The City Warehouse");
+		//city.addBuilding(energyBuilding);
+		city.setName("Utrecht");
+		city.setPopulation(1000);
+		wareHouse.setOwner(city);
+		try
+		{
+			city.Save("/cities/");
+			wareHouse.Save("/warehouses/");
+		}
+		catch (RubyException e)
+		{
+			e.printStackTrace();
+		}*/
 	}
 }
 	
