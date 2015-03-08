@@ -24,6 +24,8 @@ public class PreFiller {
 	private ReligionFiller religionFiller;
 	private EnergyBuildingFiller energyBuildingFiller;
 
+    private CityFiller cityFiller;
+    private WarehouseFiller warehouseFiller;
     public PreFiller(RubyContext context)
     {
         this.context = context;
@@ -33,13 +35,16 @@ public class PreFiller {
 		this.regimeFiller = new RegimeFiller(context);
 		this.religionFiller = new ReligionFiller(context);
 		this.energyBuildingFiller = new EnergyBuildingFiller(context);
-
+        this.warehouseFiller = new WarehouseFiller(context);
+        this.cityFiller = new CityFiller(context);
     }
 
     public void Fill()
     {
 		userFiller.Fill();
         energyBuildingFiller.Fill();
+        cityFiller.Fill();
+        warehouseFiller.Fill();
        	// TODO: refactor these models also in the new BaseFiller model
         fillTerrainTypes();
         fillResourceTypes();
@@ -61,6 +66,7 @@ public class PreFiller {
             claim.setClaimedBy(state);
 
             claim.Save("/claims/");
+
         } catch (RubyException e) {
             e.printStackTrace();
         }
@@ -132,6 +138,10 @@ public class PreFiller {
 
         this.energyBuildingFiller.Save(EnergyBuildingType.class,"/energy_building_types");
         this.energyBuildingFiller.Save(EnergyBuilding.class,"/energy_building_types");
+
+        this.cityFiller.Save(City.class,"/cities/");
+        this.warehouseFiller.Save(WareHouse.class,"/warehouses/");
+
 
 
         String resourceTypeUrl = "/resourcetypes";
