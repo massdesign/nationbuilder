@@ -12,7 +12,7 @@ public class Generator
 		RubyScaffoldGenerator scaffoldGenerator = new RubyScaffoldGenerator();
 		String scaffoldcmd = scaffoldGenerator.createScaffold(Claim.class);
 		scaffoldGenerator.writeRablidFileToTemp(Claim.class);
-		String cpcmd = scaffoldGenerator.createCpcommand(Claim.class);
+		String cpcmd = scaffoldGe:q:qnerator.createCpcommand(Claim.class);
 	//	scaffoldGenerator.writeControllerToFile(Test.class);
 		print(scaffoldcmd);
 		print(cpcmd);
