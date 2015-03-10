@@ -35,7 +35,7 @@ public class WorldLoader {
     public void ConvertMap()
     {
         TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
-        TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.NB14Map);
+        TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.SmallDemoMap);
         TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
         converter.Convert();
         this.mapDataset = converter.GetMapDataset();
