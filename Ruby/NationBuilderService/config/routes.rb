@@ -1,5 +1,7 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :military_bases
+
   resources :warehouses
 
   resources :cities

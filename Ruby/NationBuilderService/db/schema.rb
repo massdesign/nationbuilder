@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302165417) do
+ActiveRecord::Schema.define(version: 20150310074850) do
 
   create_table "buildings", force: true do |t|
     t.string   "name"
     t.integer  "warehouse_id"
+    t.integer  "military_base_id"
     t.integer  "game_entity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150302165417) do
   create_table "game_entities", force: true do |t|
     t.string   "name"
     t.integer  "city_id"
+    t.integer  "military_base_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -88,6 +90,12 @@ ActiveRecord::Schema.define(version: 20150302165417) do
     t.integer  "height"
     t.integer  "tileWidth"
     t.integer  "tileHeight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "military_bases", force: true do |t|
+    t.integer  "health"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
