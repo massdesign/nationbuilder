@@ -34,7 +34,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
 		// alle militaire acties zijn afgekort met mil_    
-    	$scope.mil_lct = function(event) {
+    $scope.mil_lct = function(event) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
     		var newClaim = {}
     		newClaim.state_id = 1;
@@ -45,6 +45,10 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     		t.doPostRequest(newClaim)
     	
     	}
+    $scope.mil_pmb = function(event) {
+   
+   
+    }
       $scope.scrollright = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();
 		   var scrollValueX =  map.getMapData().getViewportX()+1;
