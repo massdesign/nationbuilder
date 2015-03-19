@@ -11,6 +11,7 @@
     <script type="text/Javascript" src="services/mapservice.js"></script>
     <script type="text/Javascript" src="services/userservice.js"></script>
     <script type="text/Javascript" src="services/territoryservice.js"></script>
+    <script type="text/Javascript" src="services/militaryservice.js"></script>
     <script type="text/Javascript" src="engine/util.js"></script>
     <script type="text/JavaScript" src="engine/tile.js"></script>
     <script type="text/JavaScript" src="engine/mapdata.js"></script> 
@@ -70,7 +71,7 @@ Show grid <input type="checkbox" name="gridcontrol" value="showgrid" ng-click="s
 			  <!-- military acties zijn afgekort met mil_ -->
 			  <button class="pure-button" title="Lay claim on territory" ng-click="mil_lct($event)">LCT</button>
 			  <!-- Het plaatsen van een military base op een tile -->
-			  <button class="pure-button" title="mil_pmb($event)">PMB</button>
+			  <button class="pure-button" title="Place Military Base" ng-click="mil_pmb($event)">PMB</button>
           </div>
         </li>
         <li>

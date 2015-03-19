@@ -27,10 +27,10 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 
-       /* MilitaryBase base = context.createRubyModel(MilitaryBase.class);
+        MilitaryBase base = context.createRubyModel(MilitaryBase.class);
         base.setHealth(1000);
         base.setName("The Third Castle!");
-        base.Save("/military_bases/");*/
+        base.Save("/military_bases/");
 	}
 }
 	

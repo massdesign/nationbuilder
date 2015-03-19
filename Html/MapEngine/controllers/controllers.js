@@ -10,7 +10,8 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 	 	}, 3000);*/
     var s = new MapService(); 
     var u = new UserService();
-    var t = new TerritoryService();
+    var ms = new MilitaryService();
+    var ts = new TerritoryService();
     $scope.zoomIn = function(event) {
         map.zoomIn();
     }
@@ -39,6 +40,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     		var newClaim = {}
     		newClaim.state_id = 1;
     		console.log(JSON.stringify(newClaim))
+
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
 			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
 			newClaim.state_id = $scope.userData.state.id;
@@ -46,8 +48,17 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     	
     	}
     $scope.mil_pmb = function(event) {
-   
-   
+   		var newMilitaryBase = {}   		
+			// TODO: database id's moeten niet geexposed worden.. zelfde geldt voor Claims   		
+   		newMilitaryBase.name = "Temp Name for MilBase";
+   		console.log(JSON.stringify(newMilitaryBase))
+   		// Hier moet ik dus mijn tile informatie vandaan halen (location)
+   		console.log(map.getMapData().getClickedTile().tile.tiles[0].tile.id)
+			clickedTile = map.getMapData().getClickedTile();
+			
+			newMilitaryBase.tile_id = .tile.tiles[0].tile.id;
+			//newMilitaryBase
+   		ms.doPostRequest(newMilitaryBase);
     }
       $scope.scrollright = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();

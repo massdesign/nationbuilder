@@ -25,10 +25,14 @@ class MilitaryBasesController < ApplicationController
   def create
  
     geName = params[:name];
-  	 @gameentity = GameEntity.create(name: geName)
+    tile_id = params[:tile_id];
+    @gameentity = GameEntity.create(name: geName)
   	 @gameentity.name = geName
     @military_basis = MilitaryBase.new(health: params[:health])
-    @gameentity.save  
+	 if tile_id != nil
+		#@military_basis.      
+    end	 
+	 @gameentity.save  
     @military_basis.game_entity = @gameentity
 
     respond_to do |format|
