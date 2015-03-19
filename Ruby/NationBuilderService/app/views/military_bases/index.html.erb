@@ -10,11 +10,11 @@
   </thead>
 
   <tbody>
-    <% @military_bases.each do |military_basis| %>
+    <% @military_bases.each do |military_base| %>
       <tr>
-        <td><%= link_to 'Show', military_basis %></td>
-        <td><%= link_to 'Edit', edit_military_basis_path(military_basis) %></td>
-        <td><%= link_to 'Destroy', military_basis, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', military_base %></td>
+        <td><%= link_to 'Edit', edit_military_base_path(military_base) %></td>
+        <td><%= link_to 'Destroy', military_base, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -22,4 +22,4 @@
 
 <br>
 
-<%= link_to 'New Military base', new_military_basis_path %>
+<%= link_to 'New Military base', new_military_base_path %>

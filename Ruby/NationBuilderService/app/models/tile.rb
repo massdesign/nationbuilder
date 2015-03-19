@@ -3,4 +3,5 @@ class Tile < ActiveRecord::Base
  has_one :image
  has_one :resource
  has_many :claims
+ has_and_belongs_to_many :military_bases
 end

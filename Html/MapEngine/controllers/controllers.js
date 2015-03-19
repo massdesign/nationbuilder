@@ -56,9 +56,10 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    		console.log(map.getMapData().getClickedTile().tile.tiles[0].tile.id)
 			clickedTile = map.getMapData().getClickedTile();
 			
-			newMilitaryBase.tile_id = .tile.tiles[0].tile.id;
+			newMilitaryBase.tile_id = clickedTile.tile.tiles[0].tile.id;
 			//newMilitaryBase
-   		ms.doPostRequest(newMilitaryBase);
+   		ms.createNewBase(newMilitaryBase);
+   	//	ms.doPostRequest(newMilitaryBase);
     }
       $scope.scrollright = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();

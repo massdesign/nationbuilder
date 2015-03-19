@@ -1,10 +1,10 @@
-<%= form_for(@military_basis) do |f| %>
-  <% if @military_basis.errors.any? %>
+<%= form_for(@military_base) do |f| %>
+  <% if @military_base.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@military_basis.errors.count, "error") %> prohibited this military_basis from being saved:</h2>
+      <h2><%= pluralize(@military_base.errors.count, "error") %> prohibited this military_base from being saved:</h2>
 
       <ul>
-      <% @military_basis.errors.full_messages.each do |msg| %>
+      <% @military_base.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
