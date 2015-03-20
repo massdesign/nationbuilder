@@ -14,3 +14,8 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.plural 'military_bases', 'military_bases'
+   inflect.irregular 'military_bases', 'military_bases'
+     inflect.singular 'military_base', 'military_bases'
+end

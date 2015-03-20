@@ -1,21 +1,11 @@
 
 import java.io.IOException;
 
-import World.PreFiller;
 import World.WorldLoader;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
-import nationbuilder.lib.data.map.entities.City;
-import nationbuilder.lib.data.map.entities.EnergyBuilding;
-import nationbuilder.lib.data.map.entities.MapDataset;
-import nationbuilder.lib.data.map.converter.TiledMapConverter;
-import nationbuilder.lib.data.map.entities.MilitaryBase;
-import nationbuilder.lib.data.map.entities.WareHouse;
-import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
-import nationbuilder.lib.data.map.xml.Configuration;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
-import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
+import nationbuilder.lib.data.map.entities.MilitaryStronghold;
 
 
 public class Main {
@@ -26,11 +16,10 @@ public class Main {
 
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
-
-        MilitaryBase base = context.createRubyModel(MilitaryBase.class);
-        base.setHealth(1000);
-        base.setName("The Third Castle!");
-        base.Save("/military_bases/");
+       // MilitaryStronghold base = context.createRubyModel(MilitaryStronghold.class);
+       // base.setHealth(1000); 
+       // base.setName("The Third Castle!");
+     //   base.Save("/militarystrongholds/");
 	}
 }
 	

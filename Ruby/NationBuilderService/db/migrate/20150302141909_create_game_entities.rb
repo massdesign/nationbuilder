@@ -3,7 +3,7 @@ class CreateGameEntities < ActiveRecord::Migration
     create_table :game_entities do |t|
       t.string :name
       t.integer :city_id
-      t.integer :military_base_id
+      t.integer :militarystronghold_id
       t.timestamps
     end
   end
