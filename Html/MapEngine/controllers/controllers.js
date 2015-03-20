@@ -58,7 +58,15 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 			
 			newMilitaryBase.tile_id = clickedTile.tile.tiles[0].tile.id;
 			//newMilitaryBase
-   		ms.createNewBase(newMilitaryBase);
+   		ms.createNewBase(newMilitaryBase,function(json_data) {
+				
+				if(json_data.status == "ALREADYINUSE")
+				{
+					alert("sorry man die shit is al in gebruik")
+				}
+				   		
+   		}
+   		);
    	//	ms.doPostRequest(newMilitaryBase);
     }
       $scope.scrollright = function (event) {

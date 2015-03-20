@@ -7,8 +7,8 @@ function MilitaryService() {
    this._baseService.doPostJsonRequest("/militarystrongholds.json",function() {},data);
   
   }
-    this.createNewBase = function(data) {
-   this._baseService.doPostJsonRequest("/militarystrongholds/createnewbase.json",function() {},data);
+    this.createNewBase = function(data,callback) {
+   this._baseService.doPostJsonRequest("/militarystrongholds/createnewbase.json",callback,data);
   
   }
 }

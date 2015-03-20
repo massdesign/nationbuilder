@@ -28,26 +28,36 @@ class MilitarystrongholdsController < ApplicationController
     @gameentity = GameEntity.create(name: geName)
   	 @gameentity.name = geName
     @militarystronghold = Militarystronghold.new(health: params[:health])	
-
- 	if tile_id != nil
-	 
+	
+ 	if tile_id != nil	 
 	 @tile = Tile.find(tile_id)
-	 @militarystronghold.tiles  << @tile    
-	# @tile.militarystrongholds << @military_base    
-	 logger.info(ActiveSupport::Inflector.pluralize("militarybase"))
-    end	     
+	 	# puts  "even testen of dit uberhaupt wel iets doet" + @tile.militarystrongholds.length.to_s
+	 if @tile.militarystrongholds.length == 0
+	 		puts  "Hier is nog geen military base geplaatst dus het is toegestaan om te plaatsen"
+	 		@militarystronghold.tiles  << @tile    
+			# @tile.militarystrongholds << @military_base    
+        
      
-	 @gameentity.save  
-    @militarystronghold.game_entity = @gameentity
+	 	@gameentity.save  
+    	@militarystronghold.game_entity = @gameentity
 
-    respond_to do |format|
-    if  @militarystronghold.save
-        format.html { redirect_to  @militarystronghold, notice: 'Military basis was successfully created.' }
-        format.json { render action: 'id', status: :created, location:  @militarystronghold }
-      else
-        format.html { render action: 'new' }
-        format.json { render json:  @militarystronghold.errors, status: :unprocessable_entity }
-      end
+    	respond_to do |format|
+    		if  @militarystronghold.save
+        		format.html { redirect_to  @militarystronghold, notice: 'Military basis was successfully created.' }
+        		format.json { render action: 'id', status: :created, location:  @militarystronghold }
+      	else
+        		format.html { render action: 'new' }
+        		format.json { render json:  @militarystronghold.errors, status: :unprocessable_entity }
+      	end
+	  end
+	  else 
+	  	puts "tile wordt al gebruikt voor een military base"	
+	  	@tilestatus = Tilestatus.new()
+	  	@tilestatus.status = "ALREADYINUSE"
+	  	respond_to do |format|
+		 format.json { render action: 'alreadyinuse', status: :created }#, #location: @tilestatus}
+		 end
+	  end	 
 	 end   
   end
 
