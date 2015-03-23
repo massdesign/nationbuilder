@@ -3,6 +3,7 @@ function Map(javascript_console,applicationName)
 		this._mapData = new MapData();
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
+		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		
 		this._angularBridge = new AngularBridge();
@@ -29,6 +30,8 @@ function Map(javascript_console,applicationName)
     	this.layers.push(this._tileLayer);
     	this.layers.push(new SelectLayer(this,javascript_console));
     	this.layers.push(this._gridLayer);
+    	this.layers.push(this._itemLayer);
+    	
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -139,7 +142,9 @@ function Map(javascript_console,applicationName)
 		var startY = this.getMapData().getStartPositionY();
 		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
+		 if(currentContext._tileLayer != null) {
        currentContext._tileLayer.renderTiles(imageData,data,true)
+    	 }
 		});
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();

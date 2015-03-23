@@ -80,7 +80,8 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			dbrequest = protocol + "://" + dbserver + self.path
 			cservice = cacheservice.Cacheservice()
 			content = ""
-			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css"):
+			# TODO: assets opnemen als een data die tijdens install mee moet komen 
+			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css") or ("assets" in self.path):
 				print("non cacheable resource requested")
 				return http.server.SimpleHTTPRequestHandler.do_GET(self)
 			if disableCache:
