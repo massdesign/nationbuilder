@@ -60,9 +60,12 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 			//newMilitaryBase
    		ms.createNewBase(newMilitaryBase,function(json_data) {
 				
-				if(json_data.status == "ALREADYINUSE")
-				{
+				if(json_data.status == "ALREADYINUSE"){
 					alert("sorry man die shit is al in gebruik")
+				}
+				else {
+					
+					map.drawItem(json_data)
 				}
 				   		
    		}

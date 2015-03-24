@@ -167,6 +167,10 @@ function Map(javascript_console,applicationName)
 		});
 		this.layers[0].move()
    }
+   this.drawItem = function (item) {
+   
+    this._itemLayer.renderItem(item);
+   }
    /*this.render = function() {
 		console.log("render will be called")
 		for(i=0;i<this.layers.length;i++)  {

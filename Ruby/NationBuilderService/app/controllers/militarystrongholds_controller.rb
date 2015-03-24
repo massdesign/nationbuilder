@@ -47,7 +47,7 @@ class MilitarystrongholdsController < ApplicationController
     	respond_to do |format|
     		if  @militarystronghold.save
         		format.html { redirect_to  @militarystronghold, notice: 'Military basis was successfully created.' }
-        		format.json { render action: 'id', status: :created, location:  @militarystronghold }
+        		format.json { render action: 'createnewbase', status: :created, location:  @militarystronghold }
       	else
         		format.html { render action: 'new' }
         		format.json { render json:  @militarystronghold.errors, status: :unprocessable_entity }
