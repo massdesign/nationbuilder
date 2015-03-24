@@ -6,6 +6,7 @@ function Map(javascript_console,applicationName)
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		this._militaryService = new MilitaryService();
+		this._mapTranslator = new MapTranslator(this);
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -89,6 +90,9 @@ function Map(javascript_console,applicationName)
  	 this.getYOffset = function() {
 		return this._g_yoffset;
  	 }
+ 	 this.getMapTranslator = function () {
+		return this._mapTranslator; 	 
+ 	 }
 
  	 this.getAngularBridge = function() {
 
@@ -163,7 +167,8 @@ function Map(javascript_console,applicationName)
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)    			
+					currentContext._tileLayer.renderTiles(imageData,data,false)
+					    			
 		});
 		this.layers[0].move()
    }

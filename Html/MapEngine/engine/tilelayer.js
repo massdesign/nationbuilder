@@ -35,19 +35,21 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
 				xoffset = tile.xoffset
     			yoffset = tile.yoffset
-				if(first) {
+    			// TODO: useless code found 
+			//	if(first) {
 						
-    					xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
-    					yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
-    					image_id = tile.image_id
-				}
-				else {
+    				//	xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
+    			//		yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
+    			//		image_id = tile.image_id
+				//}
+				//else {
 					
     					xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
 						yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
-    							
-				}
 						image_id = tile.image_id	
+    							
+				//}
+				
  			   		tilesize = this.parentMap.getRelativeTilesize();
     					tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     					source = "http://" + this._host + "/ncache/" + tilerequest;
@@ -67,6 +69,9 @@ function TileLayer(parentMap,loginstance)
 		
 		}   	
 	 this.move = function() {
+	 	
+	 	this.parentMap.getMapTranslator().move(this._layer,this.parentMap.getMapData().getTiles());
+	 	/*
 					var c = 0;
 		   		var currentContext = this;
 		var anim = new Kinetic.Animation(function(frame) {
@@ -117,6 +122,7 @@ function TileLayer(parentMap,loginstance)
        					this.stop()
      						 }, currentContext._layer);
 		anim.start()
+		*/
 	 }
     this._sort = function(data)
     {
