@@ -17,10 +17,10 @@ this.getLayer = function()
 	return this._layer;
 }
 
-this.render = function(imagedata,data) {
+/*this.render = function(imagedata,data) {
 
 
-}
+}*/
 this._showSelectedTile = function showSelectedTile(x,y)
 {
 	var new_x  = x/this.parentMap.getTileWidth();

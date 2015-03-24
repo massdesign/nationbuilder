@@ -5,6 +5,7 @@ function Map(javascript_console,applicationName)
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
+		this._militaryService = new MilitaryService();
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -140,16 +141,24 @@ function Map(javascript_console,applicationName)
 	
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
+		
+		for(i=0;i<this.layers.length;i++)  {
+			this.layers[i].init();
+			this.stage.add(this.layers[i].getLayer());
+		}   
 		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
        currentContext._tileLayer.renderTiles(imageData,data,true)
     	 }
+    	 
 		});
-		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].init();
-			this.stage.add(this.layers[i].getLayer());
-		}   	
+		this._militaryService.getMilitaryStrongholds(function(data) {
+			if(currentContext._itemLayer != null) {
+				currentContext._itemLayer.renderItems(data)
+			} 
+		});
+		
    }
    this.move = function () {
    			var currentContext = this;
@@ -158,12 +167,12 @@ function Map(javascript_console,applicationName)
 		});
 		this.layers[0].move()
    }
-   this.render = function() {
-
+   /*this.render = function() {
+		console.log("render will be called")
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].render(this._imagedata,this._data);
 		}  
-   }
+   }*/
    this.getCanvas = function () {
    	return this._context;
    }   

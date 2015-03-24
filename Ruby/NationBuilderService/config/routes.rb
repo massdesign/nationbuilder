@@ -37,7 +37,10 @@ NationBuilderMapsService::Application.routes.draw do
   
   get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile1' 
   get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles1' 
-  get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1' 
+  get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1'
+  
+ # get  '/militarystrongholds/getscreen/:centerpositiony/:width/:height', to: 'militarystrongholds#getscreen', as: 'militarystrongholds2'  
+   
   post '/militarystrongholds/createnewbase', to: 'militarystrongholds#createnewbase', as: 'militarystrongholds1'
 
   # The priority is based upon order of creation: first created -> highest priority.

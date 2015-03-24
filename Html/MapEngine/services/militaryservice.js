@@ -11,4 +11,7 @@ function MilitaryService() {
    this._baseService.doPostJsonRequest("/militarystrongholds/createnewbase.json",callback,data);
   
   }
+  	this.getMilitaryStrongholds = function(callback) {
+  	this._baseService.doGetRequest('/militarystrongholds',callback);			
+  }
 }

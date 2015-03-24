@@ -7,28 +7,43 @@ this._host = "localhost:8083"
 this.init = function() {
 
  this._layer = new Kinetic.Layer({clearBeforeDraw: true});
- var currentContext = this;
- var newAsset = new Image();
+ 
+
+
+}
+
+
+this.renderItems = function(data) { 
+
+var currentContext = this;
+
  
 assetUrl = "http://" + this._host + "/assets/mil_symbol.png";
 
-newAsset.src = assetUrl;
- var img = new Kinetic.Image({
-				x: 32*8,
-				y: 32*10,
+							
+
+
+
+for(i=0;i<data.length;i++)
+
+	if(data[i].tiles[0] != null) {
+		console.log(data[i].tiles[0].tile)
+		
+		var newAsset = new Image();
+		newAsset.src = assetUrl;
+ 		var img = new Kinetic.Image({
+				x: data[i].tiles[0].tile.xposition*currentContext.parentMap.getRelativeTilesize(),
+				y: data[i].tiles[0].tile.yposition*currentContext.parentMap.getRelativeTilesize(),
 				width: currentContext.parentMap.getRelativeTilesize(),
 				height: currentContext.parentMap.getRelativeTilesize(),
 				image: newAsset,
 				draggable: false
 			}); 		
-							
-this._layer.add(img);
-this._layer.draw();
+		this._layer.add(img);
+	}
+	this._layer.draw();
 }
-this.render = function(imagedata,data) {
 
-
-}
 this.getLayer = function() {
 	return this._layer;
 }

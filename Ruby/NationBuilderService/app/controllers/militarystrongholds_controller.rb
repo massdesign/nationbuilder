@@ -19,8 +19,11 @@ class MilitarystrongholdsController < ApplicationController
   # GET /militarystrongholds/1/edit
   def edit
   end
-
-
+  
+  def getscreen
+  
+  end 
+  
   def createnewbase
   
    geName = params[:name];
