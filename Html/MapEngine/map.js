@@ -170,7 +170,11 @@ function Map(javascript_console,applicationName)
 					currentContext._tileLayer.renderTiles(imageData,data,false)
 					    			
 		});
-		this.layers[0].move()
+		this._tileLayer.move();
+		this._itemLayer.move();
+		
+		//this.layers[0].move()
+		this
    }
    this.drawItem = function (item) {
    
