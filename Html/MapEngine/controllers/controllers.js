@@ -3,11 +3,6 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
-	/* setInterval(function() {
-	 
-	 
-	 	 	
-	 	}, 3000);*/
     var s = new MapService(); 
     var u = new UserService();
     var ms = new MilitaryService();
@@ -51,11 +46,11 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    		var newMilitaryBase = {}   		
 			// TODO: database id's moeten niet geexposed worden.. zelfde geldt voor Claims   		
    		newMilitaryBase.name = "Temp Name for MilBase";
-   		console.log(JSON.stringify(newMilitaryBase))
+   		console.log(JSON.stringify(newMilitaryBase));
+
    		// Hier moet ik dus mijn tile informatie vandaan halen (location)
-   		console.log(map.getMapData().getClickedTile().tile.tiles[0].tile.id)
-			clickedTile = map.getMapData().getClickedTile();
-			
+   		clickedTile = map.getMapData().getClickedTile();
+			console.log(clickedTile)			
 			newMilitaryBase.tile_id = clickedTile.tile.tiles[0].tile.id;
 			//newMilitaryBase
    		ms.createNewBase(newMilitaryBase,function(json_data) {
@@ -88,7 +83,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
         {
             map.disableGrid()
         }
-      //  alert('even een testje doen of dit werkt')
+
     }
     $scope.availableactions  = function(event)   {
     	console.log("bladiebloe")

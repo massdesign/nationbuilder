@@ -2,6 +2,25 @@ function MapTranslator(parentMap) {
 
  this.parentMap = parentMap;
  
+ // translates position of a given X,Y coordinate set to the current
+ this.translatePosition = function (currentX,currentY) {
+ 	var mapData = this.parentMap.getMapData();
+  	var viewportX = mapData.getViewportX();
+	var viewportY = mapData.getViewportY();
+ 	
+ 
+	
+	return new Coordinate(currentX+viewportX,currentY+viewportY);	
+ }
+ this.normalizePosition = function (currentX,currentY) {
+ 	var mapData = this.parentMap.getMapData();
+  	var viewportX = mapData.getViewportX();
+	var viewportY = mapData.getViewportY();
+ 	
+	
+	return new Coordinate(currentX-viewportX,currentY-viewportY);
+ 
+ }
  this.move = function(currentLayer,items) {
 					var c = 0;
 		   		var currentContext = this;
@@ -12,6 +31,9 @@ function MapTranslator(parentMap) {
 		 	 				var prevViewportY = mapData.getPrevViewportY();
 		 	 				var viewportX = mapData.getViewportX();
 	    					var viewportY = mapData.getViewportY();
+	    					
+	    					console.log("viewportX: " + viewportX);
+	    					console.log("viewportY: " + viewportY);
 		    					
 	    					
           		      var tilesize = currentContext.parentMap.getRelativeTilesize()

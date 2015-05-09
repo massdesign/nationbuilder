@@ -110,11 +110,11 @@ this.getNewY = function () {
 	}
 }
  this.clickedTile = new ClickedTile(tile,newX,newY)
- console.log(this.clickedTile)
+
 }
 
 this.getClickedTile = function() {
-
+ console.log(this.clickedTile)
 return this.clickedTile;
 }
 

@@ -4,6 +4,7 @@ function Map(javascript_console,applicationName)
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
+		this._selectLayer = new SelectLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
@@ -30,7 +31,7 @@ function Map(javascript_console,applicationName)
       this._data = isNaN;
     	
     	this.layers.push(this._tileLayer);
-    	this.layers.push(new SelectLayer(this,javascript_console));
+    	this.layers.push(this._selectLayer);
     	this.layers.push(this._gridLayer);
     	this.layers.push(this._itemLayer);
     	
@@ -168,10 +169,14 @@ function Map(javascript_console,applicationName)
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data,false)
+					
+					
 					    			
 		});
+		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		this._tileLayer.move();
 		this._itemLayer.move();
+		this._selectLayer.move();
 		
 		//this.layers[0].move()
 		this

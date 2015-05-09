@@ -19,8 +19,12 @@ var currentContext = this;
 		
 		var newAsset = new Image();
 		newAsset.src = this.assetUrl;
-		var xposition = data.tiles[0].tile.xposition*currentContext.parentMap.getRelativeTilesize();
-		var yposition = data.tiles[0].tile.yposition*currentContext.parentMap.getRelativeTilesize();
+
+		var normalizedPosition = this.parentMap.getMapTranslator().normalizePosition(data.tiles[0].tile.xposition,data.tiles[0].tile.yposition);
+				
+		
+		var xposition = normalizedPosition.getX()*currentContext.parentMap.getRelativeTilesize();
+		var yposition = normalizedPosition.getY()*currentContext.parentMap.getRelativeTilesize();
  		var img = new Kinetic.Image({
 				x: xposition,
 				y: yposition,
@@ -42,9 +46,7 @@ var currentContext = this;
 
 this.move = function() {
 	
-	//console.log("viewport X: " + this.parentMap.getMapData().getViewportX())
-	//console.log("viewport Y: " + this.parentMap.getMapData().getViewportY())
-	this.parentMap.getMapTranslator().move(this._layer,this.parentMap.getMapData().getItems());
+		this.parentMap.getMapTranslator().move(this._layer,this.parentMap.getMapData().getItems());
 	
 }
 
@@ -55,7 +57,6 @@ var currentContext = this;
 
 for(i=0;i<data.length;i++) {
 	if(data[i].tiles[0] != null) {
-		console.log(data[i].tiles[0].tile)
 		var xposition = data[i].tiles[0].tile.xposition*currentContext.parentMap.getRelativeTilesize();
 		var yposition = data[i].tiles[0].tile.yposition*currentContext.parentMap.getRelativeTilesize()
 		var newAsset = new Image();
