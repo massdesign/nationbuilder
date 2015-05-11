@@ -45,3 +45,5 @@ NB-42: Mogelijk maken een building te plaatsen in de gamewereld vanuit de GUI
 NB-43: Energybuilding en State entities opwaarderen met het TablePerClass systeem
 NB-44: minimaliseren van het exposen van database_ids,op teveel plekken wordt dit door de applicatie gebruikt
 NB-45: losse assets zoals military bases en iconen ook mee laten komen in het install process 
+NB-48: javascript performance verbeteren door gebruik te maken van prototype initialisatie
+NB-46: inzoomen,uitzoomen gebeurt nu niet op een goede manier.. De map is niet gecenterteerd. Zorg ervoor dat inzoomen uitzoomen consistent wertk

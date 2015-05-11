@@ -12,7 +12,7 @@ function Map(javascript_console,applicationName)
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
-		this._context = null;
+		//this._context = null;
 		this.jsconsole = javascript_console
 		 	
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
@@ -101,22 +101,38 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
-        if(this._zoomlevel < 16)
-        {
-            this._zoomlevel *= 2;
-            this.init();
-            this.render();
-        }
+    	
+
+		this.stage.setScale({
+            x: this.stage.getScale().x*2,
+            y: this.stage.getScale().y*2
+        });    
+                this.stage.draw();
+
+
+    	
+    	//this.getCanvas().scale(2,2);
+       // if(this._zoomlevel < 16)
+    //    {
+       //     this._zoomlevel *= 2;
+      //      this.init();
+            //this.render();
+       // }
 
     }
     this
     this.zoomOut = function()
     {
-        if(this._zoomlevel != 1) {
-            this._zoomlevel /= 2;
-            this.init();
-            this.render();
-        }
+        //if(this._zoomlevel != 1) {
+         //   this._zoomlevel /= 2;
+          //  this.init();
+            //this.render();
+        //}
+        		this.stage.setScale({
+            x: this.stage.getScale().x/2,
+            y: this.stage.getScale().y/2
+        });    
+                this.stage.draw();    
     }
  	this.getMapData = function() {
 		return this._mapData; 	
@@ -185,13 +201,4 @@ function Map(javascript_console,applicationName)
    
     this._itemLayer.renderItem(item);
    }
-   /*this.render = function() {
-		console.log("render will be called")
-		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].render(this._imagedata,this._data);
-		}  
-   }*/
-   this.getCanvas = function () {
-   	return this._context;
-   }   
 }
