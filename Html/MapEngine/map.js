@@ -101,16 +101,15 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
+    	var objectToScale = this.stage;	
+    	
     	
 
-		this.stage.setScale({
-            x: this.stage.getScale().x*2,
-            y: this.stage.getScale().y*2
+		objectToScale.setScale({
+            x: objectToScale.getScale().x*2,
+            y: objectToScale.getScale().y*2
         });    
-                this.stage.draw();
-
-
-    	
+                objectToScale.draw();
     	//this.getCanvas().scale(2,2);
        // if(this._zoomlevel < 16)
     //    {
@@ -120,19 +119,44 @@ function Map(javascript_console,applicationName)
        // }
 
     }
-    this
+    
     this.zoomOut = function()
-    {
+    {	
         //if(this._zoomlevel != 1) {
          //   this._zoomlevel /= 2;
           //  this.init();
-            //this.render();
         //}
-        		this.stage.setScale({
-            x: this.stage.getScale().x/2,
-            y: this.stage.getScale().y/2
-        });    
-                this.stage.draw();    
+ 				var objectToScale = this.stage;
+ 				
+ 				if(objectToScale.getScale().x == 1 && objectToScale.getScale().y == 1) {
+ 					var tiles = this.getMapData().getTiles();
+ 		
+ 						
+ 						var anim = new Kinetic.Animation(function(frame) {
+ 							for(var i=0;i<tiles.length;i++) {
+ 								var tileImage =	tiles[i].getTileImage()		
+ 								tileImage.setX(tileImage.getX()+64);
+ 							}
+ 					  this.stop()
+     				},this._selectLayer);
+					anim.start()
+ 					
+				 console.log("we Moeten iets doen met centereren");
+				 objectToScale.setScale({
+            	x: objectToScale.getScale().x/2,
+            	y: objectToScale.getScale().y/2
+       		 });  
+				 
+				}
+				else 
+				{
+				 objectToScale.setScale({
+            	x: objectToScale.getScale().x/2,
+            	y: objectToScale.getScale().y/2
+       		 })
+				}
+  
+                objectToScale.draw();    
     }
  	this.getMapData = function() {
 		return this._mapData; 	
@@ -156,6 +180,9 @@ function Map(javascript_console,applicationName)
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
+   	 
+   	 console.log("getScale");
+   	 console.log(this.stage.getScale())
 
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
 
