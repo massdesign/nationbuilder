@@ -28,9 +28,17 @@
 			position:relative;
 			left:700px;        
 			width:535px;
-			top:-720px;
+			top:-780px;
 			height: 320px;
 			background-color: #EBF1FF;
+        }
+        .minimap { 
+         position:relative;
+			left:700px;        
+			width:250px;
+			top:-750px;
+			height: 200px;
+			
         }
         
         .zoombutton {
