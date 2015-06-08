@@ -128,8 +128,6 @@ this._calculateMovement = function(treshold) {
 		result = []
 		
 		
-
-	
 	var currentTresholdX = Math.abs(this._parent.getMapData().getTresholdX())
  	var currentTresholdY = Math.abs(this._parent.getMapData().getTresholdY())
  	var xmove = this._parent.getMapData().getViewportX();
@@ -165,7 +163,6 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX+multiplier,this.newY-multiplier))	
 			
 		this.xCorrection += (treshold+1);
-		//console.log("we gaan naar rechts")   
 		this.xCurrentPosition += this._scrollAdjust;
    }
 	else if(xmove < prevxmove) {
@@ -182,7 +179,6 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY))
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY+multiplier))
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY-multiplier))
-		//console.log("we gaan naar links")	
 		this.xCorrection -= (treshold+1);
 		this.xCurrentPosition -= this._scrollAdjust;
 	}
@@ -192,7 +188,6 @@ this._calculateMovement = function(treshold) {
 		this.newX -= this.xCorrection;
 		this.xCorrection = 0;
 		this.yCorrection += (treshold+1);
-		//result.push(new SectionLocation(this.newX-this.xCurrentPosition,newY-this.yCurrentPosition))
 		
 		result.push(new SectionLocation(this.newX+multiplier,this.newY))	
 		result.push(new SectionLocation(this.newX-multiplier,this.newY))	
@@ -211,7 +206,6 @@ this._calculateMovement = function(treshold) {
 		//console.log("we gaan naar onderen")	
 	}	
 	else if(ymove < prevymove) {
-	//	result.push(new SectionLocation(this.newX-this.xCurrentPosition,this.newY-this.yCurrentPosition))
 	
 		this.newY -= (this._sectionHeight+1);
 		this.newX -= this.xCorrection;
@@ -232,8 +226,16 @@ this._calculateMovement = function(treshold) {
 	//	console.log("we gaan naar boven")			
 	}
 		result.push(new SectionLocation(this.newX,this.newY))
+			console.log("newX" + this.newX)
 	return result;	
 	
+}
+
+this._calculateZoomOut = function () {
+
+	result = []
+	result.push(new SectionLocation(this.newX,this.newY))
+	return result;
 }
 
 this._initialLoader = function (x,y) {
@@ -354,7 +356,7 @@ this.getInitialMapData = function(x,y,callback) {
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
-this.getMapData = function (treshold,callback) {
+this.getMapData = function (treshold,callback,zoomfactor) {
 
 
 			var currentContext = this;
@@ -365,18 +367,19 @@ this.getMapData = function (treshold,callback) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    		
-
- 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
- 	    {
-			 	var sections = this._calculateMovement(treshold)
-			 	this._fetchRecursive(sections,callback,0)
-		 }
-		else 
-		{
-			//console.log("values within treshold, don't get new data from the server")
-			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
-			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
-		}	
+		 if(typeof zoomfactor !== "undefined") {
+ 	    	if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
+ 	   	 {
+				 	var sections = this._calculateMovement(treshold)
+				 	this._fetchRecursive(sections,callback,0)
+			 }
+			else 
+			{
+				//console.log("values within treshold, don't get new data from the server")
+				this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
+				this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
+			}	
+		}
 
 	}
 }

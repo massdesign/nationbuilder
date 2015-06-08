@@ -123,54 +123,26 @@ function Map(javascript_console,applicationName)
     
     this.zoomOut = function()
     {	
-        //if(this._zoomlevel != 1) {
-         //   this._zoomlevel /= 2;
-          //  this.init();
-        //}
-        		console.log(this._zoomlevel);
  				var objectToScale = this.stage;
+ 				console.log(objectToScale); 
  				var currentContext = this;
- 				if(objectToScale.getScale().x == 1 && objectToScale.getScale().y == 1) {
+ 			//	if(objectToScale.getScale().x == 1 && objectToScale.getScale().y == 1) {
  					var tiles = this.getMapData().getTiles();
- 		
- 						
  						var anim = new Kinetic.Animation(function(frame) {
 							console.log(objectToScale.getScale()); 							
- 							for(var i=0;i<tiles.length;i++) {
- 								var tileImage =	tiles[i].getTileImage()		
- 								var repositionFactorX = objectToScale.getScale().x;
- 								var repositionFactorY = objectToScale.getScale().y;
- 								if(repositionFactorX == 1)  {
-								  	repositionFactorX += 1;							
- 								}
- 								if(repositionFactorY == 1)  {
-								  	repositionFactorY += 1;							
- 								}
- 								
- 								tileImage.setX(tileImage.getX()+(currentContext.getMapWidth()/repositionFactorX)*currentContext.getRelativeTilesize()*currentContext._zoomlevel);
- 							}
  					  this.stop()
      				},this._selectLayer);
 					anim.start()
-				
-			
- 					
+								
 				 console.log("we Moeten iets doen met centereren");
 				 objectToScale.setScale({
             	x: objectToScale.getScale().x/2,
             	y: objectToScale.getScale().y/2
        		 });  
 				 
-				}
-				else 
-				{
-				 objectToScale.setScale({
-            	x: objectToScale.getScale().x/2,
-            	y: objectToScale.getScale().y/2
-       		 })
-				}
-  
-                objectToScale.draw();    
+				//}
+
+           objectToScale.draw();    
     }
  	this.getMapData = function() {
 		return this._mapData; 	
