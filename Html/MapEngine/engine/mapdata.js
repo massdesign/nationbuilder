@@ -112,7 +112,6 @@ this.getNewY = function () {
  this.clickedTile = new ClickedTile(tile,newX,newY)
 
 }
-
 this.getClickedTile = function() {
  console.log(this.clickedTile)
 return this.clickedTile;

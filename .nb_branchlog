@@ -47,3 +47,4 @@ NB-44: minimaliseren van het exposen van database_ids,op teveel plekken wordt di
 NB-45: losse assets zoals military bases en iconen ook mee laten komen in het install process 
 NB-48: javascript performance verbeteren door gebruik te maken van prototype initialisatie
 NB-46: inzoomen,uitzoomen gebeurt nu niet op een goede manier.. De map is niet gecenterteerd. Zorg ervoor dat inzoomen uitzoomen consistent wertk
+NB-47: calculateMovement functie refactoren zodat het mogelijk wordt te gaan werken met verschillende grootes Canvas deze feature is in lijn met NB-20

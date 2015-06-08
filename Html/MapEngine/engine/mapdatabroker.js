@@ -147,8 +147,8 @@ this._calculateMovement = function(treshold) {
    	this.newX += (this._sectionWidth+1);//this._parent.getMapData().getViewportX();
    	this.newY -= this.yCorrection;
    	this.yCorrection = 0;
-
-
+			
+		// TODO: deze chunks moeten worden gegenereerd volgens een algoritme.. bij vergroten van de canvas gaan we tegen problemen aanlopen
 		result.push(new SectionLocation(this.newX,this.newY+multiplier))	
 		result.push(new SectionLocation(this.newX+multiplier,this.newY))	
 		result.push(new SectionLocation(this.newX+multiplier,this.newY+multiplier))	
@@ -231,10 +231,24 @@ this._calculateMovement = function(treshold) {
 	
 }
 
-this._calculateZoomOut = function () {
+this._calculateZoomOut = function (zoomfactor) {
 
 	result = []
-	result.push(new SectionLocation(this.newX,this.newY))
+	var multiplier = this._sectionWidth+1;
+	// NOTE: voor nu gaan we uit van een chunksize van 7 bij 7 en een canvas van 20*20
+	
+
+	if(this.newX == 0 && this.newY == 0)  {
+		 this.newX = this._parent.getMapData().getStartPositionX();
+		 this.newY = this._parent.getMapData().getStartPositionY();
+	}
+	// wat wordt er momenteel op het scherm getoond, deze dataset moeten we gaan uitlezen voor uitzoomen
+	console.log(this._parent.getMapData().getTiles())
+	
+	
+
+	result.push(new SectionLocation(this.newX+(multiplier),this.newY))
+	//result.push(new SectionLocation(this.newX+(multiplier),this.newY))
 	return result;
 }
 
@@ -340,7 +354,8 @@ this.getInitialMapData = function(x,y,callback) {
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
 				var sections = currentContext._initialLoader(x,y)
-				currentContext._fetchRecursive(sections,callback,0)
+				// NOTE: tijdelijk even recursive chunkloading uitgezet om het wat makkelijker te maken
+			//	currentContext._fetchRecursive(sections,callback,0)
 				callback(currentContext.imageData, currentContext.data)
 			}
 
@@ -352,34 +367,47 @@ this.getInitialMapData = function(x,y,callback) {
 	this.xOuter = x;
 	this.yOuter = y;
 }
+this._getMapDataForMove = function(treshold,callback) {
 
+		var currentContext = this;
+		var multiplier = 2;
+		var x1load,y1load,x2load,y2load	
+		var xmove = this._parent.getMapData().getViewportX();
+  	 	var ymove = this._parent.getMapData().getViewportY();
+  		var prevxmove = this._parent.getMapData().getPrevViewportX();
+  		var prevymove = this._parent.getMapData().getPrevViewportY();
+
+	  if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
+ 	   {
+		 	var sections = this._calculateMovement(treshold)
+		 	this._fetchRecursive(sections,callback,0)
+		}
+		else 
+		{
+			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
+			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
+		}	
+}
+this._getMapDataForZoomout = function(zoomfactor,callback) { 
+
+var sections = this._calculateZoomOut(zoomfactor)
+	 	this._fetchRecursive(sections,callback,0)
+
+}
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
 this.getMapData = function (treshold,callback,zoomfactor) {
 
-
-			var currentContext = this;
-			var multiplier = 2;
-			var x1load,y1load,x2load,y2load	
-			var xmove = this._parent.getMapData().getViewportX();
-   	 	var ymove = this._parent.getMapData().getViewportY();
-   		var prevxmove = this._parent.getMapData().getPrevViewportX();
-   		var prevymove = this._parent.getMapData().getPrevViewportY();
-   		
-		 if(typeof zoomfactor !== "undefined") {
- 	    	if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
- 	   	 {
-				 	var sections = this._calculateMovement(treshold)
-				 	this._fetchRecursive(sections,callback,0)
-			 }
-			else 
-			{
-				//console.log("values within treshold, don't get new data from the server")
-				this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
-				this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
-			}	
+		 if(typeof zoomfactor !== "undefined")
+		 {
+		 	console.log("We gaan er even wat tiles bijladen")
+		 	this._getMapDataForZoomout(zoomfactor,callback)
+		 	
+		 }
+		 else {
+		 	console.log("goed geprogrammeerd hoor")
+ 			this._getMapDataForMove(treshold,callback)
 		}
-
 	}
 }

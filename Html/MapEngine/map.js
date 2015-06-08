@@ -24,7 +24,8 @@ function Map(javascript_console,applicationName)
         this._g_tilesize = 32;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
-      this._zoomlevel = 1;
+    	// standard we are zoomed in at level 5, so, we can go zoom out max 5 steps
+      this._zoomfactor = 5;
     
 
 
@@ -102,6 +103,7 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
+    	this._zoomfactor += 1;
     	var objectToScale = this.stage;	
     	
     	
@@ -111,18 +113,11 @@ function Map(javascript_console,applicationName)
             y: objectToScale.getScale().y*2
         });    
                 objectToScale.draw();
-    	//this.getCanvas().scale(2,2);
-       // if(this._zoomlevel < 16)
-    //    {
-       //     this._zoomlevel *= 2;
-      //      this.init();
-            //this.render();
-       // }
-
     }
     
     this.zoomOut = function()
-    {	
+    {			// increases with zoom
+    			this._zoomfactor -= 1;
  				var objectToScale = this.stage;
  				console.log(objectToScale); 
  				var currentContext = this;
@@ -134,12 +129,13 @@ function Map(javascript_console,applicationName)
      				},this._selectLayer);
 					anim.start()
 								
-				 console.log("we Moeten iets doen met centereren");
 				 objectToScale.setScale({
             	x: objectToScale.getScale().x/2,
             	y: objectToScale.getScale().y/2
        		 });  
-				 
+								this._mapDataBroker.getMapData(null,function(imageData,data) {
+					currentContext._tileLayer.renderTiles(imageData,data,false)    			
+					},this._zoomfactor);
 				//}
 
            objectToScale.draw();    
