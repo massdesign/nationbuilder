@@ -5,9 +5,13 @@ function Map(javascript_console,applicationName)
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
+<<<<<<< Updated upstream
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
+=======
+	
+>>>>>>> Stashed changes
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -26,7 +30,7 @@ function Map(javascript_console,applicationName)
     	this._g_yoffset = 0;
     	// standard we are zoomed in at level 5, so, we can go zoom out max 5 steps
       this._zoomfactor = 5;
-    
+    	this._mapDataBroker = new  MapDataBroker(this,7,7,2,this._g_mapWidth,this._g_mapHeight);
 
 
       this._imagedata = isNaN;

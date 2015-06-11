@@ -1,5 +1,5 @@
 
-function MapDataBroker(parent,sectionWidth,sectionHeight,treshold) {
+function MapDataBroker(parent,sectionWidth,sectionHeight,treshold,mapwidth,mapheight) {
 	
 	this._mapservice = new MapService();
 	this._treshold = treshold;
@@ -18,6 +18,9 @@ function MapDataBroker(parent,sectionWidth,sectionHeight,treshold) {
 	this.data = [];
 	this._sectionWidth = sectionWidth;
 	this._sectionHeight = sectionHeight;
+	//console.log(this._parent.getMapWidth())
+	this._currentMapWidth  = mapwidth;
+	this._currentMapHeight = mapheight;
 	this.requestCache = [];
 	this.newX = 0;
 	this.newY = 0;
@@ -236,14 +239,24 @@ this._calculateZoomOut = function (zoomfactor) {
 	result = []
 	var multiplier = this._sectionWidth+1;
 	// NOTE: voor nu gaan we uit van een chunksize van 7 bij 7 en een canvas van 20*20
+	// Delen door twee want de scaling is linear dus de helft
+	var newsw = this._sectionWidth/2;
+	var newsh = this._sectionHeight/2;
 	
-
+	var canvaswidth =  this._currentMapWidth*2;
+	var canvasheight = this._currentMapHeight*2;
+	
+	
+	var currentLoadedTiles = this._parent.getMapData().getTiles();
+	
+	
+	
 	if(this.newX == 0 && this.newY == 0)  {
 		 this.newX = this._parent.getMapData().getStartPositionX();
 		 this.newY = this._parent.getMapData().getStartPositionY();
 	}
 	// wat wordt er momenteel op het scherm getoond, deze dataset moeten we gaan uitlezen voor uitzoomen
-	console.log(this._parent.getMapData().getTiles())
+	
 	
 	
 
@@ -406,7 +419,6 @@ this.getMapData = function (treshold,callback,zoomfactor) {
 		 	
 		 }
 		 else {
-		 	console.log("goed geprogrammeerd hoor")
  			this._getMapDataForMove(treshold,callback)
 		}
 	}
