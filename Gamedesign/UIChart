@@ -24,6 +24,7 @@
 [structure]-[military base]
 [structure]-[policestation]
 [structure]-[tax office]
+[structure]-[warehouse]
 [military base]-[small base]
 [military base]-[medium base]
 [military base]-[large base]
@@ -44,7 +45,9 @@
 [welfare]--[owner]
 [policeforce]--[owner]
 
-
+[city]--[province]
+[city]--[land]
+[city]--[owner]
 
 
 

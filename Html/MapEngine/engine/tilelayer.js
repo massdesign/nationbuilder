@@ -35,24 +35,18 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
 				xoffset = tile.xoffset
     			yoffset = tile.yoffset
-				if(first) {
-						
-    					xposition = tile.xposition - this.parentMap.getMapData().getViewportX()-this.parentMap.getMapData().getStartPositionX()
-    					yposition = tile.yposition - this.parentMap.getMapData().getViewportY()-this.parentMap.getMapData().getStartPositionY()
-    					image_id = tile.image_id
-				}
-				else {
-					
-    					xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
-						yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
+    			
+    			xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
+				yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
+				image_id = tile.image_id	
     							
-				}
-						image_id = tile.image_id	
- 			   		tilesize = this.parentMap.getRelativeTilesize();
-    					tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
-    					source = "http://" + this._host + "/ncache/" + tilerequest;
-    					// tot aan hier
-						var newTile  = new Tile(tile)
+				
+				
+ 				tilesize = this.parentMap.getRelativeTilesize();
+    			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
+    			source = "http://" + this._host + "/ncache/" + tilerequest;
+    			// tot aan hier
+				var newTile  = new Tile(tile)
     			
     			newTile.setImageUrl(source)
     			newTile.setPosition(xposition,yposition);
@@ -67,56 +61,8 @@ function TileLayer(parentMap,loginstance)
 		
 		}   	
 	 this.move = function() {
-					var c = 0;
-		   		var currentContext = this;
-		var anim = new Kinetic.Animation(function(frame) {
-		 					
-		 	 				
-		 	 				var mapData = currentContext.parentMap.getMapData();
-		 	 				var tiles = currentContext.parentMap.getMapData().getTiles();
-		 	 				var prevViewportX = mapData.getPrevViewportX();
-		 	 				var prevViewportY = mapData.getPrevViewportY();
-		 	 				var viewportX = mapData.getViewportX();
-	    					var viewportY = mapData.getViewportY();
-		    					
-	    					
-          		      var tilesize = currentContext.parentMap.getRelativeTilesize()
-			 				for(i=0;i<tiles.length;i++) {
-							 
-	    					 var currentX = tiles[i].getTileImage().getX() 
-	    					 var currentY = tiles[i].getTileImage().getY()
-	    					   
-	  						 var newX = 0;
-							 var newY = 0;		
-							
-										
-							if(prevViewportX > viewportX) {
-								newX = currentX + tilesize;		
-								tiles[i].getTileImage().setX(newX);	
-								//console.log("go right")
-		 	 				}
-		 	 				else if(prevViewportX < viewportX)
-		 	 				{
-		 	 					newX = currentX - tilesize;	
-		 	 					tiles[i].getTileImage().setX(newX);			
-		 	 					//console.log("go left")
-		 	 				} 
-		 	 				
-							if(prevViewportY > viewportY) {
-								newY = currentY + tilesize;
-								 tiles[i].getTileImage().setY(newY);
-								 //console.log("go down")
-							}		 	 		
-							else if(prevViewportY < viewportY) {
-								newY = currentY - tilesize;		
-								 tiles[i].getTileImage().setY(newY);
-								 //console.log("go up")
-							}
-       					 }
-				 
-       					this.stop()
-     						 }, currentContext._layer);
-		anim.start()
+	 	
+	 	this.parentMap.getMapTranslator().move(this._layer,this.parentMap.getMapData().getTiles());
 	 }
     this._sort = function(data)
     {

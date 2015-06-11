@@ -25,6 +25,12 @@ this.clickedTile = function() {
 this.getTiles = function() {
 	return this._tiles;
 }
+this.getItems = function() {
+ return this._items;	
+}
+this.setItems = function (items) {
+	this._items = items;
+}
 this.setTiles = function(tiles)	 {
 	this._tiles = tiles;
 }
@@ -104,15 +110,11 @@ this.getNewY = function () {
 	}
 }
  this.clickedTile = new ClickedTile(tile,newX,newY)
- console.log(this.clickedTile)
+
 }
 
-//this.getNewY = function () {
-//	return this.newY;
-//}
-//}
 this.getClickedTile = function() {
-
+ console.log(this.clickedTile)
 return this.clickedTile;
 }
 

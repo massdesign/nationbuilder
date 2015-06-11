@@ -3,7 +3,11 @@ function Map(javascript_console,applicationName)
 		this._mapData = new MapData();
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
+		this._itemLayer = new ItemLayer(this,javascript_console);
+		this._selectLayer = new SelectLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
+		this._militaryService = new MilitaryService();
+		this._mapTranslator = new MapTranslator(this);
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -27,8 +31,10 @@ function Map(javascript_console,applicationName)
       this._data = isNaN;
     	
     	this.layers.push(this._tileLayer);
-    	this.layers.push(new SelectLayer(this,javascript_console));
+    	this.layers.push(this._selectLayer);
     	this.layers.push(this._gridLayer);
+    	this.layers.push(this._itemLayer);
+    	
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
@@ -85,6 +91,9 @@ function Map(javascript_console,applicationName)
  	 this.getYOffset = function() {
 		return this._g_yoffset;
  	 }
+ 	 this.getMapTranslator = function () {
+		return this._mapTranslator; 	 
+ 	 }
 
  	 this.getAngularBridge = function() {
 
@@ -137,28 +146,51 @@ function Map(javascript_console,applicationName)
 	
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
-		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
-		 currentContext.setImageData(imageData,data);
-       currentContext._tileLayer.renderTiles(imageData,data,true)
-		});
+		
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
-		}   	
+		}   
+		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
+		 currentContext.setImageData(imageData,data);
+		 if(currentContext._tileLayer != null) {
+       currentContext._tileLayer.renderTiles(imageData,data,true)
+    	 }
+    	 
+		});
+		this._militaryService.getMilitaryStrongholds(function(data) {
+			if(currentContext._itemLayer != null) {
+				currentContext._itemLayer.renderItems(data)
+			} 
+		});
+		
    }
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)    			
+					currentContext._tileLayer.renderTiles(imageData,data,false)
+					
+					
+					    			
 		});
-		this.layers[0].move()
+		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
+		this._tileLayer.move();
+		this._itemLayer.move();
+		this._selectLayer.move();
+		
+		//this.layers[0].move()
+		this
    }
-   this.render = function() {
-
+   this.drawItem = function (item) {
+   
+    this._itemLayer.renderItem(item);
+   }
+   /*this.render = function() {
+		console.log("render will be called")
 		for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].render(this._imagedata,this._data);
 		}  
-   }
+   }*/
    this.getCanvas = function () {
    	return this._context;
    }   

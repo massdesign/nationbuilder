@@ -3,14 +3,10 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
-	/* setInterval(function() {
-	 
-	 
-	 	 	
-	 	}, 3000);*/
     var s = new MapService(); 
     var u = new UserService();
-    var t = new TerritoryService();
+    var ms = new MilitaryService();
+    var ts = new TerritoryService();
     $scope.zoomIn = function(event) {
         map.zoomIn();
     }
@@ -34,17 +30,43 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 		   $scope._scroll(scrollValueX,scrollValueY,9,9)
     }
 		// alle militaire acties zijn afgekort met mil_    
-    	$scope.mil_lct = function(event) {
+    $scope.mil_lct = function(event) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
     		var newClaim = {}
     		newClaim.state_id = 1;
     		console.log(JSON.stringify(newClaim))
+
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
 			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
 			newClaim.state_id = $scope.userData.state.id;
     		t.doPostRequest(newClaim)
     	
     	}
+    $scope.mil_pmb = function(event) {
+   		var newMilitaryBase = {}   		
+			// TODO: database id's moeten niet geexposed worden.. zelfde geldt voor Claims   		
+   		newMilitaryBase.name = "Temp Name for MilBase";
+   		console.log(JSON.stringify(newMilitaryBase));
+
+   		// Hier moet ik dus mijn tile informatie vandaan halen (location)
+   		clickedTile = map.getMapData().getClickedTile();
+			console.log(clickedTile)			
+			newMilitaryBase.tile_id = clickedTile.tile.tiles[0].tile.id;
+			//newMilitaryBase
+   		ms.createNewBase(newMilitaryBase,function(json_data) {
+				
+				if(json_data.status == "ALREADYINUSE"){
+					alert("sorry man die shit is al in gebruik")
+				}
+				else {
+					
+					map.drawItem(json_data)
+				}
+				   		
+   		}
+   		);
+   	//	ms.doPostRequest(newMilitaryBase);
+    }
       $scope.scrollright = function (event) {
 		   var scrollValueY =  map.getMapData().getViewportY();
 		   var scrollValueX =  map.getMapData().getViewportX()+1;
@@ -61,7 +83,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
         {
             map.disableGrid()
         }
-      //  alert('even een testje doen of dit werkt')
+
     }
     $scope.availableactions  = function(event)   {
     	console.log("bladiebloe")

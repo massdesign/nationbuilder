@@ -1,0 +1,25 @@
+<h1>Listing militarystrongholds</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @militarystrongholds.each do |militarystronghold| %>
+      <tr>
+        <td><%= link_to 'Show', militarystronghold %></td>
+        <td><%= link_to 'Edit', edit_militarystronghold_path(militarystronghold) %></td>
+        <td><%= link_to 'Destroy', militarystronghold, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Militarystronghold', new_militarystronghold_path %>

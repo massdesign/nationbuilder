@@ -10,9 +10,9 @@ function GridLayer(parentMap,loginstance)
 		this._createGrid();
    }
    	
-	this.render = function(imagedata,data)
+	/*this.render = function(imagedata,data)
 	{
-	}
+	}*/
 	this.getLayer = function()
 	{
 		return this._layer;

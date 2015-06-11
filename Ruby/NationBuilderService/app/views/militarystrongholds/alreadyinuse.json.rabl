@@ -1,0 +1,3 @@
+object @tilestatus
+attributes :status
+

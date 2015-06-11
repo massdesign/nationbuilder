@@ -4,6 +4,8 @@ function SelectLayer(parentMap,loginstance) {
 this.parentMap = parentMap;
 this.loginstance = loginstance;
 
+this.currentClickedCoords = null;
+
 this.init = function() {
 	
 this._layer = new Kinetic.Layer({clearBeforeDraw: true});
@@ -17,21 +19,27 @@ this.getLayer = function()
 	return this._layer;
 }
 
-this.render = function(imagedata,data) {
 
-
-}
 this._showSelectedTile = function showSelectedTile(x,y)
 {
 	var new_x  = x/this.parentMap.getTileWidth();
 	var new_y = y/this.parentMap.getTileHeight();
 	
+	var newCoords = this.parentMap.getMapTranslator().translatePosition(new_x,new_y);
+
    var p =	this.parentMap;
-   console.log(p)
-	this._mapService.getTileByXY(new_x,new_y,function(data)	{
-		p.getMapData().setClickedTile(data,new_x,new_y);	
+	this._mapService.getTileByXY(newCoords.getX(),newCoords.getY(),function(data)	{
+		p.getMapData().setClickedTile(data,newCoords.getX(),newCoords.getY());	
 		p.getAngularBridge().updateMapControllerScope(p.getMapData());
 	});	
+}
+this.move = function() {
+
+if(this.currentClickedCoords != null) {
+   // newCoord =   this.parentMap.getMapTranslator().translatePosition(this.currentClickedCoords.getX(),this.currentClickedCoords.getY());	
+	 this._showSelectedTile(this.currentClickedCoords.getX()*this.parentMap.getTileWidth(),this.currentClickedCoords.getY()*this.parentMap.getTileHeight());
+}
+	
 }
 
 this._createBackgroundRect = function(c_width,c_height)
@@ -60,6 +68,8 @@ this._createBackgroundRect = function(c_width,c_height)
 			currentContext._layer.destroyChildren();
 			currentContext._layer.add(selectedRect);
 			currentContext._layer.draw();
+			currentContext.currentClickedCoords =  new Coordinate(cst[0]/currentContext.parentMap.getTileWidth(), cst[1]/currentContext.parentMap.getTileHeight());
+		 
 		  }  	
 	});
  
