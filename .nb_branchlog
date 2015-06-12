@@ -32,11 +32,11 @@ NB-29: Turn based mechanisme ontwerpen op basis van de RubyDI
 NB-30: Mogelijk maken gebouw te plaatsen op een tile
 NB-31: Mogelijk maken om een stad te bouwen op een tile
 NB-32: City screen ontwerp maken 
-NB-33: Mogelijk maken een militaire basis te plaatsen op een tile
+NB-33: Mogelijk maken een militaire basis te plaatsen op een tilei*
 NB-34: Military deployment screen ontwerp maken
 NB-35: Als een tile bezet is door een miltaire eenheid icoontje toevoegen
 NB-36: Een tool in python schrijven die het mogelijk maakt om tickets bij te houden zoals NB-1 NB-2 NB-3 etc
-NB-37: Het concept stad toevoegen aan het model (rfm)
+NB-37: Het concept stad toevoegen aan het model (rfm)*
 NB-38: Ontwerp maken en implementeren hoe belastingen worden berekend in het spel
 NB-39: AI ontwerpen die een fabriek draaiende kan houden met verschillende strategien,
 NB-40: De database compleet maken wat betreft grondstoffen die in het spel verwerkt kunnen worden
