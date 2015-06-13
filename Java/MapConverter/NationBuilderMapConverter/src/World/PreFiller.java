@@ -4,6 +4,7 @@ package World;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
@@ -39,8 +40,7 @@ public class PreFiller {
         this.cityFiller = new CityFiller(context);
     }
 
-    public void Fill()
-    {
+    public void Fill() throws ObjectConversionFailedException {
 		userFiller.Fill();
         energyBuildingFiller.Fill();
         cityFiller.Fill();

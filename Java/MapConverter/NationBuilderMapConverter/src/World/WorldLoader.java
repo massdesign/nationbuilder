@@ -30,7 +30,7 @@ public class WorldLoader {
 
     }
 
-    public void PreFiller() {
+    public void PreFiller() throws ObjectConversionFailedException {
 
         this.preFiller.Fill();
     }
