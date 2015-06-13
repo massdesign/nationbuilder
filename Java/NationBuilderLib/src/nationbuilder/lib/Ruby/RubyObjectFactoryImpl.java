@@ -13,7 +13,6 @@ import nationbuilder.lib.connectors.JsonObjectBuilder;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.data.HttpResponseData;
 import nationbuilder.lib.http.data.ResponseData;
-import nationbuilder.lib.json.data.HttpResult;
 
 /**
  * Created by patrick on 10/21/14.
@@ -31,6 +30,8 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 		this.clazz = clazz;
 		this.clazzArray = clazzArray;
 		this.objectBuilder = new JsonObjectBuilder();
+
+
 		//this.gson = new Gson();
 	}
 	private String getRequestUrl(Class<?> t)
@@ -135,13 +136,16 @@ public class RubyObjectFactoryImpl<T extends RubyModel> implements RubyObjectFac
 	@Override
 	public RubyModel getFirst() throws ObjectConversionFailedException
 	{
-		T result = null;
 
-		ResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/first");
+        RubyObjectManager marshaller = this.context.createRubyMarshaller(this.objectBuilder);
+        return marshaller.retrieve(this.clazz,ObjectSelector.First);
+		/*ResponseData data = this.context.getRubyService().getObject("/" + getRequestUrl(clazz) + "/first");
 		if (data != null)
 		{
 			result = (T) this.objectBuilder.createObjectFromString(data, this.clazz);
 		}
 		return result;
+		}
+		*/
 	}
 }
