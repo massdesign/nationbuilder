@@ -21,6 +21,22 @@ function MapTranslator(parentMap) {
 	return new Coordinate(currentX-viewportX,currentY-viewportY);
  
  }
+
+ this.calculateOffset = function () {
+	
+var mapWidth =	Config.MAP_WIDTH;
+var mapHeight = Config.MAP_HEIGHT;
+
+var chunkWidth = Config.CHUNK_WIDTH;
+var chunkHeight = Config.CHUNK_HEIGHT;
+
+xOffset =  Math.floor(mapWidth/2)-Math.floor(chunkWidth/2);
+yOffset =  Math.floor(mapHeight/2)-Math.floor(chunkHeight/2);
+
+return new XYTuple(xOffset,yOffset);
+	
+ } 
+ 
  this.move = function(currentLayer,items) {
 					var c = 0;
 		   		var currentContext = this;

@@ -243,24 +243,59 @@ this._calculateZoomOut = function (zoomfactor) {
 	var newsw = this._sectionWidth/2;
 	var newsh = this._sectionHeight/2;
 	
+	console.log("currentMapWidth: " + this._currentMapWidth);
+	console.log("currentMapHeight: " + this._currentMapHeight);
+	
 	var canvaswidth =  this._currentMapWidth*2;
 	var canvasheight = this._currentMapHeight*2;
 	
 	
 	var currentLoadedTiles = this._parent.getMapData().getTiles();
+
+	var highestX = 0;
+	var highestY = 0;
 	
+	for(var i=0;i<currentLoadedTiles.length;i++) {
+		
+			
+			if(currentLoadedTiles[i].xposition > highestX) {
+				highestX = currentLoadedTiles[i].xposition;			
+			}		
+			if(currentLoadedTiles[i].yposition > highestY) {
+				highestY = currentLoadedTiles[i].yposition;			
+			}
+	}
+		
+	var offsetTuple = this._parent.getMapTranslator().calculateOffset();
 	
+	highestX += offsetTuple.getX()
+	highestY += offsetTuple.getY()
+	
+	console.log("highest X: " + highestX)
+	console.log("highest Y: " + highestY)
+	console.log("canvas width: " + canvaswidth)
+	console.log("canvas height: " + canvasheight)
+	console.log("multiplier: " + multiplier)
 	
 	if(this.newX == 0 && this.newY == 0)  {
 		 this.newX = this._parent.getMapData().getStartPositionX();
 		 this.newY = this._parent.getMapData().getStartPositionY();
 	}
 	// wat wordt er momenteel op het scherm getoond, deze dataset moeten we gaan uitlezen voor uitzoomen
-	
-	
-	
+	console.log("newX: " +  this.newX)
+	//result.push(new SectionLocation(this.newX-this._sectionWidth,this.newY))
+	// eerst de x as vullen met chunks
+	while(highestX < canvaswidth) {
+			result.push(new SectionLocation(this.newX+(multiplier),this.newY))
+			multiplier += this._sectionWidth;
+			highestX += this._sectionWidth;
+			console.log("highestX: " + highestX)
+	}
+	// daarna de y as vullen met chunks
+	/*while (highestY < canvasheight) {
+			highestY += 1;	
+	}	*/
 
-	result.push(new SectionLocation(this.newX+(multiplier),this.newY))
 	//result.push(new SectionLocation(this.newX+(multiplier),this.newY))
 	return result;
 }

@@ -8,4 +8,16 @@
 		this.getY = function () {
 			return this.Y;		
 		}
+	}
+	
+	function XYTuple(x,y) {
+	this._x = x;
+	this._y = y;
+	
+	this.getX = function () {
+	return this._x;
+	}	
+	this.getY = function () {
+	return this._y;	
+	}
 	}	

@@ -5,13 +5,12 @@ function Map(javascript_console,applicationName)
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
-<<<<<<< Updated upstream
-		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
+		this._mapDataBroker = new  MapDataBroker(this,Config.CHUNK_WIDTH,Config.CHUNK_HEIGHT,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
-=======
+		
 	
->>>>>>> Stashed changes
+
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -20,17 +19,18 @@ function Map(javascript_console,applicationName)
 		this.jsconsole = javascript_console
 		 	
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 20;
-    	this._g_mapHeight = 20;
+	  	this._g_mapWidth = Config.MAP_WIDTH;
+    	this._g_mapHeight = Config.MAP_HEIGHT;
         // TODO: replace width/height with tilesize we only support symmetrical tiles
-    	this._g_tileWidth = 32;
-    	this._g_tileHeight = 32;
-        this._g_tilesize = 32;
+    	this._g_tileWidth = Config.TILE_WIDTH;
+    	this._g_tileHeight = Config.TILE_HEIGHT;
+    	
+      this._g_tilesize = Config.TILE_SIZE;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
     	// standard we are zoomed in at level 5, so, we can go zoom out max 5 steps
       this._zoomfactor = 5;
-    	this._mapDataBroker = new  MapDataBroker(this,7,7,2,this._g_mapWidth,this._g_mapHeight);
+    	this._mapDataBroker = new  MapDataBroker(this,Config.CHUNK_WIDTH,Config.CHUNK_HEIGHT,2,this._g_mapWidth,this._g_mapHeight);
 
 
       this._imagedata = isNaN;
@@ -159,7 +159,7 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(20);
+	   this.getMapData().setStartPositionX(0);
 		this.getMapData().setStartPositionY(30);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',

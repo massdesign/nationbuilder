@@ -22,8 +22,8 @@ this.getLayer = function()
 
 this._showSelectedTile = function showSelectedTile(x,y)
 {
-	var new_x  = x/this.parentMap.getTileWidth();
-	var new_y = y/this.parentMap.getTileHeight();
+	var new_x  = x/Config.TILE_WIDTH;
+	var new_y = y/Config.TILE_HEIGHT;
 	
 	var newCoords = this.parentMap.getMapTranslator().translatePosition(new_x,new_y);
 
@@ -37,7 +37,7 @@ this.move = function() {
 
 if(this.currentClickedCoords != null) {
    // newCoord =   this.parentMap.getMapTranslator().translatePosition(this.currentClickedCoords.getX(),this.currentClickedCoords.getY());	
-	 this._showSelectedTile(this.currentClickedCoords.getX()*this.parentMap.getTileWidth(),this.currentClickedCoords.getY()*this.parentMap.getTileHeight());
+	 this._showSelectedTile(this.currentClickedCoords.getX()*Config.TILE_WIDTH,this.currentClickedCoords.getY()*Config.TILE_HEIGHT);
 }
 	
 }
@@ -68,7 +68,7 @@ this._createBackgroundRect = function(c_width,c_height)
 			currentContext._layer.destroyChildren();
 			currentContext._layer.add(selectedRect);
 			currentContext._layer.draw();
-			currentContext.currentClickedCoords =  new Coordinate(cst[0]/currentContext.parentMap.getTileWidth(), cst[1]/currentContext.parentMap.getTileHeight());
+			currentContext.currentClickedCoords =  new Coordinate(cst[0]/Config.TILE_WIDTH, cst[1]/Config.TILE_HEIGHT);
 		 
 		  }  	
 	});
