@@ -125,7 +125,6 @@ function Map(javascript_console,applicationName)
  				var objectToScale = this.stage;
  				console.log(objectToScale); 
  				var currentContext = this;
- 			//	if(objectToScale.getScale().x == 1 && objectToScale.getScale().y == 1) {
  					var tiles = this.getMapData().getTiles();
  						var anim = new Kinetic.Animation(function(frame) {
 							console.log(objectToScale.getScale()); 							
@@ -159,8 +158,8 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(0);
-		this.getMapData().setStartPositionY(30);
+	   this.getMapData().setStartPositionX(10);
+		this.getMapData().setStartPositionY(20);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
