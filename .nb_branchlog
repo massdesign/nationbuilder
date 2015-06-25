@@ -1,3 +1,7 @@
+
+Legenda: 
+* = issue afgerond
+(+) = issue gesloten  
 NB-2: javascript refactor*
 NB-3: mapresources feature branch*
 NB-4: AngularJs integration with frontend to represent resources datail*
@@ -26,7 +30,7 @@ NB-23: Inzoomen en uitzoomen laten samenwerken met de chunkloading dat geimpleme
 NB-24: Minimap tonen die ver uitgezoomde versie van de map laat zien 
 NB-25: Performance probleem met images query oplossen (query duurt nu 500+ms)
 NB-26: Seamless scrollen mogelijk maken 
-NB-27: Pixel clustering maken om de uitzoom limiet te vergroten 
+NB-27: Pixel clustering maken om de uitzoom limiet te vergroten(+)  
 NB-28: Productiewaardige omgeving regelen op de demo VPS
 NB-29: Turn based mechanisme ontwerpen op basis van de RubyDI
 NB-30: Mogelijk maken gebouw te plaatsen op een tile
