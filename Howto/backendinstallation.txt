@@ -118,7 +118,9 @@ rake db:migrate
 
 go to Ruby/NationBuilderServer and start ruby server (rails server)
 
+install useses for javascript dependency management 
 
 
-
+npm install useuses --save
+sudo npm install -g useuses
 

@@ -1,7 +1,12 @@
 
-var nationbuilderApp = angular.module('nationbuilderApp',[]);
+define(['angular'],function(app) {
 
-nationbuilderApp.controller('ClickdataCtrl',function($scope) {
+	console.log("waarom!!!")
+//var nationbuilderApp = angularAMD.module('nationbuilderApp',[]);
+console.log(app)
+
+
+/*app.controller('ClickdataCtrl',function($scope) {
 
     var s = new MapService(); 
     var u = new UserService();
@@ -102,4 +107,6 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    	javascript_console = console;
 	   var map = new Map(console,"nationbuilderApp");
 	   map.init()
+});
+return app;*/
 });
