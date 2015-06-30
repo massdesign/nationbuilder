@@ -1,8 +1,15 @@
 
 var nationbuilderApp = angular.module('nationbuilderApp',[]);
+	//jsimport("services/mapservice.js")
+	//jsimport("services/baseservice.js")
+	
 
+
+console.log("hier komt hij toch?")
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
+	 jsimport("services/baseservice.js","services/mapservice.js","services/userservice.js","services/militaryservice.js","services/territoryservice.js","map.js",function() {
+	 	console.log("hier ook dan?")
     var s = new MapService(); 
     var u = new UserService();
     var ms = new MilitaryService();
@@ -102,4 +109,6 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    	javascript_console = console;
 	   var map = new Map(console,"nationbuilderApp");
 	   map.init()
-});
+	});
+	   
+}); 

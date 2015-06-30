@@ -1,3 +1,5 @@
+jsimport("engine/mapdata.js",function() {
+
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
@@ -195,3 +197,4 @@ function Map(javascript_console,applicationName)
    	return this._context;
    }   
 }
+});
