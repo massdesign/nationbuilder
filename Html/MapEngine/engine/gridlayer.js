@@ -3,45 +3,59 @@ function GridLayer(parentMap,loginstance)
   this.parentMap = parentMap
   this.loginstance = loginstance;
   this._lines = [];
-  this._layer = null;
-
-	this.init = function()
+  this._layer = new Kinetic.Layer();
+	///this._createGrid(parentMap.getMapWidth(),parentMap.getMapHeight());
+	/*this.init = function()
 	{
-		this._createGrid();
-   }
+	
+   }*/
+   
+   this.draw  = function (width,height) {
    	
-	/*this.render = function(imagedata,data)
-	{
-	}*/
+		this._createGrid(width,height)   
+	}
+	
+   	
 	this.getLayer = function()
 	{
 		return this._layer;
 	}
 	this.enableGrid = function() {
-
+		console.log("enable wordt aangeroepen")
 		for(i=0;i<this._lines.length;i++) {
 
 			this._lines[i].show()
 		}
 		this._layer.draw();
 	}
+	this.clearLayer = function () {
+
+		this._lines = []		
+		this._layer.removeChildren()
+		this._layer.draw()
+	
+	}
 	this.disableGrid = function() {
+		console.log("disable wordt aangeroepene")
 		for (i = 0; i < this._lines.length; i++) {
 
 			this._lines[i].hide()
 		}
-		this._layer.draw();
+		this._layer.draw()
+		
 	}
-	 this._createGrid = function ()
+	 this._createGrid = function (mapWidth,mapHeight)
     {
-    	this._layer = new Kinetic.Layer();
-		 var currentx = 0;
+    	 var currentx = 0;
 		 var currenty = 0;
-						
-		for(var x=1;x<this.parentMap.getMapWidth()+1;x++)
+		
+		this.clearLayer()			
+		
+		for(var x=1;x<mapWidth+1;x++)
 		{
+			console.log("x grid = " + x)
 			currenty = 0;
-			for(var y=1;y<this.parentMap.getMapHeight()+1;y++)
+			for(var y=1;y<mapHeight+1;y++)
 			{
 
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset()
@@ -66,9 +80,9 @@ function GridLayer(parentMap,loginstance)
 		
 		 var currentx = 0;
 		 var currenty = 0;
-		for(var y=0;y<this.parentMap.getMapHeight()+1;y++)
+		for(var y=0;y<mapHeight+1;y++)
 		{
-			for(var x=0;x<this.parentMap.getMapWidth()+1;x++)
+			for(var x=0;x<mapWidth+1;x++)
 			{
 				points = [currentx+this.parentMap.getXOffset(), currenty+this.parentMap.getYOffset(),
 				currentx+this.parentMap.getRelativeTilesize()+this.parentMap.getXOffset(),currenty+this.parentMap.getYOffset()];
@@ -86,4 +100,4 @@ function GridLayer(parentMap,loginstance)
 			 currenty = y*this.parentMap.getRelativeTilesize();
         }
     } 
-}
+}	

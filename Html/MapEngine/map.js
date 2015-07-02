@@ -36,10 +36,11 @@ function Map(javascript_console,applicationName)
       this._imagedata = isNaN;
       this._data = isNaN;
     	
-    	this.layers.push(this._tileLayer);
-    	this.layers.push(this._selectLayer);
-    	this.layers.push(this._gridLayer);
-    	this.layers.push(this._itemLayer);
+    //	this.layers.push(this._tileLayer);
+    //	this.layers.push(this._selectLayer);
+    //	this.layers.push(this._gridLayer);
+    ///	this.layers.push(this._gridLayer);
+    //	this.layers.push(this._itemLayer);
     	
 		this._createArray = function(x,y) {	
    		var result = new Array(x);
@@ -139,24 +140,28 @@ function Map(javascript_console,applicationName)
 								this._mapDataBroker.getMapData(null,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data,false)    			
 					},this._zoomfactor);
-				//}
-
-           objectToScale.draw();    
+				
+           objectToScale.draw();
+           
+           mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
+           this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
+           this.stage.remove(this._gridLayer.getLayer())
+  			  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
+  			  this.stage.add(this._gridLayer.getLayer())
+  			  
+			  
+           
+           
     }
  	this.getMapData = function() {
 		return this._mapData; 	
  	}
 	 	
- 		this.getZoomFactor = function() { 
+ 	this.getZoomFactor = function() { 
 			return this._zoomfactor;	
-		}
-     /*this.getZoomlevel = function() {
-         return this._zoomlevel;
-     }*/
+	}
     this.getRelativeTilesize = function() {
-
-    //    return  Math.ceil(this.getTileSize()/this.getZoomlevel());
-		return this.getTileSize();
+   	return this.getTileSize();
     }
 
 	this.init = function()
@@ -170,19 +175,19 @@ function Map(javascript_console,applicationName)
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
    	 
-   	 console.log("getScale");
-   	 console.log(this.stage.getScale())
-
+   
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
-
-	
+      
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
-		
-		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].init();
-			this.stage.add(this.layers[i].getLayer());
-		}   
+		// TODO: andere layers hieraan toevoegen.. gridlayer is nu alleen actief
+		this._gridLayer.draw(this.getMapWidth(),this.getMapHeight())
+		this._selectLayer.init()
+		this.stage.add(this._gridLayer.getLayer())
+		this.stage.add(this._tileLayer.getLayer())
+	   this.stage.add(this._selectLayer.getLayer())
+	   this.stage.add(this._itemLayer.getLayer())
+		  
 		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
@@ -201,9 +206,7 @@ function Map(javascript_console,applicationName)
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data,false)
-					
-					
-					    			
+										    			
 		});
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		this._tileLayer.move();

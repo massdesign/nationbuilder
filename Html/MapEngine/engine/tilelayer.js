@@ -6,10 +6,11 @@ function TileLayer(parentMap,loginstance)
   // TODO: offset zou berekend moeten worden aan de grootte van de viewport
   this._xOffset = 7;
   this._yOffset = 7;
-	this.init = function()
+  this._layer = new Kinetic.Layer();
+	/*this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
-   }
+   }*/
    	
    	
    this.renderTiles = function (imagedata,data,first) {

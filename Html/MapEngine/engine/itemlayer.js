@@ -6,11 +6,11 @@ this._host = "localhost:8083"
 this.assetUrl = "http://" + this._host + "/assets/mil_symbol.png";
 
 this._items = [];
-
-this.init = function() {
+ this._layer = new Kinetic.Layer({clearBeforeDraw: true});
+/*this.init = function() {
 
  this._layer = new Kinetic.Layer({clearBeforeDraw: true});
-}
+}*/
 
 this.renderItem = function(data) { 
 console.log("deze wordt aangeroepen renderItem")
