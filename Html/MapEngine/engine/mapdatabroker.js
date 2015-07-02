@@ -278,96 +278,46 @@ this._calculateZoomOut = function (zoomfactor) {
 	
 	chunkDimensions = this._getChunkDimensions();	
 	
-	console.log("currentMapWidth: " + this._currentMapWidth);
-	console.log("currentMapHeight: " + this._currentMapHeight);
+
 	
 	var canvaswidth =  this._currentMapWidth*2;
 	var canvasheight = this._currentMapHeight*2;
 	
 	
 	var currentLoadedTiles = this._parent.getMapData().getTiles();
-
-	
-		
 	var offsetTuple = this._parent.getMapTranslator().calculateOffset();
 	
-	var highestX = chunkDimensions.getX2();
-	var highestY = chunkDimensions.getY2();
-	
-	var lowestX  = chunkDimensions.getX1();
-	var lowestY  = chunkDimensions.getY1();
-	highestX += offsetTuple.getX()
-	highestY += offsetTuple.getY()
-	
-	lowestX += offsetTuple.getX()
-	lowestY += offsetTuple.getY()
 		
 	if(this.newX == 0 && this.newY == 0)  {
 		 this.newX = this._parent.getMapData().getStartPositionX();
 		 this.newY = this._parent.getMapData().getStartPositionY();
 	}
-	// wat wordt er momenteel op het scherm getoond, deze dataset moeten we gaan uitlezen voor uitzoomen
-	// eerst de x as naar rechts vullen met chunks
-	
-	/*while(highestX < canvaswidth && highestY < canvasheight) {
-			result.push(new SectionLocation(this.newX+(sectionX1Position),this.newY))
-			sectionX1Position += this._sectionWidth;
-			highestX += this._sectionWidth;
-			
-			result.push(new SectionLocation(this.newX,this.newY+(sectionY1Position)))
-			result.push(new SectionLocation(this.newX+(sectionX1Position),this.newY+(sectionY1Position)))
 
-			sectionY1Position += this._sectionHeight;
-			highestY += this._sectionHeight;
-	}*/
 	var newXPosition = this.newX;
 	var newYPosition = this.newY;
-	while(highestX < canvaswidth) {
-		console.log("sectionX1Position = " + sectionX1Position)
-		
-		highestY = offsetTuple.getY()
-		sectionY1Position = this._sectionHeight+1;
-		newYPosition = this.newY;
-		result.push(new SectionLocation(newXPosition,this.newY))
-		console.log("highestY: " + highestY)
-		while(highestY < canvasheight) {			
-			console.log("newYPosition: " + newYPosition)
-			result.push(new SectionLocation(newXPosition,newYPosition))
-			newYPosition  = this.newY+(sectionY1Position)
-			sectionY1Position += this._sectionHeight;
-			highestY += this._sectionHeight;
+	console.log("newX: " + this.newX)
+	
+	var startX = this.newX - offsetTuple.getX();
+	var startY = this.newY - offsetTuple.getY();
+	var mapSize = this._parent.getMapTranslator().getRelativeMapSize(this._parent.getZoomFactor(),this._currentMapWidth,this._currentMapHeight)
+	var stopX = startX + mapSize.getX()
+	var stopY = startY + mapSize.getY()
+	console.log("startY: " + startY)
+	console.log("stopX: " + stopX)
+	console.log("startX: " + startX)
+	console.log("stopY: " + stopY)
+	console.log("currentMapWidth: " + mapSize.getX());
+	console.log("currentMapHeight: " + mapSize.getY());
+	
+	for(var x=startX;x<stopX;x +=   this._sectionWidth) {
+		//var xIncrement = x+this._sectionWidth
+		result.push(new SectionLocation(x,startY))
+		for(var  y=startY;y<stopY;y += this._sectionHeight) { 
+			result.push(new SectionLocation(x,y))
 		}
-		newYPosition = this.newY
-		lowestY  = chunkDimensions.getY1();
-		lowestY += offsetTuple.getY();
-		while(lowestY > 0) {
-					result.push(new SectionLocation(newXPosition,newYPosition))
-					sectionY2Position -= this.newY-(sectionY2Position);
-					newYPosition  = this.newY-(sectionY2Position)
-					lowestY -= this._sectionHeight
-		}
-		newYPosition = this.newY
-		
-		newXPosition = this.newX+(sectionX1Position)
-		
-		sectionX1Position += this._sectionWidth;
-		highestX += this._sectionWidth;
 	}
 
-	while(lowestX > 0) {
-		
-			result.push(new SectionLocation(this.newX-(sectionX2Position),this.newY))						
-			sectionX2Position -=  this._sectionWidth;
-			lowestX -= this._sectionWidth;
-			console.log("lowestX: " + lowestX)
-			
-	}
-	/*while(lowestY > 0) {
-			console.log(this.newX);
-			result.push(new SectionLocation(this.newX/*-(sectionX2Position)*///,this.newY-(sectionY2Position)))	
-		//	sectionY2Position -=  this._sectionHeight;
-		//	lowestY -= this._sectionHeight
-		//}	
+	
 	return result;
 }
 
@@ -393,7 +343,8 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			y2load = height * this._cacheSize;
 			if(!this.isAlreadyFetched(xOuter, yOuter, x2load, y2load)) {
 				this._mapservice.getMap(function (mapData) {
-									
+					if (typeof mapData !== 'undefined' && typeof mapData[0] !== 'undefined') {
+					
 					var newData = mapData[0]['layers'];
 										
 					for (i = 0; i < newData.length; i++) {
@@ -421,7 +372,11 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 					);
 					
 					chain()
-
+				}
+				else {
+					console.log("section fetch yielded no result")
+					chain()
+				}
 				}, xOuter, yOuter, x2load, y2load);
 			}
 			else {

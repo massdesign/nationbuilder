@@ -15,3 +15,5 @@ Config.TILE_SIZE = 32;
 
 Config.CHUNK_WIDTH=7;
 Config.CHUNK_HEIGHT=7;
+
+

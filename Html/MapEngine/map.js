@@ -29,7 +29,7 @@ function Map(javascript_console,applicationName)
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
     	// standard we are zoomed in at level 5, so, we can go zoom out max 5 steps
-      this._zoomfactor = 5;
+      this._zoomfactor = 0;
     	this._mapDataBroker = new  MapDataBroker(this,Config.CHUNK_WIDTH,Config.CHUNK_HEIGHT,2,this._g_mapWidth,this._g_mapHeight);
 
 
@@ -107,7 +107,7 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
-    	this._zoomfactor += 1;
+    	this._zoomfactor -= 1;
     	var objectToScale = this.stage;	
     	
     	
@@ -121,7 +121,7 @@ function Map(javascript_console,applicationName)
     
     this.zoomOut = function()
     {			// increases with zoom
-    			this._zoomfactor -= 1;
+    			this._zoomfactor += 1;
  				var objectToScale = this.stage;
  				console.log(objectToScale); 
  				var currentContext = this;
@@ -146,9 +146,13 @@ function Map(javascript_console,applicationName)
  	this.getMapData = function() {
 		return this._mapData; 	
  	}
-     this.getZoomlevel = function() {
+	 	
+ 		this.getZoomFactor = function() { 
+			return this._zoomfactor;	
+		}
+     /*this.getZoomlevel = function() {
          return this._zoomlevel;
-     }
+     }*/
     this.getRelativeTilesize = function() {
 
     //    return  Math.ceil(this.getTileSize()/this.getZoomlevel());
@@ -158,8 +162,8 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(10);
-		this.getMapData().setStartPositionY(20);
+	   this.getMapData().setStartPositionX(7);
+		this.getMapData().setStartPositionY(7);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,

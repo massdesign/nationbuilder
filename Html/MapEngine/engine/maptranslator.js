@@ -21,7 +21,7 @@ function MapTranslator(parentMap) {
 	return new Coordinate(currentX-viewportX,currentY-viewportY);
  
  }
-
+ // TODO: deze functie wordt nog niet overal gebruikt.. 
  this.calculateOffset = function () {
 	
 var mapWidth =	Config.MAP_WIDTH;
@@ -36,6 +36,19 @@ yOffset =  Math.floor(mapHeight/2)-Math.floor(chunkHeight/2);
 return new XYTuple(xOffset,yOffset);
 	
  } 
+ this.getRelativeMapSize = function(zoomfactor,mapWidth,mapHeight) {
+
+	var m = 2; 
+	var rw = mapWidth;
+	var rh = mapHeight;
+	console.log("zoomfactor: " + zoomfactor)
+	while(zoomfactor > 0) {
+	rw = rw*2
+	rh = rh*2
+	zoomfactor--;
+	}
+ 	return new XYTuple(rw,rh)
+ }
  
  this.move = function(currentLayer,items) {
 					var c = 0;
