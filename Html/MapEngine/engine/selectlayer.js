@@ -11,6 +11,8 @@ this.init = function() {
 this._layer = new Kinetic.Layer({clearBeforeDraw: true});
 this._createBackgroundRect(2,2);
 this._mapService = new MapService();
+this._eventBus = EventBus.instance;
+this._eventBus.registerClass(this)
 
 
 }

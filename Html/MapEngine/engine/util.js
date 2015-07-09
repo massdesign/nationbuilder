@@ -41,3 +41,17 @@
 		return this._y2;	
 	}
 	}	
+	
+	
+	Reflection = function() {}
+	
+	Reflection.typeof = function typeOf (obj) {
+  return {}.toString.call(obj).split(' ')[1].slice(0, -1).toLowerCase();
+	}
+	Reflection.classType = function(object) { 
+		return object.name;
+	}
+	Reflection.className = function(object) {
+		// Get the type of a object instance		
+    	return object.constructor.name
+	}

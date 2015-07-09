@@ -4,24 +4,20 @@ function GridLayer(parentMap,loginstance)
   this.loginstance = loginstance;
   this._lines = [];
   this._layer = new Kinetic.Layer();
-	///this._createGrid(parentMap.getMapWidth(),parentMap.getMapHeight());
-	/*this.init = function()
-	{
-	
-   }*/
+  this._eventBus = EventBus.instance;
+  this._eventBus.registerClass(this)
    
    this.draw  = function (width,height) {
    	
 		this._createGrid(width,height)   
 	}
-	
+
    	
 	this.getLayer = function()
 	{
 		return this._layer;
 	}
 	this.enableGrid = function() {
-		console.log("enable wordt aangeroepen")
 		for(i=0;i<this._lines.length;i++) {
 
 			this._lines[i].show()
@@ -36,7 +32,7 @@ function GridLayer(parentMap,loginstance)
 	
 	}
 	this.disableGrid = function() {
-		console.log("disable wordt aangeroepene")
+
 		for (i = 0; i < this._lines.length; i++) {
 
 			this._lines[i].hide()
@@ -53,7 +49,6 @@ function GridLayer(parentMap,loginstance)
 		
 		for(var x=1;x<mapWidth+1;x++)
 		{
-			console.log("x grid = " + x)
 			currenty = 0;
 			for(var y=1;y<mapHeight+1;y++)
 			{
@@ -70,8 +65,9 @@ function GridLayer(parentMap,loginstance)
 
    		 	  this._layer.add(blackLine);
 			  this._lines.push(blackLine)
-			  this.parentMap.setTileValue(x,y,0,currentx + this.parentMap.getXOffset());
-			  this.parentMap.setTileValue(x,y,1,currenty + this.parentMap.getYOffset());
+			  this._eventBus.notifyListeners(Event.GRID_INIT,Reflection.classType(TileLayer),new Event())
+			  //this.parentMap.setTileValue(x,y,0,currentx + this.parentMap.getXOffset());
+			  //this.parentMap.setTileValue(x,y,1,currenty + this.parentMap.getYOffset());
 			  currenty = y*this.parentMap.getRelativeTilesize();
 			}
 			
@@ -100,4 +96,17 @@ function GridLayer(parentMap,loginstance)
 			 currenty = y*this.parentMap.getRelativeTilesize();
         }
     } 
+    // NOTE: misschien in de toekomst dit ding verplaatsen naar een util class of iets dergelijks
+   this._createArray = function(x,y) {	
+   	var result = new Array(x);
+   	for(var i=0;i<y;i++)
+   		{
+ 	  		 result[i] = new Array(5);   
+ 		  		for(var j=0;j<y;j++)
+ 		  		{
+ 		   		result[i][j] = new Array(2);
+ 		  		} 		  
+    		}
+    		return result;
+    	}
 }	

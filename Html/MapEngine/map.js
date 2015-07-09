@@ -1,13 +1,17 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
-		this._gridLayer = new GridLayer(this, javascript_console);
+		// NOTE: wordt verplaatst naar LayerService
+	/*	this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
+		*/
 		this._mapDataBroker = new  MapDataBroker(this,Config.CHUNK_WIDTH,Config.CHUNK_HEIGHT,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
+		
+		this._layerService = new LayerService(this,javascript_console)
 		
 	
 
@@ -36,13 +40,8 @@ function Map(javascript_console,applicationName)
       this._imagedata = isNaN;
       this._data = isNaN;
     	
-    //	this.layers.push(this._tileLayer);
-    //	this.layers.push(this._selectLayer);
-    //	this.layers.push(this._gridLayer);
-    ///	this.layers.push(this._gridLayer);
-    //	this.layers.push(this._itemLayer);
-    	
-		this._createArray = function(x,y) {	
+    	// TODO: verplaatsen naar GridLayer
+		/*this._createArray = function(x,y) {	
    		var result = new Array(x);
     		for(var i=0;i<y;i++)
     		{
@@ -54,7 +53,7 @@ function Map(javascript_console,applicationName)
     		}
     		
     		return result;
-    	}
+    	}*/
     this.getStage = function() {
 	 return this.stage;    
     }
@@ -64,19 +63,20 @@ function Map(javascript_console,applicationName)
 	this.disableGrid = function() {
 		this._gridLayer.disableGrid();
 	}
-    this.getTileValue = function(x,y,axis)
+    /*this.getTileValue = function(x,y,axis)
     { 
     	return this._g_tileValues[x][y][axis];
-    }
+    }*/
     // TODO: this is crappy.. why do we need two parameters?? and find an decent naming scheme for it.
     this.setImageData = function(imagedata,data){
         this._imagedata = imagedata;
         this._data = data
     }
+    /*
     this.setTileValue = function(x,y,axis,value) {
     	
     	this._g_tileValues[x][y][axis] = value;
- 	 }
+ 	 }*/
     this.getTileHeight = function() {
       return this._g_tileHeight;
     }
@@ -122,15 +122,15 @@ function Map(javascript_console,applicationName)
     
     this.zoomOut = function()
     {			// increases with zoom
+    			// NOTE: wordt deels verplaatst naar LayerService
     			this._zoomfactor += 1;
  				var objectToScale = this.stage;
  				console.log(objectToScale); 
  				var currentContext = this;
  					var tiles = this.getMapData().getTiles();
- 						var anim = new Kinetic.Animation(function(frame) {
-							console.log(objectToScale.getScale()); 							
+ 						var anim = new Kinetic.Animation(function(frame) {					
  					  this.stop()
-     				},this._selectLayer);
+     				},this._layerService.getLayer(LayerService.SELECT_LAYER));
 					anim.start()
 								
 				 objectToScale.setScale({
@@ -138,20 +138,17 @@ function Map(javascript_console,applicationName)
             	y: objectToScale.getScale().y/2
        		 });  
 								this._mapDataBroker.getMapData(null,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)    			
+					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)    			
 					},this._zoomfactor);
 				
            objectToScale.draw();
            
            mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
            this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
-           this.stage.remove(this._gridLayer.getLayer())
-  			  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
-  			  this.stage.add(this._gridLayer.getLayer())
-  			  
-			  
-           
-           
+           	 this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
+         //  this.stage.remove(this._gridLayer.getLayer())
+  			//  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
+  			 // this.stage.add(this._gridLayer.getLayer())        
     }
  	this.getMapData = function() {
 		return this._mapData; 	
@@ -175,25 +172,21 @@ function Map(javascript_console,applicationName)
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
    	 
-   
-      this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
+   	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
+      //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
       
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
-		// TODO: andere layers hieraan toevoegen.. gridlayer is nu alleen actief
-		this._gridLayer.draw(this.getMapWidth(),this.getMapHeight())
-		this._selectLayer.init()
-		this.stage.add(this._gridLayer.getLayer())
-		this.stage.add(this._tileLayer.getLayer())
-	   this.stage.add(this._selectLayer.getLayer())
-	   this.stage.add(this._itemLayer.getLayer())
+		// NOTE: wordt verplaatst naar LayerService
+		// TODO: Layer bootstrapping zou moeten gebeuren in een aparte Klasse.  Eens na gaan denken over een LayerService die verantwoordelijk is voor het aanmaken en verversen van Layers, tis nu een zooitje 
+		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
+		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
+		this._layerService.registerStage(this.stage)   
+
 		  
 		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
-		 if(currentContext._tileLayer != null) {
-       currentContext._tileLayer.renderTiles(imageData,data,true)
-    	 }
-    	 
+		 currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,true)  	 
 		});
 		this._militaryService.getMilitaryStrongholds(function(data) {
 			if(currentContext._itemLayer != null) {
@@ -205,7 +198,7 @@ function Map(javascript_console,applicationName)
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)
+					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)
 										    			
 		});
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
