@@ -8,7 +8,7 @@ var nationbuilderApp = angular.module('nationbuilderApp',[]);
 console.log("hier komt hij toch?")
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
-	 jsimport("services/baseservice.js","services/mapservice.js","services/userservice.js","services/militaryservice.js","services/territoryservice.js","map.js",function() {
+	 jsimport("services/baseservice.js","services/mapservice.js","services/userservice.js","services/militaryservice.js","services/territoryservice.js","map.js","engine/mapdata.js",function() {
 	 	console.log("hier ook dan?")
     var s = new MapService(); 
     var u = new UserService();

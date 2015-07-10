@@ -1,7 +1,8 @@
-jsimport("engine/mapdata.js",function() {
+
 
 function Map(javascript_console,applicationName)
 {
+	
 		this._mapData = new MapData();
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
@@ -197,4 +198,3 @@ function Map(javascript_console,applicationName)
    	return this._context;
    }   
 }
-});
