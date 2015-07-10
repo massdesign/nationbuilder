@@ -1,6 +1,7 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
+		this._eventBus = EventBus.instance;
 		// NOTE: wordt verplaatst naar LayerService
 	/*	this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
@@ -144,7 +145,9 @@ function Map(javascript_console,applicationName)
            objectToScale.draw();
            
            mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
-           this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
+      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+			  this._eventBus.notifyListeners(newEvent,true)
+         //  this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
            	 this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
          //  this.stage.remove(this._gridLayer.getLayer())
   			//  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
@@ -174,13 +177,19 @@ function Map(javascript_console,applicationName)
    	 
    	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
       //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
-      
+      var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
+
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
 		// NOTE: wordt verplaatst naar LayerService
-		// TODO: Layer bootstrapping zou moeten gebeuren in een aparte Klasse.  Eens na gaan denken over een LayerService die verantwoordelijk is voor het aanmaken en verversen van Layers, tis nu een zooitje 
-		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
+		// TODO: Layer bootstrapping zou moeten gebeuren in een aparte Klasse.  Eens na gaan denken over een LayerService die verantwoordelijk is voor het aanmaken en verversen van Layers, tis nu een zooitje
+		
+		// TODO: Layer bootstrapping moet gebeuren alvorens er events afgevuurd worden.. dit zorgt voor een fragiele architecteur
 		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
+		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+		this._eventBus.notifyListeners(newEvent,true)
+		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
+
 		this._layerService.registerStage(this.stage)   
 
 		  

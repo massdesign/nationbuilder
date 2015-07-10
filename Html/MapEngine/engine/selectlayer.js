@@ -5,6 +5,7 @@ this.parentMap = parentMap;
 this.loginstance = loginstance;
 
 this.currentClickedCoords = null;
+this._tileValues = null;
 
 this.init = function() {
 	
@@ -13,6 +14,7 @@ this._createBackgroundRect(2,2);
 this._mapService = new MapService();
 this._eventBus = EventBus.instance;
 this._eventBus.registerClass(this)
+//this._tileValues = Util.createArray()
 
 
 }
@@ -24,8 +26,38 @@ this.getLayer = function()
 // Event bus interface 
 this.getSubscribedEvents = function () {
 
-return [Event.GRID_INIT];
+return [Event.INIT_GRID,Event.MAP_SIZE_CHANGE];
 
+}
+// tevent = triggered event, payload is the message we want to get accross
+this.notify = function(tevent) {
+	
+	switch(tevent.getEventId()) {
+	case Event.INIT_GRID:
+		console.log("Init grid called")
+		
+		var x1 = tevent.getPayload()[0].getX();
+		var y1 = tevent.getPayload()[0].getY()
+
+		var x2 = tevent.getPayload()[1].getX();
+		var y2 = tevent.getPayload()[1].getY()
+
+	//	console.log("x1 = " + x1)
+	//	console.log("y1 = " + y1)
+	//	console.log("x2 = " + x2)
+	//	console.log("y2 = " + y2)
+	//	console.log("y2 = " + y2)
+	//	console.log("a1" + tevent.getPayload()[1].getA())		
+		
+		this._tileValues[x1][y1][0] = tevent.getPayload()[0].getA();
+		this._tileValues[x2][y2][1] = tevent.getPayload()[1].getA();
+	break;
+	case Event.MAP_SIZE_CHANGE:
+		console.log("Map size change called")
+	this._tileValues = Util.createArray(tevent.getPayload().getX(),tevent.getPayload().getY())
+	break;
+	}
+	return true;
 }
 
 this._showSelectedTile = function showSelectedTile(x,y)
@@ -92,22 +124,22 @@ this._createBackgroundRect = function(c_width,c_height)
     		for(var y=0;y<currenty;y++)
     		{ 
     		  // topleft 
-    		  var topleftx = this.parentMap.getTileValue(x,y,X_AXIS);
-    		  var toplefty = this.parentMap.getTileValue(x,y,Y_AXIS);
+    		  var topleftx = this._tileValues[x][y][X_AXIS];
+    		  var toplefty = this._tileValues[x][y][Y_AXIS];
     		  // topright
-    		  var toprightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
-    		  var toprighty = this.parentMap.getTileValue(x,y,Y_AXIS);
+    		  var toprightx = this._tileValues[x][y][X_AXIS] + this.parentMap.getRelativeTilesize();
+    		  var toprighty = this._tileValues[x][y][Y_AXIS];
+   		      		  
+    		  var bottomleftx = this._tileValues[x][y][X_AXIS];
+    		  var bottomlefty = this._tileValues[x][y][Y_AXIS] + this.parentMap.getRelativeTilesize()
     		      		  
-    		  var bottomleftx = this.parentMap.getTileValue(x,y,X_AXIS);
-    		  var bottomlefty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize()
-    		      		  
-    		  var bottomrightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
-    		  var bottomrighty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize();
+    		  var bottomrightx = this._tileValues[x][y][X_AXIS] + this.parentMap.getRelativeTilesize();
+    		  var bottomrighty = this._tileValues[x][y][Y_AXIS] + this.parentMap.getRelativeTilesize();
     		  if(mousePosx > topleftx && mousePosx < toprightx &&
     		  	 mousePosy > toprighty && mousePosy < bottomlefty)
     		  { 		   
-    		   	this._showSelectedTile(this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS));
-  					result = [this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS)];
+    		   	this._showSelectedTile(this._tileValues[x][y][X_AXIS],this._tileValues[x][y][Y_AXIS]);
+  					result = [this._tileValues[x][y][X_AXIS],this._tileValues[x][y][Y_AXIS]];
     		    	break;
     		  }
     		}

@@ -51,11 +51,10 @@ return this._layers[layer_id]
 }
 
 this.registerStage = function(stage) {
-console.log(this._layers)
+
 
 for (var key in this._layers) {
   if (this._layers.hasOwnProperty(key)) {
-  		console.log(this._layers[key])
   		stage.add(this._layers[key].getLayer())
   }
 }
