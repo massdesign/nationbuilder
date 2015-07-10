@@ -5,16 +5,21 @@ function EventBus() {
 this._registeredClasses = []
 
 this.registerClass = function(classInstance) {
-console.log(Reflection.className(classInstance))
+//console.log(Reflection.className(classInstance))
 this._registeredClasses.push(classInstance)
 
 }
-
+// TODO: dest parameter is optioneel.. dit moeten we opsplitsen
 this.notifyListeners = function (event_id,dest,payload) {
 
 console.log("dest: " + dest)
 
-
+	for(var i=0;i<this._registeredClasses.length;i++) {
+		// BROADCAST betekent gewoon naar alles wat geregisteerd is sturen ongeacht het type
+		if(event_id == EVENT.BROADCAST) {	
+			this._registeredClasses[i].
+		}
+	}
 }
 }
 

@@ -21,6 +21,12 @@ this.getLayer = function()
 	return this._layer;
 }
 
+// Event bus interface 
+this.getSubscribedEvents = function () {
+
+return [Event.GRID_INIT];
+
+}
 
 this._showSelectedTile = function showSelectedTile(x,y)
 {
