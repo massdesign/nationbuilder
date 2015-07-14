@@ -49,3 +49,5 @@ NB-42: Mogelijk maken een building te plaatsen in de gamewereld vanuit de GUI
 NB-43: Energybuilding en State entities opwaarderen met het TablePerClass systeem
 NB-44: minimaliseren van het exposen van database_ids,op teveel plekken wordt dit door de applicatie gebruikt
 NB-45: losse assets zoals military bases en iconen ook mee laten komen in het install process 
+NB-48: achtergrond als een plaatje renderen om geheugen te besparen
+NB-49: plaatjes in pythonserver al combineren in een PNG
