@@ -6,6 +6,8 @@ function TileLayer(parentMap,loginstance)
   // TODO: offset zou berekend moeten worden aan de grootte van de viewport
   this._xOffset = 7;
   this._yOffset = 7;
+  
+
 	this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
@@ -21,14 +23,18 @@ function TileLayer(parentMap,loginstance)
 			imagenames[imagedata[i].id] = imagedata[i].name
     	}
        	 data = this._sort(data);
-    	for(var i=0;i<data.length;i++) {
+		var layerOffset = 0; 
+    			
+		if(Config.RENDER_STATIC_BACKGROUND)      {
+			layerOffset = 1;		
+		}
+    	for(var i=layerOffset;i<data.length;i++) {
    		var tileLayer = data[i].layer;
 			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
 			 if (typeof currentOffset == 'undefined') {
 				 currentOffset = 0;		 
 			 }
    		 var tileLayertiles = tileLayer.tiles;
-
    		 for(var t=currentOffset;t<tileLayertiles.length;t++)
     		 {
     			var tiles = tileLayer.tiles;
