@@ -26,6 +26,7 @@ function Map(javascript_console,applicationName)
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
 	  	this._g_mapWidth = Config.MAP_WIDTH;
     	this._g_mapHeight = Config.MAP_HEIGHT;
+    	console.log("g map width is hier " + this._g_mapWidth)
         // TODO: replace width/height with tilesize we only support symmetrical tiles
     	this._g_tileWidth = Config.TILE_WIDTH;
     	this._g_tileHeight = Config.TILE_HEIGHT;
@@ -177,8 +178,11 @@ function Map(javascript_console,applicationName)
    	 
    	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
       //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
+      // TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
       var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
 
+		console.log("mapSize width: " + this._g_mapWidth+1)
+		console.log("other map width: " + this.getMapWidth() )
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
 		// NOTE: wordt verplaatst naar LayerService
