@@ -338,6 +338,8 @@ this.getInitialMapData = function(x,y,callback) {
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
 				var sections = currentContext._initialLoader(x,y)
+				sections = currentContext._cherryPickChunkLoading(sections)
+			
 				currentContext._fetchRecursive(sections,callback,0)
 				callback(currentContext.imageData, currentContext.data)
 			}
@@ -349,6 +351,23 @@ this.getInitialMapData = function(x,y,callback) {
 	
 	this.xOuter = x;
 	this.yOuter = y;
+}
+
+
+// NOTE: mogelijk dat deze functie in met de merge van NB-46 verplaatst moet worden 
+/*
+	cherry pick the sections needed for showing non background map tiles
+*/
+this._cherryPickChunkLoading = function(sections) { 
+
+console.log("sections that will be loaded")
+console.log(sections)
+
+
+
+
+
+	return sections;
 }
 
 /*
@@ -369,6 +388,12 @@ this.getMapData = function (treshold,callback) {
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
 			 	var sections = this._calculateMovement(treshold)
+			 	sections = this._cherryPickChunkLoading(sections)
+				
+				// Determine of all the sections that are calculated which one of these need to be fetched and which ones are background only
+				
+							 	
+			 	
 			 	this._fetchRecursive(sections,callback,0)
 		 }
 		else 

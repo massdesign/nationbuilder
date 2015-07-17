@@ -31,4 +31,8 @@ function MapService() {
 		this._baseService.doGetRequest('/tiles/find/' + x + "/" + y,callback)	
 	}
 	
+	this.markSectionsForFetching = function (sections) {
+
+	}
+	
 }

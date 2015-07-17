@@ -24,7 +24,7 @@ function TileLayer(parentMap,loginstance)
     	}
        	 data = this._sort(data);
 		var layerOffset = 0; 
-    			
+    			// skip de eerste layer als static background true is
 		if(Config.RENDER_STATIC_BACKGROUND)      {
 			layerOffset = 1;		
 		}
