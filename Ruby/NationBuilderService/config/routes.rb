@@ -35,6 +35,7 @@ NationBuilderMapsService::Application.routes.draw do
 
   resources :maps
   
+  post '/tiles/post/marksections', to: 'tiles#marksections', as: 'markedtiles'
   get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile1' 
   get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles1' 
   get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1'

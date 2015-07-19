@@ -363,6 +363,11 @@ this._cherryPickChunkLoading = function(sections) {
 console.log("sections that will be loaded")
 console.log(sections)
 
+this._mapservice.markSectionsForFetching(sections,
+function(data) {
+	
+	console.log("callback werkt")
+});
 
 
 

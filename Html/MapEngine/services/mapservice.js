@@ -31,7 +31,9 @@ function MapService() {
 		this._baseService.doGetRequest('/tiles/find/' + x + "/" + y,callback)	
 	}
 	
-	this.markSectionsForFetching = function (sections) {
+	this.markSectionsForFetching = function (sections,callback) {
+		// TODO: bekijken of de .json erachter netjes is anders hiervoor wat anders bedenken
+		this._baseService.doPostJsonRequest('/tiles/post/marksections.json',callback,sections)
 
 	}
 	

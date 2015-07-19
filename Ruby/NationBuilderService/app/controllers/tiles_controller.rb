@@ -13,6 +13,14 @@ class TilesController < ApplicationController
   # GET /tiles/1.json
   def show
   end
+  def marksections
+  	  logger.info "even kijken of dit werkt"  + params[:x].to_s
+    	@tilesection = Tilesection.new()
+			  
+	  	 respond_to do |format|
+		 format.json { render action: 'marksections', status: :created}
+		end 
+  end
   def getscreen
   	 xposrange = params[:width]
 	 yposrange = params[:height]  	 
