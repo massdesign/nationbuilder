@@ -144,50 +144,64 @@ public class SqlQueryManager
         String filename =  tableName + "_import.sql";
         String path = "/home/patrick/Git/nationbuilder/Temp/";
 
-        String filepath = path + filename;
+
+		File dirPath = new File(path);
 
 
-        try {
-            File importFile = new File(filepath);
-            if(!importFile.exists()) {
-                importFile.createNewFile();
-            }
-            PrintWriter writer = new PrintWriter(filepath,"UTF-8");
-            for(String sql : rows)
-            {
-                writer.println(sql);
-            }
+		if(!dirPath.exists())
+		{
+			dirPath.mkdir();
+		}
 
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			String filepath = path + filename;
 
-        ResponseData responseData = new SqlResponseData();
-		Connection conn = createConnection(this.database);
+			try
+			{
+				File importFile = new File(filepath);
+				if (!importFile.exists())
+				{
+					importFile.createNewFile();
+				}
+				PrintWriter writer = new PrintWriter(filepath, "UTF-8");
+				for (String sql : rows)
+				{
+					writer.println(sql);
+				}
 
-	    Statement statement  = (Statement) conn.createStatement();
-		statement.execute("SET UNIQUE_CHECKS=0;");
-		// bij wijze van concept eerst de tiles tabel proberen te inserten
-		statement.execute("ALTER TABLE " + tableName + " DISABLE KEYS");
+				writer.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 
-		String query = "LOAD DATA LOCAL INFILE '" + filepath + "' " +
-								"INTO TABLE " + tableName +
-                                " FIELDS TERMINATED BY ','";
-        statement.execute(query);
-		// Create StringBuilder to String that will become stream
-		StringBuilder builder = new StringBuilder();
-		InputStream is = IOUtils.toInputStream(builder.toString());
+			ResponseData responseData = new SqlResponseData();
+			Connection conn = createConnection(this.database);
 
-		// Setup our input stream as the source for the local infile
-		statement.setLocalInfileInputStream(is);
-		//Statement stmt = conn.createStatement();
-		//int rowsAffected  = stmt.executeUpdate(sql);
+			Statement statement = (Statement) conn.createStatement();
+			statement.execute("SET UNIQUE_CHECKS=0;");
+			// bij wijze van concept eerst de tiles tabel proberen te inserten
+			statement.execute("ALTER TABLE " + tableName + " DISABLE KEYS");
 
-		// Turn the checks back on
-		statement.execute("ALTER TABLE " + tableName + " ENABLE KEYS");
-		statement.execute("SET UNIQUE_CHECKS=1; ");
-		conn.close();
-		return responseData;
+			String query = "LOAD DATA LOCAL INFILE '" + filepath + "' " +
+						   "INTO TABLE " + tableName +
+						   " FIELDS TERMINATED BY ','";
+			statement.execute(query);
+			// Create StringBuilder to String that will become stream
+			StringBuilder builder = new StringBuilder();
+			InputStream is = IOUtils.toInputStream(builder.toString());
+
+			// Setup our input stream as the source for the local infile
+			statement.setLocalInfileInputStream(is);
+			//Statement stmt = conn.createStatement();
+			//int rowsAffected  = stmt.executeUpdate(sql);
+
+			// Turn the checks back on
+			statement.execute("ALTER TABLE " + tableName + " ENABLE KEYS");
+			statement.execute("SET UNIQUE_CHECKS=1; ");
+			conn.close();
+			return responseData;
+		}
+
 	}
-}
+

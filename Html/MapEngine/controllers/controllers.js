@@ -95,7 +95,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
     }    
-      	u.getUserById(66005,function(modelData) {
+      	u.getUserById(64330,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;
