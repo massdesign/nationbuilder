@@ -5,5 +5,5 @@ BUG_4: selectedObject Info werkt niet meer naar behoren. AngularJs bindings moet
 BUG_5: styling van de panels is een beetje door elkaar, moet opnieuw gelayout worden*
 BUG_6: filler werkt niet meer goed.. NB14.tmx laadt niet zoals verwacht
 BUG_7: bij het verplaatsen van het startpunt worden de pmbs(itemlayer) niet goed gerenderd, maar pakken naief de positie van het vorige startpunt
-
+BUG_8: er zit een fout in het datamodel. resource heeft onetoone mapping met tile. deze moet veranderd worden in onetomany zodat de koppeltabel tussen resourcetypes en resources wegkan
 
