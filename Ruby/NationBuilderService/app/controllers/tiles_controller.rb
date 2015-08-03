@@ -56,6 +56,10 @@ ActionController::Parameters.permit_all_parameters = true
       @image = Image.find(params[:imd])
       @image.tiles << @tile
     end
+    if params[:tti] != nil
+		@terraintype = Terraintype.find(params[:tti])   
+		@tile.terraintype = @terraintype 
+    end
     if params[:lmd] != nil
       @layer = Layer.find(params[:lmd])
       @layer.tiles << @tile
@@ -65,10 +69,12 @@ ActionController::Parameters.permit_all_parameters = true
     	@resource = Resource.find(params[:rid])
 	   @resource.tiles << @tile
 	 end 
-    #@tile.image = @image
-
-
-    
+    if params[:rids] != nil
+		params[:rids].each {	|x| 
+	 	@resource = Resource.find(x)	 
+	 	@tile.resources << @resource
+		}
+	end		
 Rails.logger.debug "tile params: " + params[:imd].to_s
   
     respond_to do |format|

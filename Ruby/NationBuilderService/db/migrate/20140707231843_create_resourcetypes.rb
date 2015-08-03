@@ -6,6 +6,7 @@ class CreateResourcetypes < ActiveRecord::Migration
       t.string :name
       t.string :location
       t.boolean :regenerating
+	  t.belongs_to :resource
     end
   end
 end

@@ -112,13 +112,19 @@ public class TiledMapConverter {
             }
             if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
             {
-                Resource resource =  this.rubyContext.createRubyModel(Resource.class);
-                resource.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
-                resource.addResourceType(this.getResourceType(0));
-                resource.addResourceType(this.getResourceType(1));
-                result.setResources(resource);
+                Resource resource1 =  this.rubyContext.createRubyModel(Resource.class);
+                Resource resource2 =  this.rubyContext.createRubyModel(Resource.class);
+
+                result.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
+
+                resource1.setResourceType(this.getResourceType(0));
+                resource2.setResourceType(this.getResourceType(1));
+                result.addResource(resource1);
+                result.addResource(resource2);
+                //result
                 // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
-                this.resources.add(resource);
+                this.resources.add(resource1);
+                this.resources.add(resource2);
             }
         }
         else

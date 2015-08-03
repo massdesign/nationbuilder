@@ -13,27 +13,31 @@ import java.util.List;
  */
 public class Resource extends BaseRubyModel {
 
-    @OneToMany(mapIdTo = "rtis")
-    private List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
-	@OneToOne(mapIdTo = "tti")
-    private TerrainType terrainType;
+   // @OneToMany(mapIdTo = "rtis")
+   // private List<ResourceType> resourceTypes = new ArrayList<ResourceType>();
+    @OneToOne(mapIdTo = "rti")
+    private ResourceType resourceType;
 
-    // terraintype for reference in backend
-    private String tti;
+   // private int [] rtis;
     // resourcetype for reference in backend
-    private int [] rtis;
-    public TerrainType getTerrainType() {
+    private String rti;
+  /*  public TerrainType getTerrainType() {
         return terrainType;
-    }
+    }*/
 
-    public void setTerrainType(TerrainType terrainType) {
+    /*public void setTerrainType(TerrainType terrainType) {
 
         Log.writeInfo("Teraintype: " + terrainType.getName());
         this.terrainType = terrainType;
+    }*/
+
+    public ResourceType getResourceType()
+    {
+        return resourceType;
     }
 
-    public void addResourceType(ResourceType resource)
+    public void setResourceType(ResourceType resourceType)
     {
-        this.resourceTypes.add(resource);
+        this.resourceType = resourceType;
     }
 }

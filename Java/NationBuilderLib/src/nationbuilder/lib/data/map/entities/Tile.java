@@ -1,5 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
+import java.util.ArrayList;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
@@ -20,8 +22,16 @@ public class Tile extends BaseRubyModel {
 	private MapImage image;
 	@OneToOne(mapIdTo = "lmd")
 	private Layer layer;
-	@OneToOne(mapIdTo = "rid")
-    private Resource resource;
+
+	@OneToOne(mapIdTo = "tti")
+	private TerrainType terrainType;
+
+	// terraintype for reference in backend
+	private String tti;
+
+	@OneToMany(mapIdTo = "rids")
+	private List<Resource> resources = new ArrayList<>();
+
 	public Layer getLayer() {
 		return layer;
 	}
@@ -34,6 +44,8 @@ public class Tile extends BaseRubyModel {
 	private String lmd;
     // resource id copied to local instance
     private String rid;
+
+	private int [] rids;
 	public int getImageId()
 	{
 		return  Integer.parseInt(this.image.getId().getId());
@@ -73,7 +85,7 @@ public class Tile extends BaseRubyModel {
     public void setGidtag(int resource_id) { this.gidtag = resource_id;  }
 	public Tile()
 	{
-		
+
 	}
 	public Tile(int xposition, int yposition, int xoffset, int yoffset) {
 		super();
@@ -82,13 +94,7 @@ public class Tile extends BaseRubyModel {
 		this.xoffset = xoffset;
 		this.yoffset = yoffset;
 	}
-    public Resource getResources() {
-        return resource;
-    }
 
-    public void setResources(Resource resources) {
-        this.resource = resources;
-    }
 
     public GameEntity getOwner() {
         return owner;
@@ -105,5 +111,23 @@ public class Tile extends BaseRubyModel {
     public void setClaimedBy(List<GameEntity> claimedBy) {
         this.claimedBy = claimedBy;
     }
+
+	public void addResource(Resource resource) {
+		this.resources.add(resource);
+	}
+
+	public List<Resource> getResources() {
+		return this.resources;
+	}
+
+	public TerrainType getTerrainType()
+	{
+		return terrainType;
+	}
+
+	public void setTerrainType(TerrainType terrainType)
+	{
+		this.terrainType = terrainType;
+	}
 
 }

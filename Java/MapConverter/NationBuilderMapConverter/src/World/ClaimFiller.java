@@ -54,13 +54,10 @@ public class ClaimFiller extends BaseFiller {
     private TerrainType getTerrainType(Tile tile)
     {
         TerrainType result = null;
-        if(tile.getResources() != null)
-        {
-            if(tile.getResources().getTerrainType() != null)
+            if(tile.getTerrainType() != null)
             {
-                result = tile.getResources().getTerrainType();
+                result = tile.getTerrainType();
             }
-        }
         return result;
     }
 
