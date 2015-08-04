@@ -29,13 +29,13 @@ class TilesController < ApplicationController
   end
   # GET /tiles/foo
   def find 
-  #TODO: find out if we can do this in one query.. we are doing 2 querys here.. first search for the tile then join the result together
-  @tile = Tile.where(xposition: params[:xposition],yposition: params[:yposition]).take
-  @resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
-
-   respond_to do |format|
- 		format.json { render action: 'find', status: :created, location: @resource }
-	 end
+  @tile = Tile.joins("LEFT JOIN claims ON tiles.id = claims.tile_id").joins(:resource).where(xposition: params[:xposition],yposition: params[:yposition]).take
+  
+  #@resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
+	#@resources = Resource.joins(:resourcetype).joins(:tile).where(tile_id: @tile.id)
+   #respond_to do |format|
+ 	#	format.json { render action: 'find', status: :created, location: @resources }
+	# end
   end
   # GET /tiles/new
   def new
