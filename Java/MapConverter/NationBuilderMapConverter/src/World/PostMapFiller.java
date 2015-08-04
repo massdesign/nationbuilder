@@ -49,9 +49,9 @@ public class PostMapFiller
 		for(Tile tile : tiles) {
 			// add all possible resources in the future we might add some randomisation here
 			addResourceToTile(tile,0);
-			addResourceToTile(tile,1);
-			addResourceToTile(tile,2);
-			addResourceToTile(tile,3);
+		//	addResourceToTile(tile,1);
+			//addResourceToTile(tile,2);
+			//addResourceToTile(tile,3);
 		}
 	}
 

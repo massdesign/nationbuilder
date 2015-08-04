@@ -7,12 +7,14 @@ function AngularBridge() {
 	this._controllerContext = null; 
 
 this.updateMapControllerScope = function(model) {
-	
+
 	if(this._controllerContext != null)
 	{
 		var $scope = angular.element(this._controllerContext).scope();
 		$scope.$apply(function() { 
+
 		$scope.mapData = model;	
+
 		});
 		
 	}
@@ -20,6 +22,8 @@ this.updateMapControllerScope = function(model) {
 	{
 			console.log("no controller set, can't complete request");
 	}
+	
+		console.log($scope)
 }
 
 

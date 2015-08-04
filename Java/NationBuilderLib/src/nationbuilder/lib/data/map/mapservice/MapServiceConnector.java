@@ -70,12 +70,6 @@ public class MapServiceConnector {
 	{
         this.addMap(dataset.getMap());
 
-        /*for(Resource resource : dataset.getResources())
-        {
-            this.addResource(resource);
-        }*/
-
-
 		for(Image image : dataset.getMapImages())
 		{
 			this.addImage(image);

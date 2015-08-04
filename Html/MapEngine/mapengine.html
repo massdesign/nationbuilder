@@ -56,8 +56,8 @@ Show grid <input type="checkbox" name="gridcontrol" value="showgrid" ng-click="s
 <div id="container" class="map"></div>
 <div class="selectedinfo">
  <b><label>Selected Object Info:</label></b><br/>
- <label>X: {{mapData.clickedTile.tile.tiles[0].tile.xposition}}</label> <label>Y: {{mapData.clickedTile.tile.tiles[0].tile.yposition}}</label><br/>	
- <label>Owner: {{mapData.clickedTile.tile.tiles[0].tile.claims[0].claim.state.name}} </label><br/>
+ <label>X: {{MapData._viewportx}}</label> <label>Y: {{mapData.clickedTile.tile.yposition}}</label><br/>	
+ <label>Owner: ? </label><br/>
  <label>Type: ? </label><br/><br/>
  &nbsp;<button title="Available actions" ng-click="availableactions($event)" class="pure-button">A</button>
 </div>
