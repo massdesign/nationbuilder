@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20150320000857) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tile_id"
+    t.integer  "resourcetype_id"
   end
 
   create_table "resourcetypes", force: true do |t|
@@ -117,7 +118,6 @@ ActiveRecord::Schema.define(version: 20150320000857) do
     t.string   "name"
     t.string   "location"
     t.boolean  "regenerating"
-    t.integer  "resource_id"
   end
 
   create_table "states", force: true do |t|
@@ -131,7 +131,6 @@ ActiveRecord::Schema.define(version: 20150320000857) do
 
   create_table "terraintypes", force: true do |t|
     t.string   "name"
-    t.integer  "tile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -146,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150320000857) do
     t.datetime "updated_at"
     t.integer  "layer_id"
     t.integer  "image_id"
+    t.integer  "terraintype_id"
   end
 
   create_table "users", force: true do |t|

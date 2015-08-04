@@ -19,8 +19,9 @@ public class Main {
         RubyContext context = new RubyContextFactory().createRubyContext();
 
         WorldLoader worldLoader = new WorldLoader(context);
+        worldLoader.Run();
 
-        Tile tile = context.createRubyModel(Tile.class);
+      /*  Tile tile = context.createRubyModel(Tile.class);
         Resource  resource = context.createRubyModel(Resource.class);
         ResourceType resourceType = context.createRubyModel(ResourceType.class);
         TerrainType terrainType  = context.createRubyModel(TerrainType.class);
@@ -38,9 +39,9 @@ public class Main {
         resourceType.Save("/resourcetypes");
         resource.Save("/resources/");
         terrainType.Save("/terraintypes");
-        tile.Save("/tiles/");
+        tile.Save("/tiles/"); */
         //context.SaveObject(resourceType,"")
-       // worldLoader.Run();
+
        // MilitaryStronghold base = context.createRubyModel(MilitaryStronghold.class);
        // base.setHealth(1000); 
        // base.setName("The Third Castle!");

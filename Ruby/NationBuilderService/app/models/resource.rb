@@ -1,4 +1,4 @@
 class Resource < ActiveRecord::Base
 belongs_to :tile
-has_one :resourcetype
+belongs_to :resourcetype
 end

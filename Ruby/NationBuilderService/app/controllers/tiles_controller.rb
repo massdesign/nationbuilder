@@ -58,7 +58,8 @@ ActionController::Parameters.permit_all_parameters = true
     end
     if params[:tti] != nil
 		@terraintype = Terraintype.find(params[:tti])   
-		@tile.terraintype = @terraintype 
+		@terraintype.tiles << @tile
+		#@tile.terraintype = @terraintype 
     end
     if params[:lmd] != nil
       @layer = Layer.find(params[:lmd])

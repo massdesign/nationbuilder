@@ -1,3 +1,3 @@
 class Terraintype < ActiveRecord::Base
-belongs_to :tile
+has_many :tiles
 end

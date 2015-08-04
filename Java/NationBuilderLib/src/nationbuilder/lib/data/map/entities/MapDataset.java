@@ -43,8 +43,8 @@ public class MapDataset {
         return resources;
     }
 
-    public void setResources(ArrayList<Resource> resources) {
+    /*public void setResources(ArrayList<Resource> resources) {
         this.resources = resources;
-    }
+    }*/
 
 }
