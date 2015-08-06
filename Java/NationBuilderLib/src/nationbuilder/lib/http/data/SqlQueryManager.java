@@ -27,17 +27,20 @@ public class SqlQueryManager
 	String password;
 	String serverLocation = "jdbc:mysql://";
     String database  = "";
+	String tempdirLocation = "";
     // Ruby ORM assets DB
     String rorm_assets = "rorm_assets";
 	Statement stmt = null;
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	public SqlQueryManager(String userName,String password,String serverLocation,String database) {
+	// TODO: consider packing all those properties into a object
+	public SqlQueryManager(String userName,String password,String serverLocation,String database,String tempdirLocation) {
 
 		this.userName = userName;
 		this.password = password;
 		this.serverLocation += serverLocation;
         this.database = database;
+		this.tempdirLocation = tempdirLocation;
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
@@ -48,6 +51,20 @@ public class SqlQueryManager
 		}
 	}
 
+	public int getCurrentID() throws SQLException
+	{
+		int currentint = 0;
+		Connection conn = this.createConnection(this.rorm_assets);
+
+		PreparedStatement selectStmt = conn.prepareStatement("SELECT MAX(ruby_object_counter) FROM object_count ");
+		selectStmt.execute();
+
+		ResultSet gks = selectStmt.getResultSet();
+		gks.next();
+		currentint = gks.getInt(1);
+
+		return currentint;
+	}
 
     public int getNextID() throws SQLException
 	{
@@ -142,7 +159,8 @@ public class SqlQueryManager
 	public ResponseData executeBulkInsert(List<String> rows,String tableName) throws SQLException
 	{
         String filename =  tableName + "_import.sql";
-        String path = "/home/patrick/Git/nationbuilder/Temp/";
+		String path = this.tempdirLocation;
+        //String path = "/home/patrick/Git/nationbuilder/Temp/";
 
 
 		File dirPath = new File(path);

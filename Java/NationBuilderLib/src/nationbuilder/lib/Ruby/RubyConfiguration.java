@@ -16,4 +16,5 @@ public class RubyConfiguration {
 	public static String mySqlPassword = "defcon1986";
 	public static String mySqlServer = "localhost";
     public static String mySqlDatabase  = "NationBuilder";
+	public static String mySqlTempDir = "/home/patrick/Git/nationbuilder/Temp/";
 }

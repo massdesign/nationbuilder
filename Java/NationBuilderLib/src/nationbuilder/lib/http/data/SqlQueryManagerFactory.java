@@ -12,7 +12,7 @@ public class SqlQueryManagerFactory
 	public SqlQueryManager createQueryManager()
 	{
 		SqlQueryManager result = new SqlQueryManager(RubyConfiguration.mySqlUsername, RubyConfiguration.mySqlPassword,
-		 RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase);
+		 RubyConfiguration.mySqlServer, RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
 
 		return result;
 	}

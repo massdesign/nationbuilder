@@ -46,5 +46,5 @@ public class ResourceType extends BaseRubyModel {
 
     public void setLocation(RESOURCELOCATION location) {
         this.location = location;
-    }
+        }
 }
