@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by patrick on 7/14/14.
  */
-public class PreFiller {
+public class    PreFiller {
 
     private RubyContext context;
     private ArrayList<BaseRubyModel> rubyModels;
@@ -41,13 +41,13 @@ public class PreFiller {
     }
 
     public void Fill() throws ObjectConversionFailedException {
+        fillTerrainTypes();
+
 		userFiller.Fill();
         energyBuildingFiller.Fill();
         cityFiller.Fill();
         warehouseFiller.Fill();
-       	// TODO: refactor these models also in the new BaseFiller model
-        fillTerrainTypes();
-        fillResourceTypes();
+
         this.save();
     }
 
@@ -92,28 +92,7 @@ public class PreFiller {
     }
 
 
-    private void fillResourceTypes()
-    {
-        this.rubyModels.add(createResourceType("Oil", false, RESOURCELOCATION.SUBTERRAINIAN));
-        this.rubyModels.add((createResourceType("Gold", false, RESOURCELOCATION.SUBSURFACE)));
-        this.rubyModels.add(createResourceType("Iron", false, RESOURCELOCATION.EMBEDDEDROCK));
-        this.rubyModels.add(createResourceType("Natural Gas", false, RESOURCELOCATION.CRUST));
-    }
-    private void fillTerrainTypes()
-    {
 
-        this.rubyModels.add(createTerrainType("WATER"));
-        this.rubyModels.add(createTerrainType("SEA"));
-		this.rubyModels.add(createTerrainType("INLANDCOAST"));
-		this.rubyModels.add(createTerrainType("INLANDSEA"));
-		this.rubyModels.add(createTerrainType("RIVER"));
-        this.rubyModels.add(createTerrainType("FOREST"));
-        this.rubyModels.add(createTerrainType("URBAN"));
-        this.rubyModels.add(createTerrainType("MOUNTAIN"));
-        this.rubyModels.add(createTerrainType("PLAINLAND"));
-        this.rubyModels.add(createTerrainType("COAST"));
-        this.rubyModels.add(createTerrainType("NONE"));
-    }
 /*
     private Tile createMapTile()
     {
@@ -126,21 +105,7 @@ public class PreFiller {
         return result;
     }*/
 
-    private TerrainType createTerrainType(String name)
-    {
-        TerrainType result = context.createRubyModel(TerrainType.class);
-        result.setName(name);
 
-        return result;
-    }
-    private  ResourceType createResourceType(String name,boolean regenerateing,RESOURCELOCATION location)
-    {
-        ResourceType result =  context.createRubyModel(ResourceType.class);
-        result.setName(name);
-        result.setRegenerating(regenerateing);
-        result.setLocation(location);
-        return result;
-    }
     private void save()
     {
 
@@ -157,7 +122,7 @@ public class PreFiller {
 
 
 
-        String resourceTypeUrl = "/resourcetypes";
+
         String terrainTypeUrl = "/terraintypes";
         String energyBuildingTypeUrl = "/energy_building_types";
         String energyBuildingUrl = "/energy_building_types";
@@ -170,10 +135,7 @@ public class PreFiller {
 				{
 					type.Save(terrainTypeUrl);
 				}
-				else if (type instanceof ResourceType)
-				{
-					type.Save(resourceTypeUrl);
-				}
+
 				else if (type instanceof EnergyBuildingType)
 				{
 					type.Save(energyBuildingTypeUrl);
@@ -191,6 +153,30 @@ public class PreFiller {
         }
 
 
+    }
+
+
+    private TerrainType createTerrainType(String name)
+    {
+        TerrainType result = context.createRubyModel(TerrainType.class);
+        result.setName(name);
+
+        return result;
+    }
+    private void fillTerrainTypes()
+    {
+
+        this.rubyModels.add(createTerrainType("WATER"));
+        this.rubyModels.add(createTerrainType("SEA"));
+        this.rubyModels.add(createTerrainType("INLANDCOAST"));
+        this.rubyModels.add(createTerrainType("INLANDSEA"));
+        this.rubyModels.add(createTerrainType("RIVER"));
+        this.rubyModels.add(createTerrainType("FOREST"));
+        this.rubyModels.add(createTerrainType("URBAN"));
+        this.rubyModels.add(createTerrainType("MOUNTAIN"));
+        this.rubyModels.add(createTerrainType("PLAINLAND"));
+        this.rubyModels.add(createTerrainType("COAST"));
+        this.rubyModels.add(createTerrainType("NONE"));
     }
 
 }

@@ -1,3 +1,7 @@
+
+Legenda: 
+* = issue afgerond
+(+) = issue gesloten  
 NB-2: javascript refactor*
 NB-3: mapresources feature branch*
 NB-4: AngularJs integration with frontend to represent resources datail*
@@ -26,7 +30,7 @@ NB-23: Inzoomen en uitzoomen laten samenwerken met de chunkloading dat geimpleme
 NB-24: Minimap tonen die ver uitgezoomde versie van de map laat zien 
 NB-25: Performance probleem met images query oplossen (query duurt nu 500+ms)
 NB-26: Seamless scrollen mogelijk maken 
-NB-27: Pixel clustering maken om de uitzoom limiet te vergroten 
+NB-27: Pixel clustering maken om de uitzoom limiet te vergroten(+)  
 NB-28: Productiewaardige omgeving regelen op de demo VPS
 NB-29: Turn based mechanisme ontwerpen op basis van de RubyDI
 NB-30: Mogelijk maken gebouw te plaatsen op een tile
@@ -45,3 +49,6 @@ NB-42: Mogelijk maken een building te plaatsen in de gamewereld vanuit de GUI
 NB-43: Energybuilding en State entities opwaarderen met het TablePerClass systeem
 NB-44: minimaliseren van het exposen van database_ids,op teveel plekken wordt dit door de applicatie gebruikt
 NB-45: losse assets zoals military bases en iconen ook mee laten komen in het install process 
+NB-48: achtergrond als een plaatje renderen om geheugen te besparen
+NB-49: plaatjes in pythonserver al combineren in een PNG
+NB-50: resources worden nu vanuit de filler statisch gevuld, eigenlijk willen we dit vanuit Tiled aan kunnen geven

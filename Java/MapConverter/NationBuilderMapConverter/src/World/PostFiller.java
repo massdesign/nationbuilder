@@ -12,7 +12,7 @@ public class PostFiller {
 
     private RubyContext context;
     private ClaimFiller claimFiller;
-
+    ;
     private MapDataset mapDataset;
     public PostFiller(RubyContext context)
     {
@@ -21,6 +21,7 @@ public class PostFiller {
     }
 
     public void Fill() throws ObjectConversionFailedException {
+
         this.claimFiller.Fill();
         this.save();
 
@@ -28,6 +29,7 @@ public class PostFiller {
     private void save()
     {
         this.claimFiller.Save(Claim.class,"/claims/");
+
     }
 
     public MapDataset getMapDataset() {
@@ -38,5 +40,6 @@ public class PostFiller {
         this.mapDataset = mapDataset;
         this.claimFiller.setMapDataset(mapDataset);
     }
+
 
 }

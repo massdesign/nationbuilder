@@ -41,7 +41,14 @@ public class WorldLoader {
         TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
         converter.Convert();
         this.mapDataset = converter.GetMapDataset();
+
+        PostMapFiller postMapFiller = new PostMapFiller(context);
+        postMapFiller.setMapDataset(this.mapDataset);
+        postMapFiller.Fill();
+
         MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
+
+        // Save the mapdata to the database
         mapsServiceConnector.addDataset(mapDataset);
     }
     public void PostFiller() throws ObjectConversionFailedException {
