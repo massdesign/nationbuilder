@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.BaseRubyModel;
 
 import java.util.List;
+import nationbuilder.lib.Ruby.ReferenceMapping;
 
 
 @Entity(tableName = "tiles")
