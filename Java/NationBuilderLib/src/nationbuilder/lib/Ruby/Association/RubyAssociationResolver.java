@@ -193,9 +193,7 @@ public class RubyAssociationResolver
 		   o =	field.getAnnotation(OneToMany.class);
 		   if(o != null)
 		   {
-			   result = null;
-			   // TODO: implement wanneer nodig
-			 //  result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToOne) o).mappedByClazz());
+			   result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToMany) o).mappedByClazz(), instance, field);
 		   }
 			else  {
 			   o = field.getAnnotation(ManyToOne.class);

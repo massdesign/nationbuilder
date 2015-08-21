@@ -41,10 +41,9 @@ public class Main {
         tile.addResource(resource);
         tile.setTerrainType(terrainType);
         resourceType.Save("/resourcetypes");
-        resource.Save("/resources/");
         terrainType.Save("/terraintypes");
         tile.Save("/tiles/");
-
+        resource.Save("/resources/");
 
         context.commit();
     }

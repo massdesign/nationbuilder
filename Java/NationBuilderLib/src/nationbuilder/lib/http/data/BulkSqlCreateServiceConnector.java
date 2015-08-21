@@ -91,11 +91,16 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                 try
                 {
                    RubyModel objectToReference =  mappingInfo.getInstance();
-                   RubyModel foreignKeyHolder = (RubyModel)mappingInfo.getField().get(mappingInfo.getInstance());
-                   Field objectReferenceField =  mappingInfo.getMappedByClazz().getDeclaredField(
-                    mappingInfo.getMappedBy());
-                   objectReferenceField.setAccessible(true);
-                   objectReferenceField.set(foreignKeyHolder,new ReferenceMapping(objectToReference.getId(),objectToReference.getClass()));
+
+                   Object foreignKeyHolderField = mappingInfo.getField().get(mappingInfo.getInstance());
+                    if(foreignKeyHolderField instanceof RubyModel)
+                    {
+                        resolveOneToOneForeignKeys(mappingInfo,objectToReference);
+                    }
+                    // NOTE: ik weet niet of list een goeie manier is om onderscheid te maken tussen een one to one of een one to many, maar voor nu werkt dit aardig
+                    else if(foreignKeyHolderField instanceof  List) {
+                        resovleOneToManyForeignKeys(mappingInfo,objectToReference);
+                    }
                 }
                 catch (IllegalAccessException e)
                 {
@@ -107,6 +112,29 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                 }
             }
         }
+    }
+    // TODO: hier in de toekomst een strategy pattern voor implementeren, als we dit gaan refactoren
+    private void resolveOneToOneForeignKeys(MappingInfo mappingInfo,RubyModel objectToReference) throws IllegalAccessException, NoSuchFieldException
+    {
+
+        RubyModel foreignKeyHolder = (RubyModel) mappingInfo.getField().get(mappingInfo.getInstance());
+        Field objectReferenceField = mappingInfo.getMappedByClazz().getDeclaredField(mappingInfo.getMappedBy());
+        objectReferenceField.setAccessible(true);
+        objectReferenceField
+         .set(foreignKeyHolder, new ReferenceMapping(objectToReference.getId(), objectToReference.getClass()));
+    }
+    private void resovleOneToManyForeignKeys(MappingInfo mappingInfo, RubyModel objectToReference) throws IllegalAccessException, NoSuchFieldException
+    {
+
+        List list =  (List)mappingInfo.getField().get(mappingInfo.getInstance());
+
+        Field objectReferenceField = mappingInfo.getMappedByClazz().getDeclaredField(mappingInfo.getMappedBy());
+        objectReferenceField.setAccessible(true);
+        for(Object foreignKeyHolder : list) {
+
+            objectReferenceField.set(foreignKeyHolder, new ReferenceMapping(objectToReference.getId(), objectToReference.getClass()));
+        }
+
     }
     public String resolveUnresolvedFields(RubyModel key,String value)
     {

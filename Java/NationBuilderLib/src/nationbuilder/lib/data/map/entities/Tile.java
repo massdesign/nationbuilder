@@ -36,7 +36,7 @@ public class Tile extends BaseRubyModel {
 	// terraintype for reference in backend
 	private String tti;
 
-	@OneToMany(mapIdTo = "rids")
+	@OneToMany(mapIdTo = "rids",mappedBy = "tile",mappedByClazz = Resource.class)
 	private List<Resource> resources = new ArrayList<>();
 
 	public Layer getLayer() {

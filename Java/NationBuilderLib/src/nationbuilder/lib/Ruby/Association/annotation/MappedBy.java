@@ -6,4 +6,5 @@ package nationbuilder.lib.Ruby.Association.annotation;
 public class MappedBy {
 
 public static final String SELF = "SELF";
+public static final String FOREIGN_ENTITY="id";
 }

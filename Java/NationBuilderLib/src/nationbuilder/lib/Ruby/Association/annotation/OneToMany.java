@@ -13,4 +13,8 @@ import java.lang.annotation.Target;
 public @interface OneToMany
 {
 	String mapIdTo() default "";
+
+	String mappedBy() default "";
+
+	Class mappedByClazz() default Object.class;
 }

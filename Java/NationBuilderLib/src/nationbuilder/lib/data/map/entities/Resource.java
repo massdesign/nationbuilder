@@ -24,6 +24,9 @@ public class Resource extends BaseRubyModel {
     @OneToOne(mapIdTo = "rti")
     private ResourceType resourceType;
 
+
+    @ManyToOne(mapIdTo = MappedBy.SELF)
+    private ReferenceMapping tile;
    // private int [] rtis;
     // resourcetype for reference in backend
     private String rti;
