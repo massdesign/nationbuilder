@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.ID;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.http.data.QueryManager;
 import nationbuilder.lib.http.data.ResponseData;
 import nationbuilder.lib.http.data.SqlQueryManager;
 import nationbuilder.lib.http.data.SqlResponseData;
@@ -27,8 +28,8 @@ public class SqlObjectBuilder implements ObjectBuilder
 
     private HashMap<String,TableMetaData> sortedTables;
 
-    private SqlQueryManager queryManager;
-    public SqlObjectBuilder(SqlQueryManager queryManager)
+    private QueryManager queryManager;
+    public SqlObjectBuilder(QueryManager queryManager)
     {
         this.sqlObjectToRowConverter = new SqlObjectToRowConverter();
         this.sortedTables = new HashMap<>();

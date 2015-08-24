@@ -21,7 +21,7 @@ import org.apache.commons.io.IOUtils;
 /**
  * Created by patrick on 12/15/14.
  */
-public class SqlQueryManager
+public class SqlQueryManager implements QueryManager
 {
 	String userName;
 	String password;

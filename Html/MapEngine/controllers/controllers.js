@@ -2,7 +2,7 @@
 var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
-
+	 
     var s = new MapService(); 
     var u = new UserService();
     var ms = new MilitaryService();
@@ -95,8 +95,8 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     	
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
-    }    
-      	u.getUserById(64330,function(modelData) {
+    }    // NOTE: Als dit faalt loopt de rest van de applicatie in de soep.. Het is niet handig dat we telkens handmatig dit Id moeten verhogen.. 
+      	u.getUserById(90565,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;

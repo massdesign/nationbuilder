@@ -1,9 +1,6 @@
 package nationbuilder.lib.http;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
-
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
