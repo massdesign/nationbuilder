@@ -199,7 +199,8 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
         // TODO: call the resolveRelationService here.
         RelationResolveService relationResolveService = RubyDataServiceAccessor.getInstance().getService(RelationResolveService.class);
         RelationScanService relationScanService = RubyDataServiceAccessor.getInstance().getService(RelationScanService.class);
-        relationResolveService.resolveForeignKeys(relationScanService.scanForRelations(poit));
+        relationResolveService.resolveForeignKeys(relationScanService.scanForRelations(
+         this.persistedObjects.entrySet().iterator()));
 
         //resolveForeignKeys(scanPersistedObjectsForRelations());
 
