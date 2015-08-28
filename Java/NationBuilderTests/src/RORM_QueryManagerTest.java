@@ -1,14 +1,11 @@
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import nationbuilder.lib.http.data.SqlQueryManager;
+import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.sql.TableMetaData;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import test.sql.helper.SqlTestHelper;
 
 /**
  * @author patrick.ekkel

@@ -3,14 +3,12 @@ package nationbuilder.lib.data.map.entities;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 
 
-import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import java.util.ArrayList;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 import java.util.List;
-import nationbuilder.lib.Ruby.ReferenceMapping;
 
 
 @Entity(tableName = "tiles")

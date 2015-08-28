@@ -1,21 +1,17 @@
 package nationbuilder.lib.sql;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
-import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
-import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.Ruby.ReferenceMapping;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 import nationbuilder.lib.Ruby.RubyPluralizer;
 
 /**

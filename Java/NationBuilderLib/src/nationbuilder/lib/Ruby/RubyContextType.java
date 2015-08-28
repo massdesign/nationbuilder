@@ -5,5 +5,5 @@ package nationbuilder.lib.Ruby;
  */
 public enum RubyContextType
 {
-	DEFAULT,JSON, BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT
+	DEFAULT,JSON, BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,TEST
 }

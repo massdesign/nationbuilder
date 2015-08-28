@@ -1,4 +1,4 @@
-import nationbuilder.lib.http.data.BulkSqlCreateServiceConnector;
+import nationbuilder.lib.sql.connectors.BulkSqlCreateServiceConnector;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,6 +16,7 @@ public class BulkSqlCreateServiceConnectorTest {
 
         BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null);
 
+       // connector.resolveUnresolvedFields();
 
         Assert.fail();
 

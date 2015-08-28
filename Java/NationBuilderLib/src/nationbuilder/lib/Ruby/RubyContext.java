@@ -9,6 +9,7 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.Ruby.orm.objectfactories.RubyObjectFactoryImpl;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 

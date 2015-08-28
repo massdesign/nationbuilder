@@ -6,7 +6,7 @@ package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
  * Used as a base class for all actors in the game..

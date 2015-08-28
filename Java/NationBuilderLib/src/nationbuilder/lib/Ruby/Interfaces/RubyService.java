@@ -1,13 +1,10 @@
 package nationbuilder.lib.Ruby.Interfaces;
 
 import nationbuilder.lib.Ruby.Exceptions.*;
-import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
-import nationbuilder.lib.http.data.HttpResponseData;
-import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.data.map.ResponseData;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 /**
  * Created by patrick on 7/8/14.

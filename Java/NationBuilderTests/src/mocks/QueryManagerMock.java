@@ -1,8 +1,9 @@
 package mocks;
 
 import nationbuilder.lib.http.data.HttpResponseData;
-import nationbuilder.lib.http.data.QueryManager;
-import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.sql.QueryManager;
+import nationbuilder.lib.data.map.ResponseData;
+import nationbuilder.lib.sql.ColumnMetaData;
 import nationbuilder.lib.sql.TableMetaData;
 
 import java.sql.SQLException;
@@ -35,7 +36,20 @@ public class QueryManagerMock implements QueryManager
 
     @Override
     public TableMetaData getTableStructure(String tableName) throws SQLException {
-        return null;
+
+        TableMetaData tableMetaData = new TableMetaData();
+
+        tableMetaData.addColumn(new ColumnMetaData("a","varchar(11)"));
+        tableMetaData.addColumn(new ColumnMetaData("b","varchar(11)"));
+        tableMetaData.addColumn(new ColumnMetaData("c","varchar(11)"));
+        tableMetaData.addColumn(new ColumnMetaData("d","varchar(11)"));
+
+        tableMetaData.addColumn(new ColumnMetaData("e","int(11)"));
+        tableMetaData.addColumn(new ColumnMetaData("f","int(11)"));
+
+
+        return tableMetaData;
+
     }
 
     @Override

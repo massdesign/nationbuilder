@@ -3,7 +3,6 @@ package nationbuilder.lib.Ruby.Association;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
@@ -15,13 +14,11 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import nationbuilder.lib.Ruby.ID;
-import nationbuilder.lib.Ruby.ReferenceMapping;
+import nationbuilder.lib.Ruby.orm.ID;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * Created by patrick on 7/23/14.

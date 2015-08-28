@@ -1,6 +1,7 @@
 package nationbuilder.lib.http.data;
 
 import java.util.HashMap;
+import nationbuilder.lib.data.map.ResponseData;
 
 public class HttpResponseData implements ResponseData
 {

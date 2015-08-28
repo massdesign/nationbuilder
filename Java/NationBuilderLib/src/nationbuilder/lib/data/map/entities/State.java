@@ -1,7 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.*;
-import nationbuilder.lib.Ruby.ReferenceMapping;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * Created by patrick on 9/18/14.

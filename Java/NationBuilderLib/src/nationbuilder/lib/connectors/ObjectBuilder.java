@@ -1,10 +1,8 @@
 package nationbuilder.lib.connectors;
 
-import java.sql.SQLException;
-
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.data.map.ResponseData;
 
 /**
  * Created by patrick on 12/11/14.

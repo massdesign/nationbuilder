@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import nationbuilder.lib.Ruby.orm.ID;
 
 /**
  * Created by patrick on 7/16/14.

@@ -8,8 +8,7 @@ import java.util.Map;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.Ruby.Interfaces.RubyService;
-import nationbuilder.lib.Ruby.RubyConfiguration;
+import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 

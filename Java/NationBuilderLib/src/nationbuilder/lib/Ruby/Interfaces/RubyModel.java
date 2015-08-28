@@ -1,7 +1,7 @@
 package nationbuilder.lib.Ruby.Interfaces;
 
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.ID;
+import nationbuilder.lib.Ruby.orm.ID;
 
 import java.io.Serializable;
 

@@ -3,14 +3,12 @@ package World;
 
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
-import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by patrick on 7/14/14.

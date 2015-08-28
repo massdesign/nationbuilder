@@ -1,9 +1,10 @@
 import mocks.QueryManagerMock;
+import mocks.TestModel;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.ID;
+import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.connectors.SqlObjectBuilder;
-import nationbuilder.lib.http.data.SqlResponseData;
+import nationbuilder.lib.sql.SqlResponseData;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,9 +31,11 @@ public class SqlObjectBuilderTest {
 
         SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(new QueryManagerMock());
 
-        ID objectToConvert = new ID();
-        objectToConvert.setId("98012");
+        String result =  sqlObjectBuilder.createStringFromObject(new TestModel());
 
-       String result =  sqlObjectBuilder.createStringFromObject(null);
+        String expected = "a,b,c,d,1,2";
+        String actual = result;
+        Assert.assertEquals(expected,actual);
+
     }
 }

@@ -4,17 +4,13 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
-import nationbuilder.lib.Ruby.ID;
+import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.HttpResponseData;
-import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.data.map.ResponseData;
 
 /**
  * Created by patrick on 12/11/14.

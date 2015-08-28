@@ -6,8 +6,9 @@ import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.connectors.ObjectBuilder;
-import nationbuilder.lib.http.data.ResponseData;
+import nationbuilder.lib.data.map.ResponseData;
 
 import java.io.IOException;
 import java.util.List;

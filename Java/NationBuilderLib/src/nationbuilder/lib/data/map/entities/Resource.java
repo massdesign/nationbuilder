@@ -1,16 +1,12 @@
 package nationbuilder.lib.data.map.entities;
 
-import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
-import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import nationbuilder.lib.Ruby.ReferenceMapping;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * Created by patrick on 7/15/14.

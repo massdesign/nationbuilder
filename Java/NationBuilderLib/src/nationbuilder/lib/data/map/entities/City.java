@@ -2,11 +2,12 @@ package nationbuilder.lib.data.map.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 
 /**
  * Created by patrick on 1/5/15.
  */
+@Entity(tableName = "cities")
 public class City extends GameEntity
 {
 	// The name of the city

@@ -2,7 +2,7 @@ package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToMany;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
  * Created by patrick on 10/6/14.

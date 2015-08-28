@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.MapDataset;
