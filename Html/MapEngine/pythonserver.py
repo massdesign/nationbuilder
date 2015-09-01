@@ -4,10 +4,10 @@ import socketserver
 import cgi
 from urllib.request import Request
 from urllib.request import urlopen
-from localMapService import mapservice
-from localMapService import cacheservice
-from localMapService import tileset
-from localMapService import log
+from nbwebservice.localMapService import mapservice
+from nbwebservice.localMapService import cacheservice
+from nbwebservice.localMapService import tileset
+from nbwebservice.localMapService import log
 from subprocess import call
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	

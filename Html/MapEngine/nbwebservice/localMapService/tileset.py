@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from PIL import Image
-from localMapService import tile
-from localMapService import log
+from nbwebservice.localMapService import tile
+from nbwebservice.localMapService import log
 
 
 class TileSet:

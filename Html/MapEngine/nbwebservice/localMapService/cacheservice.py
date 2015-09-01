@@ -3,7 +3,7 @@ import os
 import shutil
 import numpy
 from PIL import Image
-from localMapService import log
+from nbwebservice.localMapService import log
 
 
 class Cacheservice:
