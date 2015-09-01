@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import os.path
 global WARN
 WARN = "WARN"
 global ERR
@@ -9,13 +9,22 @@ INFO = "INFO"
 
 
 def log(message,level):
+    result = ""
     if level == "WARN":
-        print("WARNING: " + message)
+        result = "WARNING: " + message
     elif level == "ERROR":
-        print("ERROR: " + message)
+        result = "ERROR: " + message
     elif level == "INFO":
-        print("INFO: " + message)
-
+        result = "INFO: " + message
+    
+    if os.path.isfile('ps.log') is not True:
+    	file = open('ps.log', 'w+')
+    else: 
+      file = open('ps.log', 'a') 	
+    file.write(result + "\n")
+    
+    file.close()
+    print(result)
 
 def loginfo(message):
     log(message,INFO)

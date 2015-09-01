@@ -8,11 +8,17 @@ from nbwebservice.localMapService import mapservice
 from nbwebservice.localMapService import cacheservice
 from nbwebservice.localMapService import tileset
 from nbwebservice.localMapService import log
+from nbwebservice.configService import getconfig
 from subprocess import call
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
-
+	commonConfigFile = "/home/patrick/Git/nationbuilder/Html/MapEngine/config/config.js"
 	def createMapCache(self):
+		
+		config = getconfig.ConfigReader(self.commonConfigFile)
+		if config.getProperty("RENDER_STATIC_BACKGROUND") is True:
+			log.loginfo("generating static background in 20x20x32 for tilemap")
+		
 		mservice = mapservice.MapsService()
 		print(mservice)
 		cservice = cacheservice.Cacheservice()
@@ -45,7 +51,7 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 		self.send_header("Content-length", len(content))
 		self.end_headers()
 		self.wfile.write(content)
-		print(dbrequest)
+		log.loginfo(dbrequest)
 		#return http.server.SimpleHTTPRequestHandler.do_POST(self)
 	def do_GET(self):
 		disableCache = True
@@ -82,14 +88,14 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			content = ""
 			# TODO: assets opnemen als een data die tijdens install mee moet komen 
 			if self.path.endswith("js") or ("ncache" in self.path) or self.path.endswith("css") or ("assets" in self.path):
-				print("non cacheable resource requested")
+				log.loginfo("non cacheable resource requested")
 				return http.server.SimpleHTTPRequestHandler.do_GET(self)
 			if disableCache:
-				print("cacheservice disabled")
+				log.loginfo("cacheservice disabled")
 				html = urlopen(dbrequest)
 				content = html.read()
 			elif not cservice.isRequestInCache(self.path):
-			 print("resource not found in cache")
+			 log.loginfo("resource not found in cache")
 			 html = urlopen(dbrequest)
 			 content = html.read()
 			 cservice.saveStringFile(self.path.replace('/','_'),content.decode())
