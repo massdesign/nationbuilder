@@ -21,5 +21,10 @@ class ConfigReader:
         if util.str2bool(result) is not None:
         		# it is boolean
        		result = util.str2bool(result)
+        else:
+        	 result = result.replace("\"","")
+        	 
+        return result
+       		      		
         # Voor nu gaan we er vanuit dat als het geen boolean is dan is het een string		
-        return result.replace("\"","")
+       

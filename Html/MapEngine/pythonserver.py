@@ -8,6 +8,7 @@ from nbwebservice.localMapService import mapservice
 from nbwebservice.localMapService import cacheservice
 from nbwebservice.localMapService import tileset
 from nbwebservice.localMapService import log
+from nbwebservice.localMapService import background
 from nbwebservice.configService import getconfig
 from subprocess import call
 
@@ -15,13 +16,16 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 	commonConfigFile = "/home/patrick/Git/nationbuilder/Html/MapEngine/config/config.js"
 	def createMapCache(self):
 		
-		config = getconfig.ConfigReader(self.commonConfigFile)
-		if config.getProperty("RENDER_STATIC_BACKGROUND") is True:
-			log.loginfo("generating static background in 20x20x32 for tilemap")
-		
+		bg = None
 		mservice = mapservice.MapsService()
 		print(mservice)
 		cservice = cacheservice.Cacheservice()
+		config = getconfig.ConfigReader(self.commonConfigFile)
+		if config.getProperty("RENDER_STATIC_BACKGROUND") is True:
+			log.loginfo("generating static background in 20x20x32 for tilemap")
+			bg = background.Background(config.getProperty("STATIC_BACKGROUND_PATTERN"),cservice)
+			
+				
 		mapdata =  mservice.getImages()
 		for element in mapdata:
 			image = 'nan'
@@ -33,6 +37,8 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 
 			tset = tileset.TileSet(cservice.getFilePath("ts_" + element['name']),cservice)
 			tset.unpack()
+			if bg is not None:
+				bg.create()
 	def do_POST(self):
 
 		content_len = int(self.headers['content-length'])
