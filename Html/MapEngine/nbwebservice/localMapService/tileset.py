@@ -5,6 +5,7 @@ from nbwebservice.localMapService import log
 
 
 class TileSet:
+	 # TODO: dit opslaan in een globale config file (misschien is config.js een goede plek voor dit)
     width = 32
     height = 32
     _filename = "nan"

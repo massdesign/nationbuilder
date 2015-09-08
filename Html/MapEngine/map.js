@@ -5,6 +5,7 @@ function Map(javascript_console,applicationName)
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
+		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
@@ -29,7 +30,8 @@ function Map(javascript_console,applicationName)
 
       this._imagedata = isNaN;
       this._data = isNaN;
-    	
+    
+    	this.layers.push(this._backgroundLayer)	
     	this.layers.push(this._tileLayer);
     	this.layers.push(this._selectLayer);
     	this.layers.push(this._gridLayer);
@@ -140,6 +142,9 @@ function Map(javascript_console,applicationName)
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
+   	 
+   	 this._backgroundLayer.init()
+   	 
 
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
 
@@ -163,6 +168,7 @@ function Map(javascript_console,applicationName)
 				currentContext._itemLayer.renderItems(data)
 			} 
 		});
+		
 		
    }
    this.move = function () {
