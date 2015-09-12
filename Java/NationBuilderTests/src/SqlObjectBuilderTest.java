@@ -1,5 +1,5 @@
 import mocks.QueryManagerMock;
-import mocks.TestModel;
+import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.orm.ID;
@@ -31,7 +31,7 @@ public class SqlObjectBuilderTest {
 
         SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(new QueryManagerMock());
 
-        String result =  sqlObjectBuilder.createStringFromObject(new TestModel());
+        String result =  sqlObjectBuilder.createStringFromObject(new TestModel1());
 
         String expected = "a,b,c,d,1,2";
         String actual = result;

@@ -1,4 +1,4 @@
-import mocks.TestModel;
+import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.sql.ObjectMap;
 import nationbuilder.lib.sql.SqlObjectToRowConverter;
@@ -18,10 +18,10 @@ public class SqlObjectToRowConverterTest
 
         SqlObjectToRowConverter sqlObjectToRowConverter = new SqlObjectToRowConverter();
 
-        ObjectMap result =  sqlObjectToRowConverter.createObjectMap(new TestModel());
+        ObjectMap result =  sqlObjectToRowConverter.createObjectMap(new TestModel1());
 
         Assert.assertNotNull(result);
-        Assert.assertEquals(result.getKvMap().size(),7);
+        Assert.assertEquals(result.getKvMap().size(),8);
 
 
         Assert.assertNotNull(result.getKvMap().get("a"));
