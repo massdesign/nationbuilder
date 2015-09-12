@@ -4,6 +4,8 @@ class Tilesection
  
  attr_accessor:x
  attr_accessor:y
- attr_accessor:fetchable 
+ 
+ attr_accessor:width
+ attr_accessor:height
  
 end

@@ -13,10 +13,16 @@ class TilesController < ApplicationController
   # GET /tiles/1.json
   def show
   end
-  def marksections
-  	  logger.info "even kijken of dit werkt"  + params[:x]#.to_s
+  def fetchsections
+  	  	
+	   params[:_json].each  do  |i| 
+			#logger.info  "zou die het doen?" + i.to_s	   
+			logger.info "X=" + i[:X].to_s
+			logger.info "Y=" + i[:Y].to_s
+	   end
+  	  
     	@tilesection = Tilesection.new()
-			  
+    				  
 	  	 respond_to do |format|
 		 format.json { render action: 'marksections', status: :created}
 		end 

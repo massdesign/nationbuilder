@@ -257,6 +257,8 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
 			if(!this.isAlreadyFetched(xOuter, yOuter, x2load, y2load)) {
+				
+				// TODO: deze call wordt dus vervangen voor een stel secties die al opgehaald zijn met een query en daarna toegevoegd  worden aan de lijst van gerenderde  tiles
 				this._mapservice.getMap(function (mapData) {
 									
 					var newData = mapData[0]['layers'];
@@ -338,10 +340,13 @@ this.getInitialMapData = function(x,y,callback) {
 		currentContext._mapservice.getImages(function (imagedata) {
 				currentContext.imageData = imagedata;
 				var sections = currentContext._initialLoader(x,y)
-				sections = currentContext._cherryPickChunkLoading(sections)
-			
-				currentContext._fetchRecursive(sections,callback,0)
-				callback(currentContext.imageData, currentContext.data)
+				//sections = currentContext._cherryPickChunkLoading(sections)
+				//currentContext._fetchRecursive(sections,callback,0)
+				currentContext._mapservice.fetchSections(sections,function(data) {
+				
+					console.log("hij doet het")				
+				});
+				//callback(currentContext.imageData, currentContext.data)
 			}
 
 		);
@@ -367,6 +372,7 @@ this._mapservice.markSectionsForFetching(sections,
 function(data) {
 	
 	console.log("callback werkt")
+	console.log(data)
 });
 
 
