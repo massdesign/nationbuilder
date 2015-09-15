@@ -256,6 +256,10 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			var currentContext = this;
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
+			console.log("xOuter= " +  xOuter)
+			console.log("yOuter= " + yOuter);
+			console.log("width = " + width)
+			console.log("height= " + height)
 			if(!this.isAlreadyFetched(xOuter, yOuter, x2load, y2load)) {
 				
 				// TODO: deze call wordt dus vervangen voor een stel secties die al opgehaald zijn met een query en daarna toegevoegd  worden aan de lijst van gerenderde  tiles
@@ -316,7 +320,7 @@ var currentContext = this;
 				});
 }
 
-// TODO: getInitialMapData and GetMapData are dependend on each other, consider loose coupling between the two or integrate more
+// TODO: getMapData and GetMapData are dependend on each other, consider loose coupling between the two or integrate more
 
 /*
 Get the initialscreen from where the user can scroll left or right
@@ -346,7 +350,7 @@ this.getInitialMapData = function(x,y,callback) {
 				
 					console.log("hij doet het")				
 				});
-				//callback(currentContext.imageData, currentContext.data)
+				callback(currentContext.imageData, currentContext.data)
 			}
 
 		);
@@ -368,12 +372,12 @@ this._cherryPickChunkLoading = function(sections) {
 console.log("sections that will be loaded")
 console.log(sections)
 
-this._mapservice.markSectionsForFetching(sections,
+/*this._mapservice.markSectionsForFetching(sections,
 function(data) {
 	
 	console.log("callback werkt")
 	console.log(data)
-});
+});*/
 
 
 
