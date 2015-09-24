@@ -32,7 +32,7 @@ function MapService() {
 	}
 	
 	this.fetchSections = function (sections,callback) {
-		this._baseService.doPostJsonRequest('/tiles/post/fetchsections.json',callback,sections)	
+		this._baseService.doPostJsonRequest('/maps/post/fetchsections.json',callback,sections)	
 	}
 	
 	// NOTE: we gaan secties  in een query ophalen en niet apart per sectie markeren wat er opgehaald gaat worden
