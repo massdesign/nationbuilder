@@ -35,6 +35,12 @@ class MapsController < ApplicationController
 		# TODO: Deze moeten we uit config.js halen.. Hier moeten we nog wat op vinden  		
   		@section_width = 7
   		@section_height = 7
+  		@lowestX = -1 
+  		@lowestY = -1
+  		
+  		@highestX = -1
+  		@highestY = -1 
+  		
   		
   		@tiles = Array.new  	  		
 	   params[:_json].each  do  |i| 
@@ -42,19 +48,61 @@ class MapsController < ApplicationController
 			#logger.info  "zou die het doen?" + i.to_s	   
 			logger.info "X=" + i[:X].to_s
 			logger.info "Y=" + i[:Y].to_s
-			@xOuter1 = i[:X]
-			@yOuter1 = i[:Y]
-			@xOuter2 = @xOuter1 + @section_width
-			@yOuter2 = @yOuter1 + @section_height 			
+			if i[:X] > @highestX
+				@highestX = i[:X]
+			end
+			if i[:Y] > @highestY
+				@highestY = i[:Y]		  
+			end
+			 
+			if i[:X] != -1 and i[:X] < @lowestX
+				@lowestX = i[:X]
+			elsif @lowestX == -1 
+				@lowestX = i[:X]			
+			end
+		
+			if i[:Y] != -1 and i[:Y] < @lowestY
+				@lowestY = i[:Y]			
+			elsif @lowestY == -1
+				@lowestY = i[:Y] 		
+			end
+			# we gaan er even vanuit dat dit klopt. 			
+				
+				
+				
+
+				
+
+			#elsif @lowestX == -1
+			#	@lowestX = i[:X]
+			
+
+			
+			#@xOuter1 = i[:X]
+			#@yOuter1 = i[:Y]
+			#@xOuter2 = @xOuter1 + @section_width
+			#@yOuter2 = @yOuter1 + @section_height 			
 			
 			# Eerst situatie maken zodat alle elke sectie in zijn eigen query opgehaald word. Als dat werkt kunnen we kijken naar optimalisatie
-			@tiles += Tile.find(:all,:conditions => 
-  	 		{ :xposition => @xOuter1..@xOuter2,
-  	   	  :yposition => @yOuter1..@yOuter2
-  	 		})
-  	 		  logger.info "Collected tiles" + @tiles.size.to_s
-  	 		
+			#@tiles += Tile.find(:all,:conditions => 
+  	 		#{ :xposition => @xOuter1..@xOuter2,
+  	   	#  :yposition => @yOuter1..@yOuter2
+  	 		#})
+  	 		#  logger.info "Collected tiles" + @tiles.size.to_s
+  	 			
 	   end			  
+	   	logger.info "Lowest  X: " + @lowestX.to_s	
+			logger.info "Lowest  Y: " + @lowestY.to_s	
+			logger.info "Highest X: " + @highestX.to_s	
+			logger.info "Highest Y: " + @highestY.to_s	
+							
+	   	@highestX += 3
+			@highestY += 3
+			@maps = Map.includes([
+  	 		{
+  	 		 :layers => [:tiles]
+  	 		}
+  	 		]).where(:tiles => { :xposition => @lowestX..@highestX,:yposition => @lowestY..@highestY})
   end  
   
   # current getscreen supports only one map. If we need more we will implement this

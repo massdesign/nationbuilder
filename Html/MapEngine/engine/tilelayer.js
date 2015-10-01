@@ -72,6 +72,8 @@ function TileLayer(parentMap,loginstance)
 	 }
     this._sort = function(data)
     {
+    	console.log("_sort");
+    	console.log(data)
     		var failsafe = 200
         result = [];
         var currentIndex = 0;

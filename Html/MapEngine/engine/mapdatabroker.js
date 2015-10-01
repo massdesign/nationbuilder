@@ -335,8 +335,34 @@ this.getInitialMapData = function(x,y,callback) {
 
 	var currentContext = this;
 	if (!this.isAlreadyFetched(x, y, x1, y1)) {
+	
+	this._mapservice.fetchSections(currentContext._initialLoader(x,y),function(mapData) {
+		var data = mapData[0]['layers'];
+		//console.log("fetch sections result")
+	//	console.log(data)
+	
+		//console.log(data)
+		currentContext.data = data;
+				currentContext._mapservice.getImages(function (imagedata) {
+				currentContext.imageData = imagedata;
+			//	var sections = currentContext._initialLoader(x,y)
+				//sections = currentContext._cherryPickChunkLoading(sections)
+				//currentContext._fetchRecursive(sections,callback,0)
+				//currentContext._mapservice.fetchSections(sections,function(data) {
+				
+					//console.log("hij doet het")				
+				//});
+				callback(currentContext.imageData, currentContext.data)
+			}
 
-	this._mapservice.getMap(function (mapData) {
+		);
+		
+		
+		
+	
+	})
+	
+	/*this._mapservice.getMap(function (mapData) {
 		var data = mapData[0]['layers'];
 		//this.xOuter += width-1;
 		//	this.yOuter += height-1;
@@ -346,16 +372,16 @@ this.getInitialMapData = function(x,y,callback) {
 				var sections = currentContext._initialLoader(x,y)
 				//sections = currentContext._cherryPickChunkLoading(sections)
 				//currentContext._fetchRecursive(sections,callback,0)
-				currentContext._mapservice.fetchSections(sections,function(data) {
+				//currentContext._mapservice.fetchSections(sections,function(data) {
 				
-					console.log("hij doet het")				
-				});
-				callback(currentContext.imageData, currentContext.data)
+					//console.log("hij doet het")				
+				//});
+			//	callback(currentContext.imageData, currentContext.data)
 			}
 
 		);
 
-	}, x, y, x1, y1);
+	}, x, y, x1, y1);*/
 }
 	
 	this.xOuter = x;
