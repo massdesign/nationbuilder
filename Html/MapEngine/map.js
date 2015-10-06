@@ -156,13 +156,14 @@ function Map(javascript_console,applicationName)
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   
-		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
+		this._mapDataBroker.getMapData(0,function(imageData,data) {
+		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
-       currentContext._tileLayer.renderTiles(imageData,data,true)
+       currentContext._tileLayer.renderTiles(imageData,data)
     	 }
     	 
-		});
+		},true);
 		this._militaryService.getMilitaryStrongholds(function(data) {
 			if(currentContext._itemLayer != null) {
 				currentContext._itemLayer.renderItems(data)
@@ -174,18 +175,15 @@ function Map(javascript_console,applicationName)
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(1,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)
-					
-					
-					    			
-		});
+					currentContext._tileLayer.renderTiles(imageData,data)    			
+		},false);
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		this._tileLayer.move();
 		this._itemLayer.move();
 		this._selectLayer.move();
 		
 		//this.layers[0].move()
-		this
+		
    }
    this.drawItem = function (item) {
    

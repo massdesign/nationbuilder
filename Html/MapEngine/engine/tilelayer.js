@@ -14,7 +14,7 @@ function TileLayer(parentMap,loginstance)
    }
    	
    	
-   this.renderTiles = function (imagedata,data,first) {
+   this.renderTiles = function (imagedata,data) {
    	
    	var imagenames = Array();
   		var renderList = [];

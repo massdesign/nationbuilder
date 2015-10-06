@@ -52,7 +52,6 @@ this.move = function() {
 
 
 this.renderItems = function(data) { 
-console.log("deze wordt aangeroepen renderItems")
 var currentContext = this;
 
 for(i=0;i<data.length;i++) {

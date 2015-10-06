@@ -256,10 +256,6 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 			var currentContext = this;
 			x2load = width * this._cacheSize;
 			y2load = height * this._cacheSize;
-			console.log("xOuter= " +  xOuter)
-			console.log("yOuter= " + yOuter);
-			console.log("width = " + width)
-			console.log("height= " + height)
 			if(!this.isAlreadyFetched(xOuter, yOuter, x2load, y2load)) {
 				
 				// TODO: deze call wordt dus vervangen voor een stel secties die al opgehaald zijn met een query en daarna toegevoegd  worden aan de lijst van gerenderde  tiles
@@ -327,14 +323,14 @@ Get the initialscreen from where the user can scroll left or right
 */
 this.getInitialMapData = function(x,y,callback) {
 
-	var x1 = this._sectionWidth  * this._cacheSize;
-	var y1 = this._sectionHeight * this._cacheSize;
+	//var x1 = this._sectionWidth  * this._cacheSize;
+//	var y1 = this._sectionHeight * this._cacheSize;
 
-	this.xStartPosition = x;
-	this.yStartPosition = y;
+	//this.xStartPosition = x;
+	//this.yStartPosition = y;
 
 	var currentContext = this;
-	if (!this.isAlreadyFetched(x, y, x1, y1)) {
+//	if (!this.isAlreadyFetched(x, y, x1, y1)) {
 	
 	this._mapservice.fetchSections(currentContext._initialLoader(x,y),function(mapData) {
 		var data = mapData[0]['layers'];
@@ -356,10 +352,6 @@ this.getInitialMapData = function(x,y,callback) {
 			}
 
 		);
-		
-		
-		
-	
 	})
 	
 	/*this._mapservice.getMap(function (mapData) {
@@ -382,10 +374,10 @@ this.getInitialMapData = function(x,y,callback) {
 		);
 
 	}, x, y, x1, y1);*/
-}
+//}
 	
-	this.xOuter = x;
-	this.yOuter = y;
+//	this.xOuter = x;
+//	this.yOuter = y;
 }
 
 
@@ -393,7 +385,7 @@ this.getInitialMapData = function(x,y,callback) {
 /*
 	cherry pick the sections needed for showing non background map tiles
 */
-this._cherryPickChunkLoading = function(sections) { 
+/*this._cherryPickChunkLoading = function(sections) { 
 
 console.log("sections that will be loaded")
 console.log(sections)
@@ -403,18 +395,14 @@ function(data) {
 	
 	console.log("callback werkt")
 	console.log(data)
-});*/
-
-
-
-
+});
 	return sections;
-}
+}*/
 
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
-this.getMapData = function (treshold,callback) {
+this.getMapData = function (treshold,callback,first) {
 
 
 			var currentContext = this;
@@ -425,17 +413,36 @@ this.getMapData = function (treshold,callback) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    		
+   		var startX = this._parent.getMapData().getStartPositionX();
+			var startY = this._parent.getMapData().getStartPositionY();
 
  	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	    {
-			 	var sections = this._calculateMovement(treshold)
-			 	sections = this._cherryPickChunkLoading(sections)
-				
-				// Determine of all the sections that are calculated which one of these need to be fetched and which ones are background only
-				
-							 	
+ 	    	 var sections = [] 
+ 	    	 if(first) {
+ 	    	  sections = this._initialLoader(startX,startY)
+ 	    	 }
+ 	    	 else {	
+ 	    	  sections = this._calculateMovement(treshold)	 
+			 }
+	
+				// Determine of all the sections that are calculated which one of these need to be fetched and which ones are background only		 	
+				console.log("treshold = " + treshold)
+			// 	this._fetchRecursive(sections,callback,0)
+			 	this._mapservice.fetchSections(sections,function(mapData) {
+					var data = mapData[0]['layers'];
+					currentContext.data = data;
+					currentContext._mapservice.getImages(function (imagedata) {
+					currentContext.imageData = imagedata;
+					callback(currentContext.imageData, currentContext.data)
+			}
+
+		);
+	})
 			 	
-			 	this._fetchRecursive(sections,callback,0)
+			 	
+
+			 	
 		 }
 		else 
 		{
