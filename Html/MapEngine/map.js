@@ -160,7 +160,7 @@ function Map(javascript_console,applicationName)
 		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
-       currentContext._tileLayer.renderTiles(imageData,data)
+      // currentContext._tileLayer.renderTiles(imageData,data)
     	 }
     	 
 		},true);
@@ -174,7 +174,7 @@ function Map(javascript_console,applicationName)
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,function(imageData,data) {
+				this._mapDataBroker.getMapData(0,function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data)    			
 		},false);
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
@@ -189,12 +189,7 @@ function Map(javascript_console,applicationName)
    
     this._itemLayer.renderItem(item);
    }
-   /*this.render = function() {
-		console.log("render will be called")
-		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].render(this._imagedata,this._data);
-		}  
-   }*/
+
    this.getCanvas = function () {
    	return this._context;
    }   

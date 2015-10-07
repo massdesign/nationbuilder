@@ -141,12 +141,27 @@ this._calculateMovement = function(treshold) {
 	if(this.newX == 0 && this.newY == 0)  {
 		 this.newX = this._parent.getMapData().getStartPositionX();
 		 this.newY = this._parent.getMapData().getStartPositionY();
+		 console.log("newX = " + this.newX)
+		 console.log("newY = " + this.newY)
+		 
+		result.push(new SectionLocation(this.newX,this.newY+multiplier))	
+		result.push(new SectionLocation(this.newX+multiplier,this.newY))	
+		result.push(new SectionLocation(this.newX+multiplier,this.newY+multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier,this.newY+multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier*2,this.newY))	
+		result.push(new SectionLocation(this.newX-multiplier*2,this.newY+multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier*2,this.newY+multiplier))	
+		result.push(new SectionLocation(this.newX,this.newY-multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier,this.newY-multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier,this.newY-multiplier))	
+		result.push(new SectionLocation(this.newX-multiplier*2,this.newY-multiplier))
+		result.push(new SectionLocation(this.newX+multiplier,this.newY-multiplier))	
 	}
 
    if(xmove > prevxmove) {			
    
    
-   	this.newX += (this._sectionWidth+1);//this._parent.getMapData().getViewportX();
+   	this.newX += (this._sectionWidth+1);
    	this.newY -= this.yCorrection;
    	this.yCorrection = 0;
 
@@ -164,8 +179,7 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX-multiplier*2,this.newY-multiplier))
 		result.push(new SectionLocation(this.newX+multiplier,this.newY-multiplier))	
 			
-		this.xCorrection += (treshold+1);
-		//console.log("we gaan naar rechts")   
+		this.xCorrection += (treshold+1);   
 		this.xCurrentPosition += this._scrollAdjust;
    }
 	else if(xmove < prevxmove) {
@@ -182,7 +196,6 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY))
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY+multiplier))
 		result.push(new SectionLocation(this.newX+multiplier*2,this.newY-multiplier))
-		//console.log("we gaan naar links")	
 		this.xCorrection -= (treshold+1);
 		this.xCurrentPosition -= this._scrollAdjust;
 	}
@@ -192,7 +205,7 @@ this._calculateMovement = function(treshold) {
 		this.newX -= this.xCorrection;
 		this.xCorrection = 0;
 		this.yCorrection += (treshold+1);
-		//result.push(new SectionLocation(this.newX-this.xCurrentPosition,newY-this.yCurrentPosition))
+
 		
 		result.push(new SectionLocation(this.newX+multiplier,this.newY))	
 		result.push(new SectionLocation(this.newX-multiplier,this.newY))	
@@ -206,12 +219,10 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX-multiplier,this.newY+multiplier))	
 	
 		
-		//this.xCurrentPosition = 0;
 		this.yCurrentPosition += this._scrollAdjust;
-		//console.log("we gaan naar onderen")	
 	}	
 	else if(ymove < prevymove) {
-	//	result.push(new SectionLocation(this.newX-this.xCurrentPosition,this.newY-this.yCurrentPosition))
+
 	
 		this.newY -= (this._sectionHeight+1);
 		this.newX -= this.xCorrection;
@@ -229,7 +240,6 @@ this._calculateMovement = function(treshold) {
 		result.push(new SectionLocation(this.newX+multiplier,this.newY+multiplier*2))
 		
 		this.yCurrentPosition -= this._scrollAdjust;
-	//	console.log("we gaan naar boven")			
 	}
 		result.push(new SectionLocation(this.newX,this.newY))
 	return result;	
@@ -416,11 +426,13 @@ this.getMapData = function (treshold,callback,first) {
    		var startX = this._parent.getMapData().getStartPositionX();
 			var startY = this._parent.getMapData().getStartPositionY();
 
- 	    if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
- 	    {
+ 	  //  if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
+ 	   // {
  	    	 var sections = [] 
  	    	 if(first) {
- 	    	  sections = this._initialLoader(startX,startY)
+ 	    	 // sections = this._initialLoader(startX,startY)
+ 	    	  sections = this._calculateMovement(treshold)	
+ 	    	  console.log("current loaded sections")
  	    	 }
  	    	 else {	
  	    	  sections = this._calculateMovement(treshold)	 
@@ -440,16 +452,14 @@ this.getMapData = function (treshold,callback,first) {
 		);
 	})
 			 	
-			 	
-
-			 	
-		 }
-		else 
+			 	 	
+		// }
+		/*else 
 		{
 			//console.log("values within treshold, don't get new data from the server")
 			this.xCounter = this._getCurrentScrollOffset(xmove, prevxmove, this.xCounter);
 			this.yCounter = this._getCurrentScrollOffset(ymove, prevymove, this.yCounter);
-		}	
+		}*/
 
 	}
 }
