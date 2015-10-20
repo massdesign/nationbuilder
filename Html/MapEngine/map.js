@@ -160,7 +160,7 @@ function Map(javascript_console,applicationName)
 		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
-      // currentContext._tileLayer.renderTiles(imageData,data)
+       currentContext._tileLayer.renderTiles(imageData,data)
     	 }
     	 
 		},true);

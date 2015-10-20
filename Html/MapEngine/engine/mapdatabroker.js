@@ -291,7 +291,7 @@ this._fetchSection = function(width,height,xOuter,yOuter,callback,chain) {
 					}
 					currentContext._mapservice.getImages(function (imagedata) {
 							currentContext.imageData = imagedata;
-							callback(currentContext.imageData, currentContext.data)
+							callback(currentgetContext.imageData, currentContext.data)
 							currentContext.xCounter = 0;
 							currentContext.yCounter = 0;
 						}
@@ -412,6 +412,14 @@ function(data) {
 /*
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
+// testmethode voor nieuwe movement calculaties
+this._calculateMovementTest = function() { 
+	 var sections = []
+	 sections.push(new SectionLocation(12,22));
+	 sections.push(new SectionLocation(28,38));
+	 return sections;
+}
+
 this.getMapData = function (treshold,callback,first) {
 
 
@@ -428,10 +436,21 @@ this.getMapData = function (treshold,callback,first) {
 
  	  //  if(Math.abs(this.xCounter) == treshold || Math.abs(this.yCounter) == treshold )
  	   // {
- 	    	 var sections = [] 
+ 	    	// var sections = []
+ 	    	// sections.push(10,30)
+ 	    	 //sections.push
  	    	 if(first) {
  	    	 // sections = this._initialLoader(startX,startY)
- 	    	  sections = this._calculateMovement(treshold)	
+ 	    	  //sections = this._calculateMovement(treshold)
+ 	    	  
+ 	    	  sections = this._calculateMovementTest();
+// 	    	  Lowest  X: 12
+//Lowest  Y: 22
+//Highest X: 28
+//Highest Y: 38
+
+		
+			 
  	    	  console.log("current loaded sections")
  	    	 }
  	    	 else {	
