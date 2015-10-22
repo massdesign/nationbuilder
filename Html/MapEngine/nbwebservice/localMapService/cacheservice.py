@@ -3,7 +3,7 @@ import os
 import shutil
 import numpy
 from PIL import Image
-from localMapService import log
+from nbwebservice.localMapService import log
 
 
 class Cacheservice:
@@ -16,7 +16,7 @@ class Cacheservice:
 
     def __init__(self):
         self._createcache()
-        print("MapsService started")
+        log.loginfo("MapsService started")
 
     def saveStringFile(self, filename, data):
         filepath = self.cachedir + "/" + filename
@@ -24,7 +24,7 @@ class Cacheservice:
         f.write(data)
         f.close()
     def saveBinaryFile(self, filename, data):
-        print("File saved: " + self.cachedir + "/" + filename)
+        log.loginfo("File saved: " + self.cachedir + "/" + filename)
         with open(self.cachedir + "/" + filename, 'wb') as out_file:
             for chunk in data.iter_content(1024):
                 out_file.write(chunk)
@@ -39,8 +39,8 @@ class Cacheservice:
         else:
             return True
     def isFileInCache(self, filename):
-        print("Probing cache")
-        print(self.fullpath + "/" + self.cachedir + "/" + filename)
+        log.loginfo("Probing cache")
+        log.loginfo(self.fullpath + "/" + self.cachedir + "/" + filename)
         return os.path.isfile(self.fullpath + "/" + self.cachedir + "/" + filename)
 
     def getImageFile(self, filename):
@@ -54,7 +54,7 @@ class Cacheservice:
         return self.cachedir + "/" + filename
 
     def getTextFile(self, filename):
-        print("file loaded")
+        log.loginfo("file loaded")
 
     def _createcache(self):
         if not os.path.exists(self.cachedir):

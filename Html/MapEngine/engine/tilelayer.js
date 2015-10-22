@@ -3,16 +3,15 @@ function TileLayer(parentMap,loginstance)
   this.parentMap = parentMap
   this._host = "localhost:8083"
   this.loginstance = loginstance;
-  // TODO: offset zou berekend moeten worden aan de grootte van de viewport
-  this._xOffset = 7;
-  this._yOffset = 7;
+
+
 	this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
    }
    	
    	
-   this.renderTiles = function (imagedata,data,first) {
+   this.renderTiles = function (imagedata,data) {
    	
    	var imagenames = Array();
   		var renderList = [];
@@ -21,27 +20,27 @@ function TileLayer(parentMap,loginstance)
 			imagenames[imagedata[i].id] = imagedata[i].name
     	}
        	 data = this._sort(data);
-    	for(var i=0;i<data.length;i++) {
+		var layerOffset = 0; 
+    			// skip de eerste layer als static background true is
+		if(Config.RENDER_STATIC_BACKGROUND)      {
+			layerOffset = 1;		
+		}
+    	for(var i=layerOffset;i<data.length;i++) {
    		var tileLayer = data[i].layer;
-			 var currentOffset = this.parentMap.getMapData().getRenderOffset(i);
-			 if (typeof currentOffset == 'undefined') {
-				 currentOffset = 0;		 
-			 }
    		 var tileLayertiles = tileLayer.tiles;
-
-   		 for(var t=currentOffset;t<tileLayertiles.length;t++)
+   		 for(var t=0;t<tileLayertiles.length;t++)
     		 {
     			var tiles = tileLayer.tiles;
     			var tile = tiles[t].tile
 				xoffset = tile.xoffset
     			yoffset = tile.yoffset
     			
-    			xposition = tile.xposition -  this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
-				yposition = tile.yposition -  this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
+    			xposition = tile.xposition - this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
+				yposition = tile.yposition - this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
+				
 				image_id = tile.image_id	
     							
-				
-				
+    			
  				tilesize = this.parentMap.getRelativeTilesize();
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://" + this._host + "/ncache/" + tilerequest;
@@ -54,7 +53,7 @@ function TileLayer(parentMap,loginstance)
     		}	
    		 
    		 
-    		this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
+    		//this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
     			
     	}
     	this.loadAllImages(renderList);
@@ -66,6 +65,8 @@ function TileLayer(parentMap,loginstance)
 	 }
     this._sort = function(data)
     {
+    	console.log("_sort");
+    	console.log(data)
     		var failsafe = 200
         result = [];
         var currentIndex = 0;
@@ -104,6 +105,8 @@ function TileLayer(parentMap,loginstance)
 		var imagesOK = 0;
 		var imUrlsLength = renderList.length;
 		var currentContext = this;
+		
+		console.log("renderList length" + renderList.length)
 
 		for(var i=0;i<renderList.length;i++) {
 			var img = new Image();
@@ -114,19 +117,14 @@ function TileLayer(parentMap,loginstance)
 				if (imagesOK >= imUrlsLength) {
 
 					for (var i = 0; i < renderList.length; i++) {
-						var tresholdX = 0;
-						var tresholdY = 0;
 						var xpos= 0,ypos=0;
 
-						tresholdX = currentContext.parentMap.getMapData().getTresholdX() * currentContext.parentMap.getRelativeTilesize();
-						tresholdY = currentContext.parentMap.getMapData().getTresholdY() * currentContext.parentMap.getRelativeTilesize();		
-						xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdX;
-						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize()-tresholdY;
+							xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdX;
+						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdY;
 						
-						xpos += currentContext._xOffset*currentContext.parentMap.getRelativeTilesize();
-						ypos += currentContext._yOffset*currentContext.parentMap.getRelativeTilesize();
-																
-						var img = new Kinetic.Image({
+						if(!renderList[i].getRendered()) {
+							
+							var img = new Kinetic.Image({
 							x: xpos,
 							y: ypos,
 							width: currentContext.parentMap.getRelativeTilesize(),
@@ -136,6 +134,9 @@ function TileLayer(parentMap,loginstance)
 						});
 						renderList[i].setTileImage(img)
 						currentContext._layer.add(img);
+							renderList[i].setRendered(true)						
+						}							
+
 					}
 					currentContext._layer.draw();
 				}

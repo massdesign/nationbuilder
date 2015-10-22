@@ -31,4 +31,14 @@ function MapService() {
 		this._baseService.doGetRequest('/tiles/find/' + x + "/" + y,callback)	
 	}
 	
+	this.fetchSections = function (sections,callback) {
+		this._baseService.doPostJsonRequest('/maps/post/fetchsections.json',callback,sections)	
+	}
+	
+	// NOTE: we gaan secties  in een query ophalen en niet apart per sectie markeren wat er opgehaald gaat worden
+	/*this.markSectionsForFetching = function (sections,callback) {
+		// TODO: bekijken of de .json erachter netjes is anders hiervoor wat anders bedenken
+		this._baseService.doPostJsonRequest('/tiles/post/marksections.json',callback,sections)
+
+	}*/	
 }

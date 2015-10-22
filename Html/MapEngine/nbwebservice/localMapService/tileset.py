@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 from PIL import Image
-from localMapService import tile
-from localMapService import log
+from nbwebservice.localMapService import tile
+from nbwebservice.localMapService import log
 
 
 class TileSet:
+	 # TODO: dit opslaan in een globale config file (misschien is config.js een goede plek voor dit)
     width = 32
     height = 32
     _filename = "nan"

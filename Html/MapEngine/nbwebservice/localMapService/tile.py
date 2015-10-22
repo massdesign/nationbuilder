@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 from PIL import Image
-from localMapService import log
-from localMapService import util
+from nbwebservice.localMapService import log
+from nbwebservice.localMapService import util
 
 
 class Tile:

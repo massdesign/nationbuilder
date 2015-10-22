@@ -29,6 +29,63 @@ class MapsController < ApplicationController
   # GET /maps/1.json
   def show
   end
+  
+  def fetchsections
+  	# NOTE  X en Y  zijn wat in javascript xOuter en yOuter zijn
+		# TODO: Deze moeten we uit config.js halen.. Hier moeten we nog wat op vinden  		
+  		@section_width = 7
+  		@section_height = 7
+  		@lowestX = -1 
+  		@lowestY = -1
+  		
+  		@highestX = -1
+  		@highestY = -1 
+  		
+  		
+  		@tiles = Array.new  	  		
+	   params[:_json].each  do  |i| 
+			
+			#logger.info  "zou die het doen?" + i.to_s	   
+			logger.info "X=" + i[:X].to_s
+			logger.info "Y=" + i[:Y].to_s
+			if i[:X] > @highestX
+				@highestX = i[:X]
+			end
+			if i[:Y] > @highestY
+				@highestY = i[:Y]		  
+			end
+			 
+			if i[:X] != -1 and i[:X] < @lowestX
+				@lowestX = i[:X]
+			elsif @lowestX == -1 
+				@lowestX = i[:X]			
+			end
+		
+			if i[:Y] != -1 and i[:Y] < @lowestY
+				@lowestY = i[:Y]			
+			elsif @lowestY == -1
+				@lowestY = i[:Y] 		
+			end
+			# we gaan er even vanuit dat dit klopt. 			
+			#elsif @lowestX == -1
+			#	@lowestX = i[:X]
+			
+  	 			
+	   end			  
+	   	logger.info "Lowest  X: " + @lowestX.to_s	
+			logger.info "Lowest  Y: " + @lowestY.to_s	
+			logger.info "Highest X: " + @highestX.to_s	
+			logger.info "Highest Y: " + @highestY.to_s	
+							
+	   	#@highestX += 1
+			#@highestY += 3
+			@maps = Map.includes([
+  	 		{
+  	 		 :layers => [:tiles]
+  	 		}
+  	 		]).where(:tiles => { :xposition => @lowestX..@highestX,:yposition => @lowestY..@highestY})
+  end  
+  
   # current getscreen supports only one map. If we need more we will implement this
 def getscreen
   	 xposrange = params[:width]

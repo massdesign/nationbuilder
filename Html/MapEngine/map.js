@@ -5,6 +5,7 @@ function Map(javascript_console,applicationName)
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
+		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
 		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
@@ -29,7 +30,8 @@ function Map(javascript_console,applicationName)
 
       this._imagedata = isNaN;
       this._data = isNaN;
-    	
+    
+    	this.layers.push(this._backgroundLayer)	
     	this.layers.push(this._tileLayer);
     	this.layers.push(this._selectLayer);
     	this.layers.push(this._gridLayer);
@@ -133,13 +135,16 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(20);
-		this.getMapData().setStartPositionY(30);
+	   this.getMapData().setStartPositionX(10);
+		this.getMapData().setStartPositionY(15);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
      	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
    	 });
+   	 
+   	 this._backgroundLayer.init()
+   	 
 
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
 
@@ -151,10 +156,11 @@ function Map(javascript_console,applicationName)
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   
-		this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
+		this._mapDataBroker.getMapData(function(imageData,data) {
+		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
-       currentContext._tileLayer.renderTiles(imageData,data,true)
+       currentContext._tileLayer.renderTiles(imageData,data)
     	 }
     	 
 		});
@@ -164,33 +170,25 @@ function Map(javascript_console,applicationName)
 			} 
 		});
 		
+		
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(1,function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data,false)
-					
-					
-					    			
+				this._mapDataBroker.getMapData(function(imageData,data) {
+					currentContext._tileLayer.renderTiles(imageData,data)    			
 		});
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		this._tileLayer.move();
 		this._itemLayer.move();
-		this._selectLayer.move();
+		this._selectLayer.move();	
+		this.layers[0].move()
 		
-		//this.layers[0].move()
-		this
    }
    this.drawItem = function (item) {
    
     this._itemLayer.renderItem(item);
    }
-   /*this.render = function() {
-		console.log("render will be called")
-		for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].render(this._imagedata,this._data);
-		}  
-   }*/
+
    this.getCanvas = function () {
    	return this._context;
    }   

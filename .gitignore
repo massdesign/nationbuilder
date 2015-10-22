@@ -20,6 +20,7 @@
 Java/NationBuilderLib/*.iml
 Java/.idea
 Html/MapEngine/ncache
-Html/MapEngine/localMapService/__pycache__
+Html/MapEngine/ps.log
+Html/MapEngine/nbwebservice/localMapService/__pycache__
 *~
 

@@ -31,11 +31,7 @@ function MapTranslator(parentMap) {
 		 	 				var prevViewportY = mapData.getPrevViewportY();
 		 	 				var viewportX = mapData.getViewportX();
 	    					var viewportY = mapData.getViewportY();
-	    					
-	    					console.log("viewportX: " + viewportX);
-	    					console.log("viewportY: " + viewportY);
-		    					
-	    					
+	    								
           		      var tilesize = currentContext.parentMap.getRelativeTilesize()
 			 				for(i=0;i<items.length;i++) {
 							 
