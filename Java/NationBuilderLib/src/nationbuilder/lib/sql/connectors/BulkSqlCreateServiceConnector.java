@@ -31,7 +31,6 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	SqlObjectBuilder objectBuilder;
 	HashMap<RubyModel,String> persistedObjects;
 
-//	SqlObjectToRowConverter sqlObjectToRowConverter;
 	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder)
 	{
 		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
@@ -148,7 +147,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
     {
         String resolvedSql = "";
 
-        Pattern p = Pattern.compile(".bui.([_a-z-A-Z]*).eui");
+        Pattern p = Pattern.compile(".bui.([_a-z-A-Z-0-9]*).eui");
         Matcher m  = p.matcher(value);
       //  if(m.matches()) {
             while (m.find()) {

@@ -1,3 +1,5 @@
+import mocks.TestModel1;
+import mocks.TestModel2;
 import nationbuilder.lib.sql.connectors.BulkSqlCreateServiceConnector;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,7 +18,9 @@ public class BulkSqlCreateServiceConnectorTest {
 
         BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null);
 
-       // connector.resolveUnresolvedFields();
+        TestModel2 rubyTestModel = new TestModel2();
+
+        connector.resolveUnresolvedFields(rubyTestModel,"187414,<bui>testmodel1_id<eui>,186627");
 
         Assert.fail();
 
