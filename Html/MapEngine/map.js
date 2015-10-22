@@ -135,8 +135,8 @@ function Map(javascript_console,applicationName)
 	this.init = function()
 	{
 	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(20);
-		this.getMapData().setStartPositionY(30);
+	   this.getMapData().setStartPositionX(10);
+		this.getMapData().setStartPositionY(15);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
@@ -156,14 +156,14 @@ function Map(javascript_console,applicationName)
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
 		}   
-		this._mapDataBroker.getMapData(0,function(imageData,data) {
+		this._mapDataBroker.getMapData(function(imageData,data) {
 		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 if(currentContext._tileLayer != null) {
        currentContext._tileLayer.renderTiles(imageData,data)
     	 }
     	 
-		},true);
+		});
 		this._militaryService.getMilitaryStrongholds(function(data) {
 			if(currentContext._itemLayer != null) {
 				currentContext._itemLayer.renderItems(data)
@@ -174,15 +174,14 @@ function Map(javascript_console,applicationName)
    }
    this.move = function () {
    			var currentContext = this;
-				this._mapDataBroker.getMapData(0,function(imageData,data) {
+				this._mapDataBroker.getMapData(function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data)    			
-		},false);
+		});
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		this._tileLayer.move();
 		this._itemLayer.move();
-		this._selectLayer.move();
-		
-		//this.layers[0].move()
+		this._selectLayer.move();	
+		this.layers[0].move()
 		
    }
    this.drawItem = function (item) {

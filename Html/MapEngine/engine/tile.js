@@ -50,6 +50,11 @@ this.setTileHtmlImage = function(img) {
 this.getTileHtmlImage = function() {
 	return this._htmlImage;
 }
-				
+this.getRendered = function() {
+	return this._rendered;
+}
+this.setRendered = function (value) {
+	this._rendered = value;
+}				
 
 }
