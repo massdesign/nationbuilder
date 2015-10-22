@@ -39,7 +39,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
 			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
 			newClaim.state_id = $scope.userData.state.id;
-    		t.doPostRequest(newClaim)
+    		ts.doPostRequest(newClaim)
     	
     	}
     $scope.mil_pmb = function(event) {
