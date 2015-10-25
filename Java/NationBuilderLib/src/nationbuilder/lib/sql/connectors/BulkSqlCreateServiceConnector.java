@@ -195,13 +195,10 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 
         Iterator poit = this.persistedObjects.entrySet().iterator();
         HashMap<String,List<String>> rows = new HashMap<>();
-        // TODO: call the resolveRelationService here.
         RelationResolveService relationResolveService = RubyDataServiceAccessor.getInstance().getService(RelationResolveService.class);
         RelationScanService relationScanService = RubyDataServiceAccessor.getInstance().getService(RelationScanService.class);
         relationResolveService.resolveForeignKeys(relationScanService.scanForRelations(
          this.persistedObjects.entrySet().iterator()));
-
-        //resolveForeignKeys(scanPersistedObjectsForRelations());
 
         while(poit.hasNext())
         {

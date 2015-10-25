@@ -1,7 +1,5 @@
 package nationbuilder.lib.Ruby.orm;
 
-import nationbuilder.lib.Ruby.orm.ID;
-
 public class ReferenceMapping {
 
 	ID id;

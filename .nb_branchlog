@@ -53,3 +53,4 @@ NB-48: achtergrond als een plaatje renderen om geheugen te besparen
 NB-49: plaatjes in pythonserver al combineren in een PNG
 NB-50: resources worden nu vanuit de filler statisch gevuld, eigenlijk willen we dit vanuit Tiled aan kunnen geven
 NB-51: user login maken en voor debugging een user selection scherm
+NB-52: integratietests weer werkend maken door nieuwe testdatabase aan te leveren
