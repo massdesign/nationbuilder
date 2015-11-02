@@ -27,14 +27,6 @@ public class RelationScanServiceTests
 		int expectedSize = 3;
 		Assert.assertEquals(mappingInfos.size(),expectedSize);
 		Assert.assertSame(testModel1,mappingInfos.get(0).getInstance());
-		//Assert.assertEquals();
-
-		//mappingInfos.get(0).
-		/*for(MappingInfo mappingInfo : mappingInfos) {
-			// TODO: implement asserts
-			//if(mappingInfo.ge)
-		}*/
-
 	}
 
 }

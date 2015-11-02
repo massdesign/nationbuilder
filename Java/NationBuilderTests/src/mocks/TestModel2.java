@@ -9,13 +9,23 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
  */
 public class TestModel2 extends BaseRubyModel
 {
-	ReferenceMapping testmodel1;
 
+	private ReferenceMapping testModel1;
 
 	public TestModel2() {
 		ID id = new ID();
 		id.setId("12345");
-		testmodel1 = new ReferenceMapping(id,TestModel1.class);
+		testModel1 = new ReferenceMapping(id,TestModel1.class);
+	}
+
+	public ReferenceMapping getTestmodel1()
+	{
+		return testModel1;
+	}
+
+	public void setTestmodel1(ReferenceMapping testmodel1)
+	{
+		this.testModel1 = testmodel1;
 	}
 
 }

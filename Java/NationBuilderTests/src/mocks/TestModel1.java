@@ -93,4 +93,24 @@ public class TestModel1 extends BaseRubyModel
 	{
 		this.test12345 = test12345;
 	}
+
+	public TestModel2 getTestModel1()
+	{
+		return testModel1;
+	}
+
+	public void setTestModel1(TestModel2 testModel1)
+	{
+		this.testModel1 = testModel1;
+	}
+
+	public TestModel2 getTestModel2()
+	{
+		return testModel2;
+	}
+
+	public void setTestModel2(TestModel2 testModel2)
+	{
+		this.testModel2 = testModel2;
+	}
 }

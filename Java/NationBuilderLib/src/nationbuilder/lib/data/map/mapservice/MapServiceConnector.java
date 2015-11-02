@@ -108,7 +108,6 @@ public class MapServiceConnector {
 	public void addImage(Image image)
 	{
 			image.getImageFile();
-			//image.fetchIDs();
 		try
 		{
 			image.Save("/images/");

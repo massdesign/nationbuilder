@@ -27,11 +27,14 @@ public class ID {
 
         boolean result = false;
 
-        if(obj != null && obj.equals(this)) {
+        if(obj != null && obj instanceof  ID && ((ID)obj).getType() != null ) {
             if(((ID)obj).getId().equals(this.getId()) && ((ID)obj).getType().equals(this.getType()))
             {
                 result = true;
-            };
+            }
+        }
+        else {
+            result = super.equals(obj);
         }
         return  result;
     }

@@ -13,13 +13,13 @@ public class Log {
         switch (type)
         {
            case WARNING:
-               logline += "WARNING:";
+               logline += "WARNING: ";
                break;
            case ERROR:
-               logline += "ERROR:";
+               logline += "ERROR: ";
                break;
            case INFO:
-               logline += "INFO:";
+               logline += "INFO: ";
                break;
         }
         logline += message;

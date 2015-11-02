@@ -21,11 +21,13 @@ public class OneToManyStrategy extends ResolveStrategy
 
 		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
 		objectReferenceField.setAccessible(true);
-		for (Object foreignKeyHolder : list)
+		if(list != null)
 		{
-
-			objectReferenceField
-			 .set(foreignKeyHolder, new ReferenceMapping(this.getObjectToReference().getId(), this.getObjectToReference().getClass()));
+			for (Object foreignKeyHolder : list)
+			{
+				objectReferenceField.set(foreignKeyHolder,
+				 new ReferenceMapping(this.getObjectToReference().getId(), this.getObjectToReference().getClass()));
+			}
 		}
 
 	}

@@ -1,6 +1,7 @@
 package nationbuilder.lib.Ruby;
 
 import java.lang.reflect.Field;
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
@@ -22,9 +23,15 @@ public class OneToOneStrategy extends ResolveStrategy
 		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(
 		 this.getMappingInfo().getMappedBy());
 		objectReferenceField.setAccessible(true);
-		objectReferenceField
-		 .set(foreignKeyHolder, new ReferenceMapping(this.getObjectToReference().getId(), this.getObjectToReference().getClass()));
-
+		if(foreignKeyHolder != null)
+		{
+			objectReferenceField.set(foreignKeyHolder,
+			 new ReferenceMapping(this.getObjectToReference().getId(), this.getObjectToReference().getClass()));
+		}
+		else
+		{
+			Log.writeWarning("foreignKeyHolder = null on " + this.getMappingInfo().getInstance().getClass().getName());
+		}
 	}
 
 	@Override
