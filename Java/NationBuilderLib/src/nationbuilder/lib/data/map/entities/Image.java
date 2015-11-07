@@ -1,6 +1,8 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 @Entity(tableName = "images")
@@ -16,7 +18,7 @@ public class Image extends BaseRubyModel {
 	private String url;
 	private String mid;
 
-	@OneToOne(mapIdTo = "mid")
+	@ManyToOne(mapIdTo = "mid")
 	private MapMap map;
 	private String name;
 	private int width;

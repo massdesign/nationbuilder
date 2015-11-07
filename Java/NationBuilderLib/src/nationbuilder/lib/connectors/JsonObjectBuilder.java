@@ -54,7 +54,7 @@ public class JsonObjectBuilder implements ObjectBuilder
 	@Override
 	public Object createObjectFromString(ResponseData data,Class<?> clazz) throws ObjectConversionFailedException
 	{
-		Object result = null;
+		Object jsonResult = null;
 		if(data instanceof HttpResponseData)
 		{
 
@@ -62,18 +62,12 @@ public class JsonObjectBuilder implements ObjectBuilder
 			Map<String, Object> map = new HashMap<>();
 			map = (Map<String, Object>) gson.fromJson(json, map.getClass());
 
-			int iValue = (int)(double)map.get("id");
+			String iValue = String.valueOf((int)(double)map.get("id"));
 
-			result = gson.fromJson(((HttpResponseData) data).getBody(), clazz);
+			//jsonResult = gson.fromJson(((HttpResponseData) data).getBody(), clazz);
 
-			if(result != null  && result instanceof RubyModel)
-			{
-				ID id =  new ID();
-				id.setId(String.valueOf(iValue));
-				id.setType(result.getClass().getName());
-				((RubyModel)result).setId(id);
-			}
-
+			ID result = new ID();
+			result.setId(iValue);
 			return result;
 		}
 		else
