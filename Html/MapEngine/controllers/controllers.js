@@ -96,7 +96,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
     }    // NOTE: Als dit faalt loopt de rest van de applicatie in de soep.. Het is niet handig dat we telkens handmatig dit Id moeten verhogen.. 
-      	u.getUserById(1,function(modelData) {
+      	u.getUserById(236205,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;

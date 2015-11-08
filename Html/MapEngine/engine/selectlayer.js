@@ -22,15 +22,21 @@ this.getLayer = function()
 
 this._showSelectedTile = function showSelectedTile(x,y)
 {
+	console.log("hij komt hier als ik klik")
+
+	
+	
 	var new_x  = x/this.parentMap.getTileWidth();
 	var new_y = y/this.parentMap.getTileHeight();
 	
 	var newCoords = this.parentMap.getMapTranslator().translatePosition(new_x,new_y);
 
    var p =	this.parentMap;
+   var context = p;
 	this._mapService.getTileByXY(newCoords.getX(),newCoords.getY(),function(data)	{
 		p.getMapData().setClickedTile(data,newCoords.getX(),newCoords.getY());	
 		p.getAngularBridge().updateMapControllerScope(p.getMapData());
+			console.log(p.getMapData().getClickedTile())
 	});	
 }
 this.move = function() {

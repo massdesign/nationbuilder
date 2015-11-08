@@ -18,8 +18,8 @@ import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 public class Main {
 
     public static void main(String[] args) throws IOException, RubyException {
-       // RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
-        RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.JSON);
+        RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
+       // RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.JSON);
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 
