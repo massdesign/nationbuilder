@@ -13,4 +13,7 @@ import java.lang.annotation.Target;
 public @interface ManyToOne
 {
 	String mapIdTo() default "";
+	String mappedBy() default "";
+	Class mappedByClazz() default Object.class;
+
 }

@@ -39,7 +39,9 @@ class StatesController < ApplicationController
       end
     end
   end
-
+  def first
+  @state = State.first 
+  end 
   # PATCH/PUT /states/1
   def update
     if @state.update(state_params)

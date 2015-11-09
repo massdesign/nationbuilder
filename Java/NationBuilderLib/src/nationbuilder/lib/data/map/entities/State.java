@@ -1,13 +1,16 @@
 package nationbuilder.lib.data.map.entities;
 
-import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
-import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.*;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * Created by patrick on 9/18/14.
  */
+@Entity(tableName = "states")
 public class State extends GameEntity
 {
+	@OneToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping user;
 	@IgnoreInRails
 	private String cur;
 	@IgnoreInRails

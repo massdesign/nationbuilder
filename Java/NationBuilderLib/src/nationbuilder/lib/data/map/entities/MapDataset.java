@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class MapDataset {
 
 	
-	private ArrayList<MapImage> mapImages;
+	private ArrayList<Image> mapImages;
 	private ArrayList<Tile> mapTiles;
 	private HashMap<String,Layer> mapLayers;
 
@@ -27,10 +27,10 @@ public class MapDataset {
 	public void setMapLayers(HashMap<String, Layer> mapLayers) {
 		this.mapLayers = mapLayers;
 	}
-	public ArrayList<MapImage> getMapImages() {
+	public ArrayList<Image> getMapImages() {
 		return mapImages;
 	}
-	public void setMapImages(ArrayList<MapImage> mapImages) {
+	public void setMapImages(ArrayList<Image> mapImages) {
 		this.mapImages = mapImages;
 	}
 	public ArrayList<Tile> getMapTiles() {
@@ -43,8 +43,8 @@ public class MapDataset {
         return resources;
     }
 
-    public void setResources(ArrayList<Resource> resources) {
+    /*public void setResources(ArrayList<Resource> resources) {
         this.resources = resources;
-    }
+    }*/
 
 }

@@ -1,11 +1,13 @@
 package nationbuilder.lib.data.map.entities;
 
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 
 /**
  * Created by patrick on 7/8/14.
  */
+@Entity(tableName = "resourcetypes")
 public class ResourceType extends BaseRubyModel {
 
     private String name;
@@ -44,5 +46,5 @@ public class ResourceType extends BaseRubyModel {
 
     public void setLocation(RESOURCELOCATION location) {
         this.location = location;
-    }
+        }
 }

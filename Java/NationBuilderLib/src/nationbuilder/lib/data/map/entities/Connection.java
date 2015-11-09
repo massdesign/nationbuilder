@@ -1,7 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
 import java.util.List;
-import nationbuilder.lib.Ruby.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
  * Created by patrick on 9/19/14.

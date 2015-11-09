@@ -25,21 +25,16 @@ class ResourcesController < ApplicationController
   def create
     @resource = Resource.new(resource_params)
     
-    @terraintype = Terraintype.find(params[:tti])
+    #@terraintype = Terraintype.find(params[:tti])
     
-
-	if params[:rtis] != nil
-	params[:rtis].each {
-	 |x| 
-	 @resourcetype = Resourcetype.find(x)	 
-	 @resourcetype.resources << @resource
-	}
-	end		 
-	@terraintype.resources << @resource
-
+	if params[:rti] != nil
+ 			 @resourcetype = Resourcetype.find(params[:rti])	 
+			 @resource.resourcetype  =  @resourcetype		
+	end    
+  
     respond_to do |format|
       if @resource.save
-        format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
+       format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
         format.json { render action: 'id', status: :created, location: @resource }
       else
         format.html { render action: 'new' }

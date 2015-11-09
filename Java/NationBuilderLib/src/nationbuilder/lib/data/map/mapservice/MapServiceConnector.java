@@ -7,33 +7,28 @@ import java.util.Map;
 
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
-import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.Ruby.Interfaces.RubyService;
-import nationbuilder.lib.Ruby.RubyConfiguration;
+import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
-import nationbuilder.lib.http.JsonServiceConnector;
 
 public class MapServiceConnector {
 
 
 	private String location;
-	private RubyService jsonServiceConnector;
     private RubyContext context;
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+	//public String getLocation() {
+	//	return location;
+	//}
+	//public void setLocation(String location) {
+	//	this.location = location;
+	//}
 
 
 	public MapServiceConnector(RubyContext context)
 	{
         this.location =  RubyConfiguration.RubyBackend + ":" + RubyConfiguration.RubyBackendPort;
-		this.jsonServiceConnector = new JsonServiceConnector(location);
+		//this.jsonServiceConnector = new JsonServiceConnector(location);
         this.context = context;
 	}
     public void addMap(MapMap map)
@@ -74,12 +69,7 @@ public class MapServiceConnector {
 	{
         this.addMap(dataset.getMap());
 
-        for(Resource resource : dataset.getResources())
-        {
-            this.addResource(resource);
-        }
-
-		for(MapImage image : dataset.getMapImages())
+		for(Image image : dataset.getMapImages())
 		{
 			this.addImage(image);
 		}
@@ -109,15 +99,15 @@ public class MapServiceConnector {
 			catch (RubyException e)
 			{
 				Log.write(e,LogType.ERROR);
+				break;
 			}
 		}
 
 
 	}
-	public void addImage(MapImage image)
+	public void addImage(Image image)
 	{
 			image.getImageFile();
-			//image.fetchIDs();
 		try
 		{
 			image.Save("/images/");

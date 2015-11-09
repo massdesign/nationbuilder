@@ -19,8 +19,9 @@
 .idea
 Java/NationBuilderLib/*.iml
 Java/.idea
+Temp/
 Html/MapEngine/ncache
 Html/MapEngine/ps.log
 Html/MapEngine/nbwebservice/localMapService/__pycache__
 *~
-
+Java/MapConverter/NationBuilderMapConverter/NationBuilderMapConverter.iml

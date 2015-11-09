@@ -1,5 +1,7 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.converter.TiledMapConverter;
 import nationbuilder.lib.data.map.entities.MapDataset;
@@ -28,7 +30,7 @@ public class WorldLoader {
 
     }
 
-    public void PreFiller() {
+    public void PreFiller() throws ObjectConversionFailedException {
 
         this.preFiller.Fill();
     }
@@ -39,20 +41,31 @@ public class WorldLoader {
         TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
         converter.Convert();
         this.mapDataset = converter.GetMapDataset();
+
+        PostMapFiller postMapFiller = new PostMapFiller(context);
+        postMapFiller.setMapDataset(this.mapDataset);
+        postMapFiller.Fill();
+
         MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
+
+        // Save the mapdata to the database
         mapsServiceConnector.addDataset(mapDataset);
     }
-    public void PostFiller()
-    {
+    public void PostFiller() throws ObjectConversionFailedException {
         this.postFiller.setMapDataset(mapDataset);
         this.postFiller.Fill();
     }
 
-    public void Run()
+    public void Run() throws RubyException
     {
         this.PreFiller();
         this.ConvertMap();
         this.PostFiller();
+        this.context.commit();
+    }
+    public void TestRun()
+    {
+        this.preFiller.testFill();
     }
 
 

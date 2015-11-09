@@ -8,12 +8,13 @@ import java.util.List;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
+import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.xml.*;
 
 public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
-    ArrayList<MapImage> mapImages;
+    ArrayList<Image> mapImages;
     ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
     MapMap map;
@@ -60,15 +61,15 @@ public class TiledMapConverter {
 
       //  System.out.println("some random crap to put a breakpoint on");
     }
-    private ArrayList<MapImage> convertTilesets(ArrayList<TileSet> tilesets)
+    private ArrayList<Image> convertTilesets(ArrayList<TileSet> tilesets)
     {
-        ArrayList<MapImage> mapImages = new ArrayList<MapImage>();
+        ArrayList<Image> mapImages = new ArrayList<Image>();
         for(TileSet tileset : tilesets)
         {
             addtilesToterrainTypeS(tileset);
-            Image image =	tileset.getImage();
+            nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
 
-            MapImage mapImage = rubyContext.createRubyModel(MapImage.class);
+            Image mapImage = rubyContext.createRubyModel(Image.class);
             MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
             mapImage.setMap(this.map);
             mapImageFile.setResource(new File(image.getFileLocation()));
@@ -112,13 +113,20 @@ public class TiledMapConverter {
             }
             if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
             {
-                Resource resource =  this.rubyContext.createRubyModel(Resource.class);
-                resource.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
-                resource.addResourceType(this.getResourceType(0));
-                resource.addResourceType(this.getResourceType(1));
-                result.setResources(resource);
+
+                result.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
+                /*
+                Resource resource1 = this.rubyContext.createRubyModel(Resource.class);
+                Resource resource2 = this.rubyContext.createRubyModel(Resource.class);
+                resource1.setResourceType(this.getResourceType(0));
+                resource2.setResourceType(this.getResourceType(1));
+                result.addResource(resource1);
+                result.addResource(resource2);
+                //result
                 // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
-                this.resources.add(resource);
+                this.resources.add(resource1);
+                this.resources.add(resource2);
+                */
             }
         }
         else
@@ -160,12 +168,13 @@ public class TiledMapConverter {
         }
         return result;
     }
+    /*
     private ResourceType getResourceType(int index)
     {
         // pick the first one.. does nog matter.. it is only for coupling.. resources will be designated in the xml.. later
        List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
        return result.get(index);
-    }
+    }*/
     private boolean mapTileImageOffset(Tile newTile,int tile_gid)
     {
 
@@ -299,7 +308,7 @@ public class TiledMapConverter {
     {
         MapDataset result = new MapDataset();
         result.setMap(this.map);
-        result.setResources(resources);
+      //  result.setResources(resources);
         result.setMapImages(this.mapImages);
         result.setMapTiles(this.mapTiles);
         result.setMapLayers(mapLayers);

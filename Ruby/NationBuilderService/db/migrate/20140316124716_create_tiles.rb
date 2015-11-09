@@ -9,7 +9,8 @@ class CreateTiles < ActiveRecord::Migration
       t.timestamps
       t.belongs_to :layer
       t.belongs_to :image 
-      t.belongs_to :resource
+      t.belongs_to :terraintype
+      #t.belongs_to :resource
  	end
   end
 end

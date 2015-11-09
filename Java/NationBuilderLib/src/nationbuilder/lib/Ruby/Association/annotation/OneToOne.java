@@ -14,6 +14,7 @@ public @interface OneToOne
 {
 
 	String mapIdTo() default "";
-	MappedBy mappedBy() default MappedBy.SELF;
+	String mappedBy() default "";
+	Class  mappedByClazz() default Object.class;
 
 }

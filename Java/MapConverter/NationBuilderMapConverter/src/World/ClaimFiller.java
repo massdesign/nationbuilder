@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
@@ -27,9 +28,9 @@ public class ClaimFiller extends BaseFiller {
 
     private MapDataset mapDataset;
     @Override
-    public void Fill() {
+    public void Fill() throws ObjectConversionFailedException {
 
-      State state =  this.stateObjectFactory.get(1);
+      State state =  this.stateObjectFactory.getFirst();
 
         List<Tile> rockTiles = this.getRockTiles();
         for(Tile tile : rockTiles)
@@ -54,13 +55,10 @@ public class ClaimFiller extends BaseFiller {
     private TerrainType getTerrainType(Tile tile)
     {
         TerrainType result = null;
-        if(tile.getResources() != null)
-        {
-            if(tile.getResources().getTerrainType() != null)
+            if(tile.getTerrainType() != null)
             {
-                result = tile.getResources().getTerrainType();
+                result = tile.getTerrainType();
             }
-        }
         return result;
     }
 

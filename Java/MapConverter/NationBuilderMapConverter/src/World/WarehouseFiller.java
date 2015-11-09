@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.City;
@@ -20,7 +21,7 @@ public class WarehouseFiller extends BaseFiller {
     }
 
     @Override
-    public void Fill() {
+    public void Fill() throws ObjectConversionFailedException {
 
 
         WareHouse wareHouse = createWareHouse("Standard warehouse");

@@ -1,10 +1,10 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
-import nationbuilder.lib.Ruby.BaseRubyModel;
-import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.http.data.ID;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
+@Entity(tableName = "layers")
 public class Layer extends BaseRubyModel {
 
 	

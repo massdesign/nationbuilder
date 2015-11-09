@@ -2,7 +2,7 @@
 var nationbuilderApp = angular.module('nationbuilderApp',[]);
 
 nationbuilderApp.controller('ClickdataCtrl',function($scope) {
-
+	 
     var s = new MapService(); 
     var u = new UserService();
     var ms = new MilitaryService();
@@ -33,16 +33,19 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     $scope.mil_lct = function(event) {
     		// by wijze van test een terraintype posten omdat het lekker kort is
     		var newClaim = {}
-    		newClaim.state_id = 1;
+    		// TODO: this should be solved differently.. because state_id is not 1 anymore.. has something to do with the generation of id
+    		newClaim.state_id =  66003;
     		console.log(JSON.stringify(newClaim))
 
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
-			newClaim.tile_id = map.getMapData().getClickedTile().tile.tiles[0].tile.id;
+
+			newClaim.tile_id = map.getMapData().getClickedTile().tile.id;
 			newClaim.state_id = $scope.userData.state.id;
     		ts.doPostRequest(newClaim)
     	
     	}
     $scope.mil_pmb = function(event) {
+    		console.log($scope)
    		var newMilitaryBase = {}   		
 			// TODO: database id's moeten niet geexposed worden.. zelfde geldt voor Claims   		
    		newMilitaryBase.name = "Temp Name for MilBase";
@@ -51,7 +54,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
    		// Hier moet ik dus mijn tile informatie vandaan halen (location)
    		clickedTile = map.getMapData().getClickedTile();
 			console.log(clickedTile)			
-			newMilitaryBase.tile_id = clickedTile.tile.tiles[0].tile.id;
+			newMilitaryBase.tile_id = clickedTile.tile.id;
 			//newMilitaryBase
    		ms.createNewBase(newMilitaryBase,function(json_data) {
 				
@@ -92,8 +95,8 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     	
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
-    }    
-      	u.getUserById(1,function(modelData) {
+    }    // NOTE: Als dit faalt loopt de rest van de applicatie in de soep.. Het is niet handig dat we telkens handmatig dit Id moeten verhogen.. 
+      	u.getUserById(236205,function(modelData) {
    		
    		$scope.$apply(function () {
    		$scope.userData = modelData;

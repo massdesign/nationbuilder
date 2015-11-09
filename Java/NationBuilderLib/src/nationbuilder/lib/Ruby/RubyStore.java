@@ -1,11 +1,12 @@
 package nationbuilder.lib.Ruby;
 
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.http.data.ID;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import nationbuilder.lib.Ruby.orm.ID;
 
 /**
  * Created by patrick on 7/16/14.
@@ -31,6 +32,11 @@ public class RubyStore {
             // TODO: implement when needed
         }
         return result;
+    }
+    
+    public Iterator getIterator()
+    {
+    	return this.modelHashMap.entrySet().iterator();
     }
 
     /**
