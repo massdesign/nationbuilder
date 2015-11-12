@@ -20,6 +20,13 @@ this._tiles = [];
 this._tresholdX = 0;
 this._tresholdY = 0;
 
+this.setMapWidth = function (width) {
+	this._mapWidth = width;
+}
+this.setMapHeight = function (height) {
+	this._mapHeight = height;
+}
+
 this.clickedTile = function() {
 }
 this.getTiles = function() {

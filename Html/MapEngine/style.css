@@ -12,6 +12,10 @@
             left:650px;
             bottom: -80px;
             width:20px;
+            z-index: 1;
+        }
+        .container { 
+			z-index:0;       
         }
         .map {	
 				position: relative;

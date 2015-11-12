@@ -54,4 +54,6 @@ NB-49: plaatjes in pythonserver al combineren in een PNG
 NB-50: resources worden nu vanuit de filler statisch gevuld, eigenlijk willen we dit vanuit Tiled aan kunnen geven
 NB-51: user login maken en voor debugging een user selection scherm
 NB-52: integratietests weer werkend maken door nieuwe testdatabase aan te leveren
-NB-60: id generatie is niet optimaal, dit was gefixt dacht ik, opnieuw implementeren
+NB-60: id generatie is niet optimaal, dit was gefixt dacht ik, opnieuw implementeren*
+NB-53: javascript performance verbeteren door gebruik te maken van prototype initialisatie 
+NB-46: inzoomen,uitzoomen gebeurt nu niet op een goede manier.. De map is niet gecenterteerd. Zorg ervoor dat inzoomen uitzoomen consistent wertk 
