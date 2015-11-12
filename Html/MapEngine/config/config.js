@@ -4,3 +4,13 @@ function  Config() { }
 // Background layer laden vanuit de backend of een statische variant pakken
 Config.RENDER_STATIC_BACKGROUND = true;
 Config.STATIC_BACKGROUND_PATTERN = "sx32_32_10ts_land1nt4";
+
+Config.MAP_WIDTH = 20;
+Config.MAP_HEIGHT = 20;
+
+Config.TILE_WIDTH = 32;
+Config.TILE_HEIGHT = 32;
+
+Config.TILE_SIZE = 32;
+
+

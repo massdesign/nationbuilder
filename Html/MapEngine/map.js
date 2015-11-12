@@ -1,12 +1,13 @@
 function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
+		this._eventBus = EventBus.instance;
 		this._gridLayer = new GridLayer(this, javascript_console);
 		this._tileLayer = new TileLayer(this,javascript_console);
 		this._itemLayer = new ItemLayer(this,javascript_console);
 		this._selectLayer = new SelectLayer(this,javascript_console);
 		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
-		this._mapDataBroker = new  MapDataBroker(this,7,7,2);
+
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
 		
@@ -17,16 +18,16 @@ function Map(javascript_console,applicationName)
 		this.jsconsole = javascript_console
 		 	
  		// TODO: hardcoded config, should be pulled from the backend. Not really important for now.. 
-	  	this._g_mapWidth = 20;
-    	this._g_mapHeight = 20;
+	  	this._g_mapWidth = Config.MAP_WIDTH;
+    	this._g_mapHeight = Config.MAP_HEIGHT;
         // TODO: replace width/height with tilesize we only support symmetrical tiles
-    	this._g_tileWidth = 32;
-    	this._g_tileHeight = 32;
-        this._g_tilesize = 32;
+    	this._g_tileWidth = Config.TILE_WIDTH;
+    	this._g_tileHeight = Config.TILE_HEIGHT;
+        this._g_tilesize = Config.TILE_SIZE;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
-      this._zoomlevel = 1;
-
+        this._zoomfactor = 0;
+	this._mapDataBroker = new MapDataBroker(this,this._g_mapWidth, this._g_mapHeight);
 
       this._imagedata = isNaN;
       this._data = isNaN;
@@ -103,32 +104,61 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
-        if(this._zoomlevel < 16)
-        {
-            this._zoomlevel *= 2;
-            this.init();
-            this.render();
-        }
+    	this._zoomfactor -= 1;
+    	var objectToScale = this.stage;	
+    	
+    	
 
+		objectToScale.setScale({
+            x: objectToScale.getScale().x*2,
+            y: objectToScale.getScale().y*2
+        });    
+                objectToScale.draw();
     }
-    this
-    this.zoomOut = function()
-    {
-        if(this._zoomlevel != 1) {
-            this._zoomlevel /= 2;
-            this.init();
-            this.render();
-        }
+	this.zoomOut = function()
+    {			// increases with zoom
+    			// NOTE: wordt deels verplaatst naar LayerService
+    			this._zoomfactor += 1;
+ 				var objectToScale = this.stage;
+ 				console.log(objectToScale); 
+ 				var currentContext = this;
+ 					var tiles = this.getMapData().getTiles();
+ 						var anim = new Kinetic.Animation(function(frame) {					
+ 					  this.stop()
+     				},this._layerService.getLayer(LayerService.SELECT_LAYER));
+					anim.start()
+								
+				 objectToScale.setScale({
+            	x: objectToScale.getScale().x/2,
+            	y: objectToScale.getScale().y/2
+       		 });  
+								this._mapDataBroker.getMapData(null,function(imageData,data) {
+					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)    			
+					},this._zoomfactor);
+				
+           objectToScale.draw();
+           
+           mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
+      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+			  this._eventBus.notifyListeners(newEvent,true)
+         //  this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
+           	 this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
+         //  this.stage.remove(this._gridLayer.getLayer())
+  			//  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
+  			 // this.stage.add(this._gridLayer.getLayer())        
     }
  	this.getMapData = function() {
 		return this._mapData; 	
  	}
+	this.getZoomFactor = function () {
+		return this._zoomfactor;
+	}
      this.getZoomlevel = function() {
          return this._zoomlevel;
      }
     this.getRelativeTilesize = function() {
 
-        return  Math.ceil(this.getTileSize()/this.getZoomlevel());
+		return this.getTileSize();
 
     }
 
@@ -147,7 +177,8 @@ function Map(javascript_console,applicationName)
    	 
 
       this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
-
+		// TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
+		// Geen idee of bovenstaatnd komementaar nog van toepassing is
 	
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();

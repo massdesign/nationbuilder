@@ -5,13 +5,15 @@ this.parentMap = parentMap;
 this.loginstance = loginstance;
 
 this.currentClickedCoords = null;
+this._tileValues = null;
 
 this.init = function() {
-	
+
 this._layer = new Kinetic.Layer({clearBeforeDraw: true});
 this._createBackgroundRect(2,2);
 this._mapService = new MapService();
-
+this._eventBus = EventBus.instance;
+this._eventBus.registerClass(this)
 
 }
 this.getLayer = function()
@@ -19,15 +21,18 @@ this.getLayer = function()
 	return this._layer;
 }
 
+// Event bus interface
+this.getSubscribedEvents = function () {
+
+	return [Event.INIT_GRID, Event.MAP_SIZE_CHANGE];
+
+}
+
 
 this._showSelectedTile = function showSelectedTile(x,y)
 {
-	console.log("hij komt hier als ik klik")
-
-	
-	
-	var new_x  = x/this.parentMap.getTileWidth();
-	var new_y = y/this.parentMap.getTileHeight();
+	var new_x = x / Config.TILE_WIDTH;
+	var new_y = y / Config.TILE_HEIGHT;
 	
 	var newCoords = this.parentMap.getMapTranslator().translatePosition(new_x,new_y);
 
@@ -36,14 +41,12 @@ this._showSelectedTile = function showSelectedTile(x,y)
 	this._mapService.getTileByXY(newCoords.getX(),newCoords.getY(),function(data)	{
 		p.getMapData().setClickedTile(data,newCoords.getX(),newCoords.getY());	
 		p.getAngularBridge().updateMapControllerScope(p.getMapData());
-			console.log(p.getMapData().getClickedTile())
 	});	
 }
 this.move = function() {
 
 if(this.currentClickedCoords != null) {
-   // newCoord =   this.parentMap.getMapTranslator().translatePosition(this.currentClickedCoords.getX(),this.currentClickedCoords.getY());	
-	 this._showSelectedTile(this.currentClickedCoords.getX()*this.parentMap.getTileWidth(),this.currentClickedCoords.getY()*this.parentMap.getTileHeight());
+    this._showSelectedTile(this.currentClickedCoords.getX() * Config.TILE_WIDTH, this.currentClickedCoords.getY() * Config.TILE_HEIGHT);
 }
 	
 }
@@ -74,8 +77,7 @@ this._createBackgroundRect = function(c_width,c_height)
 			currentContext._layer.destroyChildren();
 			currentContext._layer.add(selectedRect);
 			currentContext._layer.draw();
-			currentContext.currentClickedCoords =  new Coordinate(cst[0]/currentContext.parentMap.getTileWidth(), cst[1]/currentContext.parentMap.getTileHeight());
-		 
+			currentContext.currentClickedCoords = new Coordinate(cst[0] / Config.TILE_WIDTH, cst[1] / Config.TILE_HEIGHT);
 		  }  	
 	});
  

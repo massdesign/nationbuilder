@@ -5,14 +5,14 @@ function TileLayer(parentMap,loginstance)
   this.loginstance = loginstance;
 
 
-	this.init = function()
+	/*this.init = function()
 	{
 		this._layer = new Kinetic.Layer();
-   }
-   	
-   	
+   }*/
+
+
    this.renderTiles = function (imagedata,data) {
-   	
+
    	var imagenames = Array();
   		var renderList = [];
    	for(var i=0;i<imagedata.length;i++)
@@ -20,10 +20,10 @@ function TileLayer(parentMap,loginstance)
 			imagenames[imagedata[i].id] = imagedata[i].name
     	}
        	 data = this._sort(data);
-		var layerOffset = 0; 
+		var layerOffset = 0;
     			// skip de eerste layer als static background true is
 		if(Config.RENDER_STATIC_BACKGROUND)      {
-			layerOffset = 1;		
+			layerOffset = 1;
 		}
     	for(var i=layerOffset;i<data.length;i++) {
    		var tileLayer = data[i].layer;
@@ -34,33 +34,33 @@ function TileLayer(parentMap,loginstance)
     			var tile = tiles[t].tile
 				xoffset = tile.xoffset
     			yoffset = tile.yoffset
-    			
+
     			xposition = tile.xposition - this.parentMap.getMapData().getStartPositionX()-this.parentMap.getMapData().getViewportX();
 				yposition = tile.yposition - this.parentMap.getMapData().getStartPositionY()-this.parentMap.getMapData().getViewportY();
-				
-				image_id = tile.image_id	
-    							
-    			
+
+				image_id = tile.image_id
+
+
  				tilesize = this.parentMap.getRelativeTilesize();
     			tilerequest =  "sx" + tilesize + "_" + tilesize + "_" + xoffset.toString()  + yoffset.toString()  + "ts_" + imagenames[image_id].split('.')[0];
     			source = "http://" + this._host + "/ncache/" + tilerequest;
     			// tot aan hier
 				var newTile  = new Tile(tile)
-    			
+
     			newTile.setImageUrl(source)
     			newTile.setPosition(xposition,yposition);
 				renderList.push(newTile);
-    		}	
-   		 
-   		 
+    		}
+
+
     		//this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
-    			
+
     	}
     	this.loadAllImages(renderList);
-		
-		}   	
+
+		}
 	 this.move = function() {
-	 	
+
 	 	this.parentMap.getMapTranslator().move(this._layer,this.parentMap.getMapData().getTiles());
 	 }
     this._sort = function(data)
@@ -75,9 +75,9 @@ function TileLayer(parentMap,loginstance)
         var indexfound = false
         while(!done) {
             for (var i = 0; i < data.length; i++) {
-     	
+
                 if(data[i].layer.zindex == currentIndex)
-                {                 
+                {
                     result[currentCounter] = data[i];
                     currentIndex++;
                     currentCounter++;
@@ -88,16 +88,16 @@ function TileLayer(parentMap,loginstance)
                 done = true
             }
             else  {
-            	
+
             		if(!indexfound) {
             			console.log("skipping index: " + currentIndex)
-            			currentIndex++; 
-            			indexfound  = false 
-            		}						          
+            			currentIndex++;
+            			indexfound  = false
+            		}
             }
         }
         return result;
-       
+
     }
 
 	this.loadAllImages =   function(renderList){
@@ -105,7 +105,7 @@ function TileLayer(parentMap,loginstance)
 		var imagesOK = 0;
 		var imUrlsLength = renderList.length;
 		var currentContext = this;
-		
+
 		console.log("renderList length" + renderList.length)
 
 		for(var i=0;i<renderList.length;i++) {
@@ -121,9 +121,9 @@ function TileLayer(parentMap,loginstance)
 
 							xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdX;
 						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdY;
-						
+
 						if(!renderList[i].getRendered()) {
-							
+
 							var img = new Kinetic.Image({
 							x: xpos,
 							y: ypos,
@@ -134,8 +134,8 @@ function TileLayer(parentMap,loginstance)
 						});
 						renderList[i].setTileImage(img)
 						currentContext._layer.add(img);
-							renderList[i].setRendered(true)						
-						}							
+							renderList[i].setRendered(true)
+						}
 
 					}
 					currentContext._layer.draw();
@@ -153,7 +153,7 @@ function TileLayer(parentMap,loginstance)
 			oldRenderlist.push(renderList[i])
 		}
 		this.parentMap.getMapData().setTiles(oldRenderlist)
-	   	
+
     }
 	this.getLayer = function()
 	{

@@ -1,8 +1,6 @@
+function MapDataBroker(parent,mapwidth, mapheight) {
 
-function MapDataBroker(parent,sectionWidth,sectionHeight,treshold) {
-	
 	this._mapservice = new MapService();
-	this._treshold = treshold;
 	this._cacheSize = 1;
 	this.mapData = []
 	this._parent = parent
@@ -16,11 +14,11 @@ function MapDataBroker(parent,sectionWidth,sectionHeight,treshold) {
 	this.yCorrection = 0;
 	this.imageData = [];
 	this.data = [];
-	this._sectionWidth = sectionWidth;
-	this._sectionHeight = sectionHeight;
 	this.requestCache = [];
 	this.newX = 0;
 	this.newY = 0;
+	this._currentMapWidth = mapwidth;
+	this._currentMapHeight = mapheight;
 	
 	
 	
@@ -171,7 +169,7 @@ this._calculateMovementTest = function() {
 	 return sections;
 }
 
-this.getMapData = function (callback) {
+this.getMapData = function (callback,zoomfactor) {
 
 
 			var currentContext = this;
