@@ -6,6 +6,7 @@ this._host = "localhost:8083"
 this._assetName = "testbackground"
 
 this.init = function () {
+		console.log("dit wordt aangeroepen")
 	 this._layer = new Kinetic.Layer({clearBeforeDraw: true});
 	 
 	 	var backgroundImage = new Image();	
