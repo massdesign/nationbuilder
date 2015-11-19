@@ -3,6 +3,7 @@ function TileLayer(parentMap,loginstance)
   this.parentMap = parentMap
   this._host = "localhost:8083"
   this.loginstance = loginstance;
+  this._layer = new Kinetic.Layer();
 
 
 	/*this.init = function()

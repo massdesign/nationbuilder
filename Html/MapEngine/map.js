@@ -11,6 +11,9 @@ function Map(javascript_console,applicationName)
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
 		
+		this._layerService = new LayerService(this,javascript_console)
+	
+		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
 		this.layers = [];
@@ -132,7 +135,7 @@ function Map(javascript_console,applicationName)
             	x: objectToScale.getScale().x/2,
             	y: objectToScale.getScale().y/2
        		 });  
-								this._mapDataBroker.getMapData(null,function(imageData,data) {
+								this._mapDataBroker.getMapData(function(imageData,data) {
 					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)    			
 					},this._zoomfactor);
 				
@@ -162,6 +165,51 @@ function Map(javascript_console,applicationName)
 
     }
 
+
+	this.init = function()
+	{
+	 	var currentContext = this;
+	   this.getMapData().setStartPositionX(7);
+		this.getMapData().setStartPositionY(7);
+   	 this.stage = new Kinetic.Stage({
+    	    container: 'container',
+    	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
+     	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
+   	 });
+   	 
+   	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
+      //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
+      // TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
+      var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
+
+		console.log("mapSize width: " + this._g_mapWidth+1)
+		console.log("other map width: " + this.getMapWidth() )
+		var startX = this.getMapData().getStartPositionX();
+		var startY = this.getMapData().getStartPositionY();
+		// NOTE: wordt verplaatst naar LayerService
+		// TODO: Layer bootstrapping zou moeten gebeuren in een aparte Klasse.  Eens na gaan denken over een LayerService die verantwoordelijk is voor het aanmaken en verversen van Layers, tis nu een zooitje
+		
+		// TODO: Layer bootstrapping moet gebeuren alvorens er events afgevuurd worden.. dit zorgt voor een fragiele architecteur
+		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
+		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+		this._eventBus.notifyListeners(newEvent,true)
+		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
+
+		this._layerService.registerStage(this.stage)   
+
+		  
+		this._mapDataBroker.getMapData(function(imageData,data) {
+		 currentContext.setImageData(imageData,data);
+		 currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data)  	 
+		});
+		this._militaryService.getMilitaryStrongholds(function(data) {
+			if(currentContext._itemLayer != null) {
+				currentContext._itemLayer.renderItems(data)
+			} 
+		});
+		
+   }
+	/*
 	this.init = function()
 	{
 	 	var currentContext = this;
@@ -183,10 +231,10 @@ function Map(javascript_console,applicationName)
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
 		
-		for(i=0;i<this.layers.length;i++)  {
+		/*for(i=0;i<this.layers.length;i++)  {
 			this.layers[i].init();
 			this.stage.add(this.layers[i].getLayer());
-		}   
+		} 
 		this._mapDataBroker.getMapData(function(imageData,data) {
 		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
@@ -202,7 +250,7 @@ function Map(javascript_console,applicationName)
 		});
 		
 		
-   }
+   }  */
    this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(function(imageData,data) {
