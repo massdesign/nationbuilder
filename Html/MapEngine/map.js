@@ -29,7 +29,7 @@ function Map(javascript_console,applicationName)
         this._g_tilesize = Config.TILE_SIZE;
     	this._g_xoffset = 0;
     	this._g_yoffset = 0;
-        this._zoomfactor = 0;
+        this._zoomfactor = 1;
 	this._mapDataBroker = new MapDataBroker(this,this._g_mapWidth, this._g_mapHeight);
 
       this._imagedata = isNaN;
@@ -123,7 +123,7 @@ function Map(javascript_console,applicationName)
     			// NOTE: wordt deels verplaatst naar LayerService
     			this._zoomfactor += 1;
  				var objectToScale = this.stage;
- 				console.log(objectToScale); 
+ 			
  				var currentContext = this;
  					var tiles = this.getMapData().getTiles();
  						var anim = new Kinetic.Animation(function(frame) {					
@@ -144,11 +144,8 @@ function Map(javascript_console,applicationName)
            mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
       	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
 			  this._eventBus.notifyListeners(newEvent,true)
-         //  this._g_tileValues = this._createArray(mapSize.getX()+1,mapSize.getY()+1);
-           	 this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
-         //  this.stage.remove(this._gridLayer.getLayer())
-  			//  this._gridLayer.draw(mapSize.getX(),mapSize.getY())
-  			 // this.stage.add(this._gridLayer.getLayer())        
+           this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
+        
     }
  	this.getMapData = function() {
 		return this._mapData; 	
@@ -201,7 +198,7 @@ function Map(javascript_console,applicationName)
 		this._mapDataBroker.getMapData(function(imageData,data) {
 		 currentContext.setImageData(imageData,data);
 		 currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data)  	 
-		});
+		},this._zoomfactor);
 		this._militaryService.getMilitaryStrongholds(function(data) {
 			//if(currentContext._itemLayer != null) {
 				currentContext._layerService.getLayer(LayerService.ITEM_LAYER).renderItems(data)
@@ -257,7 +254,7 @@ function Map(javascript_console,applicationName)
 				this._mapDataBroker.getMapData(function(imageData,data) {
 					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)
 										    			
-		});
+		},this._zoomfactor);
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
 		/*this._tileLayer.move();
 		this._itemLayer.move();

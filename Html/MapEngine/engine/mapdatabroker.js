@@ -124,7 +124,7 @@ else {
 Checks if the mapbroker needs to fetch new data, it does this by checking how much progress has been made and if the treshold is reached
 */
 // testmethode voor nieuwe movement calculaties
-this._calculateMovementTest = function() { 
+this._calculateMovementTest = function(zoomfactor) { 
 	 var sections = []
 	var currentTresholdX = Math.abs(this._parent.getMapData().getTresholdX())
  	var currentTresholdY = Math.abs(this._parent.getMapData().getTresholdY())
@@ -136,8 +136,8 @@ this._calculateMovementTest = function() {
 	// TODO: dit in een config bestand zetten.. 19 slaat op de breedt van de viewport..   tellen begint bij 0 vandaar 19 viewport is namelijk 20 breed 
    var x1 = 0;
    var y1 = 0;
-   var x2 = x1+19;
-   var y2 = y1+19;
+   var x2 = (x1+19)*zoomfactor;
+   var y2 = (y1+19)*zoomfactor;
    
 
  
@@ -164,12 +164,12 @@ this._calculateMovementTest = function() {
 	 	this.newX = this._parent.getMapData().getStartPositionX();
    	this.newY = this._parent.getMapData().getStartPositionY();
 	}
-		 sections.push(new SectionLocation(x1+Math.abs(this.newX),y1+Math.abs(this.newY)));	 
+	 sections.push(new SectionLocation(x1+Math.abs(this.newX),y1+Math.abs(this.newY)));	 
 	 sections.push(new SectionLocation(x2+Math.abs(this.newX),y2+Math.abs(this.newY)));
 	 return sections;
 }
 
-this.getMapData = function (callback) {
+this.getMapData = function (callback,zoomfactor) {
 
 
 			var currentContext = this;
@@ -179,7 +179,7 @@ this.getMapData = function (callback) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    			  
- 	    	 sections = this._calculateMovementTest();
+ 	    	 sections = this._calculateMovementTest(zoomfactor);
  	    	 console.log(sections)
 
 			 	this._mapservice.fetchSections(sections,function(mapData) {
