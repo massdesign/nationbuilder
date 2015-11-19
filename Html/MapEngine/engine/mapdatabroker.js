@@ -169,7 +169,7 @@ this._calculateMovementTest = function() {
 	 return sections;
 }
 
-this.getMapData = function (callback,zoomfactor) {
+this.getMapData = function (callback) {
 
 
 			var currentContext = this;

@@ -51,6 +51,31 @@ if(this.currentClickedCoords != null) {
 	
 }
 
+// tevent = triggered event, payload is the message we want to get accross
+this.notify = function(tevent) {
+	
+	switch(tevent.getEventId()) {
+	case Event.INIT_GRID:
+		console.log("Init grid called")
+		
+		var x1 = tevent.getPayload()[0].getX();
+		var y1 = tevent.getPayload()[0].getY()
+
+		var x2 = tevent.getPayload()[1].getX();
+		var y2 = tevent.getPayload()[1].getY()
+		
+		this._tileValues[x1][y1][0] = tevent.getPayload()[0].getA();
+		this._tileValues[x2][y2][1] = tevent.getPayload()[1].getA();
+	break;
+	case Event.MAP_SIZE_CHANGE:
+		console.log("Map size change called")
+	this._tileValues = Util.createArray(tevent.getPayload().getX(),tevent.getPayload().getY())
+	break;
+	}
+	return true;
+}
+
+
 this._createBackgroundRect = function(c_width,c_height)
 {
 	
