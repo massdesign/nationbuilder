@@ -2,10 +2,6 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._eventBus = EventBus.instance;
-		//this._gridLayer = new GridLayer(this, javascript_console);
-	//	this._tileLayer = new TileLayer(this,javascript_console);
-	//	this._itemLayer = new ItemLayer(this,javascript_console);
-//		this._selectLayer = new SelectLayer(this,javascript_console);
 		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
 
 		this._militaryService = new MilitaryService();
@@ -187,6 +183,7 @@ function Map(javascript_console,applicationName)
 		// TODO: Layer bootstrapping zou moeten gebeuren in een aparte Klasse.  Eens na gaan denken over een LayerService die verantwoordelijk is voor het aanmaken en verversen van Layers, tis nu een zooitje
 		
 		// TODO: Layer bootstrapping moet gebeuren alvorens er events afgevuurd worden.. dit zorgt voor een fragiele architecteur
+		this._layerService.getLayer(LayerService.BACKGROUND_LAYER).init()
 		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
 		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
 		this._eventBus.notifyListeners(newEvent,true)
@@ -200,87 +197,27 @@ function Map(javascript_console,applicationName)
 		 currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data)  	 
 		},this._zoomfactor);
 		this._militaryService.getMilitaryStrongholds(function(data) {
-			//if(currentContext._itemLayer != null) {
 				currentContext._layerService.getLayer(LayerService.ITEM_LAYER).renderItems(data)
-			//} 
+			 
 		});
 		
    }
-	/*
-	this.init = function()
-	{
-	 	var currentContext = this;
-	   this.getMapData().setStartPositionX(10);
-		this.getMapData().setStartPositionY(15);
-   	 this.stage = new Kinetic.Stage({
-    	    container: 'container',
-    	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,
-     	     height: currentContext._g_tileHeight * currentContext._g_mapHeight
-   	 });
-   	 
-   	 this._backgroundLayer.init()
-   	 
 
-      this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
-		// TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
-		// Geen idee of bovenstaatnd komementaar nog van toepassing is
-	
-		var startX = this.getMapData().getStartPositionX();
-		var startY = this.getMapData().getStartPositionY();
-		
-		/*for(i=0;i<this.layers.length;i++)  {
-			this.layers[i].init();
-			this.stage.add(this.layers[i].getLayer());
-		} 
-		this._mapDataBroker.getMapData(function(imageData,data) {
-		//this._mapDataBroker.getInitialMapData(startX,startY,function(imageData,data) {
-		 currentContext.setImageData(imageData,data);
-		 if(currentContext._tileLayer != null) {
-       currentContext._tileLayer.renderTiles(imageData,data)
-    	 }
-    	 
-		});
-		this._militaryService.getMilitaryStrongholds(function(data) {
-			if(currentContext._itemLayer != null) {
-				currentContext._itemLayer.renderItems(data)
-			} 
-		});
-		
-		
-   }  */
-   
+   	// TODO: als het uitzoomen goed werkt dit refactoren.. eigenlijk zou het zo moeten zijn dat de layerservice zich abboneert op een move event en dit dan verder stuurt aan de verschillende layers.
+   	// Hetzelfde geld ook voor uitzoomen en init
      this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(function(imageData,data) {
 					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)
 										    			
 		},this._zoomfactor);
-		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
-		/*this._tileLayer.move();
-		this._itemLayer.move();
-		this._selectLayer.move();
-		this.layers[0].move()
-		*/
 		this._layerService.move()
 	
    }
-  /* this.move = function () {
-   			var currentContext = this;
-				this._mapDataBroker.getMapData(function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data)    			
-		});
-		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
-		this._tileLayer.move();
-		this._itemLayer.move();
-		this._selectLayer.move();	
-		this.layers[0].move()
-		
-   } */
+
    this.drawItem = function (item) {
    	
    	this._layerService.getLayer(LayerService.ITEM_LAYER).renderItem(item);
-   
-   // this._itemLayer.renderItem(item);
    }
 
    this.getCanvas = function () {
