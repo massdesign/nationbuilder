@@ -39,11 +39,7 @@ for (var key in this._layers) {
 this.redrawLayer = function(layer_id,stage) { 
 // TODO: ik weet niet of dit helemaal de bedoeling is.. ik vind het nogal borky
 var selectedLayer = this._layers[layer_id];
-console.log("Layer om te tekenen")
-console.log(layer_id)
-console.log(selectedLayer.getLayer())
 stage.remove(selectedLayer.getLayer());
-selectedLayer.draw()
 stage.add(selectedLayer.getLayer())
 
 }

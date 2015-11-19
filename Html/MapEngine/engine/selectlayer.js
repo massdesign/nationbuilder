@@ -117,22 +117,22 @@ this._createBackgroundRect = function(c_width,c_height)
     		for(var y=0;y<currenty;y++)
     		{ 
     		  // topleft 
-    		  var topleftx = this.parentMap.getTileValue(x,y,X_AXIS);
-    		  var toplefty = this.parentMap.getTileValue(x,y,Y_AXIS);
+    		  var topleftx = this._tileValues[x][y][X_AXIS];
+    		  var toplefty = this._tileValues[x][y][Y_AXIS];
     		  // topright
-    		  var toprightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
-    		  var toprighty = this.parentMap.getTileValue(x,y,Y_AXIS);
+    		  var toprightx = this._tileValues[x][y][X_AXIS] + this.parentMap.getRelativeTilesize();
+    		  var toprighty = this._tileValues[x][y][Y_AXIS];
+   		      		  
+    		  var bottomleftx = this._tileValues[x][y][X_AXIS];
+    		  var bottomlefty = this._tileValues[x][y][Y_AXIS] + this.parentMap.getRelativeTilesize()
     		      		  
-    		  var bottomleftx = this.parentMap.getTileValue(x,y,X_AXIS);
-    		  var bottomlefty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize()
-    		      		  
-    		  var bottomrightx = this.parentMap.getTileValue(x,y,X_AXIS) + this.parentMap.getRelativeTilesize();
-    		  var bottomrighty = this.parentMap.getTileValue(x,y,Y_AXIS) + this.parentMap.getRelativeTilesize();
+    		  var bottomrightx = this._tileValues[x][y][X_AXIS] + this.parentMap.getRelativeTilesize();
+    		  var bottomrighty = this._tileValues[x][y][Y_AXIS] + this.parentMap.getRelativeTilesize();
     		  if(mousePosx > topleftx && mousePosx < toprightx &&
     		  	 mousePosy > toprighty && mousePosy < bottomlefty)
     		  { 		   
-    		   	this._showSelectedTile(this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS));
-  					result = [this.parentMap.getTileValue(x,y,X_AXIS),this.parentMap.getTileValue(x,y,Y_AXIS)];
+    		   	this._showSelectedTile(this._tileValues[x][y][X_AXIS],this._tileValues[x][y][Y_AXIS]);
+  					result = [this._tileValues[x][y][X_AXIS],this._tileValues[x][y][Y_AXIS]];
     		    	break;
     		  }
     		}

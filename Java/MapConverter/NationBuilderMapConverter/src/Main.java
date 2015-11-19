@@ -23,7 +23,7 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 
-        MapImageFile mapImageFile = context.createRubyModel(MapImageFile.class);
+       /* MapImageFile mapImageFile = context.createRubyModel(MapImageFile.class);
         mapImageFile.setResource(new File("/home/patrick/Git/nationbuilder/Tiled/TileSets/World3.png"));
 
         MapMap mapMap = context.createRubyModel(MapMap.class);
@@ -36,7 +36,7 @@ public class Main {
         image.setTileWidth(32);
         image.setUrl("http://localhost");
         image.setImageFile(mapImageFile);
-        image.setMap(mapMap);
+        image.setMap(mapMap);*/
 
 
        /* mapMap.Save("/maps/");
