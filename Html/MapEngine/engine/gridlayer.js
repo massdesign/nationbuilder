@@ -54,6 +54,9 @@ function GridLayer(parentMap, loginstance) {
         this._layer.draw()
 
     }
+    this.move = function () {
+		// interface  method, do nothing    
+    }
     this._createGrid = function (mapWidth, mapHeight) {
         var currentx = 0;
         var currenty = 0;

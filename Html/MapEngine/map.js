@@ -2,10 +2,10 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._eventBus = EventBus.instance;
-		this._gridLayer = new GridLayer(this, javascript_console);
-		this._tileLayer = new TileLayer(this,javascript_console);
-		this._itemLayer = new ItemLayer(this,javascript_console);
-		this._selectLayer = new SelectLayer(this,javascript_console);
+		//this._gridLayer = new GridLayer(this, javascript_console);
+	//	this._tileLayer = new TileLayer(this,javascript_console);
+	//	this._itemLayer = new ItemLayer(this,javascript_console);
+//		this._selectLayer = new SelectLayer(this,javascript_console);
 		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
 
 		this._militaryService = new MilitaryService();
@@ -63,10 +63,10 @@ function Map(javascript_console,applicationName)
 	this.disableGrid = function() {
 		this._gridLayer.disableGrid();
 	}
-    this.getTileValue = function(x,y,axis)
+	/*this.getTileValue = function(x,y,axis)
     { 
     	return this._g_tileValues[x][y][axis];
-    }
+    }*/
     // TODO: this is crappy.. why do we need two parameters?? and find an decent naming scheme for it.
     this.setImageData = function(imagedata,data){
         this._imagedata = imagedata;
@@ -203,9 +203,9 @@ function Map(javascript_console,applicationName)
 		 currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data)  	 
 		});
 		this._militaryService.getMilitaryStrongholds(function(data) {
-			if(currentContext._itemLayer != null) {
-				currentContext._itemLayer.renderItems(data)
-			} 
+			//if(currentContext._itemLayer != null) {
+				currentContext._layerService.getLayer(LayerService.ITEM_LAYER).renderItems(data)
+			//} 
 		});
 		
    }
@@ -251,7 +251,23 @@ function Map(javascript_console,applicationName)
 		
 		
    }  */
-   this.move = function () {
+   
+     this.move = function () {
+   			var currentContext = this;
+				this._mapDataBroker.getMapData(function(imageData,data) {
+					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)
+										    			
+		});
+		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
+		/*this._tileLayer.move();
+		this._itemLayer.move();
+		this._selectLayer.move();
+		this.layers[0].move()
+		*/
+		this._layerService.move()
+	
+   }
+  /* this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(function(imageData,data) {
 					currentContext._tileLayer.renderTiles(imageData,data)    			
@@ -262,10 +278,12 @@ function Map(javascript_console,applicationName)
 		this._selectLayer.move();	
 		this.layers[0].move()
 		
-   }
+   } */
    this.drawItem = function (item) {
+   	
+   	this._layerService.getLayer(LayerService.ITEM_LAYER).renderItem(item);
    
-    this._itemLayer.renderItem(item);
+   // this._itemLayer.renderItem(item);
    }
 
    this.getCanvas = function () {
