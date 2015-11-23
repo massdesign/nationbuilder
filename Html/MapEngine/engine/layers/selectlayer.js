@@ -56,20 +56,19 @@ this.notify = function(tevent) {
 	
 	switch(tevent.getEventId()) {
 	case Event.INIT_GRID:
-		console.log("Init grid called")
+		
 		
 		var x1 = tevent.getPayload()[0].getX();
-		var y1 = tevent.getPayload()[0].getY()
+		var y1 = tevent.getPayload()[0].getY();
 
 		var x2 = tevent.getPayload()[1].getX();
-		var y2 = tevent.getPayload()[1].getY()
+		var y2 = tevent.getPayload()[1].getY();
 		
 		this._tileValues[x1][y1][0] = tevent.getPayload()[0].getA();
 		this._tileValues[x2][y2][1] = tevent.getPayload()[1].getA();
 	break;
 	case Event.MAP_SIZE_CHANGE:
-		console.log("Map size change called")
-	this._tileValues = Util.createArray(tevent.getPayload().getX(),tevent.getPayload().getY())
+	this._tileValues = Util.createArray(tevent.getPayload().getMapSize().getX(),tevent.getPayload().getMapSize().getY())
 	break;
 	}
 	return true;

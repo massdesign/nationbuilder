@@ -2,13 +2,11 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._eventBus = EventBus.instance;
-		this._backgroundLayer = new BackgroundLayer(this,javascript_console);
-
+	
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
 		
 		this._layerService = new LayerService(this,javascript_console)
-	
 		
 		this._angularBridge = new AngularBridge();
 		this._angularBridge.setController(applicationName);
@@ -138,9 +136,12 @@ function Map(javascript_console,applicationName)
            objectToScale.draw();
            
            mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
-      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+          // gridChangedPayload = new GridChangedPayLoad()
+      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this._g_mapWidth+1,this._g_mapHeight+1,this._zoomfactor));
 			  this._eventBus.notifyListeners(newEvent,true)
+			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
+     
         
     }
  	this.getMapData = function() {
@@ -173,10 +174,10 @@ function Map(javascript_console,applicationName)
    	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
       //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
       // TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
-      var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
+    //  var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
 
-		console.log("mapSize width: " + this._g_mapWidth+1)
-		console.log("other map width: " + this.getMapWidth() )
+	//	console.log("mapSize width: " + this._g_mapWidth+1)
+	//	console.log("other map width: " + this.getMapWidth() )
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
 		// NOTE: wordt verplaatst naar LayerService
@@ -185,7 +186,7 @@ function Map(javascript_console,applicationName)
 		// TODO: Layer bootstrapping moet gebeuren alvorens er events afgevuurd worden.. dit zorgt voor een fragiele architecteur
 		this._layerService.getLayer(LayerService.BACKGROUND_LAYER).init()
 		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
-		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,mapSize);
+		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this._g_mapWidth+1,this._g_mapHeight+1,this._zoomfactor));
 		this._eventBus.notifyListeners(newEvent,true)
 		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
 

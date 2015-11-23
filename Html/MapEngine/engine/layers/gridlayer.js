@@ -84,12 +84,10 @@ function GridLayer(parentMap, loginstance) {
                 var tilevalues = []
                 tilevalues.push(new TripleTuple(x, y, currentx + this.parentMap.getXOffset()))
                 tilevalues.push(new TripleTuple(x, y, currenty + this.parentMap.getYOffset()))
-                //console.log(Event.GRID_INIT)
+                
                 var newEvent = new Event(Event.INIT_GRID, Reflection.className(this), Reflection.classType(SelectLayer), tilevalues);
                 this._eventBus.notifyListeners(newEvent, true)
-                //this.parentMap.setTileValue(x,y,0,currentx + this.parentMap.getXOffset());
-                //this.parentMap.setTileValue(x,y,1,currenty + this.parentMap.getYOffset());
-
+         
 
                 currenty = y * this.parentMap.getRelativeTilesize();
             }

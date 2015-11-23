@@ -6,12 +6,6 @@ function TileLayer(parentMap,loginstance)
   this._layer = new Kinetic.Layer();
 
 
-	/*this.init = function()
-	{
-		this._layer = new Kinetic.Layer();
-   }*/
-
-
    this.renderTiles = function (imagedata,data) {
 
    	var imagenames = Array();
@@ -52,9 +46,6 @@ function TileLayer(parentMap,loginstance)
     			newTile.setPosition(xposition,yposition);
 				renderList.push(newTile);
     		}
-
-
-    		//this.parentMap.getMapData().setRenderOffset(tileLayertiles.length,i);
 
     	}
     	this.loadAllImages(renderList);

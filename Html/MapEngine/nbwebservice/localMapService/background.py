@@ -13,12 +13,15 @@ class Background:
 		print("background")
 		self.bt = basetile
 		self.cs = cacheservice
-	def create(self):
-		im = Image.new("RGB",(20*self.width,20*self.height),"white")
-		#base tile image
+	def fillbackground(self,size):
+		im = Image.new("RGB",(size*self.width,size*self.height),"white")
 		bti = self.cs.getImageFile(self.bt)	
-		for x in range(0, int(20*self.width),32):
-			for y in range(0, int(20*self.height),32):
+		for x in range(0, int(size*self.width),32):
+			for y in range(0, int(size*self.height),32):
 				im.paste(bti,(x,y))
-		self.cs.saveImagePNG("testbackground",im)
-		print("create background")	
+		return im
+	def create(self):
+		for x in range(1,5):
+			im = self.fillbackground(20*x)
+			self.cs.saveImagePNG("testbackground_" + str(x),im)
+			print("create background")	
