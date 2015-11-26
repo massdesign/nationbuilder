@@ -96,12 +96,12 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
  		  map.getMapData().setviewportPosition(x,y);
  		  map.move(); 
     }    // NOTE: Als dit faalt loopt de rest van de applicatie in de soep.. Het is niet handig dat we telkens handmatig dit Id moeten verhogen.. 
-      	u.getUserById(225247,function(modelData) {
-   		
-   		$scope.$apply(function () {
-   		$scope.userData = modelData;
-   		})	
-   	}); 
+
+    		u.getUserByUsername("test",function(modelData) {
+    	 		$scope.$apply(function () {
+   			$scope.userData = modelData;
+    		}); });
+
    	javascript_console = console;
 	   var map = new Map(console,"nationbuilderApp");
 	   map.init()
