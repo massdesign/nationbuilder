@@ -37,6 +37,8 @@ NationBuilderMapsService::Application.routes.draw do
   
   #post '/tiles/post/fetchsections', to: 'tiles#fetchsections', as: 'fetchsections'
   get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile1' 
+  #get '/users/', to: 'tiles#find', as: 'user1' 
+  get '/users/names/:name', to: 'users#getuserbyname'
   get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles1' 
   get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1'
   post '/maps/post/fetchsections', to: 'maps#fetchsections', as: 'fetchsections'

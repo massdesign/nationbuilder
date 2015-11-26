@@ -8,14 +8,18 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1
-  def show
+  def show	
   end
 
   # GET /users/new
   def new
     @user = User.new
   end
-
+  def getuserbyname
+  	if params[:name] != nil
+	 @user = User.where(loginname: params[:name]).take  
+  	end
+  end
   # GET /users/1/edit
   def edit
   end
