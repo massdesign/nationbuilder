@@ -11,6 +11,8 @@ from nbwebservice.localMapService import log
 from nbwebservice.localMapService import background
 from nbwebservice.configService import getconfig
 from subprocess import call
+from socketserver import ThreadingMixIn
+import threading
 
 class MyRequestHandler(http.server.SimpleHTTPRequestHandler):	
 	commonConfigFile = "/home/patrick/Git/nationbuilder/Html/MapEngine/config/config.js"
@@ -115,7 +117,11 @@ class MyRequestHandler(http.server.SimpleHTTPRequestHandler):
 			self.end_headers()
 			self.wfile.write(content)
 
+class ThreadedHTTPServer(ThreadingMixIn, http.server.HTTPServer):
+    """Handle requests in a separate thread."""
+    
 Handler = MyRequestHandler
-server = socketserver.TCPServer(('0.0.0.0', 8083), Handler)
+#server = socketserver.TCPServer(('0.0.0.0', 8083), Handler)
+server = ThreadedHTTPServer(('0.0.0.0', 8083), Handler)
 
 server.serve_forever()
