@@ -101,20 +101,33 @@ function Map(javascript_console,applicationName)
  	 }
     this.zoomIn = function()
     {
+    	
+    	if(this._zoomfactor > Config.MIN_ZOOM_FACTOR)  {
+    	
     	this._zoomfactor -= 1;
     	var objectToScale = this.stage;	
-    	
     	
 
 		objectToScale.setScale({
             x: objectToScale.getScale().x*2,
             y: objectToScale.getScale().y*2
         });    
-                objectToScale.draw();
+        objectToScale.draw();
+              mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
+          // gridChangedPayload = new GridChangedPayLoad()
+      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this._g_mapWidth+1,this._g_mapHeight+1,this._zoomfactor));
+			  this._eventBus.notifyListeners(newEvent,true)
+			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
+           this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
+           this._layerService.redrawLayer(LayerService.GRID_LAYER,this.stage)
+   
+        }
     }
 	this.zoomOut = function()
     {			// increases with zoom
     			// NOTE: wordt deels verplaatst naar LayerService
+    			if(this._zoomfactor < Config.MAX_ZOOM_FACTOR) {
+    			
     			this._zoomfactor += 1;
  				var objectToScale = this.stage;
  			
@@ -141,8 +154,8 @@ function Map(javascript_console,applicationName)
 			  this._eventBus.notifyListeners(newEvent,true)
 			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
-     
-        
+           this._layerService.redrawLayer(LayerService.GRID_LAYER,this.stage)
+        		}
     }
  	this.getMapData = function() {
 		return this._mapData; 	
