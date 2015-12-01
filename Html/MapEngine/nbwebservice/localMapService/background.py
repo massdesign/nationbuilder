@@ -21,7 +21,9 @@ class Background:
 				im.paste(bti,(x,y))
 		return im
 	def create(self):
-		for x in range(1,5):
-			im = self.fillbackground(20*x)
+		lastsize = 20
+		for x in range(1,6):
+			im = self.fillbackground(lastsize)
+			lastsize = lastsize*2			
 			self.cs.saveImagePNG("testbackground_" + str(x),im)
 			print("create background")	

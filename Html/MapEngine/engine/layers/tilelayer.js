@@ -111,7 +111,7 @@ function TileLayer(parentMap,loginstance)
 					for (var i = 0; i < renderList.length; i++) {
 						var xpos= 0,ypos=0;
 
-							xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdX;
+						xpos =	renderList[i].getXPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdX;
 						ypos = 	renderList[i].getYPosition() * currentContext.parentMap.getRelativeTilesize();//-tresholdY;
 
 						if(!renderList[i].getRendered()) {

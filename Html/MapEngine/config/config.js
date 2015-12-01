@@ -12,5 +12,6 @@ Config.TILE_WIDTH = 32;
 Config.TILE_HEIGHT = 32;
 
 Config.TILE_SIZE = 32;
-
+Config.MAX_ZOOM_FACTOR  = 5;
+Config.MIN_ZOOM_FACTOR =  1;
 
