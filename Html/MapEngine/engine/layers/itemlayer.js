@@ -6,13 +6,9 @@ function ItemLayer(parentMap, loginstance) {
 
     this._items = [];
     this._layer = new Kinetic.Layer({clearBeforeDraw: true});
-    /*this.init = function() {
-
-     this._layer = new Kinetic.Layer({clearBeforeDraw: true});
-     }*/
+ 
 
     this.renderItem = function (data) {
-        console.log("deze wordt aangeroepen renderItem")
         var currentContext = this;
         if (data.tiles[0] != null) {
 
@@ -20,11 +16,11 @@ function ItemLayer(parentMap, loginstance) {
             newAsset.src = this.assetUrl;
 
             var normalizedPosition = this.parentMap.getMapTranslator().normalizePosition(data.tiles[0].tile.xposition, data.tiles[0].tile.yposition);
-
-
-            var xposition = normalizedPosition.getX() * currentContext.parentMap.getRelativeTilesize();
-            var yposition = normalizedPosition.getY() * currentContext.parentMap.getRelativeTilesize();
-            var img = new Kinetic.Image({
+				newAsset.onload = function () {
+					
+					 var xposition = normalizedPosition.getX() * currentContext.parentMap.getRelativeTilesize();
+         	    var yposition = normalizedPosition.getY() * currentContext.parentMap.getRelativeTilesize();
+            	 var img = new Kinetic.Image({
                 x: xposition,
                 y: yposition,
                 width: currentContext.parentMap.getRelativeTilesize(),
@@ -33,14 +29,21 @@ function ItemLayer(parentMap, loginstance) {
                 draggable: false
             });
 
-            this._layer.add(img);
+            currentContext._layer.add(img);
+            
             var item = new Item()
             item.setPosition(xposition, yposition);
             item.setTileImage(img);
-            this._items.push(item);
-            this.parentMap.getMapData().setItems(this._items);
+            currentContext._items.push(item);
+            currentContext.parentMap.getMapData().setItems(currentContext._items);
+				currentContext._layer.draw();
+				
+				}
+
+           
+ 
         }
-        this._layer.draw();
+       
     }
 
     this.move = function () {
@@ -51,7 +54,6 @@ function ItemLayer(parentMap, loginstance) {
 
 
     this.renderItems = function (data) {
-        console.log("deze wordt aangeroepen renderItems")
         var currentContext = this;
 
         for (i = 0; i < data.length; i++) {
