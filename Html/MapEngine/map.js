@@ -120,6 +120,7 @@ function Map(javascript_console,applicationName)
 			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.GRID_LAYER,this.stage)
+           this._layerService.redrawLayer(LayerService.ITEM_LAYER,this.stage)
    
         }
     }
@@ -155,6 +156,7 @@ function Map(javascript_console,applicationName)
 			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.GRID_LAYER,this.stage)
+           this._layerService.redrawLayer(LayerService.ITEM_LAYER,this.stage)
         		}
     }
  	this.getMapData = function() {

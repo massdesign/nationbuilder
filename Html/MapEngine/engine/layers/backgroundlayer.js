@@ -19,28 +19,19 @@ this.init = function () {
 	source = "http://" + this._host + "/ncache/" +  this._assetName + "_" + this._zoomfactor;
 	backgroundImage.src  = source
 	currentContext = this;
-	console.log("current zoom factor =" + this._zoomfactor)
 	backgroundImage.onload = function () {
 
 					// zoom in
 					if(currentContext._zoomfactor >  currentContext._previouszoomfactor) 
 					{
-						console.log("increasing")
-						//for(i=1;i<currentContext._zoomfactor;i++) {
-							console.log("hoevaak doen  we dit")
-					  		currentContext._currentSize = currentContext._currentSize*2;
-						//}
+							currentContext._currentSize = currentContext._currentSize*2;
 					}
 					if(currentContext._zoomfactor < currentContext._previouszoomfactor) 
 					{
-						console.log("decreasing")
-					//	for(i=1;i<currentContext._zoomfactor;i++) {
 					  		currentContext._currentSize = currentContext._currentSize/2;
-						//}
 					}		
 		
 					
-					console.log("currentsize = " + currentContext._currentSize)
 		 			var img = new Kinetic.Image({
 					x: 0,
 					y: 0,

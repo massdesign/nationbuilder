@@ -21,10 +21,12 @@ function GridLayer(parentMap, loginstance) {
         return [Event.MAP_SIZE_CHANGE];
     }
     this.notify = function (tevent) {
-
+			console.log("kom hij hier wel voorbij")
         switch (tevent.getEventId) {
 
             case Event.MAP_SIZE_CHANGE:
+            	 console.log(tevent)
+            	 console.log("gridlayer mapsize change event")
 
                 this._tileValueGrid = this._createArray(tevent.Getpayload.getX() + 1, tevent.getPayload().getY() + 1);
                 break;
