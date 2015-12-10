@@ -56,3 +56,4 @@ NB-51: user login maken en voor debugging een user selection scherm
 NB-52: integratietests weer werkend maken door nieuwe testdatabase aan te leveren
 NB-53: javascript performance verbeteren door gebruik te maken van prototype initialisatie 
 NB-46: inzoomen,uitzoomen gebeurt nu niet op een goede manier.. De map is niet gecenterteerd. Zorg ervoor dat inzoomen uitzoomen consistent wertk 
+NB-54: landgenerator maken die contininten/eilandgroepen kan genereren inclusief kustlijn
