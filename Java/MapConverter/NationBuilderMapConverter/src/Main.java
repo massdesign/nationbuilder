@@ -2,6 +2,9 @@
 import java.io.File;
 import java.io.IOException;
 import World.WorldLoader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
@@ -18,6 +21,8 @@ import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 public class Main {
 
     public static void main(String[] args) throws IOException, RubyException {
+        long startTime  = System.currentTimeMillis();
+
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
         //RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.JSON);
         WorldLoader worldLoader = new WorldLoader(context);
@@ -42,9 +47,12 @@ public class Main {
        /* mapMap.Save("/maps/");
         mapImageFile.Save("/uploads/");
         image.Save("/images/"); */
+        long endtime = System.currentTimeMillis();
 
-
-        System.out.println("einde");
+        Date date = new Date((endtime - startTime));
+        DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+        String dateFormatted = formatter.format(date);
+        System.out.println("Total running time " + dateFormatted);
 
     }
 
