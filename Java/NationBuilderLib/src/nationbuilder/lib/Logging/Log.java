@@ -5,25 +5,30 @@ package nationbuilder.lib.Logging;
  */
 public class Log {
 
+    private static boolean disableAllLogging = false;
+
 
     public static void write(String message,LogType type)
     {
-        String logline = "";
-
-        switch (type)
+        if(!disableAllLogging)
         {
-           case WARNING:
-               logline += "WARNING: ";
-               break;
-           case ERROR:
-               logline += "ERROR: ";
-               break;
-           case INFO:
-               logline += "INFO: ";
-               break;
+            String logline = "";
+
+            switch (type)
+            {
+            case WARNING:
+                logline += "WARNING: ";
+                break;
+            case ERROR:
+                logline += "ERROR: ";
+                break;
+            case INFO:
+                logline += "INFO: ";
+                break;
+            }
+            logline += message;
+            System.out.println(logline);
         }
-        logline += message;
-        System.out.println(logline);
     }
     public static void write(Exception ex,LogType type)
     {
@@ -43,4 +48,13 @@ public class Log {
     }
 
 
+    public static boolean isDisableAllLogging()
+    {
+        return disableAllLogging;
+    }
+
+    public static void setDisableAllLogging(boolean disableAllLogging)
+    {
+        Log.disableAllLogging = disableAllLogging;
+    }
 }

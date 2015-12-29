@@ -17,7 +17,7 @@ import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.sql.SqlQueryManagerFactory;
 
 /**
- * Created by patrick on 7/10/14.
+ * @author patrick.ekkel
  */
 public class RubyContextFactory {
 
@@ -78,11 +78,7 @@ public class RubyContextFactory {
     }
     private RubyContext createJsonRubyContext()
     {
-        String serverUrl = String.format("%s:%s", RubyConfiguration.RubyBackend, RubyConfiguration.RubyBackendPort);
-        ObjectBuilder objectBuilder = new JsonObjectBuilder();
-        RubyService service = new JsonServiceConnector(serverUrl,objectBuilder);
-        RubyContext result = new RubyContext(service,objectBuilder);
-        return result;
+        return createDefaultRubyContext();
     }
 
     private RubyContext createBulkInsertSqlJsonUpdateDeleteSelectRubyContext(RubyContextType contextType)
