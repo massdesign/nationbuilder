@@ -57,8 +57,6 @@ function TileLayer(parentMap,loginstance)
 	 }
     this._sort = function(data)
     {
-    	console.log("_sort");
-    	console.log(data)
     		var failsafe = 200
         result = [];
         var currentIndex = 0;
@@ -82,7 +80,6 @@ function TileLayer(parentMap,loginstance)
             else  {
 
             		if(!indexfound) {
-            			console.log("skipping index: " + currentIndex)
             			currentIndex++;
             			indexfound  = false
             		}
@@ -98,7 +95,6 @@ function TileLayer(parentMap,loginstance)
 		var imUrlsLength = renderList.length;
 		var currentContext = this;
 
-		console.log("renderList length" + renderList.length)
 
 		for(var i=0;i<renderList.length;i++) {
 			var img = new Image();

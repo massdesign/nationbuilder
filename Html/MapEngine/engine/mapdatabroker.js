@@ -143,24 +143,20 @@ this._calculateMovementTest = function(zoomfactor) {
  
    if(xmove > prevxmove) {	
     this.newX += 1;
-	 console.log("go right")	
 	}	
 	else if(xmove < prevxmove) {
 	 this.newX -= 1;
-	 console.log("go left")	
 	}
 	if(ymove > prevymove) {
-	 console.log("go down")	
 	 this.newY += 1;
 	}
 	else if(ymove < prevymove) {
 	 this.newY -= 1;
-	 console.log("go up")	
+	
 	}
 
 
 	if(this.newX == 0 && this.newY == 0)  { 
-	 	console.log("first")	
 	 	this.newX = this._parent.getMapData().getStartPositionX();
    	this.newY = this._parent.getMapData().getStartPositionY();
 	}
@@ -179,19 +175,15 @@ this.getMapData = function (callback,zoomfactor) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    			  
- 	    	 sections = this._calculateMovementTest(zoomfactor);
- 	    	 console.log(sections)
-
+ 	    	 	sections = this._calculateMovementTest(zoomfactor);
+				console.log(sections)	
 			 	this._mapservice.fetchSections(sections,function(mapData) {
 					var data = mapData[0]['layers'];
-					console.log("fetched tiles")
-					console.log(mapData);
 					currentContext.data = data;
 					currentContext._mapservice.getImages(function (imagedata) {
 					currentContext.imageData = imagedata;
 					callback(currentContext.imageData, currentContext.data)
-			}
-
+			},sections
 		);
 	})
 	}

@@ -35,7 +35,6 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     		var newClaim = {}
     		// TODO: this should be solved differently.. because state_id is not 1 anymore.. has something to do with the generation of id
     		newClaim.state_id =  66003;
-    		console.log(JSON.stringify(newClaim))
 
 			// TODO: ervoor zorgen dat dit domeinmodel van selected tile er wat beter uitziet het is nu een bij elkaar geraapt zooitje
 
@@ -45,15 +44,15 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
     	
     	}
     $scope.mil_pmb = function(event) {
-    		console.log($scope)
+
    		var newMilitaryBase = {}   		
 			// TODO: database id's moeten niet geexposed worden.. zelfde geldt voor Claims   		
    		newMilitaryBase.name = "Temp Name for MilBase";
-   		console.log(JSON.stringify(newMilitaryBase));
+
 
    		// Hier moet ik dus mijn tile informatie vandaan halen (location)
    		clickedTile = map.getMapData().getClickedTile();
-			console.log(clickedTile)			
+
 			newMilitaryBase.tile_id = clickedTile.tile.id;
 			//newMilitaryBase
    		ms.createNewBase(newMilitaryBase,function(json_data) {
@@ -89,7 +88,7 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
     }
     $scope.availableactions  = function(event)   {
-    	console.log("bladiebloe")
+
     }
     $scope._scroll = function(x,y,width,height) {
     	

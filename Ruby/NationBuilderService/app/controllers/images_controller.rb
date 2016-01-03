@@ -8,6 +8,8 @@ class ImagesController < ApplicationController
     @images = Image.all
   end
 
+
+
   # GET /images/1
   # GET /images/1.json
   def show
@@ -38,7 +40,29 @@ class ImagesController < ApplicationController
       end
     end
   end
+  
+  def getscreen
+  x1 = params[:x1]
+  y1 = params[:y1]
+  
+  x2 = params[:x2]
+  y2 = params[:y2]
+  
+   #@images = Image.joins("INNER JOIN tiles ON tiles.image_id = images.id WHERE tiles.xposition = 5 GROUP BY images.id ")
+   @images = Image.includes(:tiles).where("tiles.xposition" => x1..x2,"tiles.yposition" => y1..y2)
+  
 
+   
+ #	@tiles = Tile.joins("INNER JOIN images ON images.id = tiles.image_id").find(:all,:conditions => 
+  #	 { :xposition => x1..x2,
+  	#   :yposition => y1..y2
+  	# })
+  	 
+  	 #for image in @images 
+  	 #image.tiles = @tiles
+	 #end
+   
+  end
   # PATCH/PUT /images/1
   # PATCH/PUT /images/1.json
   def update

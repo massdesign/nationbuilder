@@ -6,13 +6,12 @@ this._registeredClasses = []
 this._queuedEvents = []
 
 this.registerClass = function(classInstance) {
-//console.log(Reflection.className(classInstance))
+
 this._registeredClasses.push(classInstance)
 var localqueue = this._queuedEvents;
 // check the queue for delayed messages and see if we can deliver them to the newly registered class
 for(var i=0;i<localqueue.length;i++) {
-		console.log("biertje met worst")
-		console.log(this._registeredClasses[i])
+
 	var eventHandled = this.notifyListeners(localqueue[i],false);
 	if(eventHandled) {
 		this._queuedEvents = this._queuedEvents.splice(i,1)
@@ -31,7 +30,6 @@ var newEvent = tevent;
 	for(var i=0;i<this._registeredClasses.length;i++) {
 		// BROADCAST betekent gewoon naar alles wat geregisteerd is sturen ongeacht het type
 		if(newEvent.getDestinationClass() == Event.BROADCAST) {	
-		console.log(this._registeredClasses[i])
 		eventHandled =	 this._registeredClasses[i].notify(newEvent)
 		}
 		else {

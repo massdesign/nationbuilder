@@ -30,8 +30,9 @@ NationBuilderMapsService::Application.routes.draw do
   resources :tiles 
   
   resources :layers
-
+   
   resources :images
+  get '/images/getscreen/:x1/:y1/:x2/:y2', to: 'images#getscreen', as: 'images1'
 
   resources :maps
   
@@ -47,6 +48,7 @@ NationBuilderMapsService::Application.routes.draw do
    
   post '/militarystrongholds/createnewbase', to: 'militarystrongholds#createnewbase', as: 'militarystrongholds1'
   get '/states/first', to: 'states#first', as: 'states1'
+
   resources :states
 
 

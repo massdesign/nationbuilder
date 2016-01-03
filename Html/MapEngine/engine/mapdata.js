@@ -121,7 +121,6 @@ this.getNewY = function () {
 }
 
 this.getClickedTile = function() {
- console.log(this.clickedTile)
 return this.clickedTile;
 }
 

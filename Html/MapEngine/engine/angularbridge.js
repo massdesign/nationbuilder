@@ -22,8 +22,6 @@ this.updateMapControllerScope = function(model) {
 	{
 			console.log("no controller set, can't complete request");
 	}
-	
-		console.log($scope)
 }
 
 

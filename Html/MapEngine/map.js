@@ -191,8 +191,6 @@ function Map(javascript_console,applicationName)
       // TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
     //  var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
 
-	//	console.log("mapSize width: " + this._g_mapWidth+1)
-	//	console.log("other map width: " + this.getMapWidth() )
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
 		// NOTE: wordt verplaatst naar LayerService

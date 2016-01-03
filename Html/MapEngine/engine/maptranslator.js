@@ -41,7 +41,6 @@ function MapTranslator(parentMap) {
 		var m = 2;
 		var rw = mapWidth;
 		var rh = mapHeight;
-		console.log("zoomfactor: " + zoomfactor)
 		while (zoomfactor > 0) {
 			rw = rw * 2
 			rh = rh * 2
@@ -72,24 +71,24 @@ function MapTranslator(parentMap) {
 							if(prevViewportX > viewportX) {
 								newX = currentX + tilesize;		
 								items[i].setX(newX);	
-								//console.log("go right")
+						
 		 	 				}
 		 	 				else if(prevViewportX < viewportX)
 		 	 				{
 		 	 					newX = currentX - tilesize;			
 		 	 					items[i].setX(newX);			
-		 	 					//console.log("go left")
+		 	 		
 		 	 				} 
 		 	 				
 							if(prevViewportY > viewportY) {
 								newY = currentY + tilesize;
 								 items[i].setY(newY);
-								 //console.log("go down")
+					
 							}		 	 		
 							else if(prevViewportY < viewportY) {
 								newY = currentY - tilesize;		
 								 items[i].setY(newY);
-								 //console.log("go up")
+				
 							}
        					 }
 				 

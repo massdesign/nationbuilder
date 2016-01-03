@@ -175,6 +175,7 @@ public class    PreFiller {
         this.rubyModels.add(createTerrainType("PLAINLAND"));
         this.rubyModels.add(createTerrainType("COAST"));
         this.rubyModels.add(createTerrainType("NONE"));
+        this.rubyModels.add(createTerrainType("ROAD"));
     }
 
 }
