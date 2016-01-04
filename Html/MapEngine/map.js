@@ -128,7 +128,8 @@ function Map(javascript_console,applicationName)
     {			// increases with zoom
     			// NOTE: wordt deels verplaatst naar LayerService
     			if(this._zoomfactor < Config.MAX_ZOOM_FACTOR) {
-    			
+    			console.log("zoomfactor")
+    			console.log(this._zoomfactor)
     			this._zoomfactor += 1;
  				var objectToScale = this.stage;
  			
@@ -143,15 +144,18 @@ function Map(javascript_console,applicationName)
             	x: objectToScale.getScale().x/2,
             	y: objectToScale.getScale().y/2
        		 });  
+       	
 								this._mapDataBroker.getMapData(function(imageData,data) {
+		
 					currentContext._layerService.getLayer(LayerService.TILE_LAYER).renderTiles(imageData,data,false)    			
 					},this._zoomfactor);
 				
            objectToScale.draw();
            
            mapSize =  this.getMapTranslator().getRelativeMapSize(this._zoomfactor,this.getMapWidth(),this.getMapHeight());
+           console.log(mapSize)
           // gridChangedPayload = new GridChangedPayLoad()
-      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this._g_mapWidth+1,this._g_mapHeight+1,this._zoomfactor));
+      	  var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(mapSize.getX(),mapSize.getY(),this._zoomfactor));
 			  this._eventBus.notifyListeners(newEvent,true)
 			  this._layerService.redrawLayer(LayerService.BACKGROUND_LAYER,this.stage)
            this._layerService.redrawLayer(LayerService.TILE_LAYER,this.stage)
@@ -189,7 +193,7 @@ function Map(javascript_console,applicationName)
    	// Create array verplaatst naar gridlayer.. maar nu moeten we een soort Eventbus systeem hebben om dit soort gegevens tussen layers te kunnen delen
       //this._g_tileValues = this._createArray(this._g_mapWidth+1,this._g_mapHeight+1);
       // TODO: de +1 toevoeging zorgt voor rare rsultaten, dit werkte altijd per toeval
-    //  var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
+      var mapSize = new XYTuple(this._g_mapWidth+1,this._g_mapHeight+1);
 
 		var startX = this.getMapData().getStartPositionX();
 		var startY = this.getMapData().getStartPositionY();
@@ -199,9 +203,9 @@ function Map(javascript_console,applicationName)
 		// TODO: Layer bootstrapping moet gebeuren alvorens er events afgevuurd worden.. dit zorgt voor een fragiele architecteur
 		this._layerService.getLayer(LayerService.BACKGROUND_LAYER).init()
 		this._layerService.getLayer(LayerService.SELECT_LAYER).init()
-		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this._g_mapWidth+1,this._g_mapHeight+1,this._zoomfactor));
+		var newEvent = new Event(Event.MAP_SIZE_CHANGE,Reflection.className(this),Event.BROADCAST,new GridChangedPayload(this.getMapWidth(),this.getMapHeight(),this._zoomfactor));
 		this._eventBus.notifyListeners(newEvent,true)
-		this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
+		//this._layerService.getLayer(LayerService.GRID_LAYER).draw(this.getMapWidth(),this.getMapHeight())
 
 		this._layerService.registerStage(this.stage)   
 
