@@ -21,14 +21,12 @@ function GridLayer(parentMap, loginstance) {
         return [Event.MAP_SIZE_CHANGE];
     }
     this.notify = function (tevent) {
-			console.log("kom hij hier wel voorbij")
-        switch (tevent.getEventId) {
+
+        switch (tevent.getEventId()) {
 
             case Event.MAP_SIZE_CHANGE:
-            	 console.log(tevent)
-            	 console.log("gridlayer mapsize change event")
-
-                this._tileValueGrid = this._createArray(tevent.Getpayload.getX() + 1, tevent.getPayload().getY() + 1);
+                //this._tileValueGrid = Util.createArray(tevent.getPayload().getMapSize().getX() + 1, tevent.getPayload().getMapSize().getY() + 1);
+               this._createGrid(tevent.getPayload().getMapSize().getX(),tevent.getPayload().getMapSize().getY())
                 break;
         }
         return true;
@@ -62,7 +60,6 @@ function GridLayer(parentMap, loginstance) {
     this._createGrid = function (mapWidth, mapHeight) {
         var currentx = 0;
         var currenty = 0;
-
         this.clearLayer()
 
         for (var x = 1; x < mapWidth + 1; x++) {
@@ -86,7 +83,6 @@ function GridLayer(parentMap, loginstance) {
                 var tilevalues = []
                 tilevalues.push(new TripleTuple(x, y, currentx + this.parentMap.getXOffset()))
                 tilevalues.push(new TripleTuple(x, y, currenty + this.parentMap.getYOffset()))
-                
                 var newEvent = new Event(Event.INIT_GRID, Reflection.className(this), Reflection.classType(SelectLayer), tilevalues);
                 this._eventBus.notifyListeners(newEvent, true)
          

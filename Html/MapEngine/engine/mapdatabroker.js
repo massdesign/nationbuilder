@@ -133,12 +133,25 @@ this._calculateMovementTest = function(zoomfactor) {
    var prevxmove = this._parent.getMapData().getPrevViewportX();
    var prevymove = this._parent.getMapData().getPrevViewportY();
    
+	//var x2 = sections[1].getX()*zoomfactor
+	//var y2 = sections[1].getY()*zoomfactor
+   
+   
+
 	// TODO: dit in een config bestand zetten.. 19 slaat op de breedt van de viewport..   tellen begint bij 0 vandaar 19 viewport is namelijk 20 breed 
    var x1 = 0;
    var y1 = 0;
-   var x2 = (x1+19)*zoomfactor;
-   var y2 = (y1+19)*zoomfactor;
+   //var x2 = (x1+19)*zoomfactor;
+  // var y2 = (y1+19)*zoomfactor;
+   var x2 = 19
+   var y2 = 19
+   for(var i=0;i<zoomfactor;i++) {
+   	x2 *= 2 
+   	y2 *= 2
+   }
+
    
+
 
  
    if(xmove > prevxmove) {	
@@ -179,9 +192,8 @@ this.getMapData = function (callback,zoomfactor) {
    		var prevxmove = this._parent.getMapData().getPrevViewportX();
    		var prevymove = this._parent.getMapData().getPrevViewportY();
    			  
- 	    	 sections = this._calculateMovementTest(zoomfactor);
- 	    	 console.log(sections)
 
+			sections = this._calculateMovementTest(zoomfactor);
 			 	this._mapservice.fetchSections(sections,function(mapData) {
 					var data = mapData[0]['layers'];
 					console.log("fetched tiles")
