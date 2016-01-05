@@ -28,7 +28,7 @@ NB-22: afhankelijkheden tussen bestanden moet geregeld worden op een onderhoudba
 
 NB-23: Inzoomen en uitzoomen laten samenwerken met de chunkloading dat geimplementeerd is NB-14 
 NB-24: Minimap tonen die ver uitgezoomde versie van de map laat zien 
-NB-25: Performance probleem met images query oplossen (query duurt nu 500+ms)
+NB-25: Performance probleem met images query oplossen (query duurt nu 500+ms)(wordt opgelost in branch NB-46_rebase)i issuenummer NB-46
 NB-26: Seamless scrollen mogelijk maken 
 NB-27: Pixel clustering maken om de uitzoom limiet te vergroten(+)  
 NB-28: Productiewaardige omgeving regelen op de demo VPS
