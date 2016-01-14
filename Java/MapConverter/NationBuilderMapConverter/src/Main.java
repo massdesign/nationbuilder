@@ -21,6 +21,7 @@ import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 public class Main {
 
     public static void main(String[] args) throws IOException, RubyException {
+
         long startTime  = System.currentTimeMillis();
 
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
@@ -34,7 +35,6 @@ public class Main {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);
         System.out.println("Total running time " + dateFormatted);
-
     }
 
 }

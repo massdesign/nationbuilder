@@ -6,6 +6,7 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 /**
  * Created by patrick on 9/18/14.
  */
+// TODO: State komt niet voor in de tabel GameEnitity, waarschijnlijk  was dit nog niet zo belangerijk, maar het is wel consistent als het gedaan wordt
 @Entity(tableName = "states")
 public class State extends GameEntity
 {

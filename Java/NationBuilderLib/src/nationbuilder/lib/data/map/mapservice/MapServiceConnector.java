@@ -102,8 +102,6 @@ public class MapServiceConnector {
 				break;
 			}
 		}
-
-
 	}
 	public void addImage(Image image)
 	{

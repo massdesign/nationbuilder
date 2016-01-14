@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @node_type.name %>
+</p>
+
+<p>
+  <strong>Destroyable:</strong>
+  <%= @node_type.destroyable %>
+</p>
+
+<%= link_to 'Edit', edit_node_type_path(@node_type) %> |
+<%= link_to 'Back', node_types_path %>

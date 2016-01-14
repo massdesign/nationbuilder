@@ -4,7 +4,7 @@ import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 
 /**
- * Created by patrick on 9/19/14.
+ * @author patrick.ekkel
  */
 @Entity(tableName = "energy_buildings")
 public class EnergyBuilding extends Building

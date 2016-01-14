@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150320000857) do
+ActiveRecord::Schema.define(version: 20160111174610) do
 
   create_table "buildings", force: true do |t|
     t.string   "name"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 20150320000857) do
   create_table "game_entities", force: true do |t|
     t.string   "name"
     t.integer  "city_id"
+    t.integer  "node_type_id"
     t.integer  "militarystronghold_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -103,6 +104,19 @@ ActiveRecord::Schema.define(version: 20150320000857) do
   create_table "militarystrongholds_tiles", force: true do |t|
     t.integer "tile_id"
     t.integer "militarystronghold_id"
+  end
+
+  create_table "node_types", force: true do |t|
+    t.string   "name"
+    t.boolean  "destroyable"
+    t.integer  "power_grid_node_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "power_grid_nodes", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "resources", force: true do |t|
