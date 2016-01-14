@@ -65,7 +65,7 @@ public class WorldLoader {
     }
     public void TestRun()
     {
-        this.preFiller.testFill();
+        this.postFiller.testFill();
     }
 
 

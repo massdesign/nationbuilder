@@ -4,7 +4,7 @@ import java.util.List;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
- * Created by patrick on 9/19/14.
+ * @author patrick.ekkel
  */
 public class Connection extends BaseRubyModel
 {
@@ -19,7 +19,7 @@ public class Connection extends BaseRubyModel
 	/**
 	 * A is the source if we are speaking from a one way perspective
 	 */
-	private List<StaticEntity> A;
+	private StaticEntity A;
 	/**
 	 * 	 * B is the endpoint if we are speaking from a one way perspective
 	 */

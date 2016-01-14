@@ -1,0 +1,25 @@
+<h1>Listing power_grid_nodes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @power_grid_nodes.each do |power_grid_node| %>
+      <tr>
+        <td><%= link_to 'Show', power_grid_node %></td>
+        <td><%= link_to 'Edit', edit_power_grid_node_path(power_grid_node) %></td>
+        <td><%= link_to 'Destroy', power_grid_node, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Power grid node', new_power_grid_node_path %>

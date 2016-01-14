@@ -1,0 +1,17 @@
+<%= form_for(@power_grid_node) do |f| %>
+  <% if @power_grid_node.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@power_grid_node.errors.count, "error") %> prohibited this power_grid_node from being saved:</h2>
+
+      <ul>
+      <% @power_grid_node.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

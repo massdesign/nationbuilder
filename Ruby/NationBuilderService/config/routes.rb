@@ -1,5 +1,9 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :power_grid_nodes
+
+  resources :node_types
+
   resources :militarystrongholds
 
   resources :warehouses
