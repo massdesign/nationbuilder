@@ -7,7 +7,6 @@ public class PowerRelayStation  extends Building
 {
 	private int capacity;
 
-
 	public int getCapacity()
 	{
 		return capacity;
