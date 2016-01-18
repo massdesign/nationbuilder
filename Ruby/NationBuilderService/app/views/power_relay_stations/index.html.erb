@@ -1,0 +1,27 @@
+<h1>Listing power_relay_stations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Capacity</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @power_relay_stations.each do |power_relay_station| %>
+      <tr>
+        <td><%= power_relay_station.capacity %></td>
+        <td><%= link_to 'Show', power_relay_station %></td>
+        <td><%= link_to 'Edit', edit_power_relay_station_path(power_relay_station) %></td>
+        <td><%= link_to 'Destroy', power_relay_station, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Power relay station', new_power_relay_station_path %>

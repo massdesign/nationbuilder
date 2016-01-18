@@ -27,10 +27,14 @@ class PowerGridNodesController < ApplicationController
   	 nTName = params[:name];
   	 nTDestroyable  = params[:destroyable]
   	 
-  	 @nodetype = NodeType.create(name: nTName,destroyable: nTDestroyable)
+  	 @nodetype = NodeType.create(name: nTName,destroyable: nTDestroyable)	
     @power_grid_node = PowerGridNode.new(power_grid_node_params)
     @nodetype.save 
 	 @power_grid_node.node_type = @nodetype 
+	 if params[:rsid] != nil      
+	  @powerrelaystation = PowerRelayStation.find(params[:rsid])
+	  @powerrelaystation.power_grid_node = @power_grid_node
+	 end
 	 
       respond_to do |format|
       if @power_grid_node.save

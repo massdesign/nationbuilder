@@ -37,14 +37,18 @@ public class PostFiller {
 
     public void testFill() {
 
-
+        PowerRelayStation powerRelayStation = context.createRubyModel(PowerRelayStation.class);
         PowerGridNode type = context.createRubyModel(PowerGridNode.class);
         type.setName("test node types");
+        powerRelayStation.setCapacity(300);
+        powerRelayStation.setName("300MW power relay station");
         type.setDestroyable(true);
         try
         {
-         //   type.Save("/node_types/");
+            type.setRelayStation(powerRelayStation);
+            powerRelayStation.Save("/power_relay_stations");
             type.Save("/power_grid_nodes/");
+
         }
         catch (RubyException e)
         {

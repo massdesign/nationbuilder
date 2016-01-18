@@ -7,10 +7,12 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
  */
 public class PowerGridNode extends NodeType
 {
-	// TODO: one to one hier uitbreiden
-	@OneToOne
-	private PowerRelayStation relayStation;
 
+	private String rsid;
+
+	// TODO: one to one hier uitbreiden
+	@OneToOne(mapIdTo = "rsid")
+	private PowerRelayStation relayStation;
 
 	public PowerRelayStation getRelayStation()
 	{

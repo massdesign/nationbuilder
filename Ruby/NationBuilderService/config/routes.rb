@@ -1,5 +1,7 @@
 NationBuilderMapsService::Application.routes.draw do
 
+  resources :power_relay_stations
+
   resources :power_grid_nodes
 
   resources :node_types

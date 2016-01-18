@@ -5,6 +5,7 @@ import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 /**
  * Created by patrick on 9/18/14.
  */
+
 public class Building extends StaticEntity
 {
 
@@ -44,6 +45,4 @@ public class Building extends StaticEntity
 	//{
 	//	this.contract = contract;
 	//}
-
-
 }

@@ -6,6 +6,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 /**
  * @author patrick.ekkel
  */
+// TODO: energy_building is op een rare manier opgeslagen niet zoals de andere buildings.. dit moeten we rechtzetten en energybuilding in lijn brengen met de rest van de code
 @Entity(tableName = "energy_buildings")
 public class EnergyBuilding extends Building
 {
