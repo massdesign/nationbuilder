@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @power_relay_station_type.name %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @power_relay_station_type.capacity %>
+</p>
+
+<%= link_to 'Edit', edit_power_relay_station_type_path(@power_relay_station_type) %> |
+<%= link_to 'Back', power_relay_station_types_path %>

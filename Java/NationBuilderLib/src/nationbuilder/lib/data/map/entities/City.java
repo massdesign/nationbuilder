@@ -14,8 +14,6 @@ public class City extends GameEntity
 //	private String name;
 	// The building that are part of the city and its administration (does not mean that these have to be in the same place)
 //	private List<Building> buildings;
-	// infrastructure connected to the city (trade routes,railways,highways etc)
-	private List<Connection> connections;
 	// The tiles that fall under the administration of the city (initially the land on which the city is build) but can also be expanded later on
 	private List<Tile> locations;
 	// The contracts where the city is involved
@@ -27,7 +25,6 @@ public class City extends GameEntity
 	public City()
 	{
 	//	this.buildings = new ArrayList<>();
-		this.connections = new ArrayList<>();
     //	this.locations = new ArrayList<>();
 		this.contracts = new ArrayList<>();
 	}

@@ -24,16 +24,21 @@ class PowerRelayStationsController < ApplicationController
 
   # POST /power_relay_stations
   def create
-  
+     #@power_relay_station = PowerRelayStation.new(power_relay_station_params)
+     @power_relay_station = PowerRelayStation.new()
      bName = params[:name];
-    
+     
 	  @building = Building.create(name: bName)
      if params[:geo] != nil      
 	  	@gameentity = GameEntity.find(params[:geo])
 	  	@gameentity.buildings << @building
 	  end
+	  if params[:prstid] != nil      
+	  	@power_relay_station_type = PowerRelayStationType.find(params[:prstid])
+	  	@power_relay_station	.power_relay_station_type = @power_relay_station_type
+	  end
 	  
-     @power_relay_station = PowerRelayStation.new(power_relay_station_params)
+     
 	  @building.save
 	  @power_relay_station.building = @building
        respond_to do |format|

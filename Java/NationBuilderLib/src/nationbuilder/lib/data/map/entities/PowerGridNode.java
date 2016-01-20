@@ -5,7 +5,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 /**
  * @author patrick.ekkel
  */
-public class PowerGridNode extends NodeType
+public class PowerGridNode extends Node
 {
 
 	private String rsid;
