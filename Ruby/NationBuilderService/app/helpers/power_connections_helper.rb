@@ -1,0 +1,2 @@
+module PowerConnectionsHelper
+end

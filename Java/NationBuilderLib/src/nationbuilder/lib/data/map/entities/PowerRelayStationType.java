@@ -5,20 +5,20 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 /**
  * @author patrick.ekkel
  */
-public class NodeType extends BaseRubyModel
+public class PowerRelayStationType extends BaseRubyModel
 {
+	private int capacity;
 	private String name;
 
-	private boolean destroyable;
 
-	public boolean isDestroyable()
+	public int getCapacity()
 	{
-		return destroyable;
+		return capacity;
 	}
 
-	public void setDestroyable(boolean destroyable)
+	public void setCapacity(int capacity)
 	{
-		this.destroyable = destroyable;
+		this.capacity = capacity;
 	}
 
 	public String getName()

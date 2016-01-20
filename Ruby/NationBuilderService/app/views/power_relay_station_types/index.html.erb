@@ -1,0 +1,29 @@
+<h1>Listing power_relay_station_types</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Capacity</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @power_relay_station_types.each do |power_relay_station_type| %>
+      <tr>
+        <td><%= power_relay_station_type.name %></td>
+        <td><%= power_relay_station_type.capacity %></td>
+        <td><%= link_to 'Show', power_relay_station_type %></td>
+        <td><%= link_to 'Edit', edit_power_relay_station_type_path(power_relay_station_type) %></td>
+        <td><%= link_to 'Destroy', power_relay_station_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Power relay station type', new_power_relay_station_type_path %>

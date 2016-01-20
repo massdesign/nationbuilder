@@ -20,14 +20,5 @@ public class EnergyBuilding extends Building
 
     @OneToOne(mapIdTo = "btid")
 	private EnergyBuildingType buildingType;
-    private Connection connection;
     private String btid;
-	public Connection getConnection()
-	{
-		return connection;
-	}
-	public void setConnection(Connection connection)
-	{
-		this.connection = connection;
-	}
 }

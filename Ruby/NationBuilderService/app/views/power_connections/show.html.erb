@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Load:</strong>
+  <%= @power_connection.load %>
+</p>
+
+<p>
+  <strong>Capacity:</strong>
+  <%= @power_connection.capacity %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @power_connection.name %>
+</p>
+
+<%= link_to 'Edit', edit_power_connection_path(@power_connection) %> |
+<%= link_to 'Back', power_connections_path %>

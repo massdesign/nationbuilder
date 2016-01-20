@@ -1,0 +1,31 @@
+<h1>Listing power_connections</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Load</th>
+      <th>Capacity</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @power_connections.each do |power_connection| %>
+      <tr>
+        <td><%= power_connection.load %></td>
+        <td><%= power_connection.capacity %></td>
+        <td><%= power_connection.name %></td>
+        <td><%= link_to 'Show', power_connection %></td>
+        <td><%= link_to 'Edit', edit_power_connection_path(power_connection) %></td>
+        <td><%= link_to 'Destroy', power_connection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Power connection', new_power_connection_path %>

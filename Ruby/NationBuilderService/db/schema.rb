@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114082025) do
+ActiveRecord::Schema.define(version: 20160120123638) do
 
   create_table "buildings", force: true do |t|
     t.string   "name"
@@ -115,16 +115,33 @@ ActiveRecord::Schema.define(version: 20160114082025) do
     t.datetime "updated_at"
   end
 
+  create_table "power_connections", force: true do |t|
+    t.integer  "load"
+    t.integer  "capacity"
+    t.string   "name"
+    t.integer  "power_grid_node_a_id"
+    t.integer  "power_grid_node_b_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "power_grid_nodes", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "power_relay_station_id"
   end
 
-  create_table "power_relay_stations", force: true do |t|
+  create_table "power_relay_station_types", force: true do |t|
+    t.string   "name"
     t.integer  "capacity"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "power_relay_stations", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "power_relay_station_type_id"
   end
 
   create_table "resources", force: true do |t|
