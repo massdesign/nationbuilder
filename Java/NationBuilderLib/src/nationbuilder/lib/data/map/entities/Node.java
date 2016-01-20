@@ -1,10 +1,12 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
  * @author patrick.ekkel
  */
+@Entity(tableName = "node_types")
 public class Node extends BaseRubyModel
 {
 	private String name;
