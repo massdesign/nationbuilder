@@ -1,10 +1,12 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 
 /**
  * @author patrick.ekkel
  */
+@Entity(tableName = "power_grid_nodes")
 public class PowerGridNode extends Node
 {
 

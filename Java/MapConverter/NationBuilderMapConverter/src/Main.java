@@ -21,10 +21,15 @@ import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
 public class Main {
 
     public static void main(String[] args) throws IOException, RubyException {
+<<<<<<< 2dfba48e429a0f6fde65c5053d4e670f35af8ec1
 
         long startTime  = System.currentTimeMillis();
 
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
+=======
+        RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
+       // RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.JSON);
+>>>>>>> NB-13: entity notatie toegevoegd voor de performance filler
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 

@@ -1,12 +1,14 @@
 package nationbuilder.lib.data.map.entities;
 
 import java.util.List;
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
  * @author patrick.ekkel
  */
+@Entity(tableName = "power_connections")
 public class PowerConnection extends BaseRubyModel
 {
 	/**

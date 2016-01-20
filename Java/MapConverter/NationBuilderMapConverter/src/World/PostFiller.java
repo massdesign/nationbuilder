@@ -77,6 +77,7 @@ public class PostFiller {
             powerGridNode1.Save("/power_grid_nodes/");
             powerGridNode2  .Save("/power_grid_nodes/");
             powerConnection.Save("/power_connections/");
+            this.context.commit();
         }
         catch (RubyException e)
         {
