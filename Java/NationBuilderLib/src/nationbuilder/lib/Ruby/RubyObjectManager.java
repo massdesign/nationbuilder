@@ -1,9 +1,6 @@
 package nationbuilder.lib.Ruby;
 
-import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
-import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
+import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.orm.ID;
@@ -31,7 +28,7 @@ public class RubyObjectManager {
 
     }
 
-    public boolean store(RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException {
+    public boolean store(RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
         ResponseData data = this.rubyService.postObject(model,resourceUrl);
         // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service

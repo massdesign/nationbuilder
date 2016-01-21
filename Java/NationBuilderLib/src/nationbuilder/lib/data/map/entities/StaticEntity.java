@@ -1,6 +1,7 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
@@ -10,7 +11,7 @@ public class StaticEntity extends BaseRubyModel
 {
     @OneToOne(mapIdTo = "loid")
 	private Tile locatedOn;
-
+    @Transient
     private String loid;
 
 	public Tile getLocatedOn()

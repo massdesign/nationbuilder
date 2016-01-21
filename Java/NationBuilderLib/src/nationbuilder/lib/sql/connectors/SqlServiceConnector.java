@@ -45,7 +45,7 @@ public class SqlServiceConnector extends BaseServiceConnector
 	}
 
 	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException {
+	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
 
 		return getCreateService().postObject(objectToPost, resourceUrl);
 	}

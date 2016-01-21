@@ -6,16 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by patrick on 9/15/14.
+ * Created by patrick on 1/21/16.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface OneToOne
-{
-
-	String mapIdTo() default "";
-	String mappedBy() default "";
-    String foreignKey() default "";
-	Class  mappedByClazz() default Object.class;
-
+public @interface Transient {
 }

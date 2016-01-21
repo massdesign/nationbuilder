@@ -1,5 +1,7 @@
 package nationbuilder.lib.sql;
 
+import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
+
 /**
  * Created by patrick on 12/25/14.
  */
@@ -12,8 +14,7 @@ public class TableRow {
         this.row = new ColumnValue[length];
         this.tableMetaData = metaData;
     }
-    public void setColumn(String columnName, Object value)
-    {
+    public void setColumn(String columnName, Object value) throws ColumnNotFoundException {
         String resultValue = "";
 
         if(value != null && value instanceof  Integer)
@@ -26,21 +27,31 @@ public class TableRow {
         }
 
 
-
+        ColumnValue columnValue = null;
+        int columnValueIndex = -1;
         for(int i=0;i<this.tableMetaData.getSortedColumns().size();i++)
         {
+            columnValueIndex = i;
             if(this.tableMetaData.getSortedColumns().get(i).getColumnName().equals(columnName))
             {
-                if(i <= row.length)
-                {
-                    this.row[i] = new ColumnValue(this.tableMetaData.getSortedColumns().get(i),resultValue);
+               // if(i <= row.length)
+                //{
+                   // this.row[i] = new ColumnValue(this.tableMetaData.getSortedColumns().get(i),resultValue);
+                    columnValue = new ColumnValue(this.tableMetaData.getSortedColumns().get(i),resultValue);
                     break;
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     // throw some nasty error with index out of range because of exception
-                }
+                //}
             }
+        }
+        if(columnValue != null) {
+
+          this.row[columnValueIndex] = columnValue;
+        }
+        else {
+            throw new ColumnNotFoundException("Column: " + columnName + " not found on " + this.tableMetaData.getTable());
         }
     }
 

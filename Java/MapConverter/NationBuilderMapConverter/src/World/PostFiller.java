@@ -75,7 +75,7 @@ public class PostFiller {
             powerRelayStation1.Save("/power_relay_stations");
             powerRelayStation2.Save("/power_relay_stations");
             powerGridNode1.Save("/power_grid_nodes/");
-            powerGridNode2  .Save("/power_grid_nodes/");
+            powerGridNode2.Save("/power_grid_nodes/");
             powerConnection.Save("/power_connections/");
             this.context.commit();
         }

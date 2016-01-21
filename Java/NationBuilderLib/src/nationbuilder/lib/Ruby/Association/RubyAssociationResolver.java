@@ -98,31 +98,6 @@ public class RubyAssociationResolver
                         {
                             RubyModel castedFieldValue = (RubyModel) fieldValue;
                             ID fieldId = castedFieldValue.getId();
-                           // OneToOne annotation =  objectField.getAnnotation(OneToOne.class);
-					        // if(annotation != null)
-                             //{
-					             //String mappedByVar =  annotation.mappedBy();
-					            // Class refClazz = ReferenceMapping.class;
-				            	// Constructor<?> ctor = refClazz.getConstructor();
-					 
-			                    // ReferenceMapping instance =  (ReferenceMapping)ctor.newInstance();
-			         
-			                   // instance.setID(fieldId);
-			                   // instance.setClassType(model.getClass());
-			                
-			                    /*Field[] fieldFields =   fieldValue.getClass().getDeclaredFields();
-			         
-			                   for(Field field : fieldFields)
-			                   {
-			                  	 if(field.getName().equals(mappedByVar) && field.getType().getSimpleName().toLowerCase().equals("referencemapping"))
-			                  	 {
-			                  		 field.setAccessible(true);
-			                  		 field.set(fieldValue, instance);
-			        	        	 break;
-			        	         }
-			                   }
-			                   */
-				        	//}
 					        if (fieldId != null)
 				        	{
 					        	mappedField.set(model, fieldId.getId());
@@ -135,28 +110,16 @@ public class RubyAssociationResolver
 		        	}
                     else if(fieldValue instanceof ReferenceMapping)
                     {
-                       // ReferenceMapping castedFieldValue = (ReferenceMapping)fieldValue;
-
-                       // ID fieldId = castedFieldValue.getID();
-
-
+                        // Hmm this does nothing.. consider getting rid of it?
                     }
 		    }
 		catch (IllegalAccessException e)
 		{
 			Log.write(e, LogType.ERROR);
-		} 
-		//catch (InstantiationException e) {
-		//	Log.write(e, LogType.ERROR);
-		//}
+		}
 		 catch (IllegalArgumentException e) {
 			Log.write(e, LogType.ERROR);
 		 }
-		//} catch (InvocationTargetException e) {
-	//		Log.write(e, LogType.ERROR);
-		//} catch (NoSuchMethodException e) {
-	//		Log.write(e, LogType.ERROR);
-		//}
 		    catch (SecurityException e) {
 			Log.write(e, LogType.ERROR);
 		}
@@ -183,20 +146,21 @@ public class RubyAssociationResolver
 	   Object o =  field.getAnnotation(OneToOne.class);
 		if(o != null)
 		{
-			result = new MappingInfo(((OneToOne)o).mappedBy(),((OneToOne)o).mappedByClazz(),instance,field);
+
+			result = new MappingInfo(((OneToOne)o).mappedBy(),((OneToOne)o).mappedByClazz(),instance,field,((OneToOne)o).foreignKey());
 		}
 		else
 		{
 		   o =	field.getAnnotation(OneToMany.class);
 		   if(o != null)
 		   {
-			   result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToMany) o).mappedByClazz(), instance, field);
+			   result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToMany) o).mappedByClazz(), instance, field,null);
 		   }
 			else  {
 			   o = field.getAnnotation(ManyToOne.class);
 			   if(o != null)
 			   {
-				   result = new MappingInfo(((ManyToOne)o).mappedBy(), ((ManyToOne) o).mappedByClazz(),instance,field);
+				   result = new MappingInfo(((ManyToOne)o).mappedBy(), ((ManyToOne) o).mappedByClazz(),instance,field,null);
 			   }
 		   }
 
