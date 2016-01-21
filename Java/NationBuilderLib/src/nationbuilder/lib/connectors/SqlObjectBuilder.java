@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.orm.ID;
@@ -62,7 +63,7 @@ public class SqlObjectBuilder implements ObjectBuilder
     }
 
     @Override
-    public String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException {
+    public String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
         RubyModel model = (RubyModel)object;
 
 

@@ -1,5 +1,6 @@
 import mocks.QueryManagerMock;
 import mocks.TestModel1;
+import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.orm.ID;
@@ -27,7 +28,7 @@ public class SqlObjectBuilderTest {
         Assert.assertEquals(expected,actual);
     }
     @Test
-    public void createStringFromObject() throws ObjectConversionFailedException, MissingAnnotationException {
+    public void createStringFromObject() throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
 
         SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(new QueryManagerMock());
 

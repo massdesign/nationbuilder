@@ -8,6 +8,7 @@ public class ColumnMetaData
 	private String columnName;
 	private String columnType;
 
+
 	public String getColumnType()
 	{
 		return columnType;

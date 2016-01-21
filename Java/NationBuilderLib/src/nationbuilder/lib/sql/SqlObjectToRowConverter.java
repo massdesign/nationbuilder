@@ -7,8 +7,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
+import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
@@ -109,9 +113,22 @@ public class SqlObjectToRowConverter
 
                 if (fieldEntityAnnotation != null)
                 {
-                    String field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
-                    String fieldValue = (String) mappedField.get(model);
-                    result = om.createObjectMapRow(field_id, fieldValue);
+
+
+
+                       MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
+                       String field_id = "";
+                       String fieldValue = (String) mappedField.get(model);
+                        // TODO: consider making the empty value of the foreign key a string constant
+                        if(mappingInfo != null &&  mappingInfo.getForeignKey() != null && !mappingInfo.getForeignKey().equals("")) {
+
+                            field_id = mappingInfo.getForeignKey();
+                        }
+                        else {
+                        field_id = RubyPluralizer.DePluralize(fieldEntityAnnotation.tableName()) + "_id";
+                        }
+                        result = om.createObjectMapRow(field_id, fieldValue);
+
                 }
                 else
                 {
@@ -151,8 +168,15 @@ public class SqlObjectToRowConverter
                     if (fieldType.toLowerCase().equals(STRING_TYPE) || fieldType.toLowerCase().equals(INT_TYPE))
                     {
                         field.setAccessible(true);
-                        result.addEntry(result.createObjectMapRow(field.getName(),field.get(model)));
-                     //   result.addEntry(field.getName(), field.get(model));
+
+                        if(field.getAnnotations().length > 0)  {
+                            if(field.getAnnotation(Transient.class) != null ) {
+                                Log.writeInfo("Skipping field " + field.getName() + " on class " + model.getClass().getName() +" because it is transient");
+                            }
+                        }
+                        else {
+                            result.addEntry(result.createObjectMapRow(field.getName(), field.get(model)));
+                        }
                     }
                     else
                     {

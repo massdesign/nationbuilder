@@ -12,7 +12,7 @@ import java.io.IOException;
 public interface RubyService {
 
     public ResponseData postObject(Object objectToPost,String resourceUrl,String rootValue) throws IOException;
-    public ResponseData postObject(Object objectToPost,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException;
+    public ResponseData postObject(Object objectToPost,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
     public int postFile(String fileLocation,String resourceUrl) throws IOException;
     public int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
 	public ResponseData getObject(String resourceUrl);

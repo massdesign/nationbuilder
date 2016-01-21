@@ -11,6 +11,6 @@ import nationbuilder.lib.data.map.ResponseData;
 public interface RubyCreateService
 {
 	ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException;
-	ResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException;
+	ResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
     void commit() throws RubyException;
 }

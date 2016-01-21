@@ -3,6 +3,7 @@ package nationbuilder.lib.data.map.entities;
 import java.util.List;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 /**
@@ -29,17 +30,18 @@ public class PowerConnection extends BaseRubyModel
 	/**
 	 * Left hand side of the connection
 	 */
-	@OneToOne(mapIdTo = "aid")
+	@OneToOne(mapIdTo = "aid",foreignKey = "power_grid_node_a_id")
 	private PowerGridNode A;
 
 	/**
 	 * Right hand side of the connection
 	 */
-	@OneToOne(mapIdTo = "bid")
+	@OneToOne(mapIdTo = "bid",foreignKey = "power_grid_node_b_id")
 	private PowerGridNode B;
 
-
+    @Transient
 	private String bid;
+    @Transient
 	private String aid;
 
 	public PowerGridNode getA()

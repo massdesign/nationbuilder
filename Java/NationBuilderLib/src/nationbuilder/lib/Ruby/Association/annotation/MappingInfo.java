@@ -8,18 +8,20 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
  */
 public class MappingInfo
 {
-	public MappingInfo(String mappedBy,Class mappedByClazz,RubyModel instance,Field field)
+	public MappingInfo(String mappedBy,Class mappedByClazz,RubyModel instance,Field field,String foreignKey)
 	{
 		this.mappedBy = mappedBy;
 		this.mappedByClazz = mappedByClazz;
 		this.instance = instance;
 		this.field = field;
+        this.foreignKey = foreignKey;
 	}
 
 	private RubyModel instance;
 	private String mappedBy;
 	private Class mappedByClazz;
 	private Field field;
+    private String foreignKey;
 
 	public String getMappedBy() {
 		return mappedBy;
@@ -41,5 +43,7 @@ public class MappingInfo
 	{
 		return this.field;
 	}
-
+    public String getForeignKey() {
+        return foreignKey;
+    }
 }
