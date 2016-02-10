@@ -15,6 +15,7 @@ import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 import nationbuilder.lib.Ruby.RubyPluralizer;
 
@@ -106,7 +107,7 @@ public class SqlObjectToRowConverter
             Field mappedField = RubyAssociationResolver.getMappedField(field, currentClass);
             field.setAccessible(true);
             Object fieldDereferencedValue = field.get(model);
-            if (fieldDereferencedValue != null)
+            if (fieldDereferencedValue != null && !(fieldDereferencedValue instanceof ID))
             {
   
                 Entity fieldEntityAnnotation = fieldDereferencedValue.getClass().getAnnotation(Entity.class);
@@ -189,12 +190,18 @@ public class SqlObjectToRowConverter
                             }
                             else if(fieldType.toLowerCase().equals(REFERENCE_TYPE))
                             {
-
-                                ObjectMap.ObjectMapRow newObjectMapRow  = this.createReferenceMappingObjectMapRow(field, model, result);
-                                if(newObjectMapRow != null)
+                                nationbuilder.lib.Ruby.Association.annotation.ID idAnnotation = field.getAnnotation(
+                                 nationbuilder.lib.Ruby.Association.annotation.ID.class);
+                                if(idAnnotation == null)
                                 {
-                                    result.addEntry(newObjectMapRow);
+                                    ObjectMap.ObjectMapRow newObjectMapRow = this
+                                     .createReferenceMappingObjectMapRow(field, model, result);
+                                    if (newObjectMapRow != null)
+                                    {
+                                        result.addEntry(newObjectMapRow);
+                                    }
                                 }
+                                // else is nog niet geimplementeerd.. nu doen we alleen wat als ID annotatie niet aanwezig is op de ReferenceMapping
                             }
                             else
                             {

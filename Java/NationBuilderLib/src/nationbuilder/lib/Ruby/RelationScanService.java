@@ -8,6 +8,7 @@ import java.util.Map;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.orm.RubyObjectKey;
 import nationbuilder.lib.Ruby.services.RubyDataService;
 
 /**
@@ -22,7 +23,9 @@ public class RelationScanService implements RubyDataService
 		while (poit.hasNext())
 		{
 			Map.Entry pair = (Map.Entry) poit.next();
-			RubyModel model = (RubyModel) pair.getKey();
+			RubyObjectKey objectKey = (RubyObjectKey) pair.getKey();
+
+			RubyModel model = objectKey.getObject();
 
 			Field[] fields = model.getClass().getDeclaredFields();
 

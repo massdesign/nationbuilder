@@ -1,14 +1,20 @@
 package nationbuilder.lib.Ruby.Association;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
@@ -17,8 +23,10 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
+import nationbuilder.lib.reflection.ClassReflection;
 
 /**
  * Created by patrick on 7/23/14.
@@ -220,6 +228,57 @@ public class RubyAssociationResolver
 
 		return result;
 	}
+
+	public static Field getIDFromSuperClass(RubyModel baseRubyModel)  throws MissingAnnotationException
+	{
+		Field result = null;
+		if(baseRubyModel != null) {
+
+			Field [] fields = baseRubyModel.getClass().getSuperclass().getDeclaredFields();
+			for(int i=0;i<fields.length;i++) {
+				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
+				if(annotation != null) {
+
+				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(annotation.mapIdToEntity()).getClass()
+						   .getAnnotation(Entity.class);
+				   Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
+
+
+						if(expectedEntity != null) {
+
+					   // we found the correct field for the correct class
+					   if(expectedEntity.tableName().equals(currentEntity.tableName())) {
+						   result = fields[i];
+						   break;
+					   }
+					}
+					else {
+								throw new MissingAnnotationException("Expected Annotation Entity o " + expectedEntity.toString());
+
+						}
+
+					//else {
+					//	}
+				}
+
+			}
+
+		}
+		return result;
+
+	}
+	public static boolean StrategyIsTablePerClass(BaseRubyModel model) {
+		boolean result = false;
+		if(model.getClass().getAnnotations().length > 0) {
+
+			Entity entity = model.getClass().getAnnotation(Entity.class);
+			if(entity != null) {
+				result = entity.strategy() == InhiritanceStrategy.TablePerClass;
+			}
+		}
+		return result;
+	}
+
 	// NOTE: workaround to create something that works for now
 	public static int[] CreateIDsFromArrayList(List<? extends RubyModel> list)
 	{

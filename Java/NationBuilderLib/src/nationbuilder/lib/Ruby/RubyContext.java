@@ -75,12 +75,17 @@ public class RubyContext {
 			result.setRubyContext(this);
 			return result;
 	}
+
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
+    {
+        return this.SaveObject(object.getClass(),object,resourceUrl);
+    }
+    public boolean SaveObject(Class clazz,RubyModel object,String resourceUrl) throws RubyException
 	{
 		object.FetchIDs();
 		try
 		{
-           return  this.rubyObjectMarshaller.store(object, resourceUrl);
+           return  this.rubyObjectMarshaller.store(clazz,object, resourceUrl);
 			//data = this.rubyService.postObject(object,resourceUrl);
             // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
            /* ID resultObject = (ID)this.objectBuilder.createObjectFromString(data, ID.class);
