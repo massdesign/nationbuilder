@@ -6,12 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by patrick on 12/22/14.
+ * @author patrick.ekkel
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Entity
+@Target(ElementType.FIELD)
+public @interface ID
 {
-	String tableName() default "";
-	InhiritanceStrategy strategy() default InhiritanceStrategy.OneTablePerInstance;
+	Class mapIdToEntity();
 }

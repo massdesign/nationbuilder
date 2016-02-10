@@ -1,13 +1,14 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 
 /**
  * @author patrick.ekkel
  */
-@Entity(tableName = "power_grid_nodes")
+@Entity(tableName = "power_grid_nodes",strategy = InhiritanceStrategy.TablePerClass)
 public class PowerGridNode extends Node
 {
     @Transient

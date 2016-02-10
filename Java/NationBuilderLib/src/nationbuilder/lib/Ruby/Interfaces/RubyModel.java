@@ -9,11 +9,11 @@ import java.io.Serializable;
  * Created by patrick on 7/8/14.
  */
 public interface RubyModel extends Saveable,Serializable {
-    public ID getId();
-    public boolean isCommitted();
-    public void setCommitted(boolean committed);
-    public void setId(ID id);
-	public void FetchIDs();
-    public void setRubyContext(RubyContext context);
+     ID getId();
+     boolean isCommitted();
+     void setCommitted(boolean committed);
+     void setId(ID id);
+	 void FetchIDs();
+     void setRubyContext(RubyContext context);
 
 }

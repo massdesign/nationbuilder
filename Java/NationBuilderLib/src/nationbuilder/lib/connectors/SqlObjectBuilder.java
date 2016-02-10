@@ -3,6 +3,7 @@ package nationbuilder.lib.connectors;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
@@ -18,6 +19,7 @@ import nationbuilder.lib.sql.TableMetaData;
 import nationbuilder.lib.sql.ObjectMap;
 import nationbuilder.lib.sql.SqlObjectToRowConverter;
 import nationbuilder.lib.sql.TableRow;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by patrick on 12/15/14.
@@ -47,12 +49,16 @@ public class SqlObjectBuilder implements ObjectBuilder
 
             if(data instanceof SqlResponseData)
             {
-               String sqlString =   ((SqlResponseData) data).getSql();
+                String sql = ((SqlResponseData)data).getSql();
 
-               String id =  sqlString.split(",")[0];
 
-                 result = new ID();
-                 ((ID)result).setId(id);
+                    String sqlString = ((SqlResponseData) data).getSql();
+                    String id = sqlString.split(",")[0];
+
+                    result = new ID();
+                    ((ID) result).setId(id);
+
+
             }
             else
             {
