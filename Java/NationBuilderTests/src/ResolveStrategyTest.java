@@ -30,7 +30,7 @@ public class ResolveStrategyTest
 		field.setAccessible(true);
 		testModel1.setTestModel1(testModel2);
 
-		MappingInfo mappingInfo = new MappingInfo("testModel1", TestModel2.class,testModel1,field,null);
+		MappingInfo mappingInfo = new MappingInfo("testmodel1", TestModel2.class,testModel1,field,null);
 
 		OneToOneStrategy oneToOneStrategy = new OneToOneStrategy("OneToOne Resolving Strategy");
 		oneToOneStrategy.setMappingInfo(mappingInfo);
@@ -54,7 +54,7 @@ public class ResolveStrategyTest
 		field.setAccessible(true);
 		OneToManyStrategy oneToManyStrategy = new OneToManyStrategy("OneToMany Resolving Strategy");
 
-		MappingInfo mappingInfo = new MappingInfo("testModel1", TestModel2.class, testModel3, field,null);
+		MappingInfo mappingInfo = new MappingInfo("testmodel1", TestModel2.class, testModel3, field,null);
 		oneToManyStrategy.setMappingInfo(mappingInfo);
 		oneToManyStrategy.setObjectToReference(testModel3);
 		oneToManyStrategy.resolve();

@@ -43,28 +43,8 @@ public class SqlObjectBuilder implements ObjectBuilder
     public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException {
 
         Object result = null;
-        // make exception for ID type
-        if(clazz.getSimpleName().equals("ID"))
-        {
-
-            if(data instanceof SqlResponseData)
-            {
-                String sql = ((SqlResponseData)data).getSql();
 
 
-                    String sqlString = ((SqlResponseData) data).getSql();
-                    String id = sqlString.split(",")[0];
-
-                    result = new ID();
-                    ((ID) result).setId(id);
-
-
-            }
-            else
-            {
-                // TODO: throw nasty exception that SqlResponseData is the only way
-            }
-        }
         return result;
     }
 
@@ -74,7 +54,6 @@ public class SqlObjectBuilder implements ObjectBuilder
 
 
         ObjectMap objectMap = sqlObjectToRowConverter.createObjectMap(model);
-        String result = "";
 
         Entity annotation =  model.getClass().getAnnotation(Entity.class);
 
@@ -137,5 +116,27 @@ public class SqlObjectBuilder implements ObjectBuilder
         {
             throw new MissingAnnotationException("Missing Entity annotation on " + object.getClass().getSimpleName());
         }
+    }
+
+    @Override
+    public ID createIDFromResponse(ResponseData data)
+    {
+        ID result = null;
+        // make exception for ID type
+
+         if (data instanceof SqlResponseData)
+            {
+                String sql = ((SqlResponseData) data).getSql();
+
+                String sqlString = ((SqlResponseData) data).getSql();
+                String id = sqlString.split(",")[0];
+
+                result = new ID();
+                ((ID) result).setId(id);
+
+
+            }
+
+        return result;
     }
 }

@@ -11,6 +11,9 @@ import static org.junit.Assert.*;
 
 public class TiledXmlMapTest {
 
+
+
+	private String  tmxFile = "/home/patrick/Git/nationbuilder/Tiled/Maps/overview.tmx";
 	
 	TiledXmlMapFactory xmlFactory = new TiledXmlMapFactory();
 	TiledXmlMap map = null;
@@ -30,7 +33,7 @@ public class TiledXmlMapTest {
 	public void testLayers() {
 		// TODO: add this map as a resource
 		//given a map loaded from xml
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 
 		// when
 		ArrayList<XmlLayer> layers = this.map.getLayers();
@@ -43,7 +46,7 @@ public class TiledXmlMapTest {
 	@Test
 	public void testTilesets()
 	{
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 
 		// when
 		ArrayList<TileSet> tilesets = this.map.getTilesets();
@@ -56,7 +59,7 @@ public class TiledXmlMapTest {
 	@Test 
 	public void testTiles()
 	{
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		
 		ArrayList<XmlTile> tiles = this.map.getLayers().get(0).getTiles();
 		assertTrue("tilesetlist is empty",tiles.size() > 0);
@@ -65,7 +68,7 @@ public class TiledXmlMapTest {
 	@Test
 	public void testTilesetObject()
 	{
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		// when
 		ArrayList<TileSet> tilesets = this.map.getTilesets();
 		
@@ -114,7 +117,7 @@ public class TiledXmlMapTest {
 	public void testLayerObject() {
 		// TODO: add this map as a resource
 		//given a map loaded from xml
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 
 		// when
 		ArrayList<XmlLayer> layers = this.map.getLayers();
@@ -136,7 +139,7 @@ public class TiledXmlMapTest {
 	@Test
 	public void testImageObject()
 	{
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		
 		// first element
 		// TODO: this unitTest is broken, fix it.
@@ -172,7 +175,7 @@ public class TiledXmlMapTest {
 	@Test
 	public void testTileObject()
 	{
-		this.map =	xmlFactory.createTiledXmlMap("/home/patrick/Desktop/NationBuilder/map/overview.tmx");
+		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		
 		XmlTile tile = this.map.getLayers().get(0).getTiles().get(0);
 		

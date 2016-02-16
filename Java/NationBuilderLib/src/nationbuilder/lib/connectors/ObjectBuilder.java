@@ -3,6 +3,7 @@ package nationbuilder.lib.connectors;
 import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
+import nationbuilder.lib.Ruby.orm.ID;
 import nationbuilder.lib.data.map.ResponseData;
 
 /**
@@ -10,6 +11,7 @@ import nationbuilder.lib.data.map.ResponseData;
  */
 public interface ObjectBuilder
 {
-	public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException;
+	Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException;
 	String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
+	ID createIDFromResponse(ResponseData data) throws ObjectConversionFailedException;
 }

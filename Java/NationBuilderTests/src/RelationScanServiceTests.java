@@ -5,6 +5,7 @@ import mocks.TestModel2;
 import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RelationScanService;
+import nationbuilder.lib.Ruby.orm.RubyObjectKey;
 import org.junit.Assert;
 import org.junit.Test;
 /**
@@ -15,13 +16,12 @@ public class RelationScanServiceTests
 	@Test
 	public void scanForRelationsTest() {
 
-		HashMap<RubyModel,String> objects = new HashMap<>();
+		HashMap<RubyObjectKey, String> objects  = new HashMap<>();
 		TestModel1 testModel1 = new TestModel1();
-		TestModel2 testModel2 = new TestModel2();
 		String sqlString = "a,b,c,d,1,2";
 		RelationScanService scanService = new RelationScanService();
-
-		objects.put(testModel1,sqlString);
+		RubyObjectKey objectKey = new RubyObjectKey("testmodel",testModel1);
+		objects.put(objectKey,sqlString);
 
 		List<MappingInfo> mappingInfos = scanService.scanForRelations(objects.entrySet().iterator());
 		int expectedSize = 3;
