@@ -21,7 +21,7 @@ public class SqlObjectBuilderTest {
         responseData.setSql("96037,Dollar,0,0,0,0");
 
         SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(new QueryManagerMock());
-        ID result = (ID)sqlObjectBuilder.createObjectFromString(responseData,ID.class);
+        ID result = sqlObjectBuilder.createIDFromResponse(responseData);
 
         String expected = "96037";
         String actual = result.getId();
@@ -34,7 +34,7 @@ public class SqlObjectBuilderTest {
 
         String result =  sqlObjectBuilder.createStringFromObject(new TestModel1());
 
-        String expected = "a,b,c,d,1,2";
+        String expected = "0,a,b,c,d,1,2,test12345";
         String actual = result;
         Assert.assertEquals(expected,actual);
 

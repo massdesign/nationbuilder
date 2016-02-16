@@ -19,9 +19,11 @@ import nationbuilder.lib.Ruby.RubyRESTHelper;
  * Created by patrick on 7/8/14.
  */
 public class BaseRubyModel implements RubyModel {
+
 	@IgnoreInRails
     @nationbuilder.lib.Ruby.Association.annotation.ID(mapIdToEntity = BaseRubyModel.class)
     private ID id;
+
     @Expose
 	@IgnoreInRails
     protected RubyContext context;
@@ -38,6 +40,7 @@ public class BaseRubyModel implements RubyModel {
     public void setId(ID id) {
     this.id = id;
     }
+
 
 	@Override
 	public void FetchIDs()
@@ -130,6 +133,7 @@ public class BaseRubyModel implements RubyModel {
         return false;
     }
 
+
     @Override
     public boolean isCommitted() {
         return this.committed;
@@ -139,4 +143,5 @@ public class BaseRubyModel implements RubyModel {
     public void setCommitted(boolean committed) {
         this.committed = committed;
     }
+
 }

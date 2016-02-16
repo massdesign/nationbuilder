@@ -38,7 +38,7 @@ public class RubyObjectManager {
 
         ResponseData data = this.rubyService.postObject(model,resourceUrl);
         // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
-        ID resultObject = (ID)this.objectBuilder.createObjectFromString(data, ID.class);
+        ID resultObject = this.objectBuilder.createIDFromResponse(data);
         resultObject.setType(model.getClass().getName());
 
         Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);

@@ -38,7 +38,7 @@ public class QueryManagerMock implements QueryManager
     public TableMetaData getTableStructure(String tableName) throws SQLException {
 
         TableMetaData tableMetaData = new TableMetaData();
-
+        tableMetaData.addColumn(new ColumnMetaData("id","int(11)"));
         tableMetaData.addColumn(new ColumnMetaData("a","varchar(11)"));
         tableMetaData.addColumn(new ColumnMetaData("b","varchar(11)"));
         tableMetaData.addColumn(new ColumnMetaData("c","varchar(11)"));
@@ -46,6 +46,7 @@ public class QueryManagerMock implements QueryManager
 
         tableMetaData.addColumn(new ColumnMetaData("e","int(11)"));
         tableMetaData.addColumn(new ColumnMetaData("f","int(11)"));
+        tableMetaData.addColumn(new ColumnMetaData("test12345","varchar(30)"));
 
 
         return tableMetaData;

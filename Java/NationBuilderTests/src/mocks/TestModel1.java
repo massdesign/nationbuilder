@@ -37,6 +37,7 @@ public class TestModel1 extends BaseRubyModel
 		this.b = "b";
 		this.c = "c";
 		this.d = "d";
+		this.test12345 = "test12345";
 
 
 		this.e = 1;

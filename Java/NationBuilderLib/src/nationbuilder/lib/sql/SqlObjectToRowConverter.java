@@ -174,6 +174,9 @@ public class SqlObjectToRowConverter
                             if(field.getAnnotation(Transient.class) != null ) {
                                 Log.writeInfo("Skipping field " + field.getName() + " on class " + model.getClass().getName() +" because it is transient");
                             }
+                            else {
+                                result.addEntry(result.createObjectMapRow(field.getName(), field.get(model)));
+                            }
                         }
                         else {
                             result.addEntry(result.createObjectMapRow(field.getName(), field.get(model)));

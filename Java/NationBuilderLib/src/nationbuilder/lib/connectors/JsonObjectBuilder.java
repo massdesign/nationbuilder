@@ -52,27 +52,17 @@ public class JsonObjectBuilder implements ObjectBuilder
 	}
 
 	@Override
-	public Object createObjectFromString(ResponseData data,Class<?> clazz) throws ObjectConversionFailedException
+	public Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException
 	{
-		Object jsonResult = null;
-		if(data instanceof HttpResponseData)
+		if (data instanceof HttpResponseData)
 		{
-
-		    String json	 =	((HttpResponseData) data).getBody();
-			Map<String, Object> map = new HashMap<>();
-			map = (Map<String, Object>) gson.fromJson(json, map.getClass());
-
-			String iValue = String.valueOf((int)(double)map.get("id"));
-
-			//jsonResult = gson.fromJson(((HttpResponseData) data).getBody(), clazz);
-
-			ID result = new ID();
-			result.setId(iValue);
-			return result;
+			return gson.fromJson(((HttpResponseData) data).getBody(), clazz);
 		}
 		else
 		{
-			throw new ObjectConversionFailedException("Atttempted to convert the object but the JsonObjectBuilder recieved an instance of ResponseData that is not parseable ResponseData: " + data.getClass().getSimpleName());
+			throw new ObjectConversionFailedException(
+					"Atttempted to convert the object but the JsonObjectBuilder recieved an instance of ResponseData that is not parseable ResponseData: "
+					+ data.getClass().getSimpleName());
 		}
 
 	}
@@ -81,5 +71,28 @@ public class JsonObjectBuilder implements ObjectBuilder
 	public String createStringFromObject(Object object)
 	{
 	  return gson.toJson(object);
+	}
+
+	@Override
+	public ID createIDFromResponse(ResponseData data) throws ObjectConversionFailedException
+	{
+		ID result = new ID();
+		if (data instanceof HttpResponseData)
+		{
+			String json = ((HttpResponseData) data).getBody();
+			Map<String, Object> map = new HashMap<>();
+			map = (Map<String, Object>) gson.fromJson(json, map.getClass());
+
+			String iValue = String.valueOf((int) (double) map.get("id"));
+
+			result.setId(iValue);
+			return result;
+		}
+		else
+		{
+			throw new ObjectConversionFailedException(
+					"Atttempted to convert the object but the JsonObjectBuilder recieved an instance of ResponseData that is not parseable ResponseData: "
+					+ data.getClass().getSimpleName());
+		}
 	}
 }
