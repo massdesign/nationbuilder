@@ -19,7 +19,7 @@ public class BulkSqlCreateServiceConnectorTest {
         BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null,null);
 
         TestModel2 rubyTestModel = new TestModel2();
-        String actual = connector.resolveUnresolvedFields(rubyTestModel,"187414,<bui>testmodel1_id<eui>");
+        String actual = connector.resolveUnresolvedFields(TestModel2.class,rubyTestModel,"187414,<bui>testmodel1_id<eui>");
         String expected  = "187414,12345";
 
         Assert.assertEquals(actual,expected);

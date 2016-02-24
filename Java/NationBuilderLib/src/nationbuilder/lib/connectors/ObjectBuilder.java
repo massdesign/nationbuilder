@@ -12,6 +12,6 @@ import nationbuilder.lib.data.map.ResponseData;
 public interface ObjectBuilder
 {
 	Object createObjectFromString(ResponseData data, Class<?> clazz) throws ObjectConversionFailedException;
-	String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
+	String createStringFromObject(Class clazz, Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
 	ID createIDFromResponse(ResponseData data) throws ObjectConversionFailedException;
 }

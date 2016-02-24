@@ -1,5 +1,5 @@
 
-import java.io.File;
+
 import java.io.IOException;
 import World.WorldLoader;
 import java.text.DateFormat;
@@ -9,14 +9,7 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.Ruby.RubyContextType;
-import nationbuilder.lib.data.map.entities.Image;
-import nationbuilder.lib.data.map.entities.MapImageFile;
-import nationbuilder.lib.data.map.entities.MapMap;
-import nationbuilder.lib.data.map.entities.Resource;
-import nationbuilder.lib.data.map.entities.ResourceType;
-import nationbuilder.lib.data.map.entities.TerrainType;
-import nationbuilder.lib.data.map.entities.Tile;
-import nationbuilder.lib.data.map.enums.RESOURCELOCATION;
+
 
 public class Main {
 

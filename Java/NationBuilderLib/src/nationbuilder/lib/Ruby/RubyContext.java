@@ -86,14 +86,6 @@ public class RubyContext {
 		try
 		{
            return  this.rubyObjectMarshaller.store(clazz,object, resourceUrl);
-			//data = this.rubyService.postObject(object,resourceUrl);
-            // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
-           /* ID resultObject = (ID)this.objectBuilder.createObjectFromString(data, ID.class);
-            resultObject.setType(object.getClass().getName());
-            object.setId(resultObject);
-            this.rubyStore.registerRubyModel(object);
-            */
-            //return resultObject != null ? true : false;
 		}
 		catch (ConnectException e)
 		{

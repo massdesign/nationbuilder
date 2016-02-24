@@ -8,14 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
-import nationbuilder.lib.Ruby.Association.annotation.Entity;
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.Ruby.RelationResolveService;
-import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
+import nationbuilder.lib.Ruby.resolvestrategies.RelationResolveService;
+import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
@@ -44,40 +42,46 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
-	// TODO: RubyModel als parameter toevoegen, nu is alles Object dit kan zorgen voor bugs
+
 	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public ResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
         SqlResponseData responseData = new SqlResponseData();
+        String sql;
+        if(RubyAssociationResolver.StrategyIsTablePerClass(objectToPost)) {
+            sql = this.objectBuilder.createStringFromObject(clazz, objectToPost);
+        }
+        else {
+            sql = this.objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
+        }
 
+        RubyObjectKey rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost,clazz);
+        this.persistedObjects.put(rubyObjectKey, sql);
+        responseData.setSql(sql);
 
-            String sql = this.objectBuilder.createStringFromObject(objectToPost);
-
-            RubyObjectKey  rubyObjectKey  =  new RubyObjectKey(resourceUrl,(RubyModel)objectToPost);
-            this.persistedObjects.put(rubyObjectKey, sql);
-            responseData.setSql(sql);
-
-
-		return responseData;
+        return responseData;
 	}
 
-    public String resolveUnresolvedFields(RubyModel key,String value)
+    public String resolveUnresolvedFields(Class clazz,RubyModel key,String value)
     {
         String resolvedSql = "";
 
         Pattern p = Pattern.compile(".bui.([_a-z-A-Z-0-9]*).eui");
         Matcher m  = p.matcher(value);
+        Field refMappingField = null;
       //  if(m.matches()) {
             while (m.find()) {
 
                 String field_id = m.group(1);
-                String stripped_field_id = field_id.replace("_id","");
                 try {
                     // expecting this to be ReferenceMapping if not well we get a cast exception
-                      Field refMappingField = key.getClass().getDeclaredField(stripped_field_id); //.get(key);
+
+                     refMappingField = RubyAssociationResolver.getRefMappingField(clazz,field_id);
+
+
                       refMappingField.setAccessible(true);
                       Object refMapping = refMappingField.get(key);
                       if(refMapping != null)
@@ -91,8 +95,6 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                       }
 
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                } catch (NoSuchFieldException e) {
                     e.printStackTrace();
                 }
             }
@@ -133,7 +135,8 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
             String sqlString = (String)pair.getValue();
             if(hasUnresolvedfields(sqlString))
             {
-              sqlString =  resolveUnresolvedFields(model,sqlString);
+                // TODO: Class object beschikbaar maken in dit geval
+              sqlString =  resolveUnresolvedFields(objectKey.getClazz(),model,sqlString);
               pair.setValue(sqlString);
             }
 

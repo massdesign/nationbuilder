@@ -1,9 +1,10 @@
-package nationbuilder.lib.Ruby;
+package nationbuilder.lib.Ruby.resolvestrategies;
 
 import java.lang.reflect.Field;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
+import nationbuilder.lib.Ruby.resolvestrategies.ResolveStrategy;
 
 /**
  * @author patrick.ekkel

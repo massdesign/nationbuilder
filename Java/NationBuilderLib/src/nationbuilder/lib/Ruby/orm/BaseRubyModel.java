@@ -68,41 +68,53 @@ public class BaseRubyModel implements RubyModel {
 
     private void handleTablePerClassSave(Class currentClassname) throws RubyException
     {
+        Stack<Class> classes = new Stack<>();
+        // TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
         while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
         {
+            classes.push(currentClassname);
+            currentClassname = currentClassname.getSuperclass();
+        }
 
-                try
+        while (!classes.empty())
+        {
+            currentClassname = classes.pop();
+
+            //  while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
+            //  {
+
+            try
+            {
+                Class objectInstance = this.getClass().forName(currentClassname.getName());
+
+                //Object downCast =   objectInstance.
+                Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
+                if (entity != null)
                 {
-                    Class objectInstance = this.getClass().forName(currentClassname.getName());
 
-                    //Object downCast =   objectInstance.
-                    Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
-                    if (entity != null)
+                    if (entity.tableName() != null && !entity.tableName().equals(""))
                     {
 
-                        if (entity.tableName() != null && !entity.tableName().equals(""))
-                        {
-
-                            this.Save(objectInstance, entity.tableName());
-                            //  ((BaseRubyModel)downCast).Save(RubyRESTHelper.pluralize(entity.tableName()));
-                        }
-                        else
-                        {
-                            throw new IllegalArgumentException("tablename can't be null or empty");
-                        }
+                        this.Save(objectInstance, entity.tableName());
                     }
                     else
                     {
-                        throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
+                        throw new IllegalArgumentException("tablename can't be null or empty");
                     }
                 }
-                catch (ClassNotFoundException e)
+                else
                 {
-                    e.printStackTrace();
+                    throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
                 }
-
-            currentClassname = currentClassname.getSuperclass();
+            }
+            catch (ClassNotFoundException e)
+            {
+                e.printStackTrace();
+            }
         }
+          //  currentClassname = currentClassname.getSuperclass();
+
+       // }
 
     }
     @Override
