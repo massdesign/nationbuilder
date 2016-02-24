@@ -14,8 +14,7 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 public class Node extends BaseRubyModel
 {
     // TODO: zelfde reden als building.name.. heeft te maken met superclassing en subclassing wat nog niet goed geregeld is in de RubyDI
-    @Transient
-	private String name;
+    private String name;
 
 	private boolean destroyable;
 	@ID(mapIdToEntity = PowerGridNode.class)

@@ -13,7 +13,6 @@ import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.RubyRESTHelper;
 
 /**
  * Created by patrick on 7/8/14.
@@ -80,14 +79,11 @@ public class BaseRubyModel implements RubyModel {
         {
             currentClassname = classes.pop();
 
-            //  while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
-            //  {
 
             try
             {
                 Class objectInstance = this.getClass().forName(currentClassname.getName());
 
-                //Object downCast =   objectInstance.
                 Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
                 if (entity != null)
                 {
@@ -124,12 +120,9 @@ public class BaseRubyModel implements RubyModel {
 		{
 			throw new NoAttachedRubyContextException(this);
 		}
-
-
-            if(RubyAssociationResolver.StrategyIsTablePerClass(this))
+            if(RubyAssociationResolver.StrategyIsTablePerClass(this) && !context.getRubyService().ignoreClassMapInsertStrategy())
             {
                 handleTablePerClassSave(this.getClass());
-
             }
             else
             {

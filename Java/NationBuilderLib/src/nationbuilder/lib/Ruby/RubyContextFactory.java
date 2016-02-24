@@ -68,13 +68,9 @@ public class RubyContextFactory {
             RubyDataServiceAccessor.getInstance().registerRubyService(RelationScanService.class);
             RubyDataServiceAccessor.getInstance().registerRubyService(RelationResolveService.class);
         }
-        catch (RubyDataServiceNotInitializedException e)
+        catch (RubyDataServiceNotInitializedException | ServiceAlreadyRegisteredException e)
         {
             Log.write(e, LogType.ERROR);
-        }
-        catch (ServiceAlreadyRegisteredException e)
-        {
-            Log.write(e,LogType.ERROR);
         }
     }
     private RubyContext createJsonRubyContext()
@@ -92,11 +88,6 @@ public class RubyContextFactory {
         JsonServiceConnector jsonServiceConnector = new JsonServiceConnector(blobServiceUrl,new JsonObjectBuilder());
         RubyService service = new RubyServiceImpl(jsonServiceConnector,sqlServiceConnector);
         //RubyService service = new SqlServiceConnector(databaseServerUrl,blobServiceUrl,contextType,true,queryManagerManager);
-        RubyContext result = new RubyContext(service,new SqlObjectBuilder(queryManagerManager));
-
-
-
-
-        return result;
+        return new RubyContext(service,new SqlObjectBuilder(queryManagerManager));
     }
 }
