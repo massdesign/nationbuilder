@@ -17,6 +17,8 @@ public interface RubyService {
      int postFile(String fileLocation,String resourceUrl) throws IOException;
      int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
 	 ResponseData getObject(String resourceUrl);
+     boolean ignoreClassMapInsertStrategy();
+     boolean ignoreClassMapSelectStrategy();
      void commit() throws RubyException;
 
 }

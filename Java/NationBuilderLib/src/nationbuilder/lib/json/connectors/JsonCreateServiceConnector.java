@@ -37,7 +37,7 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		String json = objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
 		//	String json = gson.toJson(objectToPost);
 		Log.writeInfo("Json object" + json.toString());
-		HttpResponseData data = HttpRequestUtil.sendPostRequest(this.serverUrl + resourceUrl, json);
+		HttpResponseData data = HttpRequestUtil.sendPostRequest(this.serverUrl + "/" + resourceUrl, json);
 		return data;
 	}
 

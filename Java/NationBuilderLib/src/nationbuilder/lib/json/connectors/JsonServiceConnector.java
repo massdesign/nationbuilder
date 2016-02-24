@@ -52,6 +52,18 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 	}
 
 	@Override
+	public boolean ignoreClassMapInsertStrategy()
+	{
+		return true;
+	}
+
+	@Override
+	public boolean ignoreClassMapSelectStrategy()
+	{
+		return false;
+	}
+
+	@Override
 	public void commit() throws RubyException
 	{
 

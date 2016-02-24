@@ -11,6 +11,8 @@ import nationbuilder.lib.data.map.ResponseData;
 /**
  * @author patrick.ekkel
  */
+
+// TODO: deze klasse stelt je in staat om verschillende select en insert strategien te mixen, maar we komen in de knel met deze combi. Deze klas wegrefactoren
 public class RubyServiceImpl implements RubyService
 {
 	RubyService writeService;
@@ -49,6 +51,18 @@ public class RubyServiceImpl implements RubyService
 	public ResponseData getObject(String resourceUrl)
 	{
 		return this.retrieveService.getObject(resourceUrl);
+	}
+
+	@Override
+	public boolean ignoreClassMapInsertStrategy()
+	{
+		return writeService.ignoreClassMapInsertStrategy();
+	}
+
+	@Override
+	public boolean ignoreClassMapSelectStrategy()
+	{
+		return false;
 	}
 
 	@Override

@@ -70,6 +70,18 @@ public class SqlServiceConnector extends BaseServiceConnector
 		return null;
 	}
 
+	@Override
+	public boolean ignoreClassMapInsertStrategy()
+	{
+		return false;
+	}
+
+	@Override
+	public boolean ignoreClassMapSelectStrategy()
+	{
+		return false;
+	}
+
 
 	@Override
     public void commit() throws RubyException {
