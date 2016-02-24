@@ -68,7 +68,7 @@ public class JsonObjectBuilder implements ObjectBuilder
 	}
 
 	@Override
-	public String createStringFromObject(Object object)
+	public String createStringFromObject(Class clazz,Object object)
 	{
 	  return gson.toJson(object);
 	}

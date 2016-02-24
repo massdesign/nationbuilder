@@ -10,13 +10,15 @@ public class RubyObjectKey
 {
 
 
-	public RubyObjectKey(String table,RubyModel object) {
+	public RubyObjectKey(String table,RubyModel object,Class clazz) {
 		this.table = table;
 		this.object = object;
+		this.clazz = clazz;
 	}
 
 	private RubyModel object;
 	private String table;
+	private Class clazz;
 
 	public String getTable()
 	{
@@ -58,5 +60,15 @@ public class RubyObjectKey
 		int hashcode = 1;
 		hashcode = 31 * hashcode + this.getObject().hashCode() + this.getTable().hashCode();
 		return hashcode;
+	}
+
+	public Class getClazz()
+	{
+		return clazz;
+	}
+
+	public void setClazz(Class clazz)
+	{
+		this.clazz = clazz;
 	}
 }

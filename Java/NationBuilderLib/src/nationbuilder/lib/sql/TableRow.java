@@ -34,25 +34,19 @@ public class TableRow {
             columnValueIndex = i;
             if(this.tableMetaData.getSortedColumns().get(i).getColumnName().equals(columnName))
             {
-               // if(i <= row.length)
-                //{
-                   // this.row[i] = new ColumnValue(this.tableMetaData.getSortedColumns().get(i),resultValue);
                     columnValue = new ColumnValue(this.tableMetaData.getSortedColumns().get(i),resultValue);
                     break;
-                //}
-                //else
-                //{
-                    // throw some nasty error with index out of range because of exception
-                //}
             }
         }
         if(columnValue != null) {
 
           this.row[columnValueIndex] = columnValue;
         }
+        // NOTE: decide not to throw error, because if we can't map we can't map. just continue
+        /*
         else {
             throw new ColumnNotFoundException("Column: " + columnName + " not found on " + this.tableMetaData.getTable());
-        }
+        }*/
     }
 
     public String createInsertStatement()

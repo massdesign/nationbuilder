@@ -6,8 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
+import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
 import nationbuilder.lib.Ruby.services.RubyDataService;
 
@@ -26,22 +27,34 @@ public class RelationScanService implements RubyDataService
 			RubyObjectKey objectKey = (RubyObjectKey) pair.getKey();
 
 			RubyModel model = objectKey.getObject();
-
-			Field[] fields = model.getClass().getDeclaredFields();
-
-			for (Field field : fields)
+			// TODO: superclass ook meenemen in het scan for relations systeem
+			Class currentClass = model.getClass();
+			while (currentClass != null)
 			{
-				if (field != null)
+				Field[] fields = currentClass.getDeclaredFields();
+
+				for (Field field : fields)
 				{
-					if (field.getAnnotations().length > 0)
+					if (field != null)
 					{
-						field.setAccessible(true);
-						MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
-						if (mappingInfo != null && mappingInfo.isForeignRelation())
+						if (field.getAnnotations().length > 0)
 						{
-							mappingList.add(mappingInfo);
+							field.setAccessible(true);
+							MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
+							if (mappingInfo != null && mappingInfo.isForeignRelation())
+							{
+								if(!mappingList.contains(mappingInfo))
+								{
+									mappingList.add(mappingInfo);
+								}
+							}
 						}
 					}
+				}
+				// We zijn niet geintereseerd in de properties van het  BaseRubyModel dus daar stoppen we met propageren
+				currentClass = currentClass.getSuperclass();
+				if(currentClass.equals(BaseRubyModel.class)) {
+					currentClass = null;
 				}
 			}
 		}

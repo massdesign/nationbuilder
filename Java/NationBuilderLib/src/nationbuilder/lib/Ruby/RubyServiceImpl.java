@@ -3,6 +3,7 @@ package nationbuilder.lib.Ruby;
 import java.io.IOException;
 
 import nationbuilder.lib.Ruby.Exceptions.*;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.data.map.ResponseData;
@@ -22,14 +23,14 @@ public class RubyServiceImpl implements RubyService
 	}
 
 	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
 	{
 		return this.writeService.postObject(objectToPost,resourceUrl,rootValue);
 	}
 
 	@Override
-	public ResponseData postObject(Object objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
-		return this.writeService.postObject(objectToPost,resourceUrl);
+	public ResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		return this.writeService.postObject(clazz,objectToPost,resourceUrl);
 	}
 
 	@Override

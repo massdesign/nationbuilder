@@ -1,6 +1,6 @@
-package nationbuilder.lib.Ruby;
+package nationbuilder.lib.Ruby.resolvestrategies;
 
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
+import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 /**

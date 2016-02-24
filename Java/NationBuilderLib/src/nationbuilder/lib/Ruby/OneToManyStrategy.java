@@ -3,6 +3,7 @@ package nationbuilder.lib.Ruby;
 import java.lang.reflect.Field;
 import java.util.List;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
+import nationbuilder.lib.Ruby.resolvestrategies.ResolveStrategy;
 
 /**
  * @author patrick.ekkel
@@ -35,6 +36,7 @@ public class OneToManyStrategy extends ResolveStrategy
 	@Override
 	public boolean isConditionMet() throws IllegalAccessException
 	{
+		// consider making this method like TablePerClassStrategy
 		boolean result = false;
 		Object foreignKeyHolderField = this.getMappingInfo().getField().get(this.getMappingInfo().getInstance());
 		if (foreignKeyHolderField instanceof List)

@@ -5,10 +5,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import mocks.TestModel1;
 import mocks.TestModel2;
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
-import nationbuilder.lib.Ruby.OneToOneStrategy;
+import nationbuilder.lib.Ruby.Association.MappingInfo;
+import nationbuilder.lib.Ruby.resolvestrategies.OneToOneStrategy;
 import nationbuilder.lib.Ruby.orm.ID;
-import org.junit.Test;
 
 /**
  * @author patrick.ekkel

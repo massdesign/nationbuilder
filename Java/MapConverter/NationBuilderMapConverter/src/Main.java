@@ -1,4 +1,9 @@
+import java.io.IOException;
 
+<<<<<<< 879453dba87bc81b79f95d346116bc3e60b86115
+=======
+
+>>>>>>> NB-13: tableperclass werkt nu zoals het zou moeten
 import java.io.IOException;
 import World.WorldLoader;
 import java.text.DateFormat;
@@ -27,6 +32,7 @@ public class Main {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);
         System.out.println("Total running time " + dateFormatted);
+
     }
 
 }

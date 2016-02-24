@@ -49,13 +49,15 @@ public class SqlObjectBuilder implements ObjectBuilder
     }
 
     @Override
-    public String createStringFromObject(Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+    public String createStringFromObject(Class clazz, Object object) throws ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
         RubyModel model = (RubyModel)object;
 
 
         ObjectMap objectMap = sqlObjectToRowConverter.createObjectMap(model);
+        // TODO: inhiritance toevoegen.. alle base classes doorlopen om the id's te kunnen plaatsen
 
-        Entity annotation =  model.getClass().getAnnotation(Entity.class);
+       // Entity annotation =  model.getClass().getAnnotation(Entity.class);
+        Entity annotation =  (Entity)clazz.getAnnotation(Entity.class);
 
         if(annotation != null)
         {

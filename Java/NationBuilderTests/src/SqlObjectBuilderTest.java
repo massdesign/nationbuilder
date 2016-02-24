@@ -32,7 +32,7 @@ public class SqlObjectBuilderTest {
 
         SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(new QueryManagerMock());
 
-        String result =  sqlObjectBuilder.createStringFromObject(new TestModel1());
+        String result =  sqlObjectBuilder.createStringFromObject(TestModel1.class,new TestModel1());
 
         String expected = "0,a,b,c,d,1,2,test12345";
         String actual = result;

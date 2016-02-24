@@ -1,9 +1,6 @@
 package nationbuilder.lib.Ruby.Association;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -11,7 +8,6 @@ import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
@@ -33,6 +29,7 @@ import nationbuilder.lib.reflection.ClassReflection;
  */
 public class RubyAssociationResolver
 {
+	// TODO: voor al deze methoden kunnen we unit tests schrijven, dit moeten we doen als we klaar zijn met NB-13
 	public static void AssignIds(RubyModel model) throws NotSavedEntityException
 	{
 
@@ -148,9 +145,61 @@ public class RubyAssociationResolver
 
         return result;
     }
+	public static Field getRefMappingField(Class clazz,String field_id) {
+
+		Field result = null;
+		try
+		{
+			// Eerst gaan we het proberen zonder id
+			String stripped_field_id = field_id.replace("_id", "");
+			result = clazz.getDeclaredField(stripped_field_id);
+		}
+		catch (NoSuchFieldException e)
+		{
+			// als we het niet zonder id kunnen vinden dan met id proberen
+			try
+			{
+				result = clazz.getDeclaredField(field_id);
+			}
+			catch (NoSuchFieldException e1)
+			{
+				// alleen loggen verder niks doen
+				Log.write(e1,LogType.ERROR);
+			}
+
+		}
+		return result;
+	}
 	public static MappingInfo getMappingInfo(Field field,RubyModel instance)
 	{
 		MappingInfo result = null;
+		if(field.getAnnotation(OneToOne.class) != null)  {
+			OneToOne o = field.getAnnotation(OneToOne.class);
+			result = new MappingInfo(o.mappedBy(), o.mappedByClazz(), instance, field,
+					o.foreignKey());
+			result.setMappingInfoType(MappingInfoType.OneToOne);
+
+
+		}
+		else  if(field.getAnnotation(OneToMany.class) != null) {
+			OneToMany o = field.getAnnotation(OneToMany.class);
+			result = new MappingInfo(o.mappedBy(), o.mappedByClazz(), instance, field, null);
+			result.setMappingInfoType(MappingInfoType.OneToMany);
+
+		}
+		else if(field.getAnnotation(ManyToOne.class) != null) {
+			ManyToOne o = field.getAnnotation(ManyToOne.class);
+			result = new MappingInfo(o.mappedBy(), o.mappedByClazz(), instance, field, null);
+			result.setMappingInfoType(MappingInfoType.ManyToOne);
+		}
+		else if(field.getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class) != null) {
+			nationbuilder.lib.Ruby.Association.annotation.ID o = field.getAnnotation(
+					nationbuilder.lib.Ruby.Association.annotation.ID.class);
+			result = new MappingInfo(o.mapIdToEntity(),instance,field);
+			result.setMappingInfoType(MappingInfoType.IDMapping);
+		}
+		// TODO: weggooien als bovenstaande code goed werkt
+		/*
 	   Object o =  field.getAnnotation(OneToOne.class);
 		if(o != null)
 		{
@@ -172,7 +221,7 @@ public class RubyAssociationResolver
 			   }
 		   }
 
-		}
+		}*/
 		return result;
 	}
 	private static Field getMappedField(Class annotationType,Field field,Class currentClass)
@@ -267,7 +316,7 @@ public class RubyAssociationResolver
 		return result;
 
 	}
-	public static boolean StrategyIsTablePerClass(BaseRubyModel model) {
+	public static boolean StrategyIsTablePerClass(RubyModel model) {
 		boolean result = false;
 		if(model.getClass().getAnnotations().length > 0) {
 

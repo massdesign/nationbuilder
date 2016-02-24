@@ -36,7 +36,7 @@ public class RubyObjectManager {
 
     public boolean store(Class clazz,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
-        ResponseData data = this.rubyService.postObject(model,resourceUrl);
+        ResponseData data = this.rubyService.postObject(clazz,model,resourceUrl);
         // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
         ID resultObject = this.objectBuilder.createIDFromResponse(data);
         resultObject.setType(model.getClass().getName());
@@ -50,7 +50,7 @@ public class RubyObjectManager {
             {
                 idField.setAccessible(true);
                 // TODO: classtype is null.. .misschien moeten we dat nog wel even gaan zetten
-                ReferenceMapping resultMapping = new ReferenceMapping(resultObject,null);
+                ReferenceMapping resultMapping = new ReferenceMapping(resultObject,clazz);
 
                 idField.set(model,resultMapping);
             }

@@ -11,7 +11,7 @@ import java.util.Map;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
-import nationbuilder.lib.Ruby.Association.annotation.MappingInfo;
+import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
@@ -195,7 +195,7 @@ public class SqlObjectToRowConverter
                             {
                                 nationbuilder.lib.Ruby.Association.annotation.ID idAnnotation = field.getAnnotation(
                                  nationbuilder.lib.Ruby.Association.annotation.ID.class);
-                                if(idAnnotation == null)
+                                if(idAnnotation != null)
                                 {
                                     ObjectMap.ObjectMapRow newObjectMapRow = this
                                      .createReferenceMappingObjectMapRow(field, model, result);
