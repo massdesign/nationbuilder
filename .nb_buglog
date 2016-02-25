@@ -10,3 +10,4 @@ BUG_8: er zit een fout in het datamodel. resource heeft onetoone mapping met til
 BUG_7: bij het verplaatsen van het startpunt worden de pmbs(itemlayer) niet goed gerenderd, maar pakken we naief de positie van het vorige startpunt
 BUG_10: als er geen items op de map zijn krijgen we een undefined op this.items
 BUG_11: bij het in en uitzoomen verwdijnt de mogelijkheid te kunnen klikken op een tile
+BUG_12: @Transient annotatie werkt alleen voor de bulkfiller niet voor de json variant

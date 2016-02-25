@@ -10,6 +10,7 @@ import nationbuilder.lib.data.map.entities.Node;
 import nationbuilder.lib.data.map.entities.PowerGridNode;
 import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.PowerRelayStationType;
+import nationbuilder.lib.data.map.entities.WareHouse;
 
 /**
  * Created by patrick on 11/2/14.
@@ -48,6 +49,16 @@ public class PostFiller {
 
         PowerGridNode powerGridNode3 = context.createRubyModel(PowerGridNode.class);
 
+        WareHouse wareHouse = context.createRubyModel(WareHouse.class);
+        wareHouse.setName("even testen hoor");
+
+
+
+        PowerRelayStation powerRelayStation3 = context.createRubyModel(PowerRelayStation.class);
+
+        powerRelayStation3.setName("testje voor je moeder");
+
+
         powerGridNode1.setName("Lakeside power grid node");
         powerGridNode1.setDestroyable(true);
         powerGridNode2.setName("Countryside power grid node");
@@ -75,15 +86,17 @@ public class PostFiller {
         {
             powerGridNode3.setName("test in je moeder");
             powerGridNode3.setDestroyable(true);
+         //   wareHouse.Save("warehouses");
+            powerRelayStation3.Save("buildings");
             //powerGridNode3.Save("power_grid_nodes");
 
 
-            powerRelayStationType.Save("power_relay_station_types");
+           /* powerRelayStationType.Save("power_relay_station_types");
             powerRelayStation1.Save("power_relay_stations");
             powerRelayStation2.Save("power_relay_stations");
             powerGridNode1.Save("power_grid_nodes");
             powerGridNode2.Save("power_grid_nodes");
-            powerConnection.Save("power_connections");
+            powerConnection.Save("power_connections");  */
 
             this.context.commit();
         }
