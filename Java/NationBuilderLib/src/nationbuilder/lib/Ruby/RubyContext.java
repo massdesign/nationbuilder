@@ -75,17 +75,20 @@ public class RubyContext {
 			result.setRubyContext(this);
 			return result;
 	}
-
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
     {
-        return this.SaveObject(object.getClass(),object,resourceUrl);
+        return this.SaveObject(null,object,resourceUrl);
     }
-    public boolean SaveObject(Class clazz,RubyModel object,String resourceUrl) throws RubyException
+    public boolean SaveObject(Class subclazz,RubyModel object,String resourceUrl) throws RubyException
+    {
+        return this.SaveObject(subclazz,object.getClass(),object,resourceUrl);
+    }
+    public boolean SaveObject(Class subclazz,Class clazz,RubyModel object,String resourceUrl) throws RubyException
 	{
 		object.FetchIDs();
 		try
 		{
-           return  this.rubyObjectMarshaller.store(clazz,object, resourceUrl);
+           return  this.rubyObjectMarshaller.store(subclazz,clazz,object, resourceUrl);
 		}
 		catch (ConnectException e)
 		{

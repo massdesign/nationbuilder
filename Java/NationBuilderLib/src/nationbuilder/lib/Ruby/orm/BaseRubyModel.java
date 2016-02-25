@@ -1,6 +1,7 @@
 package nationbuilder.lib.Ruby.orm;
 
 import com.google.gson.annotations.Expose;
+import java.util.Queue;
 import java.util.Stack;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
@@ -13,6 +14,7 @@ import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
+import org.eclipse.jetty.util.ArrayQueue;
 
 /**
  * Created by patrick on 7/8/14.
@@ -59,9 +61,9 @@ public class BaseRubyModel implements RubyModel {
     this.context = context;
     }
 
-    protected boolean Save(Class clazz,String resourceUrl) throws RubyException
+    protected boolean Save(Class subclazz,Class clazz,String resourceUrl) throws RubyException
     {
-        return context.SaveObject(clazz,this, resourceUrl);
+        return context.SaveObject(subclazz,clazz,this, resourceUrl);
     }
 
 
@@ -74,7 +76,7 @@ public class BaseRubyModel implements RubyModel {
             classes.push(currentClassname);
             currentClassname = currentClassname.getSuperclass();
         }
-
+        Class currentSubClass = null;
         while (!classes.empty())
         {
             currentClassname = classes.pop();
@@ -91,7 +93,7 @@ public class BaseRubyModel implements RubyModel {
                     if (entity.tableName() != null && !entity.tableName().equals(""))
                     {
 
-                        this.Save(objectInstance, entity.tableName());
+                        this.Save(currentSubClass,objectInstance, entity.tableName());
                     }
                     else
                     {
@@ -102,6 +104,7 @@ public class BaseRubyModel implements RubyModel {
                 {
                     throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
                 }
+                currentSubClass = currentClassname.gets
             }
             catch (ClassNotFoundException e)
             {

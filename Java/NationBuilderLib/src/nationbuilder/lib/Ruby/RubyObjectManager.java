@@ -34,7 +34,7 @@ public class RubyObjectManager {
 
     }
 
-    public boolean store(Class clazz,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
+    public boolean store(Class subclazz,Class clazz,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
         ResponseData data = this.rubyService.postObject(clazz,model,resourceUrl);
         // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
@@ -44,7 +44,7 @@ public class RubyObjectManager {
         Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
         // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
         if(entityAnnotation != null && clazz.getSuperclass() != BaseRubyModel.class && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass) {
-           Field idField =   RubyAssociationResolver.getIDFromSuperClass(model);
+           Field idField =   RubyAssociationResolver.getIDFromSuperClass(subclazz,model);
 
             try
             {
