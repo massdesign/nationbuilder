@@ -54,9 +54,7 @@ public class SqlObjectBuilder implements ObjectBuilder
 
 
         ObjectMap objectMap = sqlObjectToRowConverter.createObjectMap(model);
-        // TODO: inhiritance toevoegen.. alle base classes doorlopen om the id's te kunnen plaatsen
 
-       // Entity annotation =  model.getClass().getAnnotation(Entity.class);
         Entity annotation =  (Entity)clazz.getAnnotation(Entity.class);
 
         if(annotation != null)

@@ -278,7 +278,7 @@ public class RubyAssociationResolver
 		return result;
 	}
 
-	public static Field getIDFromSuperClass(RubyModel baseRubyModel)  throws MissingAnnotationException
+	public static Field getIDFromSuperClass(Class subclazz,RubyModel baseRubyModel)  throws MissingAnnotationException
 	{
 		Field result = null;
 		if(baseRubyModel != null) {
@@ -288,8 +288,7 @@ public class RubyAssociationResolver
 				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
 				if(annotation != null) {
 
-				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(annotation.mapIdToEntity()).getClass()
-						   .getAnnotation(Entity.class);
+				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(subclazz).getClass().getAnnotation(Entity.class);
 				   Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
 
 
