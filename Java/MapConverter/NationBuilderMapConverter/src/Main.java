@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import nationbuilder.lib.Ruby.*;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-
+import nationbuilder.lib.Ruby.orm.BaseRubyModel;
+import nationbuilder.lib.data.map.entities.PowerGridNode;
 
 
 public class Main {
@@ -17,8 +18,7 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 
-
-        long endtime = System.currentTimeMillis();
+       long endtime = System.currentTimeMillis();
 
         Date date = new Date((endtime - startTime));
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");

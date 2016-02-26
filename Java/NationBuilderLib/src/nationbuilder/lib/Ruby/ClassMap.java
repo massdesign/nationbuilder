@@ -57,9 +57,35 @@ public class ClassMap {
     }
     public Class getSubClassFrom(Class clazz) {
 
-      Class result = null;
+        // check of de eerste match met Class zodat we die case afgedekt hebben
+        if(classHierarchy.getFirst().getValue().equals(clazz)) {
 
-      return result;
+            return null;
+        }
+        //  de laatse checken of die match met de class en dan de previou teruggegeven
+        else if(classHierarchy.getLast().getValue().equals(clazz)) {
+
+            return classHierarchy.getLast().getPrevious().getValue();
+        }
+        else {
+
+            // search the double linked list and begin at the bottom
+
+            DoubleLinkedList<Class>.Node<Class> currentNode = classHierarchy.getLast();
+
+            Class result = null;
+            while (currentNode != null) {
+
+
+                if(currentNode.getValue().equals(clazz) && currentNode.getPrevious() != null) {
+                    result = currentNode.getPrevious().getValue();
+                }
+
+                currentNode  = currentNode.getPrevious();
+
+            }
+            return result;
+        }
     }
 
 
