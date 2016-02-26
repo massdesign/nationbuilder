@@ -3,10 +3,9 @@ import World.WorldLoader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import nationbuilder.lib.Ruby.*;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.RubyContextFactory;
-import nationbuilder.lib.Ruby.RubyContextType;
+
 
 
 public class Main {
@@ -25,7 +24,6 @@ public class Main {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);
         System.out.println("Total running time " + dateFormatted);
-
     }
 
 }
