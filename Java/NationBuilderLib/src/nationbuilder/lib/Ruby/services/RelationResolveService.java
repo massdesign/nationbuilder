@@ -1,14 +1,13 @@
-package nationbuilder.lib.Ruby.resolvestrategies;
+package nationbuilder.lib.Ruby.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
-import nationbuilder.lib.Ruby.OneToManyStrategy;
+import nationbuilder.lib.Ruby.resolvestrategies.OneToManyStrategy;
 import nationbuilder.lib.Ruby.resolvestrategies.OneToOneStrategy;
 import nationbuilder.lib.Ruby.resolvestrategies.ResolveStrategy;
-import nationbuilder.lib.Ruby.services.RubyDataService;
 
 /**
  * @author patrick.ekkel
@@ -22,7 +21,6 @@ public class RelationResolveService implements RubyDataService
 		this.strategies = new ArrayList<>();
 		this.strategies.add(new OneToOneStrategy("OneToOne Resolving strategy"));
 		this.strategies.add(new OneToManyStrategy("OneToMany Resolving strategy"));
-		this.strategies.add(new TablePerClassStrategy("TablePerClass Resolving Strategy"));
 
 	}
 

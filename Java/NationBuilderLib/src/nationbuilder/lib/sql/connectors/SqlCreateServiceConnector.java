@@ -1,6 +1,7 @@
 package nationbuilder.lib.sql.connectors;
 
 import java.io.IOException;
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -18,7 +19,7 @@ public class SqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public HttpResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl)
+	public HttpResponseData postObject(ClassMap clazz,RubyModel objectToPost, String resourceUrl)
 	{
 
 		return null;

@@ -2,6 +2,7 @@ package nationbuilder.lib.sql.connectors;
 
 import java.io.IOException;
 
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyContextType;
@@ -47,7 +48,7 @@ public class SqlServiceConnector extends BaseServiceConnector
 	}
 
 	@Override
-	public ResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public ResponseData postObject(ClassMap clazz,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
 
 		return getCreateService().postObject(clazz,objectToPost, resourceUrl);
 	}

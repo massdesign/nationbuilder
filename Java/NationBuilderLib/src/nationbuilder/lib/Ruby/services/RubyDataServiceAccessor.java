@@ -24,6 +24,8 @@ public class RubyDataServiceAccessor
 		}
 		RubyDataServiceAccessor.clazz = clazz;
 	}
+	// TODO: deze manier van laden zorgt ervoor dat we geen twee contexts naast elkaar kunnen draaien, want dit is immers een "singleton"
+	// NOTE: als de services geen staat bevatten is dit geen probleem natuurlijk
 	public static  <T extends RubyDataServiceLoader> T getInstance() throws RubyDataServiceNotInitializedException
 	{
 		if (instance == null && clazz != null)

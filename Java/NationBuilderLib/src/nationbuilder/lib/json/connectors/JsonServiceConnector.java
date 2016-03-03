@@ -2,6 +2,7 @@ package nationbuilder.lib.json.connectors;
 
 import java.io.IOException;
 
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.connectors.ObjectBuilder;
@@ -25,8 +26,8 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 	{
         return this.getCreateService().postObject(objectToPost,resourceUrl,rootValue);
 	}
-	public ResponseData postObject(Class clazz,RubyModel objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
-		return this.getCreateService().postObject(clazz,objectToPost,resourceUrl);
+	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		return this.getCreateService().postObject(clazzMap,objectToPost,resourceUrl);
 	}
 
 	@Override

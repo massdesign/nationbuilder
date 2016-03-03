@@ -34,23 +34,22 @@ public class RubyObjectManager {
 
     }
 
-    public boolean store(Class subclazz,Class clazz,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
+    public boolean store(ClassMap clazzMap,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
-        ResponseData data = this.rubyService.postObject(clazz,model,resourceUrl);
+        ResponseData data = this.rubyService.postObject(clazzMap,model,resourceUrl);
         // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
         ID resultObject = this.objectBuilder.createIDFromResponse(data);
         resultObject.setType(model.getClass().getName());
 
         Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
         // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
-        if(entityAnnotation != null && clazz.getSuperclass() != BaseRubyModel.class && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass) {
-           Field idField =   RubyAssociationResolver.getIDFromSuperClass(subclazz,model);
+        if(entityAnnotation != null && clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass) {
+           Field idField =   RubyAssociationResolver.getIDFromSuperClass(clazzMap,model);
 
             try
             {
                 idField.setAccessible(true);
-                // TODO: classtype is null.. .misschien moeten we dat nog wel even gaan zetten
-                ReferenceMapping resultMapping = new ReferenceMapping(resultObject,clazz);
+                ReferenceMapping resultMapping = new ReferenceMapping(resultObject,clazzMap.getCurrent());
 
                 idField.set(model,resultMapping);
             }

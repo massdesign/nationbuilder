@@ -1,5 +1,8 @@
 package nationbuilder.lib.Ruby;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.collections.DoubleLinkedList;
 
 import java.util.List;
@@ -7,15 +10,20 @@ import java.util.List;
 /**
  * Created by patrick on 2/26/16.
  */
-public class ClassMap {
-
+public class ClassMap implements Iterable<Class>,Iterator<Class>
+{
     private DoubleLinkedList<Class> classHierarchy;
 
+    private RubyModel currentObjectInstance;
+    private boolean reverseIterator = false;
+    DoubleLinkedList<Class>.Node<Class> currentNode;
     public ClassMap(DoubleLinkedList<Class> classHierarchy) {
         this.classHierarchy = classHierarchy;
     }
 
-
+    public void reverseIterator() {
+        this.reverseIterator = true;
+    }
     public Class getSuperClassFrom(Class clazz) {
 
         // first find the class that is mentioned
@@ -55,6 +63,12 @@ public class ClassMap {
 
 
     }
+    public Class getSubClassFromCurrent() {
+        return this.getSubClassFrom(this.getCurrent());
+    }
+    public Class getSuperClassFromCurrent() {
+        return this.getSuperClassFrom(this.getCurrent());
+    }
     public Class getSubClassFrom(Class clazz) {
 
         // check of de eerste match met Class zodat we die case afgedekt hebben
@@ -89,6 +103,74 @@ public class ClassMap {
     }
 
 
+    public RubyModel getCurrentObjectInstance()
+    {
+        return currentObjectInstance;
+    }
 
+    public void setCurrentObjectInstance(RubyModel currentObjectInstance)
+    {
+        this.currentObjectInstance = currentObjectInstance;
+    }
+
+    @Override
+    public boolean hasNext()
+    {
+        boolean result = false;
+        if(reverseIterator) {
+            result  = currentNode == null && classHierarchy.getLast() != null;
+            if(!result) {
+                result = currentNode.getPrevious() != null;
+            }
+
+        }
+        else {
+            result = currentNode == null && classHierarchy.getFirst() != null;
+
+            if(!result) {
+                result = currentNode.getNext() != null;
+            }
+        }
+
+        return  result;
+    }
+
+    @Override
+    public Class next()
+    {
+        Class result = null;
+        if(reverseIterator) {
+            if(currentNode == null) {
+                currentNode = classHierarchy.getLast();
+            }
+            else
+            {
+                currentNode = currentNode.getPrevious();
+            }
+
+        }
+        else
+        {
+            if(currentNode == null) {
+                currentNode = classHierarchy.getFirst();
+            }
+            else {
+                currentNode = currentNode.getNext();
+            }
+        }
+        result  = currentNode.getValue();
+
+        return  result;
+    }
+
+    @Override
+    public Iterator<Class> iterator()
+    {
+        return this;
+    }
+
+    public Class getCurrent() {
+        return currentNode.getValue();
+    }
 }
 

@@ -8,11 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
-import nationbuilder.lib.Ruby.orm.BaseRubyModel;
-import nationbuilder.lib.Ruby.resolvestrategies.RelationResolveService;
+import nationbuilder.lib.Ruby.services.RelationResolveService;
 import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
@@ -48,17 +48,17 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public ResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
         SqlResponseData responseData = new SqlResponseData();
         String sql;
         if(RubyAssociationResolver.StrategyIsTablePerClass(objectToPost)) {
-            sql = this.objectBuilder.createStringFromObject(clazz, objectToPost);
+            sql = this.objectBuilder.createStringFromObject(clazzMap.getCurrent(), objectToPost);
         }
         else {
             sql = this.objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
         }
 
-        RubyObjectKey rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost,clazz);
+        RubyObjectKey rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost,clazzMap.getCurrent());
         this.persistedObjects.put(rubyObjectKey, sql);
         responseData.setSql(sql);
 

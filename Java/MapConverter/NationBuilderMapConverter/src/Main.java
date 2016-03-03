@@ -19,7 +19,6 @@ public class Main {
         worldLoader.Run();
 
        long endtime = System.currentTimeMillis();
-
         Date date = new Date((endtime - startTime));
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);

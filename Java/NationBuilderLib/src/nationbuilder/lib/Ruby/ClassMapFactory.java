@@ -1,5 +1,6 @@
 package nationbuilder.lib.Ruby;
 
+import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.collections.DoubleLinkedList;
 
 /**
@@ -15,7 +16,7 @@ public class ClassMapFactory {
     }
 
 
-    public ClassMap createClassmap() {
+    public ClassMap createClassmap(RubyModel instance) {
 
         DoubleLinkedList<Class> linkedList = new DoubleLinkedList<>();
 
@@ -28,6 +29,7 @@ public class ClassMapFactory {
         }
 
         ClassMap cm = new ClassMap(linkedList);
+        cm.setCurrentObjectInstance(instance);
         return cm;
     }
 

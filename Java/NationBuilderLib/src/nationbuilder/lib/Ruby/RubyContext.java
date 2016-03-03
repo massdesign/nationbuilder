@@ -10,6 +10,8 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.orm.objectfactories.RubyObjectFactoryImpl;
+import nationbuilder.lib.Ruby.services.ClassMapService;
+import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 
@@ -75,20 +77,18 @@ public class RubyContext {
 			result.setRubyContext(this);
 			return result;
 	}
+
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
     {
-        return this.SaveObject(null,object,resourceUrl);
+        ClassMapService classMapService =  RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
+        return this.SaveObject(classMapService.createClassMap(object),object,resourceUrl);
     }
-    public boolean SaveObject(Class subclazz,RubyModel object,String resourceUrl) throws RubyException
-    {
-        return this.SaveObject(subclazz,object.getClass(),object,resourceUrl);
-    }
-    public boolean SaveObject(Class subclazz,Class clazz,RubyModel object,String resourceUrl) throws RubyException
+    public boolean SaveObject(ClassMap clazzMap,RubyModel object,String resourceUrl) throws RubyException
 	{
 		object.FetchIDs();
 		try
 		{
-           return  this.rubyObjectMarshaller.store(subclazz,clazz,object, resourceUrl);
+           return  this.rubyObjectMarshaller.store(clazzMap,object, resourceUrl);
 		}
 		catch (ConnectException e)
 		{

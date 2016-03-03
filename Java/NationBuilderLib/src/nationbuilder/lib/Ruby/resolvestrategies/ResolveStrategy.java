@@ -1,7 +1,10 @@
 package nationbuilder.lib.Ruby.resolvestrategies;
 
+import java.lang.reflect.Field;
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * @author patrick.ekkel
@@ -43,4 +46,5 @@ public abstract class ResolveStrategy
 	{
 		this.name = name;
 	}
+
 }

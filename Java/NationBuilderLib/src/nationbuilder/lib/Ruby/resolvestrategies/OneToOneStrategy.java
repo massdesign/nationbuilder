@@ -1,10 +1,10 @@
 package nationbuilder.lib.Ruby.resolvestrategies;
 
+
 import java.lang.reflect.Field;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
-import nationbuilder.lib.Ruby.resolvestrategies.ResolveStrategy;
 
 /**
  * @author patrick.ekkel
@@ -19,12 +19,10 @@ public class OneToOneStrategy extends ResolveStrategy
 	@Override
 	public void resolve() throws IllegalAccessException, NoSuchFieldException
 	{
-		RubyModel foreignKeyHolder = (RubyModel) this.getMappingInfo().getField().get(
-		 this.getMappingInfo().getInstance());
-		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(
-		 this.getMappingInfo().getMappedBy());
+		RubyModel foreignKeyHolder = (RubyModel) this.getMappingInfo().getField().get(this.getMappingInfo().getInstance());
+		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
 		objectReferenceField.setAccessible(true);
-		if(foreignKeyHolder != null)
+		if (foreignKeyHolder != null)
 		{
 			objectReferenceField.set(foreignKeyHolder,
 			 new ReferenceMapping(this.getObjectToReference().getId(), this.getObjectToReference().getClass()));
@@ -45,6 +43,6 @@ public class OneToOneStrategy extends ResolveStrategy
 			result = true;
 		}
 
-		return  result;
+		return result;
 	}
 }
