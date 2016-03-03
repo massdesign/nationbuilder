@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Logging.Log;
@@ -278,7 +279,7 @@ public class RubyAssociationResolver
 		return result;
 	}
 
-	public static Field getIDFromSuperClass(Class subclazz,RubyModel baseRubyModel)  throws MissingAnnotationException
+	public static Field getIDFromSuperClass(ClassMap clazzMap,RubyModel baseRubyModel)  throws MissingAnnotationException
 	{
 		Field result = null;
 		if(baseRubyModel != null) {
@@ -288,7 +289,7 @@ public class RubyAssociationResolver
 				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
 				if(annotation != null) {
 
-				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(subclazz).getClass().getAnnotation(Entity.class);
+				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getCurrent()).getClass().getAnnotation(Entity.class);
 				   Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
 
 

@@ -31,8 +31,8 @@ public class RubyServiceImpl implements RubyService
 	}
 
 	@Override
-	public ResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
-		return this.writeService.postObject(clazz,objectToPost,resourceUrl);
+	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		return this.writeService.postObject(clazzMap,objectToPost,resourceUrl);
 	}
 
 	@Override

@@ -1,12 +1,13 @@
 import java.lang.reflect.Field;
 import mocks.TestModel3;
-import nationbuilder.lib.Ruby.OneToManyStrategy;
+import nationbuilder.lib.Ruby.resolvestrategies.OneToManyStrategy;
+import nationbuilder.lib.Ruby.resolvestrategies.OneToOneStrategy;
+import nationbuilder.lib.Ruby.resolvestrategies.ResolveStrategy;
 import org.junit.Assert;
 import org.junit.Test;
 import mocks.TestModel1;
 import mocks.TestModel2;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
-import nationbuilder.lib.Ruby.resolvestrategies.OneToOneStrategy;
 import nationbuilder.lib.Ruby.orm.ID;
 
 /**

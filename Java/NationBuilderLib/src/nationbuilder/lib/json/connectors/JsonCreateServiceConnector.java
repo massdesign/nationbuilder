@@ -3,6 +3,7 @@ package nationbuilder.lib.json.connectors;
 import java.io.IOException;
 import java.sql.SQLException;
 import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
@@ -33,7 +34,7 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		return null;
 	}
 	@Override
-	public HttpResponseData postObject(Class clazz,RubyModel objectToPost, String resourceUrl) throws PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public HttpResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
 		String json = objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
 		//	String json = gson.toJson(objectToPost);
 		Log.writeInfo("Json object" + json.toString());

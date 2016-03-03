@@ -6,7 +6,8 @@ import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.Exceptions.ServiceAlreadyRegisteredException;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
-import nationbuilder.lib.Ruby.resolvestrategies.RelationResolveService;
+import nationbuilder.lib.Ruby.services.ClassMapService;
+import nationbuilder.lib.Ruby.services.RelationResolveService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.Ruby.services.RubyDataServiceLoaderImpl;
 import nationbuilder.lib.connectors.JsonObjectBuilder;
@@ -67,6 +68,7 @@ public class RubyContextFactory {
             RubyDataServiceAccessor.setClazz(RubyDataServiceLoaderImpl.class);
             RubyDataServiceAccessor.getInstance().registerRubyService(RelationScanService.class);
             RubyDataServiceAccessor.getInstance().registerRubyService(RelationResolveService.class);
+            RubyDataServiceAccessor.getInstance().registerRubyService(ClassMapService.class);
         }
         catch (RubyDataServiceNotInitializedException | ServiceAlreadyRegisteredException e)
         {

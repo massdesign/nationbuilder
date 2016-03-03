@@ -7,12 +7,15 @@ import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
+import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.Ruby.services.ClassMapService;
+import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 
 /**
  * Created by patrick on 7/8/14.
@@ -59,55 +62,85 @@ public class BaseRubyModel implements RubyModel {
     this.context = context;
     }
 
-    protected boolean Save(Class subclazz,Class clazz,String resourceUrl) throws RubyException
+    protected boolean Save(ClassMap clazzMap,String resourceUrl) throws RubyException
     {
-        return context.SaveObject(subclazz,clazz,this, resourceUrl);
+        return context.SaveObject(clazzMap,this, resourceUrl);
     }
 
 
-    private void handleTablePerClassSave(Class currentClassname) throws RubyException
+    private void handleTablePerClassSave(ClassMap classMap) throws RubyException
     {
-        Stack<Class> classes = new Stack<>();
+       // Stack<Class> classes = new Stack<>();
         // TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
-        while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
+        classMap.reverseIterator();
+        for(Class currentClassname: classMap)
         {
-            classes.push(currentClassname);
-            currentClassname = currentClassname.getSuperclass();
-        }
-        while (!classes.empty())
-        {
-            currentClassname = classes.pop();
 
-
-            try
-            {
-                Class objectInstance = this.getClass().forName(currentClassname.getName());
-
-                Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
-                if (entity != null)
-                {
-
-                    if (entity.tableName() != null && !entity.tableName().equals(""))
+            if(!currentClassname.equals(BaseRubyModel.class) && !currentClassname.equals(Object.class)) {
+                    // Class objectInstance = this.getClass().forName(currentClassname.getName());
+                    Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
+                    if (entity != null)
                     {
+                        if (entity.tableName() != null && !entity.tableName().equals(""))
+                        {
+                            // the current class can be extracted from the classmap structure
+                            this.Save(classMap, entity.tableName());
+                        }
+                        else
+                        {
+                            throw new IllegalArgumentException("tablename can't be null or empty");
+                        }
 
-                        this.Save(null,objectInstance, entity.tableName());
                     }
                     else
                     {
-                        throw new IllegalArgumentException("tablename can't be null or empty");
+                        throw new MissingAnnotationException("Entity annotation expected on object: " + currentClassname.getClass());
                     }
-                }
-                else
-                {
-                    throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
-                }
-            }
-            catch (ClassNotFoundException e)
-            {
-                e.printStackTrace();
+
+           /* if(currentClassname.getName() == "nationbuilder.lib.Ruby.orm.BaseRubyModel") {
+                classes.push(currentClassname);
+            }*/
             }
         }
 
+       /* while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
+        {
+            classes.push(currentClassname);
+            currentClassname = currentClassname.getSuperclass();
+        }*/
+        //while (!classes.empty())
+       // {
+         //   currentClassname = classes.pop();
+
+
+           // try
+            //{
+              //  Class objectInstance = this.getClass().forName(currentClassname.getName());
+
+              //  Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
+              //  if (entity != null)
+                //{
+
+                //    if (entity.tableName() != null && !entity.tableName().equals(""))
+                  //  {
+
+                    //    this.Save(objectInstance, entity.tableName());
+                   // }
+                   // else
+                   // {
+                    //    throw new IllegalArgumentException("tablename can't be null or empty");
+                    //}
+               // }
+              //  else
+               // {
+               //     throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
+                //}
+            //}
+            //catch (ClassNotFoundException e)
+            //{
+              //  e.printStackTrace();
+           // }
+        //}
     }
     @Override
     public boolean Save(String ResourceUrl) throws RubyException
@@ -118,13 +151,17 @@ public class BaseRubyModel implements RubyModel {
 		}
             if(RubyAssociationResolver.StrategyIsTablePerClass(this) && !context.getRubyService().ignoreClassMapInsertStrategy())
             {
-                handleTablePerClassSave(this.getClass());
+                ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
+                ClassMap classMap = classMapService.createClassMap(this);
+
+                handleTablePerClassSave(classMap);
             }
             else
             {
                 try
                     {
-                    return context.SaveObject(this.getClass(),this, ResourceUrl);
+                     ClassMapService classMapService =   RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
+                    return context.SaveObject(classMapService.createClassMap(this),this, ResourceUrl);
                 }
                 catch (RubyException e)
                 {
