@@ -24,7 +24,7 @@ public class Building extends BaseRubyModel
 	@ManyToOne(mapIdTo = "geo")
 	private GameEntity owner;
 
-	@ID(mapIdToEntity = PowerRelayStation.class)
+	@ID()
 	private ReferenceMapping power_relay_station;
 
 	public String getName()

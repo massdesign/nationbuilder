@@ -23,7 +23,7 @@ import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 public class BaseRubyModel implements RubyModel {
 
 	@IgnoreInRails
-    @nationbuilder.lib.Ruby.Association.annotation.ID(mapIdToEntity = BaseRubyModel.class)
+    @nationbuilder.lib.Ruby.Association.annotation.ID()
     private ID id;
 
     @Expose

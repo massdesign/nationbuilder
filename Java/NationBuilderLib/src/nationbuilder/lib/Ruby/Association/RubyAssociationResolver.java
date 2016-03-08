@@ -196,7 +196,8 @@ public class RubyAssociationResolver
 		else if(field.getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class) != null) {
 			nationbuilder.lib.Ruby.Association.annotation.ID o = field.getAnnotation(
 					nationbuilder.lib.Ruby.Association.annotation.ID.class);
-			result = new MappingInfo(o.mapIdToEntity(),instance,field);
+			// TODO: mappedByClazz weggehaald, dit is niet consistent
+			result = new MappingInfo(null,instance,field);
 			result.setMappingInfoType(MappingInfoType.IDMapping);
 		}
 		// TODO: weggooien als bovenstaande code goed werkt
@@ -288,8 +289,8 @@ public class RubyAssociationResolver
 			for(int i=0;i<fields.length;i++) {
 				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
 				if(annotation != null) {
-
-				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getCurrent()).getClass().getAnnotation(Entity.class);
+					// TODO: refactoren, dit is een beetje een fucked up constructie
+				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getSubClassFrom(clazzMap.getSuperClassFrom(baseRubyModel.getClass()))).getClass().getAnnotation(Entity.class);
 				   Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
 
 
