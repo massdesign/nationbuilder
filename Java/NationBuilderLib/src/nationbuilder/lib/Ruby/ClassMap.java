@@ -72,7 +72,7 @@ public class ClassMap implements Iterable<Class>,Iterator<Class>
     public Class getSubClassFrom(Class clazz) {
 
         // check of de eerste match met Class zodat we die case afgedekt hebben
-        if(classHierarchy.getFirst().getValue().equals(clazz)) {
+        if(classHierarchy.getLast().getValue().equals(clazz)) {
 
             return null;
         }

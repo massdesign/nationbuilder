@@ -88,7 +88,7 @@ public class PostFiller {
             powerGridNode3.setDestroyable(true);
          //   wareHouse.Save("warehouses");
             powerRelayStation3.Save("buildings");
-            //powerGridNode3.Save("power_grid_nodes");
+            powerGridNode3.Save("power_grid_nodes");
 
 
            /* powerRelayStationType.Save("power_relay_station_types");
