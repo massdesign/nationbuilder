@@ -77,11 +77,15 @@ public class RubyContext {
 			result.setRubyContext(this);
 			return result;
 	}
-
+    // Storing objects is not meant to be done via the context but via the object itself Active Record Style, SaveObject does not fully support TablePerClass and other facilities provided by RubyDI
+    @Deprecated()
     public boolean SaveObject(RubyModel object,String resourceUrl) throws RubyException
     {
+
         ClassMapService classMapService =  RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-        return this.SaveObject(classMapService.createClassMap(object),object,resourceUrl);
+        ClassMap classmap = classMapService.createClassMap(object);
+        classmap.loadDefault();
+        return this.SaveObject(classmap,object,resourceUrl);
     }
     public boolean SaveObject(ClassMap clazzMap,RubyModel object,String resourceUrl) throws RubyException
 	{

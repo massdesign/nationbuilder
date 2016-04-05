@@ -192,7 +192,6 @@ public class SqlQueryManager implements QueryManager
         String filename =  tableName + "_import.sql";
 		String path = this.tempdirLocation;
 
-
 		File dirPath = new File(path);
 
 

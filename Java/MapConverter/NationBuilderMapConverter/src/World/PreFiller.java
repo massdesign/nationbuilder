@@ -107,23 +107,23 @@ public class    PreFiller {
     private void save()
     {
 
-		this.userFiller.Save(Currency.class,"/currencies/");
-		this.userFiller.Save(State.class,"/states/");
-		this.userFiller.Save(User.class,"/users/");
+		this.userFiller.Save(Currency.class,"currencies");
+		this.userFiller.Save(State.class,"states");
+		this.userFiller.Save(User.class,"users");
 
 
-        this.energyBuildingFiller.Save(EnergyBuildingType.class,"/energy_building_types");
-        this.energyBuildingFiller.Save(EnergyBuilding.class,"/energy_building_types");
+        this.energyBuildingFiller.Save(EnergyBuildingType.class,"energy_building_types");
+        this.energyBuildingFiller.Save(EnergyBuilding.class,"energy_building_types");
 
-        this.cityFiller.Save(City.class,"/cities/");
-        this.warehouseFiller.Save(WareHouse.class,"/warehouses/");
-
-
+        this.cityFiller.Save(City.class,"cities");
+        this.warehouseFiller.Save(WareHouse.class,"warehouses");
 
 
-        String terrainTypeUrl = "/terraintypes";
-        String energyBuildingTypeUrl = "/energy_building_types";
-        String energyBuildingUrl = "/energy_building_types";
+
+
+        String terrainTypeUrl = "terraintypes";
+        String energyBuildingTypeUrl = "energy_building_types";
+        String energyBuildingUrl = "energy_building_types";
         for(BaseRubyModel type : rubyModels)
         {
 			try

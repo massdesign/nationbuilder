@@ -96,51 +96,10 @@ public class BaseRubyModel implements RubyModel {
                     {
                         throw new MissingAnnotationException("Entity annotation expected on object: " + currentClassname.getClass());
                     }
-
-           /* if(currentClassname.getName() == "nationbuilder.lib.Ruby.orm.BaseRubyModel") {
-                classes.push(currentClassname);
-            }*/
             }
         }
 
-       /* while (currentClassname != null && currentClassname.getName() != "nationbuilder.lib.Ruby.orm.BaseRubyModel")
-        {
-            classes.push(currentClassname);
-            currentClassname = currentClassname.getSuperclass();
-        }*/
-        //while (!classes.empty())
-       // {
-         //   currentClassname = classes.pop();
 
-
-           // try
-            //{
-              //  Class objectInstance = this.getClass().forName(currentClassname.getName());
-
-              //  Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
-              //  if (entity != null)
-                //{
-
-                //    if (entity.tableName() != null && !entity.tableName().equals(""))
-                  //  {
-
-                    //    this.Save(objectInstance, entity.tableName());
-                   // }
-                   // else
-                   // {
-                    //    throw new IllegalArgumentException("tablename can't be null or empty");
-                    //}
-               // }
-              //  else
-               // {
-               //     throw new MissingAnnotationException("Entity annotation expected on object: " + objectInstance.getClass());
-                //}
-            //}
-            //catch (ClassNotFoundException e)
-            //{
-              //  e.printStackTrace();
-           // }
-        //}
     }
     @Override
     public boolean Save(String ResourceUrl) throws RubyException
@@ -161,7 +120,9 @@ public class BaseRubyModel implements RubyModel {
                 try
                     {
                      ClassMapService classMapService =   RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-                    return context.SaveObject(classMapService.createClassMap(this),this, ResourceUrl);
+                     ClassMap classMap = classMapService.createClassMap(this);
+                     classMap.loadDefault();
+                    return context.SaveObject(classMap,this, ResourceUrl);
                 }
                 catch (RubyException e)
                 {
