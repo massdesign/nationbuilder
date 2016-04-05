@@ -36,7 +36,7 @@ public class MapServiceConnector {
 
         try
 		{
-			context.SaveObject(map, "/maps/");
+			context.SaveObject(map, "maps");
 
 		}
 		catch (RubyException e)
@@ -59,7 +59,7 @@ public class MapServiceConnector {
 	public void addLayer(Layer layer)
 	{
         try {
-            context.SaveObject(layer, "/layers/");
+            context.SaveObject(layer, "layers");
         }
 		catch (RubyException e) {
             Log.write(e,LogType.ERROR);
@@ -94,7 +94,7 @@ public class MapServiceConnector {
 		{
 			try
 			{
-				context.SaveObject(tile,"/tiles/");
+				context.SaveObject(tile,"tiles");
 			}
 			catch (RubyException e)
 			{
@@ -108,7 +108,7 @@ public class MapServiceConnector {
 			image.getImageFile();
 		try
 		{
-			image.Save("/images/");
+			image.Save("images");
 		}
 		catch (RubyException e)
 		{

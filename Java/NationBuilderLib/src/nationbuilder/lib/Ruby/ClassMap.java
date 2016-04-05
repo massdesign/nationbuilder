@@ -63,6 +63,9 @@ public class ClassMap implements Iterable<Class>,Iterator<Class>
 
 
     }
+    public void  loadDefault() {
+        this.currentNode = this.classHierarchy.getFirst();
+    }
     public Class getSubClassFromCurrent() {
         return this.getSubClassFrom(this.getCurrent());
     }

@@ -63,8 +63,8 @@ public class PostMapFiller
 	}
 	private void save() {
 
-		String resourceTypeUrl = "/resourcetypes";
-		String resourceUrl = "/resources";
+		String resourceTypeUrl = "resourcetypes";
+		String resourceUrl = "resources";
 
 		for (BaseRubyModel type : rubyModels)
 		{
