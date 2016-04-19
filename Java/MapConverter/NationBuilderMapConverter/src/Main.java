@@ -18,6 +18,7 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
 
+
        long endtime = System.currentTimeMillis();
         Date date = new Date((endtime - startTime));
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");

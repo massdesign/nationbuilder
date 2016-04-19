@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
     t.integer  "power_relay_station_id"
     t.integer  "military_base_id"
     t.integer  "game_entity_id"
+    t.integer  "tile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

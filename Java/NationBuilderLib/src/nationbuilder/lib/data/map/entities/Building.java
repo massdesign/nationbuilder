@@ -4,6 +4,7 @@ import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
@@ -12,15 +13,18 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
  * Created by patrick on 9/18/14.
  */
 @Entity(tableName = "buildings",strategy = InhiritanceStrategy.TablePerClass)
-// TODO: StaticEntity heeft geen database entry, dit moeten we fixen of het concept "Static Entity" laten vallen
-//public class Building extends StaticEntity
 public class Building extends BaseRubyModel
 {
+	@OneToOne(mapIdTo = "loid")
+	private Tile locatedOn;
+
+	@Transient
+	private String loid;
+
     @Transient
 	private String geo;
     // TODO: dit transient gemaakt, maar dit is een workaround. superclassing en subclassing moeten we later uitwerken
     private String name;
-	//private Contract contract;
 	@ManyToOne(mapIdTo = "geo")
 	private GameEntity owner;
 
@@ -45,5 +49,15 @@ public class Building extends BaseRubyModel
 	public void setOwner(GameEntity owner)
 	{
 		this.owner = owner;
+	}
+
+	public Tile getLocatedOn()
+	{
+		return locatedOn;
+	}
+
+	public void setLocatedOn(Tile locatedOn)
+	{
+		this.locatedOn = locatedOn;
 	}
 }

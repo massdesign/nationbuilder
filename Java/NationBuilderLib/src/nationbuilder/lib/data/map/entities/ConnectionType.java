@@ -9,6 +9,9 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 /**
  * Describes what type of connection you are looking at,
  */
+
+// NOTE: Het lijkt erop dat we deze niet meer nodig gaan zijn, wordt nergens gebruikt en zit ook niet in de database
+	// TODO: weghalen
 public class ConnectionType extends BaseRubyModel
 {
 	/**

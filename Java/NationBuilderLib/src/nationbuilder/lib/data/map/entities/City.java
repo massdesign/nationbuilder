@@ -24,8 +24,6 @@ public class City extends GameEntity
 
 	public City()
 	{
-	//	this.buildings = new ArrayList<>();
-    //	this.locations = new ArrayList<>();
 		this.contracts = new ArrayList<>();
 	}
 

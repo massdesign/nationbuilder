@@ -10,6 +10,8 @@ import nationbuilder.lib.data.map.entities.Node;
 import nationbuilder.lib.data.map.entities.PowerGridNode;
 import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.PowerRelayStationType;
+import nationbuilder.lib.data.map.entities.TerrainType;
+import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.data.map.entities.WareHouse;
 
 /**
@@ -41,8 +43,22 @@ public class PostFiller {
         PowerRelayStation powerRelayStation1 = context.createRubyModel(PowerRelayStation.class);
         PowerRelayStation powerRelayStation2 = context.createRubyModel(PowerRelayStation.class);
 
+        Tile tile1 = context.createRubyModel(Tile.class);
+        Tile tile2 = context.createRubyModel(Tile.class);
+
+        tile1.setXoffset(0);
+        tile1.setYoffset(0);
+        tile1.setXposition(2);
+        tile1.setYposition(2);
+
+
         powerRelayStation1.setName("PRS01");
         powerRelayStation2.setName("PRS02");
+
+
+        powerRelayStation1.setLocatedOn(tile1);
+        powerRelayStation1.setLocatedOn(tile2);
+
 
         PowerGridNode powerGridNode1 = context.createRubyModel(PowerGridNode.class);
         PowerGridNode powerGridNode2 = context.createRubyModel(PowerGridNode.class);
@@ -84,19 +100,20 @@ public class PostFiller {
 
         try
         {
+            tile1.Save("tiles");
+            tile2.Save("tiles");
             powerGridNode3.setName("test in je moeder");
             powerGridNode3.setDestroyable(true);
          //   wareHouse.Save("warehouses");
-            powerRelayStation3.Save("buildings");
+            //powerRelayStation3.Save("buildings");
             powerGridNode3.Save("power_grid_nodes");
 
-
-           /* powerRelayStationType.Save("power_relay_station_types");
+            powerRelayStationType.Save("power_relay_station_types");
             powerRelayStation1.Save("power_relay_stations");
             powerRelayStation2.Save("power_relay_stations");
             powerGridNode1.Save("power_grid_nodes");
             powerGridNode2.Save("power_grid_nodes");
-            powerConnection.Save("power_connections");  */
+            powerConnection.Save("power_connections");
 
             this.context.commit();
         }
@@ -109,11 +126,12 @@ public class PostFiller {
     {
         // uitgezet voor testen
        // this.claimFiller.Save(Claim.class,"/claims/");
-        //  TODO: ruby controllers hiervoor maken
-        this.connectionFiller.Save(Node.class,"/node_types/");
-        this.connectionFiller.Save(PowerRelayStation.class,"");
-        this.connectionFiller.Save(ConnectionType.class,"");
-        this.connectionFiller.Save(PowerConnection.class,"");
+        this.connectionFiller.Save(PowerRelayStationType.class, "power_relay_station_types");
+        this.connectionFiller.Save(PowerRelayStation.class, "power_relay_stations");
+        this.connectionFiller.Save(PowerGridNode.class,"power_grid_nodes");
+        this.connectionFiller.Save(PowerConnection.class, "power_connections");
+        this.connectionFiller.Save(Node.class,"node_types");
+
 
     }
 
@@ -124,6 +142,7 @@ public class PostFiller {
     public void setMapDataset(MapDataset mapDataset) {
         this.mapDataset = mapDataset;
         this.claimFiller.setMapDataset(mapDataset);
+        this.connectionFiller.setMapDataset(mapDataset);
     }
 
 
