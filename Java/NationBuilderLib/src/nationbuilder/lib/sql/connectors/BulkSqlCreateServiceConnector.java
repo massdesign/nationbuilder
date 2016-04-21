@@ -31,9 +31,10 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	SqlObjectBuilder objectBuilder;
 	HashMap<RubyModel,String> persistedObjects;
 
-	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder)
+	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder,SqlQueryManager queryManager)
 	{
-		this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
+        this.sqlQueryManager = queryManager;
+		//this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
 		this.objectBuilder = objectBuilder;
 		this.persistedObjects = new HashMap<>();
 

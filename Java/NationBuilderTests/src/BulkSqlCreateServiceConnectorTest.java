@@ -16,7 +16,7 @@ public class BulkSqlCreateServiceConnectorTest {
     @Test
     public void resolveUnresolvedFieldsTest() {
 
-        BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null);
+        BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null,null);
 
         TestModel2 rubyTestModel = new TestModel2();
         String actual = connector.resolveUnresolvedFields(rubyTestModel,"187414,<bui>testmodel1_id<eui>");

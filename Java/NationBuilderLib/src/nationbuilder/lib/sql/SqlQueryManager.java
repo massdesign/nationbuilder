@@ -31,6 +31,9 @@ public class SqlQueryManager implements QueryManager
     // Ruby ORM assets DB
     String rorm_assets = "rorm_assets";
 	Statement stmt = null;
+	// kleiner dan 0
+	int nextint = -1;
+	boolean sequencePersisted = false;
 
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	// TODO: consider packing all those properties into a object
@@ -53,35 +56,61 @@ public class SqlQueryManager implements QueryManager
 
 	public int getCurrentID() throws SQLException
 	{
-		int currentint = 0;
-		Connection conn = this.createConnection(this.rorm_assets);
 
-		PreparedStatement selectStmt = conn.prepareStatement("SELECT MAX(ruby_object_counter) FROM object_count ");
-		selectStmt.execute();
+		if(nextint < 0)
+		{
 
-		ResultSet gks = selectStmt.getResultSet();
-		gks.next();
-		currentint = gks.getInt(1);
+			Connection conn = this.createConnection(this.rorm_assets);
 
-		return currentint;
+			PreparedStatement selectStmt = conn.prepareStatement("SELECT MAX(ruby_object_counter) FROM object_count ");
+			selectStmt.execute();
+
+			ResultSet gks = selectStmt.getResultSet();
+			gks.next();
+			nextint = gks.getInt(1);
+
+		}
+
+		return nextint;
 	}
 
     public int getNextID() throws SQLException
 	{
+		// first check if we have fetched the current id from the database
+		if (nextint > 0) {
+			nextint += 1;
+			sequencePersisted = false;
+		}
+        else
+		{
+			nextint = getCurrentID();
+			/*Connection conn = this.createConnection(this.rorm_assets);
 
-        int nextint = 0;
-        Connection conn = this.createConnection(this.rorm_assets);
+			PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO object_count VALUES()", Statement.RETURN_GENERATED_KEYS);
+			insertStmt.executeUpdate();
+			ResultSet gks = insertStmt.getGeneratedKeys();
+			gks.next();
+			nextint = gks.getInt(1);
 
-        PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO object_count VALUES()",
-                Statement.RETURN_GENERATED_KEYS);
-            insertStmt.executeUpdate();
-            ResultSet gks = insertStmt.getGeneratedKeys();
-            gks.next();
-            nextint = gks.getInt(1);
+			conn.close();*/
 
-        conn.close();
+		}
         return nextint;
     }
+
+	private void persistCurrentId() throws SQLException
+	{
+		if(!sequencePersisted)
+		{
+			Connection conn = this.createConnection(this.rorm_assets);
+			PreparedStatement insertStmt = conn
+					.prepareStatement("INSERT INTO object_count VALUES(" + getCurrentID() + ")");
+			insertStmt.executeUpdate();
+			sequencePersisted = true;
+		}
+		//ResultSet gks = insertStmt.getGeneratedKeys();
+		//gks.next();
+	}
 
 
 	private Connection createConnection(String database) {
@@ -99,6 +128,7 @@ public class SqlQueryManager implements QueryManager
 	}
 	public void executeInsert(String sql)
 	{
+
 		Connection conn = createConnection(this.database);
 		try
 		{
@@ -158,9 +188,9 @@ public class SqlQueryManager implements QueryManager
 	}
 	public ResponseData executeBulkInsert(List<String> rows,String tableName) throws SQLException
 	{
+		this.persistCurrentId();
         String filename =  tableName + "_import.sql";
 		String path = this.tempdirLocation;
-        //String path = "/home/patrick/Git/nationbuilder/Temp/";
 
 
 		File dirPath = new File(path);

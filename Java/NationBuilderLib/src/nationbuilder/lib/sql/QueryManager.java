@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface QueryManager {
 
-    public int getCurrentID() throws SQLException;
-    public int getNextID() throws SQLException;
-    public void executeInsert(String sql);
-    public void executeUpdate(String sql);
-    public TableMetaData getTableStructure(String tableName) throws SQLException;
-    public HttpResponseData executeSelect(String sql);
-    public ResponseData executeBulkInsert(List<String> rows,String tableName) throws SQLException;
+     int getCurrentID() throws SQLException;
+     int getNextID() throws SQLException;
+     void executeInsert(String sql);
+     void executeUpdate(String sql);
+     TableMetaData getTableStructure(String tableName) throws SQLException;
+     HttpResponseData executeSelect(String sql);
+     ResponseData executeBulkInsert(List<String> rows,String tableName) throws SQLException;
 }

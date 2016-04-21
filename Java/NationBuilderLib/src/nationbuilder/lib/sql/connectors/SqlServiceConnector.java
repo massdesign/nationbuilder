@@ -25,7 +25,8 @@ public class SqlServiceConnector extends BaseServiceConnector
 		{
 			case BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT:
 				this.setFetchService(new JsonFetchServiceConnector(databaseServerUrl,new JsonObjectBuilder()));
-				this.setCreateService(new BulkSqlCreateServiceConnector(new SqlObjectBuilder(queryManager)));
+				// TODO: 2 keer hetzelfe meegeven is niet zo optimaal
+				this.setCreateService(new BulkSqlCreateServiceConnector(new SqlObjectBuilder(queryManager),queryManager));
 			break;
 			default:
 				// TODO: implement
