@@ -33,9 +33,13 @@ this.zoomIn = function() {
 this.move = function() { 
 
 for (var key in this._layers) {
-  if (this._layers.hasOwnProperty(key)) {
+	console.log("keys")
+	console.log(key)
+	if(key != "itemlayer") {
+  		if (this._layers.hasOwnProperty(key)) {
   		this._layers[key].move()
-  	}
+  		}
+  }
 }
 
 }

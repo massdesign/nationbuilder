@@ -225,22 +225,25 @@ function Map(javascript_console,applicationName)
      this.move = function () {
    			var currentContext = this;
 				this._mapDataBroker.getMapData(function(imageData,data) {
-					currentContext._tileLayer.renderTiles(imageData,data)    			
+					//currentContext._tileLayer.renderTiles(imageData,data)    			
 		// NOTE: volgorde is hier belangrijk.. de _tilelayer moet eerst gemoved worden.. dan pas de select layer.. heeft te maken met getMapdata.getClickedTile() en getViewportPosition
-		this._tileLayer.move();
+		currentContext._layerService.move()	
+		//	this._tileLayer.move();
 		// TODO: itemlayer tijdelijk uitgezet, vanwege refactor aan het datamodel werkt dit niet meer
 		//this._itemLayer.move();
-		this._selectLayer.move();	
-		this.layers[0].move()
+		//this._selectLayer.move();	
+		//this.layers[0].move()
 		
-   });
+   },this._zoomfactor);
+ 
+}
 
-   this.drawItem = function (item) {
+ this.drawItem = function (item) {
    	
    	this._layerService.getLayer(LayerService.ITEM_LAYER).renderItem(item);
    }
 
    this.getCanvas = function () {
    	return this._context;
-   }   
+   }  
 }

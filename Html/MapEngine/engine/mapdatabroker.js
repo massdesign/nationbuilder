@@ -125,7 +125,9 @@ Checks if the mapbroker needs to fetch new data, it does this by checking how mu
 */
 // testmethode voor nieuwe movement calculaties
 this._calculateMovementTest = function(zoomfactor) { 
-	 var sections = []
+	var sections = []
+		console.log("hier staat de shit")
+			console.log(zoomfactor) 
 	var currentTresholdX = Math.abs(this._parent.getMapData().getTresholdX())
  	var currentTresholdY = Math.abs(this._parent.getMapData().getTresholdY())
  	var xmove = this._parent.getMapData().getViewportX();
@@ -164,14 +166,14 @@ this._calculateMovementTest = function(zoomfactor) {
 	 	this.newX = this._parent.getMapData().getStartPositionX();
    	this.newY = this._parent.getMapData().getStartPositionY();
 	}
+	 console.log("x1=" +  x2)
 	 sections.push(new SectionLocation(x1+Math.abs(this.newX),y1+Math.abs(this.newY)));	 
 	 sections.push(new SectionLocation(x2+Math.abs(this.newX),y2+Math.abs(this.newY)));
 	 return sections;
 }
 
 this.getMapData = function (callback,zoomfactor) {
-
-
+		
 			var currentContext = this;
 			var x1load,y1load,x2load,y2load	
 			var xmove = this._parent.getMapData().getViewportX();
