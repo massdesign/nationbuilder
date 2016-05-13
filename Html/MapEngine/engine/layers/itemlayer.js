@@ -46,9 +46,12 @@ function ItemLayer(parentMap, loginstance) {
        
     }
 
-    this.move = function () {
 
-        this.parentMap.getMapTranslator().move(this._layer, this.parentMap.getMapData().getItems());
+    this.move = function () {  
+      
+      if (typeof this.parentMap.getMapData().getItems() != 'undefined') {
+		         this.parentMap.getMapTranslator().move(this._layer, this.parentMap.getMapData().getItems()); 
+      }
 
     }
 

@@ -85,3 +85,16 @@ Util.createArray = function (x, y) {
     }
     return result;
 }
+
+
+Util.rand = function() {
+    return Math.random().toString(36).substr(2); // remove `0.`
+};
+
+Util.token = function() {
+    return Util.rand() + Util.rand(); // to make it longer
+};
+
+
+
+
