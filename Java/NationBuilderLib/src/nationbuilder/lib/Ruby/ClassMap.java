@@ -1,11 +1,9 @@
 package nationbuilder.lib.Ruby;
 
-import java.util.ArrayList;
+
 import java.util.Iterator;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.collections.DoubleLinkedList;
-
-import java.util.List;
 
 /**
  * Created by patrick on 2/26/16.
@@ -164,6 +162,11 @@ public class ClassMap implements Iterable<Class>,Iterator<Class>
         result  = currentNode.getValue();
 
         return  result;
+    }
+
+    @Override
+    public void remove() {
+
     }
 
     @Override
