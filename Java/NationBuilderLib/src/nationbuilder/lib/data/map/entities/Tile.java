@@ -8,6 +8,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
+
 import java.util.List;
 
 

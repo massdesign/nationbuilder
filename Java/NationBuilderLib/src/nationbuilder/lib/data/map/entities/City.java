@@ -24,8 +24,6 @@ public class City extends GameEntity
 
 	public City()
 	{
-	//	this.buildings = new ArrayList<>();
-    //	this.locations = new ArrayList<>();
 		this.contracts = new ArrayList<>();
 	}
 
@@ -38,45 +36,13 @@ public class City extends GameEntity
 	{
 		this.population = population;
 	}
-	/*
-	public List<Building> getBuildings()
-	{
-		return buildings;
-	}
 
-	public void addBuilding(Building building)
-	{
-		this.buildings.add(building);
-	}
+    public List<Tile> getLocations() {
+        return locations;
+    }
 
-	public List<Connection> getConnections()
-	{
-		return connections;
-	}
+    public void addLocation(Tile tile) {
 
-	public void setConnections(List<Connection> connections)
-	{
-		this.connections = connections;
-	}
-
-	public List<Tile> getLocations()
-	{
-		return locations;
-	}
-
-	public void setLocations(List<Tile> locations)
-	{
-		this.locations = locations;
-	}
-
-	public List<Contract> getContracts()
-	{
-		return contracts;
-	}
-
-	public void setContracts(List<Contract> contracts)
-	{
-		this.contracts = contracts;
-	}
-	*/
+        this.locations.add(tile);
+    }
 }

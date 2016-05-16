@@ -2,7 +2,6 @@ package World;
 
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.data.map.entities.ConnectionType;
 import nationbuilder.lib.data.map.entities.Node;
 import nationbuilder.lib.data.map.entities.PowerGridNode;
 import nationbuilder.lib.data.map.entities.PowerRelayStation;
@@ -18,14 +17,14 @@ public class ConnectionFiller extends BaseFiller
 	}
 
 
-	private ConnectionType createConnectionType(String name) {
+	/*private ConnectionType_old createConnectionType(String name) {
 
-		ConnectionType connectionType = this.getContext().createRubyModel(ConnectionType.class);
+		ConnectionType_old connectionType = this.getContext().createRubyModel(ConnectionType_old.class);
 
 		connectionType.setName(name);
 		//connectionType.
 		return connectionType;
-	}
+	}*/
 	private Node createNodeType(String name,boolean destroyable,PowerRelayStation powerRelayStation) {
 
 		PowerGridNode nodeType = this.getContext().createRubyModel(PowerGridNode.class);
@@ -47,9 +46,9 @@ public class ConnectionFiller extends BaseFiller
 	@Override
 	public void Fill() throws ObjectConversionFailedException
 	{
-		this.getRubyModels().add(createConnectionType("Power Grid"));
+		/*this.getRubyModels().add(createConnectionType("Power Grid"));
 		this.getRubyModels().add(createConnectionType("Highway"));
-		this.getRubyModels().add(createConnectionType("Tradehub"));
+		this.getRubyModels().add(createConnectionType("Tradehub"));*/
 
 		PowerRelayStation prs01  = createPowerRelayStation("PRS01",300);
 		this.getRubyModels().add(prs01);

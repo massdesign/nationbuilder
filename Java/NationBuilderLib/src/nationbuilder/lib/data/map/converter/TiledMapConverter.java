@@ -115,18 +115,6 @@ public class TiledMapConverter {
             {
 
                 result.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
-                /*
-                Resource resource1 = this.rubyContext.createRubyModel(Resource.class);
-                Resource resource2 = this.rubyContext.createRubyModel(Resource.class);
-                resource1.setResourceType(this.getResourceType(0));
-                resource2.setResourceType(this.getResourceType(1));
-                result.addResource(resource1);
-                result.addResource(resource2);
-                //result
-                // NOTE: dit is een beetje lelijk nu wordt er een lijstje op een aparte manier dat later opgeslagen wordt..
-                this.resources.add(resource1);
-                this.resources.add(resource2);
-                */
             }
         }
         else
@@ -237,10 +225,14 @@ public class TiledMapConverter {
         }
         return result;
     }
-
+    // TODO: we hebben meer nodig dan een lijst van tiles.. een composiet datatype dat ook meer kan bevatten dan tiles
     public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
     {
-        ArrayList<Tile> result = new ArrayList<Tile>();
+        XmlTileFactory xmlTileFactory = new XmlTileFactory();
+        ArrayList<Tile> tilesResult = new ArrayList<>();
+        ArrayList<Tile> citiesResult = new ArrayList<>();
+        ArrayList<Tile> powergridResult = new ArrayList<>();
+
         int zindex = 0;
         try {
             for(XmlLayer layer : layers)
@@ -253,33 +245,45 @@ public class TiledMapConverter {
                 {
                     if(tile.getGID() != 0)
                     {
-
-                        Tile newTile = this.convertTile(tile);
-
-                        if(this.mapLayers.containsKey(layer.getName()))
-                        {
+                        Layer currentLayer;
+                        if (this.mapLayers.containsKey(layer.getName())) {
 
                             String layerName = layer.getName();
-                            newTile.setLayer(this.mapLayers.get(layerName));
+                            currentLayer = this.mapLayers.get(layerName);
 
-                        }
-                        else
-                        {
-                            Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
+                            //newTile.setLayer(this.mapLayers.get(layerName));
+
+                        } else {
+                           /* Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
                             newLayer.setZindex(zindex);
                             newLayer.setMap(this.map);
                             newLayer.setName(layer.getName());
                             newLayer.setTileHeight(layer.getHeight());
                             newLayer.setTileWidth(layer.getWidth());
-                            this.mapLayers.put(layer.getName(),newLayer);
-                            newTile.setLayer(newLayer);
+                            this.mapLayers.put(layer.getName(), newLayer);
+                            //newTile.setLayer(newLayer);*/
+
+                            currentLayer = createLayer(layer,zindex);
 
                         }
 
-                        // give the tile a meaningfull position
-                        newTile.setXposition(tilepositionx);
-                        newTile.setYposition(tilepositiony);
-                        result.add(newTile);
+                        // normal tiles aan de normale lijst toevoegen
+                        if(xmlTileFactory.isTile(tile)) {
+                            // we maken een onderscheidt tussen tiles en mapitems
+                              tilesResult.add(this.createTile(tile, currentLayer, tilepositionx, tilepositiony));
+                        }
+                        // city tiles aan de city tile lijst toevoegen
+                        else  if(xmlTileFactory.isCityItem(tile)) {
+                            // NOTE: duplicate code
+                                 citiesResult.add(this.createTile(tile, currentLayer, tilepositionx, tilepositiony));
+
+                        }
+                        // power grid items toevoegen aan de powergridResult
+                        else if(xmlTileFactory.isPowerGridItem(tile)) {
+
+                            powergridResult.add(this.createTile(tile,currentLayer,tilepositionx,tilepositiony));
+
+                        }
                         // -1 omdat we zerobased index gebruiken
 
                     }
@@ -302,8 +306,30 @@ public class TiledMapConverter {
             e.printStackTrace();
             // log error and tell
         }
-        return result;
+        return tilesResult;
     }
+
+    private Layer createLayer(XmlLayer layer,int zindex) {
+        Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
+        newLayer.setZindex(zindex);
+        newLayer.setMap(this.map);
+        newLayer.setName(layer.getName());
+        newLayer.setTileHeight(layer.getHeight());
+        newLayer.setTileWidth(layer.getWidth());
+        this.mapLayers.put(layer.getName(), newLayer);
+        return newLayer;
+    }
+
+    private Tile createTile(XmlTile tile,Layer currentLayer,int tilepositionx,int tilepositiony) {
+        Tile newTile = this.convertTile(tile);
+        newTile.setLayer(currentLayer);
+
+        // give the tile a meaningfull position
+        newTile.setXposition(tilepositionx);
+        newTile.setYposition(tilepositiony);
+        return newTile;
+    }
+
     public MapDataset GetMapDataset()
     {
         MapDataset result = new MapDataset();

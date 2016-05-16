@@ -40,7 +40,12 @@ public class XmlHelper {
 		  }
 		  return result;
 	}
-	
+
+    public static float getFloat(Element element,String attributeName) {
+
+        return Float.parseFloat(element.getAttribute(attributeName));
+    }
+
 	public static int getInt(Element element,String attributeName) throws NumberFormatException
 	{
         try {

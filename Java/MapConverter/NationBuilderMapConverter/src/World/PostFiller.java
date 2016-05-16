@@ -3,14 +3,7 @@ package World;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.data.map.entities.PowerConnection;
-import nationbuilder.lib.data.map.entities.ConnectionType;
-import nationbuilder.lib.data.map.entities.MapDataset;
-import nationbuilder.lib.data.map.entities.Node;
-import nationbuilder.lib.data.map.entities.PowerGridNode;
-import nationbuilder.lib.data.map.entities.PowerRelayStation;
-import nationbuilder.lib.data.map.entities.PowerRelayStationType;
-import nationbuilder.lib.data.map.entities.WareHouse;
+import nationbuilder.lib.data.map.entities.*;
 
 /**
  * Created by patrick on 11/2/14.
@@ -112,7 +105,7 @@ public class PostFiller {
         //  TODO: ruby controllers hiervoor maken
         this.connectionFiller.Save(Node.class,"/node_types/");
         this.connectionFiller.Save(PowerRelayStation.class,"");
-        this.connectionFiller.Save(ConnectionType.class,"");
+        //this.connectionFiller.Save(ConnectionType_old.class,"");
         this.connectionFiller.Save(PowerConnection.class,"");
 
     }

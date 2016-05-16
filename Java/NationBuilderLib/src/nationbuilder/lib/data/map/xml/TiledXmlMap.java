@@ -70,7 +70,21 @@ public class TiledXmlMap {
 			result.add(new XmlLayer(element));
 		}
 		return result;
-	} 
+	}
+    public ArrayList<XmlObjectGroup> getObjectGroups() {
+
+        ArrayList<Element> elements = XmlHelper.getElements("objectgroup",this.doc);
+
+        ArrayList<XmlObjectGroup> result = new ArrayList<>();
+
+        for(Element element : elements) {
+
+            result.add(new XmlObjectGroup(element));
+        }
+
+        return result;
+
+    }
 	
 	
 }
