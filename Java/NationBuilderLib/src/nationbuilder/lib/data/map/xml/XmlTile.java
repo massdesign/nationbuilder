@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class XmlTile
 {
-
-	Element element;
+	private Element element;
+    private TileSet parent;
 	public XmlTile(Element element)
 	{
 		this.element = element;
@@ -74,4 +74,11 @@ public class XmlTile
         return "{Gid  " + this.getGID() +", Properties: " + sb.toString();
     }
 
+    public TileSet getParent() {
+        return parent;
+    }
+
+    public void setParent(TileSet parent) {
+        this.parent = parent;
+    }
 }

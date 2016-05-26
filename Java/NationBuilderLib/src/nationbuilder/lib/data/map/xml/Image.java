@@ -1,16 +1,13 @@
 package nationbuilder.lib.data.map.xml;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
 public class Image {
 
-	private Element element;	
+	private Element element;
+   // private
 	public Image(Element element)
 	
 	{

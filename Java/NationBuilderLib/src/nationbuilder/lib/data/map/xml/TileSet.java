@@ -2,10 +2,13 @@ package nationbuilder.lib.data.map.xml;
 
 import java.util.ArrayList;
 
+import nationbuilder.lib.data.map.entities.MapMap;
 import org.w3c.dom.Element;
 
 public class TileSet {
-	
+
+    private MapMap parent;
+
 	Element element;
 	public TileSet(Element element)
 	{
@@ -68,6 +71,13 @@ public class TileSet {
         }
         return result;
     }
-	
 
+
+    public MapMap getParent() {
+        return parent;
+    }
+
+    public void setParent(MapMap parent) {
+        this.parent = parent;
+    }
 }

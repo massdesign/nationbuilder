@@ -22,21 +22,9 @@ public class Main {
 
         RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT);
         WorldLoader worldLoader = new WorldLoader(context);
-
-
-       worldLoader.ConvertMap();
-       // worldLoader.Run();
-
-
-        /*TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
-        TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.NB13Map);
-
-        tiledXmlMap.getObjectGroups().get(0).getObjects().get(0).getProperties();
-        */
-
+        worldLoader.Run();
 
         long endtime = System.currentTimeMillis();
-
         Date date = new Date((endtime - startTime));
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);
