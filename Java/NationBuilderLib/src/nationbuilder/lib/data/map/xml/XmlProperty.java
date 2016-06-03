@@ -5,11 +5,12 @@ import org.w3c.dom.Element;
 /**
  * Created by patrick on 7/2/14.
  */
-public class Property {
+public class XmlProperty
+{
 
     Element element;
 
-    public Property(Element element)
+    public XmlProperty(Element element)
     {
      this.element = element;
     }

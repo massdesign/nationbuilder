@@ -4,11 +4,11 @@ import java.io.File;
 
 import org.w3c.dom.Element;
 
-public class Image {
+public class XmlImage
+{
 
 	private Element element;
-   // private
-	public Image(Element element)
+	public XmlImage(Element element)
 	
 	{
 		this.element = element;

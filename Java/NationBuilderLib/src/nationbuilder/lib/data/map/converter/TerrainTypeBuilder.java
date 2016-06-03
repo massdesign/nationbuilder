@@ -1,7 +1,7 @@
 package nationbuilder.lib.data.map.converter;
 
 import nationbuilder.lib.data.map.entities.TerrainType;
-import nationbuilder.lib.data.map.xml.Property;
+import nationbuilder.lib.data.map.xml.XmlProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +22,14 @@ public class TerrainTypeBuilder {
 
 
 
-    public TerrainType convertPropertyToTerrainType(ArrayList<Property> properties,List<TerrainType> models)
+    public TerrainType convertPropertyToTerrainType(ArrayList<XmlProperty> properties,List<TerrainType> models)
     {
         TerrainType result = null;
         // search in the database for the right TerrainType..
 
         // TODO: pretty ineffecient way of quering the db, find a way to handle db queries in a generic way
         // SQL syntax for this bitch would be SELECT id from resourcetype WHERE name = 'name'
-        for(Property property : properties)
+        for(XmlProperty property : properties)
         {
             if(property.getName().toLowerCase().equals("tiletype"))
             {

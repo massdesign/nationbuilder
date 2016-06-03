@@ -30,14 +30,14 @@ public class XmlObject {
     public String height() {
         return XmlHelper.getString(element,"height");
     }
-    public ArrayList<Property> getProperties() {
+    public ArrayList<XmlProperty> getProperties() {
         // TODO: checken of dit goed is
         ArrayList<Element> elements = XmlHelper.getElements("property",XmlHelper.getElements("properties",element).get(0));
-        ArrayList<Property> result = new ArrayList<>();
+        ArrayList<XmlProperty> result = new ArrayList<>();
 
         for(Element currentElement : elements) {
           //  Element element1 = XmlHelper.getElements("property",currentElement).get(0);
-            result.add(new Property(currentElement));
+            result.add(new XmlProperty(currentElement));
         }
 
 

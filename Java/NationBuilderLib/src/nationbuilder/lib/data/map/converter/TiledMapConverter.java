@@ -9,9 +9,12 @@ import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.*;
 
+
+
+// TODO: TiledMapConverter gaat weg.. teveel meuk in een klasse en de opzet is ook niet echt flexibel
 public class TiledMapConverter {
 
-    TiledXmlMap xmlMap;
+    XmlMap xmlMap;
    // ArrayList<Image> mapImages;
     ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
@@ -21,11 +24,11 @@ public class TiledMapConverter {
     XmlTileBuilder xmlTileBuilder;
 
 
-    public TiledMapConverter(TiledXmlMap xmlXmlTileFactoryMap,RubyContext context)
+    public TiledMapConverter(XmlMap xmlXmlTileFactoryMap,RubyContext context)
     {
         this();
-
-        xmlTileBuilder =new XmlTileBuilder();
+        this.xmlMap = xmlXmlTileFactoryMap;
+       // xmlTileBuilder =new XmlTileBuilder();
         this.rubyContext = context;
     }
     public TiledMapConverter()
@@ -85,7 +88,7 @@ public class TiledMapConverter {
     // TODO: we hebben meer nodig dan een lijst van tiles.. een composiet datatype dat ook meer kan bevatten dan tiles
     public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
     {
-        XmlTileBuilder xmlTileFactory = new XmlTileBuilder();
+        //XmlTileBuilder xmlTileFactory = new XmlTileBuilder();
         ArrayList<Tile> tilesResult = new ArrayList<>();
         ArrayList<Tile> citiesResult = new ArrayList<>();
         ArrayList<Tile> powergridResult = new ArrayList<>();
@@ -131,7 +134,7 @@ public class TiledMapConverter {
                             items.add(tile);
                         }
 
-                        if(xmlTileFactory.isPowerGridItem(tile)) {
+                        /*if(xmlTileFactory.isPowerGridItem(tile)) {
 
                             powergridResult.add(this.createTile(tile,currentLayer,tilepositionx,tilepositiony));
 
@@ -146,7 +149,7 @@ public class TiledMapConverter {
                             // NOTE: duplicate code
                                  citiesResult.add(this.createTile(tile, currentLayer, tilepositionx, tilepositiony));
 
-                        }
+                        }*/
                         // power grid items toevoegen aan de powergridResult
 
                         // -1 omdat we zerobased index gebruiken
@@ -208,21 +211,24 @@ public class TiledMapConverter {
     }
     public void Convert()
     {
-        XmlTileBuilderFactory xmlTileBuilderFactory = new XmlTileBuilderFactory(this.xmlMap.getTilesets());
 
-        TilesetBuilder tilesetBuilder = new TilesetBuilder();
-        ImageBuilder imageBuilder = new ImageBuilder(tilesetBuilder);
-        XmlTileBuilder xmlTileBuilder =  xmlTileBuilderFactory.createXmlTileBuilder();
-        MapBuilder mapBuilder = new MapBuilder(tilesetBuilder,xmlTileBuilder);
 
-        this.map =   mapBuilder.convertMap(this.xmlMap);
+        XmlMapBuilder xmlMapBuilder = new XmlMapBuilder();
+        xmlMapBuilder.build(this.xmlMap);
+     //   XmlTileBuilderFactory xmlTileBuilderFactory = new XmlTileBuilderFactory(this.xmlMap.getTilesets());
+       // XmlTilesetBuilder tilesetBuilder = new XmlTilesetBuilder();
+      //  ImageBuilder imageBuilder = new ImageBuilder(tilesetBuilder);
+      //  XmlTileBuilder xmlTileBuilder =  xmlTileBuilderFactory.createXmlTileBuilder();
+       // MapBuilder mapBuilder = new MapBuilder(tilesetBuilder,xmlTileBuilder);
+
+        //this.map =   mapBuilder.convertMap(this.xmlMap);
         //this.map = this.convertMap(this.xmlMap);
-        this.resources = this.convertTilesetPropertiesToResources();
+        //this.resources = this.convertTilesetPropertiesToResources();
 
-       //xmlTileBuilder.addTileset();
+       //xmlTileBuilder.build();
 
        // this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
-        this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
+       // this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
 
 
     }

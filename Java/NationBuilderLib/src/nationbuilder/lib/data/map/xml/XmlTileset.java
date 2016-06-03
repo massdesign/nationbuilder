@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import nationbuilder.lib.data.map.entities.MapMap;
 import org.w3c.dom.Element;
 
-public class TileSet {
+public class XmlTileset
+{
 
     private MapMap parent;
 
 	Element element;
-	public TileSet(Element element)
+	public XmlTileset(Element element)
 	{
 		this.element = element;
 	}
@@ -47,26 +48,26 @@ public class TileSet {
 	{
 		return XmlHelper.getInt(element, "tileheight");
 	}
-	public Image getImage()
+	public XmlImage getImage()
 	{
-		Image result = null;
+		XmlImage result = null;
 		ArrayList<Element> elements = XmlHelper.getElements("image", element);
 		 if(elements.size() > 0)
 		 {
-			result = new Image(elements.get(0));
+			result = new XmlImage(elements.get(0));
 		 }
 		 return result;
     }
 
-    public ArrayList<XmlTile> getTiles()
+    public ArrayList<XmlTileDefinition> getTilesDefinitions()
     {
-        ArrayList<XmlTile> result = new ArrayList<XmlTile>();
+        ArrayList<XmlTileDefinition> result = new ArrayList<>();
 
         ArrayList<Element> elements = XmlHelper.getElements("tile",element);
 
         for(Element element : elements)
         {
-            XmlTile tile = new XmlTile(element);
+            XmlTileDefinition tile = new XmlTileDefinition(element);
             result.add(tile);
         }
         return result;

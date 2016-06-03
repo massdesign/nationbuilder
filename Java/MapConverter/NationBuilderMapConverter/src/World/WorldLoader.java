@@ -7,7 +7,7 @@ import nationbuilder.lib.data.map.converter.TiledMapConverter;
 import nationbuilder.lib.data.map.entities.MapDataset;
 import nationbuilder.lib.data.map.mapservice.MapServiceConnector;
 import nationbuilder.lib.data.map.xml.Configuration;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
+import nationbuilder.lib.data.map.xml.XmlMap;
 import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 
 /**
@@ -37,7 +37,7 @@ public class WorldLoader {
     public void ConvertMap()
     {
         TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();
-        TiledXmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.NB13Map);
+        XmlMap tiledXmlMap = tiledXmlMapFactory.createTiledXmlMap(Configuration.NB13Map);
         TiledMapConverter converter = new TiledMapConverter(tiledXmlMap,context);
         converter.Convert();
         this.mapDataset = converter.GetMapDataset();

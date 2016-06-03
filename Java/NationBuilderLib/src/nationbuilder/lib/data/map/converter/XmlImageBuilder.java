@@ -1,8 +1,11 @@
 package nationbuilder.lib.data.map.converter;
 
+import nationbuilder.lib.data.map.converter.converterobjects.ProcessedImage;
+import nationbuilder.lib.data.map.converter.converterobjects.ProcessedTileset;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.MapImageFile;
-import nationbuilder.lib.data.map.xml.TileSet;
+import nationbuilder.lib.data.map.xml.XmlImage;
+import nationbuilder.lib.data.map.xml.XmlTileset;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,16 +13,19 @@ import java.util.ArrayList;
 /**
  * Created by patrick on 5/19/16.
  */
-public class ImageBuilder {
+public class XmlImageBuilder
+{
 
     private  ArrayList<Image> mapImages;
-    private TilesetBuilder parentBuilder;
+    private ConverterContext converterContext;
 
-    public ImageBuilder(TilesetBuilder parentBuilder) {
+    public XmlImageBuilder(ConverterContext converterContext) {
         this.mapImages = new ArrayList<>();
 
-        this.parentBuilder = parentBuilder;
+        this.converterContext = converterContext;
     }
+
+
 
 
     public Image getTileImage(int gid)
@@ -51,18 +57,35 @@ public class ImageBuilder {
 
         return result;
     }
-    private ArrayList<Image> convertTilesets(ArrayList<TileSet> tilesets,Image mapImage,MapImageFile mapImageFile)
+
+    public void build(XmlTileset xmlTileset,ProcessedTileset processedTileset) {
+
+       XmlImage xmlImage =   xmlTileset.getImage();
+       ProcessedImage processedImage = new ProcessedImage();
+
+        processedImage.setSource(xmlImage.getFileLocation());
+        processedImage.setHeight(xmlImage.getHeight());
+        processedImage.setWidth(xmlImage.getWidth());
+
+
+        processedTileset.
+
+
+    }
+
+    private ArrayList<Image> convertTilesets(ArrayList<XmlTileset> tilesets,Image mapImage,MapImageFile mapImageFile)
     {
         ArrayList<Image> mapImages = new ArrayList<Image>();
-        for(TileSet tileset : tilesets)
+        for(XmlTileset tileset : tilesets)
         {
-            this.parentBuilder.addTileset(tileset);
+            // TODO: dit probleem oplossen
+           // this.parentBuilder.build(tileset);
             //addTilesToTerrainTypes(tileset);
-            nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
+            XmlImage image = tileset.getImage();
 
            // Image mapImage = rubyContext.createRubyModel(Image.class);
             //MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
-            mapImage.setMap(this.map);
+            mapImage.setMap(this.converterContext.getMap());
             mapImageFile.setResource(new File(image.getFileLocation()));
             mapImage.setImageFile(mapImageFile);
             mapImage.setHeight(image.getHeight());

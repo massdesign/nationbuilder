@@ -1,5 +1,6 @@
 
 
+import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.IOException;
 import World.WorldLoader;
 import java.text.DateFormat;
@@ -9,9 +10,6 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.RubyContextFactory;
 import nationbuilder.lib.Ruby.RubyContextType;
-import nationbuilder.lib.data.map.xml.Configuration;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
-import nationbuilder.lib.data.map.xml.TiledXmlMapFactory;
 
 
 public class Main {
@@ -29,6 +27,7 @@ public class Main {
         DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         String dateFormatted = formatter.format(date);
         System.out.println("Total running time " + dateFormatted);
+
     }
 
 }

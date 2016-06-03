@@ -16,7 +16,7 @@ public class TiledXmlMapTest {
 	private String  tmxFile = "/home/patrick/Git/nationbuilder/Tiled/Maps/overview.tmx";
 	
 	TiledXmlMapFactory xmlFactory = new TiledXmlMapFactory();
-	TiledXmlMap map = null;
+	XmlMap map = null;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -49,7 +49,7 @@ public class TiledXmlMapTest {
 		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 
 		// when
-		ArrayList<TileSet> tilesets = this.map.getTilesets();
+		ArrayList<XmlTileset> tilesets = this.map.getTilesets();
 		
 		if(tilesets.size() > 0)
 		{
@@ -70,7 +70,7 @@ public class TiledXmlMapTest {
 	{
 		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		// when
-		ArrayList<TileSet> tilesets = this.map.getTilesets();
+		ArrayList<XmlTileset> tilesets = this.map.getTilesets();
 		
 		
 		String actualString; 

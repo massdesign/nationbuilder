@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class TiledXmlMap {
+public class
+XmlMap
+{
 
 	private Document doc;
     private Element map;
 	
-	public TiledXmlMap(Document doc) {
+	public XmlMap(Document doc) {
 		this.doc = doc;
         ArrayList<Element> elements =   XmlHelper.getElements("map",this.doc);
         if(elements.size() > 0)
@@ -18,7 +20,7 @@ public class TiledXmlMap {
             this.map = elements.get(0);
         }
 	}
-	public TiledXmlMap()
+	public XmlMap()
 	{
 		
 	}
@@ -50,13 +52,13 @@ public class TiledXmlMap {
         return XmlHelper.getInt(this.map,"tileheight");
     }
 
-	public ArrayList<TileSet> getTilesets()
+	public ArrayList<XmlTileset> getTilesets()
 	{
 		ArrayList<Element> elements = XmlHelper.getElements("tileset",this.doc);
-		ArrayList<TileSet> result = new ArrayList<TileSet>();
+		ArrayList<XmlTileset> result = new ArrayList<XmlTileset>();
 		for(Element element : elements)
 		{
-			result.add(new TileSet(element));
+			result.add(new XmlTileset(element));
 		}
 		return result;
 	}

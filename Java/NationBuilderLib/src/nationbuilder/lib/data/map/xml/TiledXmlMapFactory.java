@@ -14,9 +14,9 @@ public class TiledXmlMapFactory {
 
 	
 	
-	public TiledXmlMap createTiledXmlMap(String filename)
+	public XmlMap createTiledXmlMap(String filename)
 	{
-		TiledXmlMap result = null;
+		XmlMap result = null;
 		File fxmlFile = new File(filename);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -24,7 +24,7 @@ public class TiledXmlMapFactory {
 			dBuilder = dbFactory.newDocumentBuilder(); 
 			Document doc = dBuilder.parse(fxmlFile);
 			doc.getDocumentElement().normalize();
-			result = new TiledXmlMap(doc);
+			result = new XmlMap(doc);
 			
 		
 		}

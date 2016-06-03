@@ -3,11 +3,9 @@ package nationbuilder.lib.data.map.converter;
 import nationbuilder.lib.Ruby.Exceptions.NoImageForTileException;
 import nationbuilder.lib.data.map.entities.TerrainType;
 import nationbuilder.lib.data.map.entities.Tile;
-import nationbuilder.lib.data.map.xml.Property;
-import nationbuilder.lib.data.map.xml.TileSet;
+import nationbuilder.lib.data.map.xml.XmlTileset;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,20 +13,22 @@ import java.util.List;
  */
 public class XmlTileBuilder {
 
-    private TilesetBuilder tilesetManager;
-    private ImageBuilder imageManager;
+    private XmlTilesetBuilder tilesetManager;
+    private XmlImageBuilder imageManager;
     private TerrainTypeBuilder terrainTypeBuilder;
-    public XmlTileBuilder(ImageBuilder imageBuilder) {
-           this.tilesetManager = new TilesetBuilder();
-           this.imageManager = new ImageBuilder(this);
+    private ConverterContext converterContext;
+    public XmlTileBuilder(ConverterContext converterContext) {
+           this.tilesetManager = new XmlTilesetBuilder(converterContext);
+           this.imageManager = new XmlImageBuilder(converterContext);
+
            this.terrainTypeBuilder = new TerrainTypeBuilder(this);
     }
 
-    public void addTileset(TileSet tileSet) {
-        this.tilesetManager.addTileset(tileSet);
+    public void addTileset(XmlTileset tileSet) {
+        this.tilesetManager.build(tileSet);
     }
 
-    public boolean isTile(XmlTile tile) {
+    /*public boolean isTile(XmlTile tile) {
 
         if(tile.getProperties().size() > 0) {
 
@@ -39,8 +39,8 @@ public class XmlTileBuilder {
             return true;
         }
 
-    }
-    public boolean isCityItem(XmlTile tile) {
+    }*/
+    /*public boolean isCityItem(XmlTile tile) {
 
         return hasProperty("city_type",tile);
     }
@@ -48,7 +48,7 @@ public class XmlTileBuilder {
     public boolean isPowerGridItem(XmlTile tile) {
 
         return hasProperty("powerstation_type",tile);
-    }
+    }*/
 
 
 
@@ -85,6 +85,10 @@ public class XmlTileBuilder {
 
     }
 
+    public void build(XmlTile tile) {
+
+    }
+
     public Tile convertTile(XmlTile tile,Tile result,List<TerrainType> terrainTypes) throws NoImageForTileException {
        // Tile result = this.rubyContext.createRubyModel(Tile.class);
         result.setGidtag(tile.getGID());
@@ -107,9 +111,10 @@ public class XmlTileBuilder {
     }
 
 
-
+    /*
     private boolean hasProperty(String propertyName ,XmlTile tile) {
         boolean result = false;
+
         for(Property xmlProperty : tile.getProperties()) {
 
             if(xmlProperty.getName().toLowerCase().equals(propertyName)) {
@@ -120,7 +125,7 @@ public class XmlTileBuilder {
 
         }
         return result;
-    }
+    }*/
 
 
 }
