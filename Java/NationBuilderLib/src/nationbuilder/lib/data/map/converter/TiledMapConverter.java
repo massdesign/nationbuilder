@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import nationbuilder.lib.Logging.Log;
+
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.entities.Image;
@@ -15,12 +15,13 @@ public class TiledMapConverter {
 
     TiledXmlMap xmlMap;
     ArrayList<Image> mapImages;
-    ArrayList<Tile> mapTiles;
+   // ArrayList<Tile> mapTiles;
     ArrayList<Resource> resources;
     MapMap map;
-    HashMap<String,Layer> mapLayers;
+    //HashMap<String,Layer> mapLayers;
+    ArrayList<Layer> layers;
+    ArrayList<Tile> mapTiles;
     RubyContext rubyContext;
-    private HashMap<Integer,XmlTile> tilesWithterrainTypes;
 
 
     public TiledMapConverter(TiledXmlMap xmlMap,RubyContext context)
@@ -31,8 +32,8 @@ public class TiledMapConverter {
     }
     public TiledMapConverter()
     {
-        this.mapLayers = new HashMap<String,Layer>();
-        this.tilesWithterrainTypes = new HashMap<Integer, XmlTile>();
+        this.layers = new ArrayList<>();
+        //this.tilesWithterrainTypes = new HashMap<Integer, XmlTile>();
     }
     public MapMap convertMap(TiledXmlMap map)
     {
@@ -43,7 +44,7 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
-    private void addtilesToterrainTypeS(TileSet tileSet)
+    /*private void addtilesToterrainTypeS(XmlTileSet tileSet)
     {
         ArrayList<XmlTile> tiles = tileSet.getTiles();
 
@@ -52,6 +53,7 @@ public class TiledMapConverter {
         for(XmlTile tile : tiles)
         {
             int calculatedGid =  tileSet.getFirstGid()+tile.getGID();
+
             if(!this.tilesWithterrainTypes.containsKey(calculatedGid))
             {
                 this.tilesWithterrainTypes.put(calculatedGid,tile);
@@ -60,13 +62,13 @@ public class TiledMapConverter {
         }
 
       //  System.out.println("some random crap to put a breakpoint on");
-    }
-    private ArrayList<Image> convertTilesets(ArrayList<TileSet> tilesets)
+    }*/
+    private ArrayList<Image> convertTilesets(ArrayList<XmlTileSet> tilesets)
     {
         ArrayList<Image> mapImages = new ArrayList<Image>();
-        for(TileSet tileset : tilesets)
+        for(XmlTileSet tileset : tilesets)
         {
-            addtilesToterrainTypeS(tileset);
+            //addtilesToterrainTypeS(tileset);
             nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
 
             Image mapImage = rubyContext.createRubyModel(Image.class);
@@ -97,32 +99,6 @@ public class TiledMapConverter {
 
 
         return resources;
-    }
-
-    public Tile convertTile(XmlTile tile)
-    {
-        Tile result = this.rubyContext.createRubyModel(Tile.class);
-        result.setGidtag(tile.getGID());
-         // TODO: volgens mij kan deze code ook wel een stukje korter.. maak unit test voor dit ding en refactor hem dan
-        if(this.mapTileSetImage(result, tile.getGID()))
-        {
-
-            if(!this.mapTileImageOffset(result,tile.getGID()))
-            {
-                result = null;
-            }
-            if(this.tilesWithterrainTypes.containsKey(tile.getGID()))
-            {
-
-                result.setTerrainType(convertPropertyToTerrainType(this.tilesWithterrainTypes.get(tile.getGID()).getProperties()));
-            }
-        }
-        else
-        {
-            result = null;
-        }
-
-        return result;
     }
 
     /**
@@ -163,171 +139,112 @@ public class TiledMapConverter {
        List<ResourceType> result = this.rubyContext.getModels(ResourceType.class);
        return result.get(index);
     }*/
-    private boolean mapTileImageOffset(Tile newTile,int tile_gid)
-    {
-
-        boolean result = true;
-        int offset = newTile.getImage().getFirstGid();
-        int columns = newTile.getImage().getWidth()/newTile.getImage().getTileWidth();
-        int rows = newTile.getImage().getHeight()/newTile.getImage().getTileHeight();
-        int gid_counter = offset;
-        // first
-        int currentrow = 1;
-        int currentcolumn = 1;
 
 
-                while(gid_counter < (tile_gid))
-                {
-                    gid_counter++;
-                    if(currentcolumn == columns)
-                    {
-                        currentcolumn = 1;
-                        currentrow++;
-                    }
-                    else
-                    {
-                        currentcolumn++;
-                    }
 
-                }
-        newTile.setXoffset(currentcolumn-1);
-        newTile.setYoffset(currentrow-1);
-        return result;
-
-    }
-    private boolean mapTileSetImage(Tile newtile,int gid)
-    {
-        boolean result = false;
-        for(int x=0;x<mapImages.size();x++)
-        {
-
-
-            if(gid >= this.mapImages.get(x).getFirstGid())
-            {
-                if((x+1) != mapImages.size())
-                {
-                    int lastGid = this.mapImages.get(x+1).getFirstGid();
-                    // do minus -1 because otherwise we select the first element of the next tileset
-                    if(gid <= (lastGid-1))
-                    {
-                        newtile.setImage(this.mapImages.get(x));
-                        result = true;
-                        break;
-                    }
-                }
-                else
-                {
-                    newtile.setImage(this.mapImages.get(x));
-                    result = true;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-    // TODO: we hebben meer nodig dan een lijst van tiles.. een composiet datatype dat ook meer kan bevatten dan tiles
     public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
     {
-        XmlTileFactory xmlTileFactory = new XmlTileFactory();
-        ArrayList<Tile> tilesResult = new ArrayList<>();
-        ArrayList<Tile> citiesResult = new ArrayList<>();
-        ArrayList<Tile> powergridResult = new ArrayList<>();
+       // ArrayList<Tile> result = new ArrayList<Tile>();
+    //    int zindex = 0;
+      //  try
+        //{
+            LayerBuilder layerBuilder = new LayerBuilder(this.rubyContext,this.map,this.mapImages);
 
-        int zindex = 0;
-        try {
-            for(XmlLayer layer : layers)
+            for (XmlLayer layer : layers)
             {
-                ArrayList<XmlTile> tiles = layer.getTiles();
-                int tilepositionx = 0;
-                int tilepositiony = 0;
 
-                for(XmlTile tile : tiles)
-                {
-                    if(tile.getGID() != 0)
-                    {
-                        Layer currentLayer;
-                        if (this.mapLayers.containsKey(layer.getName())) {
+                this.layers.add(layerBuilder.createLayer(layer));
 
-                            String layerName = layer.getName();
-                            currentLayer = this.mapLayers.get(layerName);
+            }
+               // ArrayList<XmlTile> tiles = layer.getTiles();
+            //    int tilepositionx = 0;
+              //  int tilepositiony = 0;
+               // for (XmlTile tile : tiles)
+             //   {
+                   // if (tile.getGID() != 0)
+                   // {
+                       // Layer currentLayer = null;
+                       // if (this.mapLayers.containsKey(layer.getName()))
+                       // {
 
+                          //  String layerName = layer.getName();
+                          //  currentLayer = this.mapLayers.get(layerName);
                             //newTile.setLayer(this.mapLayers.get(layerName));
-
-                        } else {
-                           /* Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
+                      //  }
+                      //  else
+                      //  {
+                            /*Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
                             newLayer.setZindex(zindex);
                             newLayer.setMap(this.map);
                             newLayer.setName(layer.getName());
                             newLayer.setTileHeight(layer.getHeight());
                             newLayer.setTileWidth(layer.getWidth());
                             this.mapLayers.put(layer.getName(), newLayer);
-                            //newTile.setLayer(newLayer);*/
+                            currentLayer = newLayer;
+                            //newTile.setLayer(newLayer);
+                            */
 
-                            currentLayer = createLayer(layer,zindex);
-
-                        }
-
-                        // normal tiles aan de normale lijst toevoegen
-                        if(xmlTileFactory.isTile(tile)) {
-                            // we maken een onderscheidt tussen tiles en mapitems
-                              tilesResult.add(this.createTile(tile, currentLayer, tilepositionx, tilepositiony));
-                        }
-                        // city tiles aan de city tile lijst toevoegen
-                        else  if(xmlTileFactory.isCityItem(tile)) {
-                            // NOTE: duplicate code
-                                 citiesResult.add(this.createTile(tile, currentLayer, tilepositionx, tilepositiony));
-
-                        }
-                        // power grid items toevoegen aan de powergridResult
-                        else if(xmlTileFactory.isPowerGridItem(tile)) {
-
-                            powergridResult.add(this.createTile(tile,currentLayer,tilepositionx,tilepositiony));
-
-                        }
+                      //  }
+                        //Tile newTile = this.createTile(tile, currentLayer,tilepositionx,tilepositiony);
+                        // give the tile a meaningfull position
+                       // newTile.setXposition(tilepositionx);
+                        //newTile.setYposition(tilepositiony);
+                      //  result.add(newTile);
                         // -1 omdat we zerobased index gebruiken
 
-                    }
-                    if(tilepositionx == layer.getWidth()-1)
-                    {
-                        tilepositionx = 0;
-                        tilepositiony++;
-                    }
-                    else
-                    {
-                        tilepositionx++;
-                    }
+                   // }
+                 //   if (tilepositionx == layer.getWidth() - 1)
+                 //   {
+                 //       tilepositionx = 0;
+                 //       tilepositiony++;
+                   // }
+                   // else
+                   // {
+                  //      tilepositionx++;
+                  //  }
+                return layerBuilder.getTiles();
                 }
 
-                zindex++;
-            }
+                //zindex++;
+         /*   }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             e.printStackTrace();
             // log error and tell
         }
-        return tilesResult;
-    }
+        return result;
+        */
+    //}
 
-    private Layer createLayer(XmlLayer layer,int zindex) {
+    /*private Layer createLayer(XmlLayer layer,int zindex) {
         Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
         newLayer.setZindex(zindex);
         newLayer.setMap(this.map);
         newLayer.setName(layer.getName());
         newLayer.setTileHeight(layer.getHeight());
         newLayer.setTileWidth(layer.getWidth());
-        this.mapLayers.put(layer.getName(), newLayer);
+
+       // this.mapLayers.put(layer.getName(), newLayer);
+        this.layers.add(newLayer);
         return newLayer;
-    }
+    }*/
+
+
+
 
     private Tile createTile(XmlTile tile,Layer currentLayer,int tilepositionx,int tilepositiony) {
-        Tile newTile = this.convertTile(tile);
-        newTile.setLayer(currentLayer);
+
+        TileBuilder tileBuilder = new TileBuilder(currentLayer,this.rubyContext,this.mapImages);
+
+        return tileBuilder.createTile(tilepositionx,tilepositiony,tile);
+        //Tile newTile = this.convertTile(tile);
+        //newTile.setLayer(currentLayer);
 
         // give the tile a meaningfull position
-        newTile.setXposition(tilepositionx);
-        newTile.setYposition(tilepositiony);
-        return newTile;
+        //newTile.setXposition(tilepositionx);
+        //newTile.setYposition(tilepositiony);
+        //return newTile;
     }
 
     public MapDataset GetMapDataset()
@@ -337,7 +254,7 @@ public class TiledMapConverter {
       //  result.setResources(resources);
         result.setMapImages(this.mapImages);
         result.setMapTiles(this.mapTiles);
-        result.setMapLayers(mapLayers);
+        result.setMapLayers(this.layers);
         return result;
     }
     public void Convert()

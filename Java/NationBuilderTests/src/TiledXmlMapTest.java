@@ -49,7 +49,7 @@ public class TiledXmlMapTest {
 		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 
 		// when
-		ArrayList<TileSet> tilesets = this.map.getTilesets();
+		ArrayList<XmlTileSet> tilesets = this.map.getTilesets();
 		
 		if(tilesets.size() > 0)
 		{
@@ -70,7 +70,7 @@ public class TiledXmlMapTest {
 	{
 		this.map =	xmlFactory.createTiledXmlMap(tmxFile);
 		// when
-		ArrayList<TileSet> tilesets = this.map.getTilesets();
+		ArrayList<XmlTileSet> tilesets = this.map.getTilesets();
 		
 		
 		String actualString; 

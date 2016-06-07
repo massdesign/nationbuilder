@@ -50,13 +50,13 @@ public class TiledXmlMap {
         return XmlHelper.getInt(this.map,"tileheight");
     }
 
-	public ArrayList<TileSet> getTilesets()
+	public ArrayList<XmlTileSet> getTilesets()
 	{
 		ArrayList<Element> elements = XmlHelper.getElements("tileset",this.doc);
-		ArrayList<TileSet> result = new ArrayList<TileSet>();
+		ArrayList<XmlTileSet> result = new ArrayList<XmlTileSet>();
 		for(Element element : elements)
 		{
-			result.add(new TileSet(element));
+			result.add(new XmlTileSet(element));
 		}
 		return result;
 	}

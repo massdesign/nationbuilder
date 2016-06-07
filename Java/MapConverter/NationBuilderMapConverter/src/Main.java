@@ -24,8 +24,8 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
 
 
-       worldLoader.ConvertMap();
-       // worldLoader.Run();
+       //worldLoader.ConvertMap();
+       worldLoader.Run();
 
 
         /*TiledXmlMapFactory tiledXmlMapFactory = new TiledXmlMapFactory();

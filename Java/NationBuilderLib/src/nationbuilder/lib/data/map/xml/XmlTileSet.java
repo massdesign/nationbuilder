@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import org.w3c.dom.Element;
 
-public class TileSet {
+public class XmlTileSet
+{
 	
 	Element element;
-	public TileSet(Element element)
+	public XmlTileSet(Element element)
 	{
 		this.element = element;
 	}
@@ -54,8 +55,25 @@ public class TileSet {
 		 }
 		 return result;
     }
+	public  ArrayList<XmlTileDefinition> getTileDefinitions() {
+		ArrayList<XmlTileDefinition> result = new ArrayList<>();
 
-    public ArrayList<XmlTile> getTiles()
+		ArrayList<Element> elements = XmlHelper.getElements("tile", element);
+
+		for (Element element : elements)
+		{
+			//XmlTile tile = new XmlTile(element);
+			//result.add(tile);
+
+			XmlTileDefinition xmlTileDefinition = new XmlTileDefinition(element);
+			result.add(xmlTileDefinition);
+		}
+		return result;
+	}
+
+
+	}
+    /*public ArrayList<XmlTile> getTiles()
     {
         ArrayList<XmlTile> result = new ArrayList<XmlTile>();
 
@@ -67,7 +85,7 @@ public class TileSet {
             result.add(tile);
         }
         return result;
-    }
+    }*/
 	
 
-}
+

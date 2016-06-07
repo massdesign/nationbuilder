@@ -73,22 +73,27 @@ public class MapServiceConnector {
 		{
 			this.addImage(image);
 		}
-        Iterator it = dataset.getMapLayers().entrySet().iterator();
+        //Iterator it = dataset.getMapLayers().entrySet().iterator();
 
-        ArrayList<Layer> mapLayer = new ArrayList<Layer>();
+        ArrayList<Layer> mapLayer = dataset.getMapLayers();
 
-		while(it.hasNext())
+		/*while(it.hasNext())
 		{
 			Map.Entry<String, Layer> pair = (Map.Entry<String, Layer>)it.next();
             mapLayer.add(pair.getValue());
-		}
+		}*/
 
-        ListIterator<Layer> li = mapLayer.listIterator(mapLayer.size());
+		// Map reversen.. volgens mij
+		for(int i=mapLayer.size()-1;i>=0;i--) {
+
+			this.addLayer(mapLayer.get(i));
+		}
+        /*ListIterator<Layer> li = mapLayer.listIterator(mapLayer.size());
 
         while(li.hasPrevious())
         {
             this.addLayer(li.previous());
-        }
+        }*/
 
 		for(Tile tile : dataset.getMapTiles())
 		{

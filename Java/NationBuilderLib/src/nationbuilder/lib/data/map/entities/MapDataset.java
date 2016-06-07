@@ -8,7 +8,7 @@ public class MapDataset {
 	
 	private ArrayList<Image> mapImages;
 	private ArrayList<Tile> mapTiles;
-	private HashMap<String,Layer> mapLayers;
+	private ArrayList<Layer> mapLayers;
 
     private ArrayList<Resource> resources;
 
@@ -21,12 +21,7 @@ public class MapDataset {
     }
 
     private MapMap map;
-	public HashMap<String, Layer> getMapLayers() {
-		return mapLayers;
-	}
-	public void setMapLayers(HashMap<String, Layer> mapLayers) {
-		this.mapLayers = mapLayers;
-	}
+
 	public ArrayList<Image> getMapImages() {
 		return mapImages;
 	}
@@ -42,6 +37,16 @@ public class MapDataset {
     public ArrayList<Resource> getResources() {
         return resources;
     }
+
+	public ArrayList<Layer> getMapLayers()
+	{
+		return mapLayers;
+	}
+
+	public void setMapLayers(ArrayList<Layer> mapLayers)
+	{
+		this.mapLayers = mapLayers;
+	}
 
     /*public void setResources(ArrayList<Resource> resources) {
         this.resources = resources;
