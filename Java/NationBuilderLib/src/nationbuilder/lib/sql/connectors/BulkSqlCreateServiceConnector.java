@@ -17,9 +17,11 @@ import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
+import nationbuilder.lib.Ruby.services.ResolveUnresolvedFieldsService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.connectors.SqlObjectBuilder;
 import nationbuilder.lib.data.map.ResponseData;
+import nationbuilder.lib.sql.QueryManager;
 import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.sql.SqlResponseData;
 
@@ -28,11 +30,11 @@ import nationbuilder.lib.sql.SqlResponseData;
  */
 public class BulkSqlCreateServiceConnector implements RubyCreateService
 {
-	SqlQueryManager sqlQueryManager;
+	QueryManager sqlQueryManager;
 	SqlObjectBuilder objectBuilder;
 	HashMap<RubyObjectKey,String> persistedObjects;
 
-	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder,SqlQueryManager queryManager)
+	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder,QueryManager queryManager)
 	{
         this.sqlQueryManager = queryManager;
 		//this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
@@ -64,7 +66,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 
         return responseData;
 	}
-
+/*
     public String resolveUnresolvedFields(Class clazz,RubyModel key,String value)
     {
         String resolvedSql = "";
@@ -101,8 +103,8 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
        // }
         return resolvedSql;
 
-    }
-    private boolean hasUnresolvedfields(String sqlString)
+    }*/
+    /*private boolean hasUnresolvedfields(String sqlString)
     {
         boolean result = false;
 
@@ -111,7 +113,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
                result = true;
            }
         return result;
-    }
+    }*/
 
     @Override
     public void commit() throws RubyException {
@@ -120,6 +122,7 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
         HashMap<String,List<String>> rows = new HashMap<>();
         RelationResolveService relationResolveService = RubyDataServiceAccessor.getInstance().getService(RelationResolveService.class);
         RelationScanService relationScanService = RubyDataServiceAccessor.getInstance().getService(RelationScanService.class);
+        ResolveUnresolvedFieldsService resolveUnresolvedFieldsService = RubyDataServiceAccessor.getInstance().getService(ResolveUnresolvedFieldsService.class);
         relationResolveService.resolveForeignKeys(relationScanService.scanForRelations(
          this.persistedObjects.entrySet().iterator()));
 
@@ -133,10 +136,10 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 
           //  Entity entity =  model.getClass().getAnnotation(Entity.class);
             String sqlString = (String)pair.getValue();
-            if(hasUnresolvedfields(sqlString))
+            if(resolveUnresolvedFieldsService.hasUnresolvedfields(sqlString))
             {
                 // TODO: Class object beschikbaar maken in dit geval
-              sqlString =  resolveUnresolvedFields(objectKey.getClazz(),model,sqlString);
+              sqlString =  resolveUnresolvedFieldsService.resolve(objectKey.getClazz(),model,sqlString);
               pair.setValue(sqlString);
             }
 

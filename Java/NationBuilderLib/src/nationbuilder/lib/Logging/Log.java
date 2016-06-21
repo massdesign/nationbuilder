@@ -6,6 +6,7 @@ package nationbuilder.lib.Logging;
 public class Log {
 
     private static boolean disableAllLogging = false;
+    private static boolean disableFullStacktrace = false;
 
 
     public static void write(String message,LogType type)
@@ -32,7 +33,11 @@ public class Log {
     }
     public static void write(Exception ex,LogType type)
     {
-        write(ex.getMessage(),type);
+        write(ex.toString(), type);
+        if(!disableFullStacktrace) {
+            ex.printStackTrace();
+        }
+
     }
     public static void writeError(String message)
     {
@@ -56,5 +61,11 @@ public class Log {
     public static void setDisableAllLogging(boolean disableAllLogging)
     {
         Log.disableAllLogging = disableAllLogging;
+    }
+
+    public static void setDisableFullStacktrace(boolean disableFullStacktrace) {
+
+        Log.disableFullStacktrace = disableFullStacktrace;
+
     }
 }

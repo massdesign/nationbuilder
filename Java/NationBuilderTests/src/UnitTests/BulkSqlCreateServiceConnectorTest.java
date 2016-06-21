@@ -1,5 +1,8 @@
+package UnitTests;
+
 import mocks.TestModel1;
 import mocks.TestModel2;
+import nationbuilder.lib.Ruby.services.ResolveUnresolvedFieldsService;
 import nationbuilder.lib.sql.connectors.BulkSqlCreateServiceConnector;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,11 +18,9 @@ public class BulkSqlCreateServiceConnectorTest {
 
     @Test
     public void resolveUnresolvedFieldsTest() {
-
-        BulkSqlCreateServiceConnector connector = new BulkSqlCreateServiceConnector(null,null);
-
         TestModel2 rubyTestModel = new TestModel2();
-        String actual = connector.resolveUnresolvedFields(TestModel2.class,rubyTestModel,"187414,<bui>testmodel1_id<eui>");
+        ResolveUnresolvedFieldsService service = new ResolveUnresolvedFieldsService();
+        String actual = service.resolve(TestModel2.class,rubyTestModel,"187414,<bui>testmodel1_id<eui>");
         String expected  = "187414,12345";
 
         Assert.assertEquals(actual,expected);

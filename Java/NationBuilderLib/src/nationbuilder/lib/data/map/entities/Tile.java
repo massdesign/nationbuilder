@@ -4,12 +4,15 @@ import nationbuilder.lib.Ruby.Association.annotation.Entity;
 
 
 import java.util.ArrayList;
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
 
 import java.util.List;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 
 @Entity(tableName = "tiles")
@@ -26,8 +29,11 @@ public class Tile extends BaseRubyModel {
     private GameEntity owner;
 	@OneToOne(mapIdTo = "imd")
 	private Image image;
-	@OneToOne(mapIdTo = "lmd")
-	private Layer layer;
+	// TODO: dit veranderen in ManyToOne
+	//@OneToOne(mapIdTo = "lmd")
+	//private Layer layer;
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping layer;
 
 	@OneToOne(mapIdTo = "tti")
 	private TerrainType terrainType;
@@ -39,10 +45,13 @@ public class Tile extends BaseRubyModel {
 	private List<Resource> resources = new ArrayList<>();
 
 	public Layer getLayer() {
-		return layer;
+		// TODO: tijdelijk voor testen
+//		return layer;
+		return null;
 	}
 	public void setLayer(Layer layer) {
-		this.layer = layer;
+		// TODO: tijdelijk voor testen
+		//this.layer = layer;
 	}
 	// image id copied to local instance
 	private String imd;

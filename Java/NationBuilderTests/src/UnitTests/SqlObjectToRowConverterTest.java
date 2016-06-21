@@ -1,3 +1,5 @@
+package UnitTests;
+
 import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.sql.ObjectMap;

@@ -13,6 +13,7 @@ import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.data.map.ResponseData;
 import nationbuilder.lib.connectors.BaseServiceConnector;
 import nationbuilder.lib.json.connectors.JsonFetchServiceConnector;
+import nationbuilder.lib.sql.QueryManager;
 import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.file.StandardFileBlobService;
 
@@ -21,7 +22,7 @@ import nationbuilder.lib.file.StandardFileBlobService;
  */
 public class SqlServiceConnector extends BaseServiceConnector
 {
-	public SqlServiceConnector(String databaseServerUrl,String blobServerUrl,RubyContextType contextType,boolean transacted,SqlQueryManager queryManager)
+	public SqlServiceConnector(String databaseServerUrl,String blobServerUrl,RubyContextType contextType,boolean transacted,QueryManager queryManager)
 	{
 		super(databaseServerUrl,transacted);
 		switch (contextType)

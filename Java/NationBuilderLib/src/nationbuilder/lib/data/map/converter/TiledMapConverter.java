@@ -66,28 +66,32 @@ public class TiledMapConverter {
     private ArrayList<Image> convertTilesets(ArrayList<XmlTileSet> tilesets)
     {
         ArrayList<Image> mapImages = new ArrayList<Image>();
+        ImageBuilder imageBuilder = new ImageBuilder(this.rubyContext,this.map);
         for(XmlTileSet tileset : tilesets)
         {
             //addtilesToterrainTypeS(tileset);
-            nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
+            //nationbuilder.lib.data.map.xml.Image image =	tileset.getImage();
 
-            Image mapImage = rubyContext.createRubyModel(Image.class);
-            MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
-            mapImage.setMap(this.map);
-            mapImageFile.setResource(new File(image.getFileLocation()));
-            mapImage.setImageFile(mapImageFile);
-            mapImage.setHeight(image.getHeight());
-            mapImage.setWidth(image.getWidth());
+          //  Image mapImage = rubyContext.createRubyModel(Image.class);
+           // MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
+           // mapImage.setMap(this.map);
+            //mapImageFile.setResource(new File(image.getFileLocation()));
+            //mapImage.setImageFile(mapImageFile);
+            //mapImage.setHeight(image.getHeight());
+            //mapImage.setWidth(image.getWidth());
 
-            mapImage.setTileHeight(tileset.getTileHeight());
-            mapImage.setTileWidth(tileset.getTileWidth());
-            mapImage.setFirstGid(tileset.getFirstGid());
-            mapImage.setLastGid(tileset.getLastGid());
+            //mapImage.setTileHeight(tileset.getTileHeight());
+            //mapImage.setTileWidth(tileset.getTileWidth());
+            //mapImage.setFirstGid(tileset.getFirstGid());
+            //mapImage.setLastGid(tileset.getLastGid());
 
-            mapImage.setUrl("/upload/" + image.getName());
-            mapImage.setName(image.getName());
+            //mapImage.setUrl("/upload/" + image.getName());
+            //mapImage.setName(image.getName());
 
-            mapImages.add(mapImage);
+            mapImages.add(imageBuilder.createImage(tileset));
+
+
+           // mapImages.add(mapImage);
         }
 
         return mapImages;
@@ -156,96 +160,12 @@ public class TiledMapConverter {
                 this.layers.add(layerBuilder.createLayer(layer));
 
             }
-               // ArrayList<XmlTile> tiles = layer.getTiles();
-            //    int tilepositionx = 0;
-              //  int tilepositiony = 0;
-               // for (XmlTile tile : tiles)
-             //   {
-                   // if (tile.getGID() != 0)
-                   // {
-                       // Layer currentLayer = null;
-                       // if (this.mapLayers.containsKey(layer.getName()))
-                       // {
 
-                          //  String layerName = layer.getName();
-                          //  currentLayer = this.mapLayers.get(layerName);
-                            //newTile.setLayer(this.mapLayers.get(layerName));
-                      //  }
-                      //  else
-                      //  {
-                            /*Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
-                            newLayer.setZindex(zindex);
-                            newLayer.setMap(this.map);
-                            newLayer.setName(layer.getName());
-                            newLayer.setTileHeight(layer.getHeight());
-                            newLayer.setTileWidth(layer.getWidth());
-                            this.mapLayers.put(layer.getName(), newLayer);
-                            currentLayer = newLayer;
-                            //newTile.setLayer(newLayer);
-                            */
-
-                      //  }
-                        //Tile newTile = this.createTile(tile, currentLayer,tilepositionx,tilepositiony);
-                        // give the tile a meaningfull position
-                       // newTile.setXposition(tilepositionx);
-                        //newTile.setYposition(tilepositiony);
-                      //  result.add(newTile);
-                        // -1 omdat we zerobased index gebruiken
-
-                   // }
-                 //   if (tilepositionx == layer.getWidth() - 1)
-                 //   {
-                 //       tilepositionx = 0;
-                 //       tilepositiony++;
-                   // }
-                   // else
-                   // {
-                  //      tilepositionx++;
-                  //  }
                 return layerBuilder.getTiles();
-                }
-
-                //zindex++;
-         /*   }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            // log error and tell
-        }
-        return result;
-        */
-    //}
-
-    /*private Layer createLayer(XmlLayer layer,int zindex) {
-        Layer newLayer = this.rubyContext.createRubyModel(Layer.class);
-        newLayer.setZindex(zindex);
-        newLayer.setMap(this.map);
-        newLayer.setName(layer.getName());
-        newLayer.setTileHeight(layer.getHeight());
-        newLayer.setTileWidth(layer.getWidth());
-
-       // this.mapLayers.put(layer.getName(), newLayer);
-        this.layers.add(newLayer);
-        return newLayer;
-    }*/
-
-
-
-
-    private Tile createTile(XmlTile tile,Layer currentLayer,int tilepositionx,int tilepositiony) {
-
-        TileBuilder tileBuilder = new TileBuilder(currentLayer,this.rubyContext,this.mapImages);
-
-        return tileBuilder.createTile(tilepositionx,tilepositiony,tile);
-        //Tile newTile = this.convertTile(tile);
-        //newTile.setLayer(currentLayer);
-
-        // give the tile a meaningfull position
-        //newTile.setXposition(tilepositionx);
-        //newTile.setYposition(tilepositiony);
-        //return newTile;
     }
+
+
+
 
     public MapDataset GetMapDataset()
     {

@@ -32,7 +32,7 @@ public class RubyContext {
     public void setRubyService(RubyService rubyService) {
         this.rubyService = rubyService;
     }
-
+    private Class applicationContext;
     private RubyService rubyService;
     private RubyObjectManager rubyObjectMarshaller;
 
@@ -105,6 +105,12 @@ public class RubyContext {
 
 
     }
+
+    public void registerApplicationContext(Class applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+
     public void commit() throws RubyException {
         this.rubyService.commit();
     }
@@ -131,4 +137,8 @@ public class RubyContext {
         return new RubyObjectManager(this.getRubyService(),this.rubyStore,builder);
     }
 
+    public Class getApplicationContext()
+    {
+        return applicationContext;
+    }
 }

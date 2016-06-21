@@ -28,7 +28,54 @@ public class PostFiller {
         this.save();
 
     }
+   /* public void testFill() {
 
+
+        Tile tile1 = this.context.createRubyModel(Tile.class);
+        tile1.setXposition(20);
+        tile1.setYposition(20);
+        tile1.setXoffset(3);
+        tile1.setYoffset(4);
+
+        Tile tile2 = this.context.createRubyModel(Tile.class);
+        tile2.setXposition(23);
+        tile2.setYposition(43);
+        tile2.setXoffset(9);
+        tile2.setYoffset(15);
+
+        Layer layer1  = this.context.createRubyModel(Layer.class);
+
+        layer1.setName("Testlayer");
+        layer1.setTileHeight(32);
+        layer1.setTileWidth(44);
+        layer1.setZindex(3);
+
+        tile1.setLayer(layer1);
+        tile2.setLayer(layer1);
+
+        layer1.addTile(tile1);
+        layer1.addTile(tile2);
+
+
+        try
+        {
+            layer1.Save("layers");
+            tile1.Save("tiles");
+            tile2.Save("tiles");
+
+
+            this.context.commit();
+        }
+        catch (RubyException e)
+        {
+            e.printStackTrace();
+        }
+
+
+    } */
+
+
+     // NODE: powergrid components voorbeeld, niet weggooien totdat we powergrid components uit de xmlmap kunnen halen
     public void testFill() {
 
         PowerRelayStation powerRelayStation1 = context.createRubyModel(PowerRelayStation.class);
@@ -83,13 +130,12 @@ public class PostFiller {
             powerRelayStation3.Save("buildings");
             powerGridNode3.Save("power_grid_nodes");
 
-
-           /* powerRelayStationType.Save("power_relay_station_types");
+            powerRelayStationType.Save("power_relay_station_types");
             powerRelayStation1.Save("power_relay_stations");
             powerRelayStation2.Save("power_relay_stations");
             powerGridNode1.Save("power_grid_nodes");
             powerGridNode2.Save("power_grid_nodes");
-            powerConnection.Save("power_connections");  */
+            powerConnection.Save("power_connections");
 
             this.context.commit();
         }

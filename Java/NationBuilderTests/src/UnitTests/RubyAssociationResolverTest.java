@@ -1,3 +1,5 @@
+package UnitTests;
+
 import java.lang.reflect.Field;
 import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;

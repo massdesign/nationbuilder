@@ -1,3 +1,5 @@
+package UnitTests;
+
 import nationbuilder.lib.data.map.xml.*;
 import org.junit.After;
 import org.junit.Before;

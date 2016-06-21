@@ -1,3 +1,5 @@
+package UnitTests;
+
 import java.util.List;
 
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;

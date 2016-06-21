@@ -1,3 +1,5 @@
+package UnitTests;
+
 import java.sql.SQLException;
 import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.sql.TableMetaData;

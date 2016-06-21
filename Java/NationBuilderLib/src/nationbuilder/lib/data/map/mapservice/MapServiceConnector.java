@@ -11,24 +11,20 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
+import nationbuilder.lib.data.map.xml.RubyDIPropertyLoader;
 
 public class MapServiceConnector {
 
 
 	private String location;
     private RubyContext context;
-	//public String getLocation() {
-	//	return location;
-	//}
-	//public void setLocation(String location) {
-	//	this.location = location;
-	//}
-
 
 	public MapServiceConnector(RubyContext context)
 	{
-        this.location =  RubyConfiguration.RubyBackend + ":" + RubyConfiguration.RubyBackendPort;
-		//this.jsonServiceConnector = new JsonServiceConnector(location);
+		RubyDIPropertyLoader rubyDIPropertyLoader = new RubyDIPropertyLoader();
+		rubyDIPropertyLoader.load(context.getApplicationContext());
+        this.location =   rubyDIPropertyLoader.getRubyConfiguration().getBackend() + ":" + rubyDIPropertyLoader.getRubyConfiguration().getPort();
+
         this.context = context;
 	}
     public void addMap(MapMap map)
@@ -73,28 +69,14 @@ public class MapServiceConnector {
 		{
 			this.addImage(image);
 		}
-        //Iterator it = dataset.getMapLayers().entrySet().iterator();
 
         ArrayList<Layer> mapLayer = dataset.getMapLayers();
-
-		/*while(it.hasNext())
-		{
-			Map.Entry<String, Layer> pair = (Map.Entry<String, Layer>)it.next();
-            mapLayer.add(pair.getValue());
-		}*/
 
 		// Map reversen.. volgens mij
 		for(int i=mapLayer.size()-1;i>=0;i--) {
 
 			this.addLayer(mapLayer.get(i));
 		}
-        /*ListIterator<Layer> li = mapLayer.listIterator(mapLayer.size());
-
-        while(li.hasPrevious())
-        {
-            this.addLayer(li.previous());
-        }*/
-
 		for(Tile tile : dataset.getMapTiles())
 		{
 			try

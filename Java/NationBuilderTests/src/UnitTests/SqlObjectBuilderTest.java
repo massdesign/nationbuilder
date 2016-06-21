@@ -1,3 +1,5 @@
+package UnitTests;
+
 import mocks.QueryManagerMock;
 import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Exceptions.ColumnNotFoundException;
