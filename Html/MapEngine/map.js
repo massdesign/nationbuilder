@@ -183,7 +183,7 @@ function Map(javascript_console,applicationName)
 	{
 	 	var currentContext = this;
 	   this.getMapData().setStartPositionX(7);
-		this.getMapData().setStartPositionY(7);
+		this.getMapData().setStartPositionY(15);
    	 this.stage = new Kinetic.Stage({
     	    container: 'container',
     	    width: currentContext._g_tileWidth* currentContext._g_mapWidth ,

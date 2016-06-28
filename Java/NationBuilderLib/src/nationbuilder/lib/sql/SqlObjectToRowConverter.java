@@ -193,17 +193,17 @@ public class SqlObjectToRowConverter
                             }
                             else if(fieldType.toLowerCase().equals(REFERENCE_TYPE))
                             {
-                                nationbuilder.lib.Ruby.Association.annotation.ID idAnnotation = field.getAnnotation(
-                                 nationbuilder.lib.Ruby.Association.annotation.ID.class);
-                                if(idAnnotation != null)
-                                {
+                               // nationbuilder.lib.Ruby.Association.annotation.ID idAnnotation = field.getAnnotation(
+                               //  nationbuilder.lib.Ruby.Association.annotation.ID.class);
+                              //  if(idAnnotation != null)
+                                //{
                                     ObjectMap.ObjectMapRow newObjectMapRow = this
                                      .createReferenceMappingObjectMapRow(field, model, result);
                                     if (newObjectMapRow != null)
                                     {
                                         result.addEntry(newObjectMapRow);
                                     }
-                                }
+                                //}
                                 // else is nog niet geimplementeerd.. nu doen we alleen wat als ID annotatie niet aanwezig is op de ReferenceMapping
                             }
                             else

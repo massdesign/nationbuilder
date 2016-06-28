@@ -69,26 +69,34 @@ public class MapServiceConnector {
 		{
 			this.addImage(image);
 		}
-
-        ArrayList<Layer> mapLayer = dataset.getMapLayers();
-
-		// Map reversen.. volgens mij
-		for(int i=mapLayer.size()-1;i>=0;i--) {
-
-			this.addLayer(mapLayer.get(i));
-		}
-		for(Tile tile : dataset.getMapTiles())
+		for (Tile tile : dataset.getMapTiles())
 		{
 			try
 			{
-				context.SaveObject(tile,"tiles");
+				context.SaveObject(tile, "tiles");
 			}
 			catch (RubyException e)
 			{
-				Log.write(e,LogType.ERROR);
+				Log.write(e, LogType.ERROR);
 				break;
 			}
 		}
+        ArrayList<Layer> mapLayer = dataset.getMapLayers();
+		// TODO: iher layer  gaan monitoren
+		// Map reversen.. volgens mij
+		for(int i=mapLayer.size()-1;i>=0;i--) {
+			//this.addLayer(mapLayer.get(i));
+			try
+			{
+				context.SaveObject(mapLayer.get(i), "layers");
+			}
+			catch (RubyException e)
+			{
+				Log.write(e, LogType.ERROR);
+			}
+
+		}
+
 	}
 	public void addImage(Image image)
 	{

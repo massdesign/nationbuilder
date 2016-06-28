@@ -148,23 +148,15 @@ public class TiledMapConverter {
 
     public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
     {
-       // ArrayList<Tile> result = new ArrayList<Tile>();
-    //    int zindex = 0;
-      //  try
-        //{
             LayerBuilder layerBuilder = new LayerBuilder(this.rubyContext,this.map,this.mapImages);
 
             for (XmlLayer layer : layers)
             {
-
                 this.layers.add(layerBuilder.createLayer(layer));
-
             }
 
-                return layerBuilder.getTiles();
+        return layerBuilder.getTiles();
     }
-
-
 
 
     public MapDataset GetMapDataset()
@@ -183,8 +175,6 @@ public class TiledMapConverter {
         this.resources = this.convertTilesetPropertiesToResources();
         this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
         this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
-
-
     }
 
 }

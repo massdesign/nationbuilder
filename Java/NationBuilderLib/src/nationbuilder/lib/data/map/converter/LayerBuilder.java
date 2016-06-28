@@ -60,6 +60,7 @@ public class LayerBuilder
 				Tile newTile = tileBuilder.createTile(tilepositionx,tilepositiony,tile);
 				//newTile.setLayer(result);
 				this.tiles.add(newTile);
+				result.addTile(newTile);
 
 			} if (tilepositionx == xmlLayer.getWidth() - 1)
 			{
