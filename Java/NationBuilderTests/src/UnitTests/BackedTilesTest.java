@@ -10,7 +10,7 @@ import org.junit.Assert;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.RubyContextFactory;
+import nationbuilder.lib.Ruby.DefaultRubyContextFactory;
 import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.http.HttpRequestUtil;
 import nationbuilder.lib.http.data.HttpResponseData;
@@ -28,7 +28,14 @@ public class BackedTilesTest
 	@Before
 	public void setup()
 	{
-		context  =new RubyContextFactory().createDefaultRubyContext();
+		context  = new DefaultRubyContextFactory()
+		{
+			@Override
+			public void loadCustomServices()
+			{
+
+			}
+		}.createDefaultRubyContext();
 		mapTileFactory= context.createRubyObjectFacory(Tile.class, Tile[].class);
 		resourceFactory = context.createRubyObjectFacory(Resource.class,Resource[].class);
 
@@ -77,7 +84,7 @@ public class BackedTilesTest
 		expected.setYoffset(20);
 		expected.setXposition(30);
 		expected.setYposition(40);
-		expected.Save("/tiles/");
+		//expected.Save("/tiles/");
 
 		Tile current = 	this.mapTileFactory.get(1);
 

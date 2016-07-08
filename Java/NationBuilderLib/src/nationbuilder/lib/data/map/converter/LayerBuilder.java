@@ -3,6 +3,7 @@ package nationbuilder.lib.data.map.converter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
@@ -23,6 +24,9 @@ public class LayerBuilder
 	// NOTE: tijdelijke oplossing
 	private ArrayList<Tile> tiles;
 
+	// NOTE: tijdelijke oplossing
+	private ArrayList<Layer> layers;
+
 
 	public LayerBuilder(RubyContext rubyContext,MapMap map,ArrayList<Image> images) {
 
@@ -30,7 +34,7 @@ public class LayerBuilder
 		this.map = map;
 		this.images = images;
 		this.tiles = new ArrayList<>();
-
+		this.layers = new ArrayList<>();
 	}
 
 	// Tijdelijk
@@ -38,14 +42,18 @@ public class LayerBuilder
 		return this.tiles;
 	}
 
-	public Layer createLayer(XmlLayer xmlLayer) {
+	// Tijdelijk
+	public ArrayList<Layer> getLayers() { return this.layers; }
+
+	public Layer createLayer(XmlLayer xmlLayer) throws RubyDataServiceNotInitializedException
+	{
 
 		Layer result = this.rubyContext.createRubyModel(Layer.class);
 
 		ArrayList<XmlTile> tiles = xmlLayer.getTiles();
 
 		result.setZindex(this.zindex);
-		result.setMap(this.map);
+		//result.setMap(this.map);
 		result.setName(xmlLayer.getName());
 		result.setTileHeight(xmlLayer.getHeight());
 		result.setTileWidth(xmlLayer.getWidth());
@@ -58,7 +66,6 @@ public class LayerBuilder
 
 				TileBuilder tileBuilder = new TileBuilder(result,this.rubyContext,this.images);
 				Tile newTile = tileBuilder.createTile(tilepositionx,tilepositiony,tile);
-				//newTile.setLayer(result);
 				this.tiles.add(newTile);
 				result.addTile(newTile);
 
@@ -75,7 +82,7 @@ public class LayerBuilder
 		}
 		zindex++;
 
-
+		this.layers.add(result);
 		return result;
 	}
 

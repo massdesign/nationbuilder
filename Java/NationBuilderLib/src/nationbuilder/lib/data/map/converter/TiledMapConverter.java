@@ -1,11 +1,8 @@
 package nationbuilder.lib.data.map.converter;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-
+import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.entities.Image;
@@ -35,7 +32,7 @@ public class TiledMapConverter {
         this.layers = new ArrayList<>();
         //this.tilesWithterrainTypes = new HashMap<Integer, XmlTile>();
     }
-    public MapMap convertMap(TiledXmlMap map)
+    /*public MapMap convertMap(TiledXmlMap map)
     {
         MapMap result = new MapMap();
         result.setHeight(map.getHeight());
@@ -44,7 +41,7 @@ public class TiledMapConverter {
         result.setTileWidth(map.getTileWidth());
         return result;
     }
-    /*private void addtilesToterrainTypeS(XmlTileSet tileSet)
+    private void addtilesToterrainTypeS(XmlTileSet tileSet)
     {
         ArrayList<XmlTile> tiles = tileSet.getTiles();
 
@@ -60,10 +57,8 @@ public class TiledMapConverter {
                 Log.writeInfo(tile.toString());
             }
         }
-
-      //  System.out.println("some random crap to put a breakpoint on");
     }*/
-    private ArrayList<Image> convertTilesets(ArrayList<XmlTileSet> tilesets)
+    /*private ArrayList<Image> convertTilesets(ArrayList<XmlTileSet> tilesets)
     {
         ArrayList<Image> mapImages = new ArrayList<Image>();
         ImageBuilder imageBuilder = new ImageBuilder(this.rubyContext,this.map);
@@ -96,14 +91,8 @@ public class TiledMapConverter {
 
         return mapImages;
 
-    }
-    private ArrayList<Resource> convertTilesetPropertiesToResources()
-    {
-        ArrayList<Resource> resources = new ArrayList<Resource>();
+    }*/
 
-
-        return resources;
-    }
 
     /**
      * Methode om stukjes code in te testen
@@ -146,7 +135,7 @@ public class TiledMapConverter {
 
 
 
-    public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers)
+    public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers) throws RubyDataServiceNotInitializedException
     {
             LayerBuilder layerBuilder = new LayerBuilder(this.rubyContext,this.map,this.mapImages);
 
@@ -171,10 +160,16 @@ public class TiledMapConverter {
     }
     public void Convert()
     {
-        this.map = this.convertMap(this.xmlMap);
-        this.resources = this.convertTilesetPropertiesToResources();
-        this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
-        this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
+
+        MapBuilder mapBuilder = new MapBuilder(this.rubyContext);
+        this.map = mapBuilder.createMap(this.xmlMap);
+        mapBuilder.Persist();
+
+
+
+        //   this.map = this.convertMap(this.xmlMap);
+        //this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
+     //   this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());
     }
 
 }

@@ -3,9 +3,12 @@ package nationbuilder.lib.data.map.entities;
 import java.util.ArrayList;
 import java.util.List;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 @Entity(tableName = "layers")
 public class Layer extends BaseRubyModel {
@@ -17,6 +20,10 @@ public class Layer extends BaseRubyModel {
     private String mid;
 	// placeholder voor ids
 	private int [] tids;
+
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping map;
+
 
 	@OneToMany(mapIdTo = "tids",mappedBy = "layer",mappedByClazz = Tile.class)
 	private List<Tile> tiles;
@@ -35,15 +42,15 @@ public class Layer extends BaseRubyModel {
 
     private int zindex;
 
-    public MapMap getMap() {
-        return map;
-    }
+   // public MapMap getMap() {
+   //     return map;
+   // }
 
-    public void setMap(MapMap map) {
-        this.map = map;
-    }
-	@OneToOne(mapIdTo = "mid")
-    private MapMap map;
+   // public void setMap(MapMap map) {
+  //      this.map = map;
+  //  }
+	//@OneToOne(mapIdTo = "mid")
+  //  private MapMap map;
 	public int getTileHeight() {
 		return tileHeight;
 	}

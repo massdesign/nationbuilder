@@ -8,6 +8,8 @@ public class XmlTileSet
 {
 	
 	Element element;
+
+
 	public XmlTileSet(Element element)
 	{
 		this.element = element;

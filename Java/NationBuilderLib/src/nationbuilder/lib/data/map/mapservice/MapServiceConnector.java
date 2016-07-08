@@ -1,14 +1,8 @@
 package nationbuilder.lib.data.map.mapservice;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.Map;
-
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.Ruby.configuration.RubyConfiguration;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.xml.RubyDIPropertyLoader;
@@ -27,7 +21,7 @@ public class MapServiceConnector {
 
         this.context = context;
 	}
-    public void addMap(MapMap map)
+   /* public void addMap(MapMap map)
     {
 
         try
@@ -40,7 +34,7 @@ public class MapServiceConnector {
 			Log.write(e, LogType.ERROR);
 		}
 
-	}
+	}*/
     public void addResource(Resource resource)
     {
         try
@@ -52,7 +46,7 @@ public class MapServiceConnector {
             Log.write(e,LogType.ERROR);
         }
     }
-	public void addLayer(Layer layer)
+	/*public void addLayer(Layer layer)
 	{
         try {
             context.SaveObject(layer, "layers");
@@ -60,16 +54,16 @@ public class MapServiceConnector {
 		catch (RubyException e) {
             Log.write(e,LogType.ERROR);
         }
-	}
+	}*/
 	public void   addDataset(MapDataset dataset)
 	{
-        this.addMap(dataset.getMap());
+     //   this.addMap(dataset.getMap());
 
-		for(Image image : dataset.getMapImages())
-		{
-			this.addImage(image);
-		}
-		for (Tile tile : dataset.getMapTiles())
+	//	for(Image image : dataset.getMapImages())
+//		{
+//			this.addImage(image);
+//		}
+		/*for (Tile tile : dataset.getMapTiles())
 		{
 			try
 			{
@@ -80,11 +74,10 @@ public class MapServiceConnector {
 				Log.write(e, LogType.ERROR);
 				break;
 			}
-		}
-        ArrayList<Layer> mapLayer = dataset.getMapLayers();
-		// TODO: iher layer  gaan monitoren
+		}*/
+        //ArrayList<Layer> mapLayer = dataset.getMapLayers();
 		// Map reversen.. volgens mij
-		for(int i=mapLayer.size()-1;i>=0;i--) {
+		/*for(int i=mapLayer.size()-1;i>=0;i--) {
 			//this.addLayer(mapLayer.get(i));
 			try
 			{
@@ -95,10 +88,10 @@ public class MapServiceConnector {
 				Log.write(e, LogType.ERROR);
 			}
 
-		}
+		}*/
 
 	}
-	public void addImage(Image image)
+	/*public void addImage(Image image)
 	{
 			image.getImageFile();
 		try
@@ -110,6 +103,6 @@ public class MapServiceConnector {
 		  Log.write(e,LogType.ERROR);
 		}
 		image.getImageFile().Save("/uploads/");
-	}
+	}*/
 
 }

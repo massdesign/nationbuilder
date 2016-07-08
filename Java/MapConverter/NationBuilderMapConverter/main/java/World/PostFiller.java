@@ -78,7 +78,39 @@ public class PostFiller {
      // NODE: powergrid components voorbeeld, niet weggooien totdat we powergrid components uit de xmlmap kunnen halen
     public void testFill() {
 
-        PowerRelayStation powerRelayStation1 = context.createRubyModel(PowerRelayStation.class);
+        MapMap map = this.context.createRubyModel(MapMap.class);
+        map.setHeight(39);
+        map.setWidth(40);
+        map.setTileHeight(30);
+        map.setTileWidth(30);
+
+
+        Layer layer = this.context.createRubyModel(Layer.class);
+
+        layer.setName("lekker testen");
+        layer.setTileHeight(4);
+        layer.setZindex(43);
+        layer.setTileHeight(30);
+        layer.setTileWidth(40);
+
+
+        map.addLayer(layer);
+
+        try
+        {
+            map.Save();
+            this.context.commit();
+
+        }
+        catch (RubyException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
+       /* PowerRelayStation powerRelayStation1 = context.createRubyModel(PowerRelayStation.class);
         PowerRelayStation powerRelayStation2 = context.createRubyModel(PowerRelayStation.class);
 
         powerRelayStation1.setName("PRS01");
@@ -127,7 +159,7 @@ public class PostFiller {
             powerGridNode3.setName("test in je moeder");
             powerGridNode3.setDestroyable(true);
          //   wareHouse.Save("warehouses");
-            powerRelayStation3.Save("buildings");
+         /*   powerRelayStation3.Save("buildings");
             powerGridNode3.Save("power_grid_nodes");
 
             powerRelayStationType.Save("power_relay_station_types");
@@ -137,12 +169,13 @@ public class PostFiller {
             powerGridNode2.Save("power_grid_nodes");
             powerConnection.Save("power_connections");
 
+
             this.context.commit();
         }
         catch (RubyException e)
         {
             e.printStackTrace();
-        }
+        } */
     }
     private void save()
     {

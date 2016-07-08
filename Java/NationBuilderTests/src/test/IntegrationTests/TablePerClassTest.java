@@ -6,28 +6,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import mocks.QueryManagerMock;
-import mocks.RubyMockService;
-import mocks.TPCTestModel1;
 import mocks.TPCTestmodel2;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
-import nationbuilder.lib.Ruby.Interfaces.RubyService;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.RubyContextFactory;
+import nationbuilder.lib.Ruby.DefaultRubyContextFactory;
 import nationbuilder.lib.Ruby.RubyContextType;
-import nationbuilder.lib.Ruby.RubyServiceImpl;
-import nationbuilder.lib.Ruby.services.ResolveUnresolvedFieldsService;
-import nationbuilder.lib.connectors.JsonObjectBuilder;
-import nationbuilder.lib.connectors.SqlObjectBuilder;
-import nationbuilder.lib.json.connectors.JsonServiceConnector;
-import nationbuilder.lib.sql.QueryManager;
-import nationbuilder.lib.sql.SqlQueryManager;
-import nationbuilder.lib.sql.SqlQueryManagerFactory;
-import nationbuilder.lib.sql.connectors.SqlServiceConnector;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 /**
  * @author patrick.ekkel
@@ -37,9 +21,16 @@ public class TablePerClassTest
 	@Test
 	public void TestTablePerClass() throws RubyException, SQLException
 	{
-		RubyContext context = new RubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,getClass());
+		RubyContext context = new DefaultRubyContextFactory()
+		{
+			@Override
+			public void loadCustomServices()
+			{
+
+			}
+		}.createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,getClass());
 		TPCTestmodel2 testmodel1 =   context.createRubyModel(TPCTestmodel2.class);
-		testmodel1.Save("tpctestmodel2");
+		testmodel1.Save();
 		context.commit();
 		String  expectedReferencedObjectId  =   testmodel1.getTpctestmodel2_id().getID().getId();
 		String  expectedId = testmodel1.getId().getId();

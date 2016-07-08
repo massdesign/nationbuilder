@@ -48,7 +48,7 @@ public abstract class BaseFiller
 
 	public  void Save(Class<?> clazz,String url)
 	{
-		for(RubyModel model : this.getRubyModels())
+		/*for(RubyModel model : this.getRubyModels())
 		{
 			if(model.getClass() == clazz)
 			{
@@ -62,7 +62,7 @@ public abstract class BaseFiller
 				}
 			}
 
-		}
+		}*/
 
 	}
 }

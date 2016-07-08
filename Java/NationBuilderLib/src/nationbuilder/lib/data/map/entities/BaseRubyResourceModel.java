@@ -1,7 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
-
 import java.io.File;
 
 /**
@@ -21,8 +20,8 @@ public class BaseRubyResourceModel extends BaseRubyModel {
     private Tile maptile;
 
     @Override
-    public boolean Save(String resourceUrl)
+    public void Save()
     {
-        return this.context.SaveResource(this, resourceUrl);
+        this.context.SaveResource(this);
     }
 }

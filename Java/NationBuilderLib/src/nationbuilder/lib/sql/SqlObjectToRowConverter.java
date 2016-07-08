@@ -37,6 +37,7 @@ public class SqlObjectToRowConverter
         this.systemFields  = new ArrayList<>();
 
         this.systemFields.add("rubycontext");
+        this.systemFields.add("objectpersister");
     }
 
     private boolean isSystemfield(Field field)

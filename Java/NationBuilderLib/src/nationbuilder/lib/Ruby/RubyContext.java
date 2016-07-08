@@ -3,6 +3,8 @@ package nationbuilder.lib.Ruby;
 import java.net.ConnectException;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyBackendConnectionFailed;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
@@ -87,7 +89,7 @@ public class RubyContext {
         classmap.loadDefault();
         return this.SaveObject(classmap,object,resourceUrl);
     }
-    public boolean SaveObject(ClassMap clazzMap,RubyModel object,String resourceUrl) throws RubyException
+    private boolean SaveObject(ClassMap clazzMap,RubyModel object,String resourceUrl) throws RubyException
 	{
 		object.FetchIDs();
 		try
@@ -106,6 +108,22 @@ public class RubyContext {
 
     }
 
+    public boolean SaveObject(ClassMap clazzMap, RubyModel object) throws RubyException
+    {
+        boolean result;
+       Entity entityMetaInfo =  object.getClass().getAnnotation(Entity.class);
+
+        if(entityMetaInfo != null && !entityMetaInfo.tableName().isEmpty())
+        {
+           result = this.SaveObject(clazzMap,object,entityMetaInfo.tableName());
+        }
+        else {
+            throw new MissingAnnotationException("Entity annotation is not set on" + object);
+        }
+
+        return result;
+    }
+
     public void registerApplicationContext(Class applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -114,7 +132,7 @@ public class RubyContext {
     public void commit() throws RubyException {
         this.rubyService.commit();
     }
-    public boolean SaveResource(BaseRubyResourceModel object,String resourceUrl)
+    public boolean SaveResource(BaseRubyResourceModel object)
     {
         try {
             int fileStatusCode = this.rubyService.postFile(object, "/uploads/");

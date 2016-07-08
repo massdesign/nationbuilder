@@ -11,8 +11,10 @@ import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
+import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ObjectPersister;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.services.ClassMapService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
@@ -31,6 +33,10 @@ public class BaseRubyModel implements RubyModel {
     protected RubyContext context;
 
     boolean committed;
+
+    @Expose
+    @IgnoreInRails
+    private ObjectPersister  objectPersister;
 
     @Override
     public ID getId() {
@@ -59,16 +65,28 @@ public class BaseRubyModel implements RubyModel {
 
 	@Override
     public void setRubyContext(RubyContext context) {
-    this.context = context;
+        this.context = context;
+
+        if (this.objectPersister == null)
+        {
+            try
+            {
+                this.objectPersister = new ObjectPersister(this.context, this);
+            }
+            catch (RubyDataServiceNotInitializedException e)
+            {
+                Log.write(e,LogType.ERROR);
+            }
+        }
     }
 
-    protected boolean Save(ClassMap clazzMap,String resourceUrl) throws RubyException
-    {
-        return context.SaveObject(clazzMap,this, resourceUrl);
-    }
+   // protected boolean Save(ClassMap clazzMap,String resourceUrl) throws RubyException
+    //{
+     //   return context.SaveObject(clazzMap,this, resourceUrl);
+    //}
 
 
-    private void handleTablePerClassSave(ClassMap classMap) throws RubyException
+    /*private void handleTablePerClassSave(ClassMap classMap) throws RubyException
     {
        // Stack<Class> classes = new Stack<>();
         // TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
@@ -98,24 +116,31 @@ public class BaseRubyModel implements RubyModel {
                     }
             }
         }
-
-
-    }
+    }*/
     @Override
-    public boolean Save(String ResourceUrl) throws RubyException
+    public void Save() throws RubyException
 	{
-		if (context == null)
+        if (context == null)
+        {
+            throw new NoAttachedRubyContextException(this);
+        }
+
+        this.objectPersister.persistObject();
+
+
+		/*if (context == null)
 		{
 			throw new NoAttachedRubyContextException(this);
 		}
-            if(RubyAssociationResolver.StrategyIsTablePerClass(this) && !context.getRubyService().ignoreClassMapInsertStrategy())
-            {
+
+       if(RubyAssociationResolver.StrategyIsTablePerClass(this) && !context.getRubyService().ignoreClassMapInsertStrategy())
+           {
                 ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
                 ClassMap classMap = classMapService.createClassMap(this);
 
                 handleTablePerClassSave(classMap);
             }
-            else
+        else
             {
                 try
                     {
@@ -130,6 +155,7 @@ public class BaseRubyModel implements RubyModel {
                 }
             }
         return false;
+        */
     }
 
 

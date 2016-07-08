@@ -1,6 +1,5 @@
 package nationbuilder.lib.Ruby.Interfaces;
 
-import nationbuilder.lib.Ruby.Exceptions.NoAttachedRubyContextException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 
 /**
@@ -8,5 +7,5 @@ import nationbuilder.lib.Ruby.Exceptions.RubyException;
  */
 public interface Saveable {
 
-    public boolean Save(String resourceUrl) throws RubyException;
+    void Save() throws RubyException;
 }

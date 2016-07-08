@@ -29,9 +29,6 @@ public class Tile extends BaseRubyModel {
     private GameEntity owner;
 	@OneToOne(mapIdTo = "imd")
 	private Image image;
-	// TODO: dit veranderen in ManyToOne
-	//@OneToOne(mapIdTo = "lmd")
-	//private Layer layer;
 	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping layer;
 
@@ -44,15 +41,6 @@ public class Tile extends BaseRubyModel {
 	@OneToMany(mapIdTo = "rids",mappedBy = "tile",mappedByClazz = Resource.class)
 	private List<Resource> resources = new ArrayList<>();
 
-	public Layer getLayer() {
-		// TODO: tijdelijk voor testen
-//		return layer;
-		return null;
-	}
-	public void setLayer(Layer layer) {
-		// TODO: tijdelijk voor testen
-		//this.layer = layer;
-	}
 	// image id copied to local instance
 	private String imd;
 	// layer id copied to local instance

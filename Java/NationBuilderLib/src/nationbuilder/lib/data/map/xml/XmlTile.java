@@ -16,7 +16,7 @@ public class XmlTile
 	}
 
 
-
+    // TODO:  deze code  kan straks ook anders als  TileDefinition  en Tile  gesplitst
     public int getGID()
 	{
         int result = -1;

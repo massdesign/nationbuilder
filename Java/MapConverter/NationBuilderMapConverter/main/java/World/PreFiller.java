@@ -68,7 +68,7 @@ public class    PreFiller {
         tile.setXposition(392);
         tile.setYposition(32);
 
-        try {
+        /*try {
             image.Save("/images/");
             tile.Save("/tiles/");
 
@@ -80,7 +80,7 @@ public class    PreFiller {
            // claim.Save("/claims/");
         } catch (RubyException e) {
             e.printStackTrace();
-        }
+        }*/
 	}
     public void testFill(MapDataset dataset)
     {
@@ -107,7 +107,7 @@ public class    PreFiller {
     private void save()
     {
 
-		this.userFiller.Save(Currency.class,"currencies");
+		/*this.userFiller.Save(Currency.class,"currencies");
 		this.userFiller.Save(State.class,"states");
 		this.userFiller.Save(User.class,"users");
 
@@ -149,8 +149,7 @@ public class    PreFiller {
 			}
 
         }
-
-
+        */
     }
 
 
