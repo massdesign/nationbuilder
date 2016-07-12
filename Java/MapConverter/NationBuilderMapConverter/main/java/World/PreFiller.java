@@ -1,11 +1,7 @@
 package World;
 
-
-import nationbuilder.lib.Logging.Log;
-import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
-import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import java.util.ArrayList;
@@ -28,7 +24,7 @@ public class    PreFiller {
     public PreFiller(RubyContext context)
     {
         this.context = context;
-        this.rubyModels = new ArrayList<BaseRubyModel>();
+        this.rubyModels = new ArrayList<>();
 
 		this.userFiller = new UserFiller(context);
 		this.regimeFiller = new RegimeFiller(context);
@@ -88,68 +84,9 @@ public class    PreFiller {
 
 
     }
-
-
-
-/*
-    private Tile createMapTile()
-    {
-        Tile result = this.context.createRubyModel(Tile.class);
-        result.setXoffset(1);
-        result.setYoffset(1);
-        result.setGidtag(2);
-        result.setYposition(3);
-        result.setXposition(4);
-        return result;
-    }*/
-
-
     private void save()
     {
 
-		/*this.userFiller.Save(Currency.class,"currencies");
-		this.userFiller.Save(State.class,"states");
-		this.userFiller.Save(User.class,"users");
-
-
-        this.energyBuildingFiller.Save(EnergyBuildingType.class,"energy_building_types");
-        this.energyBuildingFiller.Save(EnergyBuilding.class,"energy_building_types");
-
-        this.cityFiller.Save(City.class,"cities");
-        this.warehouseFiller.Save(WareHouse.class,"warehouses");
-
-
-
-
-        String terrainTypeUrl = "terraintypes";
-        String energyBuildingTypeUrl = "energy_building_types";
-        String energyBuildingUrl = "energy_building_types";
-        for(BaseRubyModel type : rubyModels)
-        {
-			try
-			{
-				// TODO: dit kan handiger.. als resourceURL weggerefactored is kan dit ook simpeler
-				if (type instanceof TerrainType)
-				{
-					type.Save(terrainTypeUrl);
-				}
-
-				else if (type instanceof EnergyBuildingType)
-				{
-					type.Save(energyBuildingTypeUrl);
-				}
-				else if (type instanceof EnergyBuilding)
-				{
-					type.Save(energyBuildingUrl);
-				}
-			}
-			catch (RubyException ex)
-			{
-				Log.write(ex,LogType.ERROR);
-			}
-
-        }
-        */
     }
 
 
@@ -162,7 +99,7 @@ public class    PreFiller {
     }
     private void fillTerrainTypes()
     {
-
+        // TODO: misschien zijn we dit ook niet meer nodig met de nieuwe filler
         this.rubyModels.add(createTerrainType("WATER"));
         this.rubyModels.add(createTerrainType("SEA"));
         this.rubyModels.add(createTerrainType("INLANDCOAST"));

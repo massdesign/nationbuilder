@@ -28,7 +28,7 @@ public class ImageBuilder
 		Image result = rubyContext.createRubyModel(Image.class);
 		MapImageFile mapImageFile = rubyContext.createRubyModel(MapImageFile.class);
 
-		result.setMap(this.map);
+
 		mapImageFile.setResource(new File(xmlImage.getFileLocation()));
 		result.setImageFile(mapImageFile);
 		result.setHeight(xmlImage.getHeight());
@@ -41,6 +41,9 @@ public class ImageBuilder
 
 		result.setUrl("/upload/" + xmlImage.getName());
 		result.setName(xmlImage.getName());
+
+		// TODO: dit er nog uitslopen want dit is tijdelijk.. dit moet op een andere plek komen te staan
+		this.map.addImage(result);
 
 		return result;
 	}

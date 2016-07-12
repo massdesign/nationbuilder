@@ -4,6 +4,7 @@ import java.net.ConnectException;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.EntityType;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyBackendConnectionFailed;
@@ -117,6 +118,16 @@ public class RubyContext {
         {
            result = this.SaveObject(clazzMap,object,entityMetaInfo.tableName());
         }
+        else if(entityMetaInfo != null && entityMetaInfo.type() == EntityType.Resource) {
+            result = true;
+            // do nothing
+            // TODO: implement files
+            // cast this to a BaseRubyResourceModel
+
+            BaseRubyResourceModel rubyResourceModel  = (BaseRubyResourceModel)object;
+            rubyResourceModel.Save();
+
+        }
         else {
             throw new MissingAnnotationException("Entity annotation is not set on" + object);
         }
@@ -135,6 +146,7 @@ public class RubyContext {
     public boolean SaveResource(BaseRubyResourceModel object)
     {
         try {
+            // TODO: dit moeten we nog een keertje instelbaar maken als we RubyDI voor meerdere toepassingen gaan gebruiken
             int fileStatusCode = this.rubyService.postFile(object, "/uploads/");
             return fileStatusCode != 200 ? false : true;
         } catch (IOException e) {

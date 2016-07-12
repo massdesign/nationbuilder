@@ -34,6 +34,8 @@ public class BaseRubyModel implements RubyModel {
 
     boolean committed;
 
+    boolean isDirty;
+
     @Expose
     @IgnoreInRails
     private ObjectPersister  objectPersister;
@@ -167,6 +169,16 @@ public class BaseRubyModel implements RubyModel {
     @Override
     public void setCommitted(boolean committed) {
         this.committed = committed;
+    }
+    @Override
+    public boolean isDirty()
+    {
+        return isDirty;
+    }
+    @Override
+    public void setDirty(boolean dirty)
+    {
+        isDirty = dirty;
     }
 
 }

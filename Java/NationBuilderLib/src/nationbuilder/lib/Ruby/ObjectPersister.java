@@ -40,6 +40,8 @@ public class ObjectPersister
 	// TODO: Resource URL wegrefactoren omdat dit zowizo niet gaat werken met de nieuwe auto class Saver
 	public void persistObject() throws RubyException
 	{
+
+		Log.write(this.rubyModel.toString(),LogType.DEBUG);
 		// voordat we dit object op gaan slaan moeten alle onderliggende entiteiten op gaan slaan..
 
 		if (RubyAssociationResolver.StrategyIsTablePerClass(rubyModel) && !context.getRubyService().ignoreClassMapInsertStrategy())

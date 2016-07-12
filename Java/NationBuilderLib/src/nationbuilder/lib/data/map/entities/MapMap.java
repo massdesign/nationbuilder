@@ -17,14 +17,20 @@ public class MapMap extends BaseRubyModel {
     private int width;
     private int height;
     private int [] lids;
+    private int [] mids;
 
     public MapMap()
     {
+        // TODO: dit op de plek initten
         this.layers = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     @OneToMany(mapIdTo = "lids", mappedBy = "map", mappedByClazz = Layer.class)
     private List<Layer> layers;
+
+    @OneToMany(mapIdTo = "mids", mappedBy = "map", mappedByClazz = Image.class)
+    private List<Image> images;
 
     public int getTileWidth() {
         return tileWidth;
@@ -58,6 +64,10 @@ public class MapMap extends BaseRubyModel {
         this.height = height;
     }
 
+    public void addImage(Image image) {
+        this.images.add(image);
+    }
+
     public void addLayer(Layer layer) {
         this.layers.add(layer);
     }
@@ -65,6 +75,9 @@ public class MapMap extends BaseRubyModel {
     public List<Layer> getLayers()
     {
         return layers;
+    }
+    public List<Image> getImages() {
+        return images;
     }
 
 }

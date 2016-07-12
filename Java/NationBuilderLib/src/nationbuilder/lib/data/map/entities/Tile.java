@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 
 
@@ -18,11 +19,14 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 @Entity(tableName = "tiles")
 public class Tile extends BaseRubyModel {
 
-	
+	@Column
 	private int xposition;
+	@Column
 	private int yposition;
     private int gidtag;
+	@Column
 	private int xoffset;
+	@Column
 	private int yoffset;
 
     private List<GameEntity> claimedBy;
@@ -33,11 +37,12 @@ public class Tile extends BaseRubyModel {
 	private ReferenceMapping layer;
 
 	@OneToOne(mapIdTo = "tti")
+	@Column
 	private TerrainType terrainType;
 
 	// terraintype for reference in backend
 	private String tti;
-
+	@Column(setMethod = "addResource")
 	@OneToMany(mapIdTo = "rids",mappedBy = "tile",mappedByClazz = Resource.class)
 	private List<Resource> resources = new ArrayList<>();
 
@@ -57,6 +62,7 @@ public class Tile extends BaseRubyModel {
 	public Image getImage() {
 		return image;
 	}
+	@Column
 	public void setImage(Image image) {
 		this.image = image;
 	}

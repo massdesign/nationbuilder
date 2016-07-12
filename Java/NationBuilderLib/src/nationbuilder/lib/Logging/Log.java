@@ -26,7 +26,11 @@ public class Log {
             case INFO:
                 logline += "INFO: ";
                 break;
+            case DEBUG:
+                logline += "DEBUG: ";
+                break;
             }
+
             logline += message;
             System.out.println(logline);
         }
@@ -47,6 +51,7 @@ public class Log {
     {
         write(message,LogType.WARNING);
     }
+    public static void writeDebug(String message) { write(message,LogType.DEBUG);}
     public static void writeInfo(String message)
     {
         write(message,LogType.INFO);

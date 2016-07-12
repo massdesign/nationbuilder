@@ -47,6 +47,7 @@ public class RubyDIPropertyLoader
 		this.rubyConfiguration.setDb_database((String)properties.get("db_database"));
 		this.rubyConfiguration.setDb_tempdir((String)properties.get("rubydi_tempdir"));
 		this.rubyConfiguration.setDb_username((String)properties.get("db_username"));
+		this.rubyConfiguration.setClassloader_packages((String)properties.get("rubydi_classloader_packages"));
 	}
 
 	public RubyConfiguration getRubyConfiguration() {

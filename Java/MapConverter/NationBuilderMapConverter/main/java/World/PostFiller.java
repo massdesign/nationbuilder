@@ -78,7 +78,7 @@ public class PostFiller {
      // NODE: powergrid components voorbeeld, niet weggooien totdat we powergrid components uit de xmlmap kunnen halen
     public void testFill() {
 
-        MapMap map = this.context.createRubyModel(MapMap.class);
+      /*  MapMap map = this.context.createRubyModel(MapMap.class);
         map.setHeight(39);
         map.setWidth(40);
         map.setTileHeight(30);
@@ -93,10 +93,19 @@ public class PostFiller {
         layer.setTileHeight(30);
         layer.setTileWidth(40);
 
-
         map.addLayer(layer);
 
-        try
+        Tile tile = this.context.createRubyModel(Tile.class);
+
+        tile.setXoffset(3);
+        tile.setYoffset(45);
+        tile.setXposition(32);
+        tile.setYposition(44);
+        layer.addTile(tile);
+        */
+
+
+        /*try
         {
             map.Save();
             this.context.commit();
@@ -105,7 +114,7 @@ public class PostFiller {
         catch (RubyException e)
         {
             e.printStackTrace();
-        }
+        }*/
 
 
 

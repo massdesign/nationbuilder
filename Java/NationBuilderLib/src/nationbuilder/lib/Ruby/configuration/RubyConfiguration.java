@@ -4,18 +4,8 @@ package nationbuilder.lib.Ruby.configuration;
  * Created by patrick on 7/10/14.
  */
 
-// TODO: if the need arises, we need to get rid of this configClass.. Create a propertiesfile that also allows for default
 public class RubyConfiguration {
 
-
-	/*public static String RubyBackend = "http://localhost";
-    public static String RubyBackendPort = "3000";
-	public static String mySqlUsername = "root";
-	public static String mySqlPassword = "defcon1986";
-	public static String mySqlServer = "localhost";
-    public static String mySqlDatabase  = "NationBuilder";
-	public static String mySqlTempDir = "/home/patrick/Git/nationbuilder/Temp/";
-    */
 	private String backend;
 	private String port;
 	private String db_username;
@@ -23,6 +13,8 @@ public class RubyConfiguration {
 	private String db_server;
 	private String db_database;
 	private String db_tempdir;
+
+	private String classloader_packages;
 
 
 	public String getBackend()
@@ -93,5 +85,15 @@ public class RubyConfiguration {
 	public void setDb_tempdir(String db_tempdir)
 	{
 		this.db_tempdir = db_tempdir;
+	}
+
+	public String getClassloader_packages()
+	{
+		return classloader_packages;
+	}
+
+	public void setClassloader_packages(String classloader_packages)
+	{
+		this.classloader_packages = classloader_packages;
 	}
 }

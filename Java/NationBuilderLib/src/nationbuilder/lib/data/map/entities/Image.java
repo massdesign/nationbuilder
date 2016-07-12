@@ -2,9 +2,12 @@ package nationbuilder.lib.data.map.entities;
 
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
+
 @Entity(tableName = "images")
 public class Image extends BaseRubyModel {
 		
@@ -16,10 +19,9 @@ public class Image extends BaseRubyModel {
 				+ ", tileHeight=" + tileHeight + ", imageFile=" + imageFile;
 	}
 	private String url;
-	private String mid;
 
-	@ManyToOne(mapIdTo = "mid")
-	private MapMap map;
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping map;
 	private String name;
 	private int width;
 
@@ -29,15 +31,6 @@ public class Image extends BaseRubyModel {
 	private int tileWidth;
 	private int tileHeight;
 	private MapImageFile imageFile;
-
-    public MapMap getMap() {
-        return map;
-    }
-
-    public void setMap(MapMap map) {
-        this.map = map;
-    }
-
 
 	
 	public Image()

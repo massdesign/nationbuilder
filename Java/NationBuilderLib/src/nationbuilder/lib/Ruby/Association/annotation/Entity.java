@@ -14,4 +14,5 @@ public @interface Entity
 {
 	String tableName() default "";
 	InhiritanceStrategy strategy() default InhiritanceStrategy.OneTablePerInstance;
+	EntityType type() default EntityType.Table;
 }
