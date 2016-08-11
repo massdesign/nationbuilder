@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
@@ -22,13 +23,19 @@ public class Image extends BaseRubyModel {
 
 	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping map;
+	@Column
 	private String name;
+	@Column
 	private int width;
-
+	@Column
 	private int height;
+	@Column
 	private int firstGid;
+	@Column
 	private int lastGid;
+	@Column
 	private int tileWidth;
+	@Column
 	private int tileHeight;
 	private MapImageFile imageFile;
 

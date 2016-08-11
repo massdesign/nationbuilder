@@ -23,7 +23,8 @@ import nationbuilder.lib.sql.SqlQueryManagerFactory;
 /**
  * @author patrick.ekkel
  */
-public abstract class DefaultRubyContextFactory
+//public abstract class DefaultRubyContextFactory
+public class DefaultRubyContextFactory
 {
 
 
@@ -116,6 +117,6 @@ public abstract class DefaultRubyContextFactory
         return result;
     }
 
-    public abstract void loadCustomServices();
+//    public abstract void loadCustomServices();
 
 }

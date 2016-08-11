@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import nationbuilder.lib.javaassist.CodeInjector;
 
 /**
  * Created by patrick on 7/8/14.
@@ -58,6 +59,8 @@ public class RubyContext {
             Constructor<?> ctor = clazz.getConstructor();
             T instance =  (T)ctor.newInstance();
            instance.setRubyContext(this);
+           this.rubyStore.registerRubyModel(instance);
+
             return instance;
 
         } catch (NoSuchMethodException e) {

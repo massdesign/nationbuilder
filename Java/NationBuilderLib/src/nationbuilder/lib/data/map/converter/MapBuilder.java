@@ -86,24 +86,6 @@ public class MapBuilder
 		try
 		{
 			this.map.Save();
-			/*for (Image image : this.mapImages)
-			{
-
-				image.getImageFile();
-				image.Save("images");
-				image.getImageFile().Save("/uploads/");
-
-
-			}
-			for(Tile tile : this.layerBuilder.getTiles()) {
-
-				tile.Save("tiles");
-			}
-
-			for (int i = layerBuilder.getLayers().size() - 1; i >= 0; i--)
-			{
-				layerBuilder.getLayers().get(i).Save("layers");
-			}*/
 
 		}
 		catch(RubyException e)

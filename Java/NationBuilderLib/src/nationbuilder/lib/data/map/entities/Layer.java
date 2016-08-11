@@ -2,6 +2,7 @@ package nationbuilder.lib.data.map.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
@@ -13,9 +14,11 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 @Entity(tableName = "layers")
 public class Layer extends BaseRubyModel {
 
-
+	@Column
 	private String name;
+	@Column
 	private int tileHeight;
+	@Column
 	private int tileWidth;
     private String mid;
 	// placeholder voor ids
@@ -24,7 +27,7 @@ public class Layer extends BaseRubyModel {
 	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping map;
 
-
+	@Column(setMethod = "addTile")
 	@OneToMany(mapIdTo = "tids",mappedBy = "layer",mappedByClazz = Tile.class)
 	private List<Tile> tiles;
 

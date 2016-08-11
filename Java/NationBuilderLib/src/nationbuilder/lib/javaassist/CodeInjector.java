@@ -63,6 +63,7 @@ public class CodeInjector
 		Class annotation = Column.class;
 		try
 		{
+
 			objectCtClass = objClassPool.get(this.className);
 
 			for(CtField field : objectCtClass.getDeclaredFields()) {
@@ -96,7 +97,8 @@ public class CodeInjector
 
 		try
 		{
-			newClassDef = objectCtClass.toClass();
+			objectCtClass.defrost();
+				newClassDef = objectCtClass.toClass();
 			return newClassDef;
 		}
 		catch (CannotCompileException e)

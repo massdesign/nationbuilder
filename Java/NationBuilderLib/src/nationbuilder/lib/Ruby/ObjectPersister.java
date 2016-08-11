@@ -40,7 +40,6 @@ public class ObjectPersister
 	// TODO: Resource URL wegrefactoren omdat dit zowizo niet gaat werken met de nieuwe auto class Saver
 	public void persistObject() throws RubyException
 	{
-
 		Log.write(this.rubyModel.toString(),LogType.DEBUG);
 		// voordat we dit object op gaan slaan moeten alle onderliggende entiteiten op gaan slaan..
 
@@ -60,14 +59,20 @@ public class ObjectPersister
 
 	private void saveToContext() throws RubyException
 	{
-		// voordat we gaan opslaan moeten we eerst zeker weten dat de onderliggende objectstructuur ook  opgeslagen is
-		if(persistObjectHierarchy())
+		// voordat we dit object gaan opslaan moeten we kijken of dit object dirty is
+		if(this.rubyModel.markDirty())
 		{
-			// als dat gelukt is mogen we het root element saven
-			context.SaveObject(classMap, rubyModel);
-		}
-		else {
-			//  throw exception dat opslaan niet mogelijk is vanwege een hierarchy
+			// voordat we gaan opslaan moeten we eerst zeker weten dat de onderliggende objectstructuur ook  opgeslagen is
+			if (persistObjectHierarchy())
+			{
+				// als dat gelukt is mogen we het root element saven
+				context.SaveObject(classMap, rubyModel);
+				this.rubyModel.setDirty(false);
+			}
+			else
+			{
+				//  throw exception dat opslaan niet mogelijk is vanwege een hierarchy probleem
+			}
 		}
 	}
 

@@ -1,10 +1,12 @@
 package nationbuilder.lib.Ruby.orm;
 
 import com.google.gson.annotations.Expose;
+import java.lang.reflect.Field;
 import java.util.Stack;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.ClassMap;
@@ -32,9 +34,9 @@ public class BaseRubyModel implements RubyModel {
 	@IgnoreInRails
     protected RubyContext context;
 
-    boolean committed;
-
-    boolean isDirty;
+    private boolean committed;
+    private boolean isDirty;
+    private String signature  = "";
 
     @Expose
     @IgnoreInRails
@@ -64,7 +66,37 @@ public class BaseRubyModel implements RubyModel {
 			Log.write(e,LogType.ERROR);
 		}
 	}
+    private String createSignature() {
 
+        // get all columns..
+        StringBuilder sb = new StringBuilder();
+        for(Field field : this.getClass().getDeclaredFields()) {
+
+            field.setAccessible(true);
+            // alleen velden gemarkeerd als Column meenemen voor het genereren van de signature
+            if(field.getAnnotation(Column.class) != null) {
+
+                try
+                {
+                  Object result =  field.get(this);
+                   if(result != null)
+                   {
+                       String hashCodeValue = String.valueOf(result.hashCode());
+                       sb.append(hashCodeValue);
+                   }
+                    else {
+
+                       sb.append("null");
+                   }
+                }
+                catch (IllegalAccessException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
+    }
 	@Override
     public void setRubyContext(RubyContext context) {
         this.context = context;
@@ -82,43 +114,6 @@ public class BaseRubyModel implements RubyModel {
         }
     }
 
-   // protected boolean Save(ClassMap clazzMap,String resourceUrl) throws RubyException
-    //{
-     //   return context.SaveObject(clazzMap,this, resourceUrl);
-    //}
-
-
-    /*private void handleTablePerClassSave(ClassMap classMap) throws RubyException
-    {
-       // Stack<Class> classes = new Stack<>();
-        // TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
-        classMap.reverseIterator();
-        for(Class currentClassname: classMap)
-        {
-
-            if(!currentClassname.equals(BaseRubyModel.class) && !currentClassname.equals(Object.class)) {
-                    // Class objectInstance = this.getClass().forName(currentClassname.getName());
-                    Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
-                    if (entity != null)
-                    {
-                        if (entity.tableName() != null && !entity.tableName().equals(""))
-                        {
-                            // the current class can be extracted from the classmap structure
-                            this.Save(classMap, entity.tableName());
-                        }
-                        else
-                        {
-                            throw new IllegalArgumentException("tablename can't be null or empty");
-                        }
-
-                    }
-                    else
-                    {
-                        throw new MissingAnnotationException("Entity annotation expected on object: " + currentClassname.getClass());
-                    }
-            }
-        }
-    }*/
     @Override
     public void Save() throws RubyException
 	{
@@ -126,38 +121,7 @@ public class BaseRubyModel implements RubyModel {
         {
             throw new NoAttachedRubyContextException(this);
         }
-
         this.objectPersister.persistObject();
-
-
-		/*if (context == null)
-		{
-			throw new NoAttachedRubyContextException(this);
-		}
-
-       if(RubyAssociationResolver.StrategyIsTablePerClass(this) && !context.getRubyService().ignoreClassMapInsertStrategy())
-           {
-                ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-                ClassMap classMap = classMapService.createClassMap(this);
-
-                handleTablePerClassSave(classMap);
-            }
-        else
-            {
-                try
-                    {
-                     ClassMapService classMapService =   RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-                     ClassMap classMap = classMapService.createClassMap(this);
-                     classMap.loadDefault();
-                    return context.SaveObject(classMap,this, ResourceUrl);
-                }
-                catch (RubyException e)
-                {
-                    Log.write(ResourceUrl + " " + e.getMessage(), LogType.ERROR);
-                }
-            }
-        return false;
-        */
     }
 
 
@@ -171,10 +135,20 @@ public class BaseRubyModel implements RubyModel {
         this.committed = committed;
     }
     @Override
-    public boolean isDirty()
+    public boolean markDirty()
     {
+        // if the object is marked dirty we will be naive about it, if the object is not dirty we will ask questions
+        if(!isDirty) {
+            String newSignature = createSignature();
+            this.setDirty(!signature.equals(newSignature));
+            signature = newSignature;
+
+        }
         return isDirty;
     }
+
+
+
     @Override
     public void setDirty(boolean dirty)
     {

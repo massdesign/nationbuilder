@@ -15,7 +15,8 @@ public interface RubyModel extends Saveable,Serializable {
      void setId(ID id);
 	 void FetchIDs();
      void setRubyContext(RubyContext context);
-     boolean isDirty();
+
+     boolean markDirty();
      void setDirty(boolean dirty);
 
 }

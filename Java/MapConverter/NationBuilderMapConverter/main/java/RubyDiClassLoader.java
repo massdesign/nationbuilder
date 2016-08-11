@@ -40,9 +40,18 @@ public class RubyDiClassLoader extends ClassLoader
 			// defineClass is inherited from the ClassLoader class
 			// that converts byte array into a Class. defineClass is Final
 			// so we cannot override it
-			Class c = defineClass(name, b, 0, b.length);
-			resolveClass(c);
-			return c;
+			if(!name.contains("java.lang") && !name.contains("java.io"))
+			{
+
+				Class c = defineClass(name, b, 0, b.length);
+
+				resolveClass(c);
+				return c;
+			}
+			else
+			{
+				return getParent().loadClass(name);
+			}
 		}
 		catch (IOException e)
 		{
@@ -52,21 +61,29 @@ public class RubyDiClassLoader extends ClassLoader
 	}
 
 	@Override
+
 	public Class loadClass(String name) throws ClassNotFoundException
 	{
+		String [] namespaces = namespace.split(";");
 
 		Log.writeDebug("Loading Class '" + name + "'");
 		// Alleen deze klasse laden met de speciale classloader
-		if (name.endsWith("RubyDiMain"))
+		for(String namespace : namespaces)
 		{
-			Log.writeDebug("Loading Class using RubyDiClassLoader");
-			return getClass(name);
-		}
-		else if(name.startsWith(namespace)) {
-			Log.writeDebug("Loading Class '" + name + "' using JavaAssist CodeInjector");
-			CodeInjector testje = new CodeInjector(name);
-			Class newClassDef = testje.injectAfterMethod("this.setDirty(true);");
-			return  newClassDef;
+			if (name.endsWith("RubyDiMain"))
+			{
+				Log.writeDebug("Loading Class using RubyDiClassLoader");
+				return getClass(name);
+			}
+			else if (name.startsWith(namespace))
+			{
+				/*Log.writeDebug("Loading Class '" + name + "' using JavaAssist CodeInjector");
+				CodeInjector testje = new CodeInjector(name);
+				Class newClassDef = testje.injectAfterMethod("this.setDirty(true);");
+				return newClassDef;*/
+
+				return getClass(name);
+			}
 		}
 		return super.loadClass(name);
 	}

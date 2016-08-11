@@ -1,6 +1,8 @@
 package nationbuilder.lib.Ruby;
 
 import java.lang.reflect.Field;
+import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
@@ -36,34 +38,41 @@ public class RubyObjectManager {
 
     public boolean store(ClassMap clazzMap,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
-        ResponseData data = this.rubyService.postObject(clazzMap,model,resourceUrl);
-        // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
-        ID resultObject = this.objectBuilder.createIDFromResponse(data);
-        resultObject.setType(model.getClass().getName());
-
-        Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
-        // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
-        if(entityAnnotation != null && clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass) {
-           Field idField =   RubyAssociationResolver.getIDFromSuperClass(clazzMap,model);
-
-            try
+        boolean result = false;
+        if(model.getId() == null)
+        {
+            ResponseData data = this.rubyService.postObject(clazzMap, model, resourceUrl);
+            // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
+            ID resultObject = this.objectBuilder.createIDFromResponse(data);
+            resultObject.setType(model.getClass().getName());
+            // We zijn er in geslaagd om het object ter persisteren.. (al dan niet naar de database of een tussenlaag) Dit betekend dat het object vanaf nu niet meer dirty is..
+            model.setDirty(false);
+            Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
+            // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
+            if (entityAnnotation != null && clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class
+                && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass)
             {
-                idField.setAccessible(true);
-                ReferenceMapping resultMapping = new ReferenceMapping(resultObject,clazzMap.getCurrent());
+                Field idField = RubyAssociationResolver.getIDFromSuperClass(clazzMap, model);
 
-                idField.set(model,resultMapping);
+                try
+                {
+                    idField.setAccessible(true);
+                    ReferenceMapping resultMapping = new ReferenceMapping(resultObject, clazzMap.getCurrent());
+
+                    idField.set(model, resultMapping);
+                    result = true;
+                }
+                catch (IllegalAccessException e)
+                {
+                    Log.write(e, LogType.ERROR);
+                }
             }
-            catch (IllegalAccessException e)
+            else
             {
-                e.printStackTrace();
+                model.setId(resultObject);
             }
         }
-        else {
-            model.setId(resultObject);
-        }
-        this.rubyStore.registerRubyModel(model);
-
-        return resultObject != null;
+        return result;
     }
 
     public RubyModel retrieve(Class clazz,ObjectSelector selector) throws ObjectConversionFailedException {

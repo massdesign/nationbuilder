@@ -21,14 +21,7 @@ public class TablePerClassTest
 	@Test
 	public void TestTablePerClass() throws RubyException, SQLException
 	{
-		RubyContext context = new DefaultRubyContextFactory()
-		{
-			@Override
-			public void loadCustomServices()
-			{
-
-			}
-		}.createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,getClass());
+		RubyContext context = new DefaultRubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,getClass());
 		TPCTestmodel2 testmodel1 =   context.createRubyModel(TPCTestmodel2.class);
 		testmodel1.Save();
 		context.commit();

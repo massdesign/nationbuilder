@@ -62,7 +62,6 @@ public class Tile extends BaseRubyModel {
 	public Image getImage() {
 		return image;
 	}
-	@Column
 	public void setImage(Image image) {
 		this.image = image;
 	}

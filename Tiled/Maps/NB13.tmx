@@ -98,30 +98,35 @@
    <properties>
     <property name="city_type" value="large_city"/>
     <property name="max_population" value="800000"/>
+	<property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="52">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
+	<property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="53">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
+	<property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="60">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
+	<property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="61">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
+	<property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="72">

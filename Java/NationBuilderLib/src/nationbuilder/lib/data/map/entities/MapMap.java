@@ -2,6 +2,7 @@ package nationbuilder.lib.data.map.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
@@ -12,26 +13,22 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 @Entity(tableName = "maps")
 public class MapMap extends BaseRubyModel {
 
+    @Column
     private int tileWidth;
+    @Column
     private int tileHeight;
+    @Column
     private int width;
+    @Column
     private int height;
     private int [] lids;
     private int [] mids;
-
-    public MapMap()
-    {
-        // TODO: dit op de plek initten
-        this.layers = new ArrayList<>();
-        this.images = new ArrayList<>();
-    }
-
+    @Column(setMethod = "addLayer")
     @OneToMany(mapIdTo = "lids", mappedBy = "map", mappedByClazz = Layer.class)
-    private List<Layer> layers;
-
+    private List<Layer> layers = new ArrayList<>();
+    @Column(setMethod = "addImage")
     @OneToMany(mapIdTo = "mids", mappedBy = "map", mappedByClazz = Image.class)
-    private List<Image> images;
-
+    private List<Image> images = new ArrayList<>();
     public int getTileWidth() {
         return tileWidth;
     }

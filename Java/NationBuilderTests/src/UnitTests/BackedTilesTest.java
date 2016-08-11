@@ -28,14 +28,7 @@ public class BackedTilesTest
 	@Before
 	public void setup()
 	{
-		context  = new DefaultRubyContextFactory()
-		{
-			@Override
-			public void loadCustomServices()
-			{
-
-			}
-		}.createDefaultRubyContext();
+		context  = new DefaultRubyContextFactory().createDefaultRubyContext();
 		mapTileFactory= context.createRubyObjectFacory(Tile.class, Tile[].class);
 		resourceFactory = context.createRubyObjectFacory(Resource.class,Resource[].class);
 

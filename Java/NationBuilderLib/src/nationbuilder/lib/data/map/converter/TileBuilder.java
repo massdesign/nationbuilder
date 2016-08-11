@@ -3,13 +3,9 @@ package nationbuilder.lib.data.map.converter;
 import java.util.ArrayList;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.services.PropertyManagerService;
-import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.Tile;
-import nationbuilder.lib.data.map.mapservice.TileProperty;
-import nationbuilder.lib.data.map.mapservice.TilePropertyType;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
@@ -21,7 +17,7 @@ public class TileBuilder
 	private Layer layer;
 	private RubyContext rubyContext;
 	private ArrayList<Image> images;
-	private TiledPropertyManager tiledPropertyManager;
+	//private TiledPropertyManager tiledPropertyManager;
 	public TileBuilder(Layer  layer,RubyContext rubyContext,ArrayList<Image> images)  {
 		this.layer = layer;
 		this.rubyContext = rubyContext;

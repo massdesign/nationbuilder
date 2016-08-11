@@ -13,30 +13,16 @@ import nationbuilder.lib.Ruby.orm.ID;
  */
 public class RubyStore {
 
-    private HashMap<ID,RubyModel> modelHashMap;
+    private ArrayList<RubyModel> models;
     public RubyStore()
     {
-        this.modelHashMap =new HashMap<ID, RubyModel>();
+        this.models =new ArrayList<>();
     }
 
-    public RubyModel getRubyModelbyId(ID id)
-    {
-        RubyModel result = null;
-        if(modelHashMap.containsKey(id))
-        {
-            result = modelHashMap.get(id);
-        }
-        else
-        {
-            // TODO: retrieve the object from the service
-            // TODO: implement when needed
-        }
-        return result;
-    }
-    
-    public Iterator getIterator()
-    {
-    	return this.modelHashMap.entrySet().iterator();
+
+
+    public Iterator getIterator() {
+        return this.models.iterator();
     }
 
     /**
@@ -46,21 +32,21 @@ public class RubyStore {
     public <T extends RubyModel> List<T> getRubyModelByType(Class<?> type)
     {
         List<T> result = new ArrayList<T>();
-        for(ID id : modelHashMap.keySet())
-        {
-            if(type.getName().equals(id.getType()))
-            {
-                result.add((T)modelHashMap.get(id));
+        for(RubyModel rubyModel : this.models ) {
+
+            if(rubyModel != null && rubyModel.getClass().equals(type)) {
+                result.add((T)rubyModel);
             }
+
         }
+
         return result;
     }
 
     public void registerRubyModel(RubyModel model)
     {
-        if(!modelHashMap.containsKey(model.getId()))
-        {
-            this.modelHashMap.put(model.getId(),model);
+        if(!this.models.contains(model)) {
+            this.models.add(model);
         }
     }
 }
