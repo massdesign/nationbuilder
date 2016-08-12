@@ -35,82 +35,21 @@ public class    PreFiller {
     }
 
     public void Fill() throws ObjectConversionFailedException {
-        fillTerrainTypes();
-
 		userFiller.Fill();
         energyBuildingFiller.Fill();
         cityFiller.Fill();
         warehouseFiller.Fill();
-
-        this.save();
     }
 
 	public void testFill()
 	{
-        Tile tile = this.context.createRubyModel(Tile.class);
-        Image image = this.context.createRubyModel(Image.class);
 
-        image.setName("Crazy images");
-        image.setTileHeight(32);
-        image.setTileWidth(32);
-      //  tile.setImage(image);
-       // Claim claim = this.context.createRubyModel(Claim.class);
-        //State state = this.context.createRubyModel(State.class);
-
-        //state.setName("henk");
-        tile.setImage(image);
-        tile.setXoffset(232);
-        tile.setYoffset(900);
-        tile.setXposition(392);
-        tile.setYposition(32);
-
-        /*try {
-            image.Save("/images/");
-            tile.Save("/tiles/");
-
-            this.context.commit();
-            //state.Save("/states/");
-            //claim.setClaimedTile(tile);
-            //claim.setClaimedBy(state);
-
-           // claim.Save("/claims/");
-        } catch (RubyException e) {
-            e.printStackTrace();
-        }*/
 	}
     public void testFill(MapDataset dataset)
     {
 
 
 
-    }
-    private void save()
-    {
-
-    }
-
-
-    private TerrainType createTerrainType(String name)
-    {
-        TerrainType result = context.createRubyModel(TerrainType.class);
-        result.setName(name);
-
-        return result;
-    }
-    private void fillTerrainTypes()
-    {
-        // TODO: misschien zijn we dit ook niet meer nodig met de nieuwe filler
-        this.rubyModels.add(createTerrainType("WATER"));
-        this.rubyModels.add(createTerrainType("SEA"));
-        this.rubyModels.add(createTerrainType("INLANDCOAST"));
-        this.rubyModels.add(createTerrainType("INLANDSEA"));
-        this.rubyModels.add(createTerrainType("RIVER"));
-        this.rubyModels.add(createTerrainType("FOREST"));
-        this.rubyModels.add(createTerrainType("URBAN"));
-        this.rubyModels.add(createTerrainType("MOUNTAIN"));
-        this.rubyModels.add(createTerrainType("PLAINLAND"));
-        this.rubyModels.add(createTerrainType("COAST"));
-        this.rubyModels.add(createTerrainType("NONE"));
     }
 
 }

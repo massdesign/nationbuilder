@@ -79,49 +79,53 @@ public class ObjectPersister
 
 	private boolean persistObjectHierarchy() throws RubyException
 	{
-		boolean result = false;
+		Class currentClass = this.rubyModel.getClass();
 
-		Field [] fields = this.rubyModel.getClass().getDeclaredFields();
-		try
+		while(currentClass != BaseRubyModel.class)
 		{
-		for(Field field : fields) {
+			Field[] fields = currentClass.getDeclaredFields();
+			try
+			{
+				for (Field field : fields)
+				{
 
-			field.setAccessible(true);
-			Object  currentField = field.get(rubyModel);
-			// Als het een databaseoject is willen we het natuurlijk opslaan
-			if(currentField != null  && currentField instanceof RubyModel) {
+					field.setAccessible(true);
+					Object currentField = field.get(rubyModel);
+					// Als het een databaseoject is willen we het natuurlijk opslaan
+					if (currentField != null && currentField instanceof RubyModel)
+					{
 
-				ObjectPersister objectPersister = retrieveObjectpersisterForModel((RubyModel)currentField);
-				objectPersister.persistObject();
-			}
-			// lijstjes willen we overheen lopen en individueel opslaan
-			else if(currentField != null && currentField instanceof List) {
+						ObjectPersister objectPersister = retrieveObjectpersisterForModel((RubyModel) currentField);
+						objectPersister.persistObject();
+					}
+					// lijstjes willen we overheen lopen en individueel opslaan
+					else if (currentField != null && currentField instanceof List)
+					{
 
-				ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
-				Class<?> stringListClass = (Class<?>) stringListType.getActualTypeArguments()[0];
-				// dit werkt niet
-				if(RubyModel.class.isAssignableFrom(stringListClass)) {
-
-					for(RubyModel rubyModel : (List<RubyModel>)currentField) {
-
-				 	  ObjectPersister persister =	retrieveObjectpersisterForModel(rubyModel);
-					  persister.persistObject();
-
+						ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
+						Class<?> stringListClass = (Class<?>) stringListType.getActualTypeArguments()[0];
+						// dit werkt niet
+						if (RubyModel.class.isAssignableFrom(stringListClass))
+						{
+							for (RubyModel rubyModel : (List<RubyModel>) currentField)
+							{
+								ObjectPersister persister = retrieveObjectpersisterForModel(rubyModel);
+								persister.persistObject();
+							}
+						}
 					}
 
 				}
 
-
+				currentClass = currentClass.getSuperclass();
+			}
+			catch (IllegalAccessException e)
+			{
+				Log.write(e, LogType.ERROR);
 			}
 
 		}
-			result = true;
-		}
-		catch (IllegalAccessException e)
-		{
-			Log.write(e, LogType.ERROR);
-		}
-		return result;
+		return true;
 	}
 
 	private ObjectPersister retrieveObjectpersisterForModel(RubyModel rubyModel) {
@@ -163,7 +167,6 @@ public class ObjectPersister
 
 	private void handleTablePerClassSave() throws RubyException
 	{
-		// Stack<Class> classes = new Stack<>();
 		// TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
 		classMap.reverseIterator();
 		for (Class currentClassname : classMap)

@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
@@ -19,8 +20,10 @@ public class Building extends BaseRubyModel
     @Transient
 	private String geo;
     // TODO: dit transient gemaakt, maar dit is een workaround. superclassing en subclassing moeten we later uitwerken
+	@Column
     private String name;
 	//private Contract contract;
+	@Column
 	@ManyToOne(mapIdTo = "geo")
 	private GameEntity owner;
 

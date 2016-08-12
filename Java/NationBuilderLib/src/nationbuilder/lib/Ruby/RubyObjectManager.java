@@ -46,6 +46,7 @@ public class RubyObjectManager {
             ID resultObject = this.objectBuilder.createIDFromResponse(data);
             resultObject.setType(model.getClass().getName());
             // We zijn er in geslaagd om het object ter persisteren.. (al dan niet naar de database of een tussenlaag) Dit betekend dat het object vanaf nu niet meer dirty is..
+            // TODO: in een table per class situatie kan je er niet vanuit gaan dat het object niet meer dirty is als je de superclass opgeslagen hebt
             model.setDirty(false);
             Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
             // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse

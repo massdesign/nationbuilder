@@ -70,30 +70,39 @@ public class BaseRubyModel implements RubyModel {
 
         // get all columns..
         StringBuilder sb = new StringBuilder();
-        for(Field field : this.getClass().getDeclaredFields()) {
+        Class currentClass = this.getClass();
+        while(currentClass != BaseRubyModel.class) {
+
+
+        for(Field field : currentClass.getDeclaredFields())
+        {
 
             field.setAccessible(true);
             // alleen velden gemarkeerd als Column meenemen voor het genereren van de signature
-            if(field.getAnnotation(Column.class) != null) {
+            if (field.getAnnotation(Column.class) != null)
+            {
 
                 try
                 {
-                  Object result =  field.get(this);
-                   if(result != null)
-                   {
-                       String hashCodeValue = String.valueOf(result.hashCode());
-                       sb.append(hashCodeValue);
-                   }
-                    else {
+                    Object result = field.get(this);
+                    if (result != null)
+                    {
+                        String hashCodeValue = String.valueOf(result.hashCode());
+                        sb.append(hashCodeValue);
+                    }
+                    else
+                    {
 
-                       sb.append("null");
-                   }
+                        sb.append("null");
+                    }
                 }
                 catch (IllegalAccessException e)
                 {
                     e.printStackTrace();
                 }
             }
+        }
+            currentClass = currentClass.getSuperclass();
         }
         return sb.toString();
     }

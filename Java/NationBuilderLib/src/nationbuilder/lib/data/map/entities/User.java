@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.IgnoreInRails;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
@@ -15,16 +16,17 @@ public class User extends BaseRubyModel
 	@IgnoreInRails
 	@OneToOne(mapIdTo = "ge",mappedBy="user",mappedByClazz = State.class )
 	private GameEntity gameEntity;
-
+	@Column
 	private String screenname;
 	@IgnoreInRails
 	private String ge;
+	@Column
 	private String loginname;
-
+	@Column
 	private String paswordhash;
-
+	@Column
 	private String emailadres;
-
+	@Column
 	private String registerdate;
 
 	public String getLoginname()

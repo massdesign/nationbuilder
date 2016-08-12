@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
@@ -13,7 +14,9 @@ public class EnergyBuildingType extends BaseRubyModel
     /**
      * Power output is measures per game turn in megawatt
      */
+	@Column
 	private int powerOutput;
+	@Column
 	private String energySource;
 
 	public String getEnergySource()

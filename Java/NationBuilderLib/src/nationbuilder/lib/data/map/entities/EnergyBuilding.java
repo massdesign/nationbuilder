@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 
@@ -18,6 +19,7 @@ public class EnergyBuilding extends Building
         this.buildingType = buildingType;
     }
 
+    @Column
     @OneToOne(mapIdTo = "btid")
 	private EnergyBuildingType buildingType;
     private String btid;

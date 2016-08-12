@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
@@ -9,9 +10,9 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 @Entity(tableName = "currencies")
 public class Currency extends BaseRubyModel
 {
-
+	@Column
 	private String name;
-
+	@Column
 	private String status;
 
 	// an indication that the currency may be traded to the outside world

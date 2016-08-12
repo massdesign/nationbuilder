@@ -79,47 +79,18 @@ public class PostFiller {
     public void testFill() {
 
 
-        Tile testTile1 = this.context.createRubyModel(Tile.class);
-        Tile testTile2 = this.context.createRubyModel(Tile.class);
-        Tile testTile3 = this.context.createRubyModel(Tile.class);
-        TerrainType terrainType1 = this.context.createRubyModel(TerrainType.class);
-        TerrainType terrainType2 = this.context.createRubyModel(TerrainType.class);
-        Layer layer = this.context.createRubyModel(Layer.class);
-        layer.setName("layer1");
-        terrainType1.setName("Type1");
-        terrainType2.setName("Type2");
+        WareHouse wareHouse = this.context.createRubyModel(WareHouse.class);
 
-
-        testTile1.setXoffset(0);
-        testTile1.setYoffset(0);
-
-        testTile2.setXoffset(1);
-        testTile2.setYoffset(1);
-
-        testTile3.setXoffset(2);
-        testTile3.setYoffset(2);
-
-        layer.addTile(testTile1);
-        layer.addTile(testTile2);
-        layer.addTile(testTile3);
-
-        testTile1.setTerrainType(terrainType1);
-        testTile2.setTerrainType(terrainType2);
-        testTile3.setTerrainType(terrainType1);
+        wareHouse.setName("testwarehouse1");
 
         try
         {
-            layer.Save();
-
-            this.context.commit();
+            wareHouse.Save();
         }
         catch (RubyException e)
         {
             e.printStackTrace();
         }
-
-
-
 
       /*  MapMap map = this.context.createRubyModel(MapMap.class);
         map.setHeight(39);

@@ -59,7 +59,7 @@ public class WorldLoader {
     public void Run() throws RubyException
     {
         this.PreFiller();
-        this.ConvertMap();
+       // this.ConvertMap();
         this.PostFiller();
         this.context.commit();
     }

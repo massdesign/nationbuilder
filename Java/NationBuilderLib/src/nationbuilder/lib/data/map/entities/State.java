@@ -23,6 +23,7 @@ public class State extends GameEntity
 	@ManyToOne(mapIdTo = "reg")
 	@IgnoreInRails
 	private Regime regime;
+	@Column
 	private String motto;
 
 	public String getMotto()

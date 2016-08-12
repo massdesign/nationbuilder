@@ -1,5 +1,6 @@
 package World;
 
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.City;
@@ -25,6 +26,17 @@ public class CityFiller extends BaseFiller
         city2.setPopulation(900);
        City city3 = createCity("Sankt Augustin");
         city3.setPopulation(12300);
+
+
+		try {
+			city1.Save();
+			city2.Save();
+			city3.Save();
+		}
+		catch (RubyException e)
+		{
+			e.printStackTrace();
+		}
 
 
         this.getRubyModels().add(city1);

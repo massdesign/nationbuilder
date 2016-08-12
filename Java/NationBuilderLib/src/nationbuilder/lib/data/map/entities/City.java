@@ -2,6 +2,7 @@ package nationbuilder.lib.data.map.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 
 /**
@@ -15,11 +16,14 @@ public class City extends GameEntity
 	// The building that are part of the city and its administration (does not mean that these have to be in the same place)
 //	private List<Building> buildings;
 	// The tiles that fall under the administration of the city (initially the land on which the city is build) but can also be expanded later on
+	@Column
 	private List<Tile> locations;
 	// The contracts where the city is involved
+	@Column
 	private List<Contract> contracts;
 
 	// population of the city.. not sure if this is the way we are going to handle this
+	@Column
 	private int population;
 
 	public City()

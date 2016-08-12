@@ -112,14 +112,6 @@ public class Tile extends BaseRubyModel {
         this.owner = owner;
     }
 
-    /*public List<GameEntity> getClaimedBy() {
-        return claimedBy;
-    }
-
-    public void setClaimedBy(List<GameEntity> claimedBy) {
-        this.claimedBy = claimedBy;
-    }*/
-
 	public void addResource(Resource resource) {
 		this.resources.add(resource);
 	}

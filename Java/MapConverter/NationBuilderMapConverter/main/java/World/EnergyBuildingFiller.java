@@ -3,6 +3,7 @@ package World;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.EnergyBuilding;
 import nationbuilder.lib.data.map.entities.EnergyBuildingType;
@@ -70,6 +71,15 @@ public class EnergyBuildingFiller extends BaseFiller
 		result.setName(name);
 		result.setBuildingType(this.energyBuildingTypes.get(next));
 
+		try
+		{
+			result.Save();
+		}
+		catch (RubyException e)
+		{
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 
@@ -80,6 +90,15 @@ public class EnergyBuildingFiller extends BaseFiller
 		result.setName(name);
 		result.setEnergySource(energysource);
 		this.energyBuildingTypes.add(result);
+
+		try
+		{
+			result.Save();
+		}
+		catch (RubyException e)
+		{
+			e.printStackTrace();
+		}
 		return result;
 	}
 }

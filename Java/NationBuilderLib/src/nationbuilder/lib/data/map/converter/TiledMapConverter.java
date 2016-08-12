@@ -164,9 +164,6 @@ public class TiledMapConverter {
         MapBuilder mapBuilder = new MapBuilder(this.rubyContext);
         this.map = mapBuilder.createMap(this.xmlMap);
         mapBuilder.Persist();
-
-
-
         //   this.map = this.convertMap(this.xmlMap);
         //this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());
      //   this.mapTiles =  this.convertLayer(this.xmlMap.getLayers());

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Secure.PasswordHash;
 import nationbuilder.lib.data.map.entities.Currency;
@@ -72,6 +73,15 @@ public class UserFiller extends BaseFiller
 		state2.setCurrency(currency1);
 		user1.setGameEntity(state1);
 		user2.setGameEntity(state2);
+
+		try
+		{
+			user1.Save();
+		}
+		catch (RubyException e)
+		{
+			e.printStackTrace();
+		}
 
 		this.getRubyModels().add(user1);
 		this.getRubyModels().add(user2);

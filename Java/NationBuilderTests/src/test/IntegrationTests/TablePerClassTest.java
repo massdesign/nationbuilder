@@ -41,10 +41,6 @@ public class TablePerClassTest
 		Assert.assertEquals(tpcmodel1_realid,expectedId);
 		Assert.assertEquals(tpcmodel2_realid,expectedReferencedObjectId);
 
-
-
-
-
 	}
 
 

@@ -1,5 +1,6 @@
 package mocks;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
@@ -36,6 +37,7 @@ public class TPCTestModel1 extends BaseRubyModel
 
 	@ID()
 	ReferenceMapping tpctestmodel2;
+	@Column
 	private String superclass_testfield;
 
 	public TPCTestModel1() {
