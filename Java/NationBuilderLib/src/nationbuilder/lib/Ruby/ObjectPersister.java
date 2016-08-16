@@ -168,7 +168,6 @@ public class ObjectPersister
 
 			if (!currentClassname.equals(BaseRubyModel.class) && !currentClassname.equals(Object.class))
 			{
-				// Class objectInstance = this.getClass().forName(currentClassname.getName());
 				Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
 				if (entity != null)
 				{

@@ -26,7 +26,7 @@ import nationbuilder.lib.sql.SqlQueryManager;
 import nationbuilder.lib.sql.SqlResponseData;
 
 /**
- * Created by patrick on 12/16/14.
+ * @author patrick.ekkel
  */
 public class BulkSqlCreateServiceConnector implements RubyCreateService
 {
@@ -37,7 +37,6 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	public BulkSqlCreateServiceConnector(SqlObjectBuilder objectBuilder,QueryManager queryManager)
 	{
         this.sqlQueryManager = queryManager;
-		//this.sqlQueryManager = new SqlQueryManager(RubyConfiguration.mySqlUsername,RubyConfiguration.mySqlPassword,RubyConfiguration.mySqlServer,RubyConfiguration.mySqlDatabase,RubyConfiguration.mySqlTempDir);
 		this.objectBuilder = objectBuilder;
 		this.persistedObjects = new HashMap<>();
 
@@ -66,54 +65,6 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 
         return responseData;
 	}
-/*
-    public String resolveUnresolvedFields(Class clazz,RubyModel key,String value)
-    {
-        String resolvedSql = "";
-
-        Pattern p = Pattern.compile(".bui.([_a-z-A-Z-0-9]*).eui");
-        Matcher m  = p.matcher(value);
-        Field refMappingField = null;
-      //  if(m.matches()) {
-            while (m.find()) {
-
-                String field_id = m.group(1);
-                try {
-                    // expecting this to be ReferenceMapping if not well we get a cast exception
-
-                     refMappingField = RubyAssociationResolver.getRefMappingField(clazz,field_id);
-
-
-                      refMappingField.setAccessible(true);
-                      Object refMapping = refMappingField.get(key);
-                      if(refMapping != null)
-                      {
-                          ReferenceMapping rm =  (ReferenceMapping)refMapping;
-                          resolvedSql = value.replace("<bui>" + field_id +"<eui>",rm.getID().getId());
-                      }
-                      else
-                      {
-                          resolvedSql = value.replace("<bui>" + field_id + "<eui>","0");
-                      }
-
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
-       // }
-        return resolvedSql;
-
-    }*/
-    /*private boolean hasUnresolvedfields(String sqlString)
-    {
-        boolean result = false;
-
-           // TODO: char sequence in een variable zetten
-           if(sqlString.contains("<bui>")) {
-               result = true;
-           }
-        return result;
-    }*/
 
     @Override
     public void commit() throws RubyException {
@@ -134,11 +85,9 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
             RubyModel model =  objectKey.getObject();
 
 
-          //  Entity entity =  model.getClass().getAnnotation(Entity.class);
             String sqlString = (String)pair.getValue();
             if(resolveUnresolvedFieldsService.hasUnresolvedfields(sqlString))
             {
-                // TODO: Class object beschikbaar maken in dit geval
               sqlString =  resolveUnresolvedFieldsService.resolve(objectKey.getClazz(),model,sqlString);
               pair.setValue(sqlString);
             }

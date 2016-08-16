@@ -46,7 +46,7 @@ public class SqlQueryManager implements QueryManager
 		this.tempdirLocation = tempdirLocation;
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(JDBC_DRIVER);
 		}
 		catch (ClassNotFoundException e)
 		{
@@ -83,17 +83,8 @@ public class SqlQueryManager implements QueryManager
 		}
         else
 		{
-			nextint = getCurrentID();
-			/*Connection conn = this.createConnection(this.rorm_assets);
-
-			PreparedStatement insertStmt = conn.prepareStatement("INSERT INTO object_count VALUES()", Statement.RETURN_GENERATED_KEYS);
-			insertStmt.executeUpdate();
-			ResultSet gks = insertStmt.getGeneratedKeys();
-			gks.next();
-			nextint = gks.getInt(1);
-
-			conn.close();*/
-
+			// Altijd eentje ophogen Als je maar een object wegschrijft levert dit een bug op
+			nextint = getCurrentID()+1;
 		}
         return nextint;
     }
@@ -108,8 +99,6 @@ public class SqlQueryManager implements QueryManager
 			insertStmt.executeUpdate();
 			sequencePersisted = true;
 		}
-		//ResultSet gks = insertStmt.getGeneratedKeys();
-		//gks.next();
 	}
 
 
