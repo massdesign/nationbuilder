@@ -104,7 +104,7 @@ public class RubyContext {
     public boolean SaveObject(ClassMap clazzMap, RubyModel object) throws RubyException
     {
         boolean result;
-       Entity entityMetaInfo =  object.getClass().getAnnotation(Entity.class);
+       Entity entityMetaInfo =  (Entity)clazzMap.getCurrent().getAnnotation(Entity.class);
 
         if(entityMetaInfo != null && !entityMetaInfo.tableName().isEmpty())
         {
