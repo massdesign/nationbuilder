@@ -33,8 +33,6 @@ public class ObjectPersister
 		this.rubyModel =  rubyModel;
 		ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
 		this.classMap = classMapService.createClassMap(rubyModel);
-		this.classMap.loadDefault();
-
 	}
 
 	// TODO: Resource URL wegrefactoren omdat dit zowizo niet gaat werken met de nieuwe auto class Saver
@@ -50,10 +48,6 @@ public class ObjectPersister
 		else
 		{
 			this.saveToContext();
-		//	ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-	//		ClassMap classMap = classMapService.createClassMap(rubyModel);
-	//		classMap.loadDefault();
-	//		context.SaveObject(classMap, rubyModel);
 		}
 	}
 

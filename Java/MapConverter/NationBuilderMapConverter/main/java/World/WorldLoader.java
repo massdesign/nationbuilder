@@ -45,11 +45,6 @@ public class WorldLoader {
         PostMapFiller postMapFiller = new PostMapFiller(context);
         postMapFiller.setMapDataset(this.mapDataset);
         postMapFiller.Fill();
-
-        MapServiceConnector mapsServiceConnector = new MapServiceConnector(context);
-
-        // Save the mapdata to the database
-        mapsServiceConnector.addDataset(mapDataset);
     }
     public void PostFiller() throws ObjectConversionFailedException {
         this.postFiller.setMapDataset(mapDataset);
