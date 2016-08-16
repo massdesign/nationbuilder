@@ -151,7 +151,6 @@ public class BaseRubyModel implements RubyModel {
             String newSignature = createSignature();
             this.setDirty(!signature.equals(newSignature));
             signature = newSignature;
-
         }
         return isDirty;
     }

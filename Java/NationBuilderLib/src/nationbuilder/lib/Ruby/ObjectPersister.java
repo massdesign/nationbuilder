@@ -161,34 +161,39 @@ public class ObjectPersister
 
 	private void handleTablePerClassSave() throws RubyException
 	{
+
 		// TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
 		classMap.reverseIterator();
-		for (Class currentClassname : classMap)
+		// voor we gaan besluiten om een tableperclass sitatie te handelen is het handig dat we vastgesteld hebben of dit object dirty is
+		if (rubyModel.markDirty())
 		{
-
-			if (!currentClassname.equals(BaseRubyModel.class) && !currentClassname.equals(Object.class))
+			for (Class currentClassname : classMap)
 			{
-				Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
-				if (entity != null)
+				if (!currentClassname.equals(BaseRubyModel.class) && !currentClassname.equals(Object.class))
 				{
-					if (entity.tableName() != null && !entity.tableName().equals(""))
+					Entity entity = (Entity) currentClassname.getAnnotation(Entity.class);
+					if (entity != null)
 					{
+						if (entity.tableName() != null && !entity.tableName().equals(""))
+						{
+							this.saveToContext();
+							// Het handelt zich hier om een meerdere tabellen per klasse, dat betekend dat we er vanuit mogen gaan dat 1 SaveToContext niet genoeg is om de dirty staat van het object op te heffen
+							// we gaan er dus standaard vanuit dat dit object nog dirty is
+							this.rubyModel.setDirty(true);
+						}
+						else
+						{
+							throw new IllegalArgumentException("tablename can't be null or empty");
+						}
 
-						this.saveToContext();
 					}
 					else
 					{
-						throw new IllegalArgumentException("tablename can't be null or empty");
+						throw new MissingAnnotationException("Entity annotation expected on object: " + currentClassname.getClass());
 					}
-
-				}
-				else
-				{
-					throw new MissingAnnotationException("Entity annotation expected on object: " + currentClassname.getClass());
 				}
 			}
 		}
 	}
-
 
 }

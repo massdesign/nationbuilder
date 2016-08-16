@@ -38,8 +38,12 @@ public class RubyObjectManager {
 
     public boolean store(ClassMap clazzMap,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
+        Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
         boolean result = false;
-        if(model.getId() == null)
+        // mogelijke situaties die we kunnen hebben waar we op moeten slaan, update niet meegerekend
+        if(model.getId() == null ||
+           (model.getId() != null && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass)
+         )
         {
             ResponseData data = this.rubyService.postObject(clazzMap, model, resourceUrl);
             // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
@@ -48,7 +52,7 @@ public class RubyObjectManager {
             // We zijn er in geslaagd om het object ter persisteren.. (al dan niet naar de database of een tussenlaag) Dit betekend dat het object vanaf nu niet meer dirty is..
             // TODO: in een table per class situatie kan je er niet vanuit gaan dat het object niet meer dirty is als je de superclass opgeslagen hebt
             model.setDirty(false);
-            Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
+
             // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
             if (entityAnnotation != null && clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class
                 && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass)

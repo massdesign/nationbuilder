@@ -109,8 +109,6 @@ public class SqlObjectBuilder implements ObjectBuilder
             {
                 throw new MissingAnnotationException("Tablename is empty on  " + object.getClass().getSimpleName());
             }
-
-
         }
         else
         {
@@ -133,8 +131,6 @@ public class SqlObjectBuilder implements ObjectBuilder
 
                 result = new ID();
                 ((ID) result).setId(id);
-
-
             }
 
         return result;
