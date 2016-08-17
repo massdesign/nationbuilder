@@ -86,6 +86,7 @@ public class PostFiller {
         try
         {
             wareHouse.Save();
+            this.context.commit();
         }
         catch (RubyException e)
         {

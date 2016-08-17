@@ -31,12 +31,14 @@ public class ResolveUnresolvedFieldsService implements RubyDataService
 		Matcher m = p.matcher(value);
 		Field refMappingField = null;
 		//  if(m.matches()) {
+		resolvedSql = value;
 		while (m.find())
 		{
 
 			String field_id = m.group(1);
 			try
 			{
+
 				// expecting this to be ReferenceMapping if not well we get a cast exception
 
 				refMappingField = RubyAssociationResolver.getRefMappingField(clazz, field_id);
@@ -46,11 +48,11 @@ public class ResolveUnresolvedFieldsService implements RubyDataService
 				if (refMapping != null)
 				{
 					ReferenceMapping rm = (ReferenceMapping) refMapping;
-					resolvedSql = value.replace("<bui>" + field_id + "<eui>", rm.getID().getId());
+					resolvedSql = resolvedSql.replace("<bui>" + field_id + "<eui>", rm.getID().getId());
 				}
 				else
 				{
-					resolvedSql = value.replace("<bui>" + field_id + "<eui>", "0");
+					resolvedSql = resolvedSql.replace("<bui>" + field_id + "<eui>", "0");
 				}
 
 			}

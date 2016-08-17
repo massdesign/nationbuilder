@@ -283,34 +283,42 @@ public class RubyAssociationResolver
 	public static Field getIDFromSuperClass(ClassMap clazzMap,RubyModel baseRubyModel)  throws MissingAnnotationException
 	{
 		Field result = null;
+		Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
 		if(baseRubyModel != null) {
 
 			Field [] fields = baseRubyModel.getClass().getSuperclass().getDeclaredFields();
 			for(int i=0;i<fields.length;i++) {
 				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
 				if(annotation != null) {
-					// TODO: refactoren, dit is een beetje een fucked up constructie
-				   Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getSubClassFrom(clazzMap.getSuperClassFrom(baseRubyModel.getClass()))).getClass().getAnnotation(Entity.class);
-				   Entity currentEntity = baseRubyModel.getClass().getAnnotation(Entity.class);
+					// NOTE: dit stukje code werkt niet zoals verwacht
 
+					Entity expectedEntity = null;
+					try
+					{
+						expectedEntity = Class.forName(annotation.mapIdToEntity()).getAnnotation(Entity.class);
+					//Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getSubClassFrom(clazzMap.getSuperClassFrom(baseRubyModel.getClass()))).getClass().getAnnotation(Entity.class);
 
-						if(expectedEntity != null) {
+						if (expectedEntity != null)
+						{
 
-					   // we found the correct field for the correct class
-					   if(expectedEntity.tableName().equals(currentEntity.tableName())) {
-						   result = fields[i];
-						   break;
-					   }
-					}
-					else {
-								throw new MissingAnnotationException("Expected Annotation Entity o " + expectedEntity.toString());
-
+							// we found the correct field for the correct class
+							if (expectedEntity.tableName().equals(currentEntity.tableName()))
+							{
+								result = fields[i];
+								break;
+							}
 						}
-
-					//else {
-					//	}
+					}
+					catch (ClassNotFoundException e)
+					{
+						Log.write(e,LogType.ERROR);
+					}
 				}
 
+			}
+
+			if(result == null) {
+				throw new MissingAnnotationException("Expected Annotation Entity o " + currentEntity.toString());
 			}
 
 		}

@@ -35,7 +35,7 @@ public class TPCTestModel1 extends BaseRubyModel
 		this.superclass_testfield = superclass_testfield;
 	}
 
-	@ID()
+	@ID(mapIdToEntity = "mocks.TPCTestmodel2")
 	ReferenceMapping tpctestmodel2;
 	@Column
 	private String superclass_testfield;

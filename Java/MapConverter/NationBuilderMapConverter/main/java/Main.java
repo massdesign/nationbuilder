@@ -14,7 +14,7 @@ public class Main {
         final RubyContext context = new DefaultRubyContextFactory()
          .createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT, Main.class);
         WorldLoader worldLoader = new WorldLoader(context);
-        worldLoader.Run();;
+        worldLoader.TestRun();
     }
 
 }

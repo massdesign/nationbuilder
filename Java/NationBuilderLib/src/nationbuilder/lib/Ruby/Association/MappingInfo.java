@@ -57,11 +57,15 @@ public class MappingInfo
 	public String getObjectKey() {
 		String result = "";
 		String  mappedByClassComponent = "";
+		String  field = "";
 		if(mappedByClazz != null) {
 			mappedByClassComponent =  mappedByClazz.getSimpleName();
 		}
+		if(this.getField() != null) {
+			field = this.getField().getName();
+		}
 		// Get some unique value and create a MD5 hash to give this mapping info an uniqe Value
-		result += this.mappingInfoType.toString() + mappedByClassComponent + this.instance.toString();
+		result += this.mappingInfoType.toString() + mappedByClassComponent + field + this.instance.toString();
 		try
 		{
 			 MessageDigest messageDigest = MessageDigest.getInstance("MD5");

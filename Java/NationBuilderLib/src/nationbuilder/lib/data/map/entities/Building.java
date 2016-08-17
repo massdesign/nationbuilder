@@ -19,16 +19,19 @@ public class Building extends BaseRubyModel
 {
     @Transient
 	private String geo;
-    // TODO: dit transient gemaakt, maar dit is een workaround. superclassing en subclassing moeten we later uitwerken
+
 	@Column
     private String name;
-	//private Contract contract;
+
 	@Column
 	@ManyToOne(mapIdTo = "geo")
 	private GameEntity owner;
 
-	@ID()
+	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.PowerRelayStation")
 	private ReferenceMapping power_relay_station;
+
+	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.WareHouse")
+	private ReferenceMapping warehouse;
 
 	public String getName()
 	{

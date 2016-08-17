@@ -12,5 +12,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ID
 {
-	//Class mapIdToEntity();
+	// TODO: niet zo'n sexy methode om aan te geven waar het id van een tableperclass structuur gelaten moet worden, zorgt er namelijk voor dat je de superclass aan moet passen voor een subclass toevoeging
+	String mapIdToEntity() default "";
 }
