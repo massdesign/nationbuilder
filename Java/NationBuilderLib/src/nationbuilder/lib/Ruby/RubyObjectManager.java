@@ -56,7 +56,7 @@ public class RubyObjectManager {
             model.setDirty(false);
 
             // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
-            if (clazzMap.getSubClassFrom(model.getClass()) != BaseRubyModel.class
+            if (clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class
                 && modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass)
             {
                 Field idField = RubyAssociationResolver.getIDFromSuperClass(clazzMap, model);

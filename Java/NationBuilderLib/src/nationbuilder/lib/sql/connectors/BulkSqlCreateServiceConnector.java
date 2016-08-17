@@ -63,12 +63,12 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 
         if(modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass) {
             sql = this.objectBuilder.createStringFromObject(clazzMap.getCurrent(), objectToPost);
-            rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost, clazzMap.getCurrent());
         }
         else {
             sql = this.objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
-            rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost, objectToPost.getClass());
+
         }
+        rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost,clazzMap.getCurrent());
         this.persistedObjects.put(rubyObjectKey, sql);
         responseData.setSql(sql);
 

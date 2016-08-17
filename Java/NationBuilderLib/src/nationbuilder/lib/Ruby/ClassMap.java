@@ -70,6 +70,11 @@ public class ClassMap implements Iterable<Class>,Iterator<Class>
         return this.getSuperClassFrom(this.getCurrent());
     }
 
+    public void loadDefault()
+    {
+        this.currentNode = this.classHierarchy.getFirst();
+
+    }
     public Class getSubClassFrom(Class clazz) {
 
         // check of de eerste match met Class zodat we die case afgedekt hebben

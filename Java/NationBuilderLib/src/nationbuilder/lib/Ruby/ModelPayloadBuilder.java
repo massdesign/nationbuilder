@@ -33,6 +33,10 @@ public class ModelPayloadBuilder
 			{
 			 inhiritanceStrategy = InhiritanceStrategy.TablePerClass;
 			}
+			else {
+				// Heel belangrijk anders krijgen we nullpointers omdat er niet over de classMap heen wordt geloopt
+				classMap.loadDefault();
+			}
 		}
 		catch (RubyDataServiceNotInitializedException e)
 		{
