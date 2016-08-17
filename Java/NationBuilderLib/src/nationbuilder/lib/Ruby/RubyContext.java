@@ -5,6 +5,7 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.EntityType;
+import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyBackendConnectionFailed;
@@ -82,12 +83,12 @@ public class RubyContext {
 			result.setRubyContext(this);
 			return result;
 	}
-    private boolean SaveObject(ClassMap clazzMap,RubyModel object,String resourceUrl) throws RubyException
+    private boolean SaveObject(ModelPayload modelPayload,String resourceUrl) throws RubyException
 	{
-		object.FetchIDs();
+		modelPayload.getRubyModel().FetchIDs();
 		try
 		{
-           return  this.rubyObjectMarshaller.store(clazzMap,object, resourceUrl);
+           return  this.rubyObjectMarshaller.store(modelPayload, resourceUrl);
 		}
 		catch (ConnectException e)
 		{
@@ -95,20 +96,32 @@ public class RubyContext {
 		}
 		catch (IOException e)
 		{
-			throw new ObjectPersistanceFailedException(object,e);
+			throw new ObjectPersistanceFailedException(modelPayload.getRubyModel(),e);
 		}
 
 
     }
 
-    public boolean SaveObject(ClassMap clazzMap, RubyModel object) throws RubyException
+    public boolean SaveObject(ModelPayload modelPayload) throws RubyException
     {
         boolean result;
-       Entity entityMetaInfo =  (Entity)clazzMap.getCurrent().getAnnotation(Entity.class);
+
+        ClassMap clazzMap = modelPayload.getClassMap();
+        RubyModel object = modelPayload.getRubyModel();
+
+        // bij een singletableperinstance maken we geen gebruik van de clazzmap
+        Entity entityMetaInfo = null;
+
+        if(modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass) {
+            entityMetaInfo =  (Entity)clazzMap.getCurrent().getAnnotation(Entity.class);
+        }
+        else {
+           entityMetaInfo = modelPayload.getRubyModel().getClass().getAnnotation(Entity.class);
+        }
 
         if(entityMetaInfo != null && !entityMetaInfo.tableName().isEmpty())
         {
-           result = this.SaveObject(clazzMap,object,entityMetaInfo.tableName());
+           result = this.SaveObject(modelPayload,entityMetaInfo.tableName());
         }
         else if(entityMetaInfo != null && entityMetaInfo.type() == EntityType.Resource) {
             result = true;

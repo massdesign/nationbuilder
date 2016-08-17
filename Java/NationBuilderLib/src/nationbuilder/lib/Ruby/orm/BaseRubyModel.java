@@ -16,6 +16,7 @@ import nationbuilder.lib.Ruby.Exceptions.NotSavedEntityException;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ModelPayloadBuilder;
 import nationbuilder.lib.Ruby.ObjectPersister;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.services.ClassMapService;
@@ -114,7 +115,8 @@ public class BaseRubyModel implements RubyModel {
         {
             try
             {
-                this.objectPersister = new ObjectPersister(this.context, this);
+                ModelPayloadBuilder modelPayloadBuilder = new ModelPayloadBuilder(this);
+                this.objectPersister = new ObjectPersister(this.context, modelPayloadBuilder.build());
             }
             catch (RubyDataServiceNotInitializedException e)
             {

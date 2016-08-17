@@ -2,6 +2,7 @@ package nationbuilder.lib.Ruby.Interfaces;
 
 import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.data.map.ResponseData;
@@ -13,8 +14,8 @@ import java.io.IOException;
  */
 public interface RubyService {
 
-     ResponseData postObject(RubyModel objectToPost,String resourceUrl,String rootValue) throws IOException;
-     ResponseData postObject(ClassMap clazzmap,RubyModel objectToPost,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
+     ResponseData postObject(ModelPayload modelPayload, String resourceUrl,String rootValue) throws IOException;
+     ResponseData postObject(ModelPayload modelPayload,String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException;
      int postFile(String fileLocation,String resourceUrl) throws IOException;
      int postFile(BaseRubyResourceModel file,String resourceUrl) throws IOException;
 	 ResponseData getObject(String resourceUrl);

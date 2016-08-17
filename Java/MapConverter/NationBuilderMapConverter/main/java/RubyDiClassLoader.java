@@ -3,8 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import nationbuilder.lib.Logging.Log;
-import nationbuilder.lib.Ruby.Association.annotation.Column;
-import nationbuilder.lib.javaassist.CodeInjector;
+
 
 /**
  * @author patrick.ekkel

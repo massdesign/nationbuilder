@@ -5,6 +5,7 @@ import java.io.IOException;
 import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
 import nationbuilder.lib.connectors.BaseServiceConnector;
@@ -22,12 +23,12 @@ public class JsonServiceConnector extends BaseServiceConnector  {
 		this.setCreateService(new JsonCreateServiceConnector(databaseServerUrl,objectBuilder));
 		this.setBlobService(new StandardFileBlobService(databaseServerUrl));
 	}
-	public ResponseData postObject(RubyModel objectToPost,String resourceUrl,String rootValue) throws IOException
+	public ResponseData postObject(ModelPayload modelPayload,String resourceUrl,String rootValue) throws IOException
 	{
-        return this.getCreateService().postObject(objectToPost,resourceUrl,rootValue);
+        return this.getCreateService().postObject(modelPayload,resourceUrl,rootValue);
 	}
-	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
-		return this.getCreateService().postObject(clazzMap,objectToPost,resourceUrl);
+	public ResponseData postObject(ModelPayload modelPayload,String resourceUrl) throws ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		return this.getCreateService().postObject(modelPayload,resourceUrl);
 	}
 
 	@Override

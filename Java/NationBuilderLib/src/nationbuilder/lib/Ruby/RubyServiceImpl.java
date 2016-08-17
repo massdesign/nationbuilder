@@ -25,14 +25,14 @@ public class RubyServiceImpl implements RubyService
 	}
 
 	@Override
-	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl, String rootValue) throws IOException
 	{
-		return this.writeService.postObject(objectToPost,resourceUrl,rootValue);
+		return this.writeService.postObject(modelPayload,resourceUrl,rootValue);
 	}
 
 	@Override
-	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
-		return this.writeService.postObject(clazzMap,objectToPost,resourceUrl);
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		return this.writeService.postObject(modelPayload,resourceUrl);
 	}
 
 	@Override

@@ -8,10 +8,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
+import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.ClassMap;
 import nationbuilder.lib.Ruby.Exceptions.*;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.Ruby.services.RelationResolveService;
 import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
@@ -43,23 +45,30 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
 	}
 
 	@Override
-	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public ResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl) throws ObjectPersistanceFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
         SqlResponseData responseData = new SqlResponseData();
+
+        RubyModel objectToPost = modelPayload.getRubyModel();
+        ClassMap clazzMap = modelPayload.getClassMap();
+
+        // TODO: bepalen wat we doen Strategy per class en Single instance onderbrengen in een soort van statemachine
         String sql;
-        if(RubyAssociationResolver.StrategyIsTablePerClass(objectToPost)) {
+        RubyObjectKey rubyObjectKey;
+
+        if(modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass) {
             sql = this.objectBuilder.createStringFromObject(clazzMap.getCurrent(), objectToPost);
+            rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost, clazzMap.getCurrent());
         }
         else {
             sql = this.objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
+            rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost, objectToPost.getClass());
         }
-
-        RubyObjectKey rubyObjectKey = new RubyObjectKey(resourceUrl, objectToPost,clazzMap.getCurrent());
         this.persistedObjects.put(rubyObjectKey, sql);
         responseData.setSql(sql);
 

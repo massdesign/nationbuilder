@@ -11,6 +11,7 @@ import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.Interfaces.RubyService;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
 import nationbuilder.lib.connectors.SqlObjectBuilder;
 import nationbuilder.lib.data.map.ResponseData;
@@ -45,15 +46,17 @@ public class RubyMockService implements RubyService
 
 
 	@Override
-	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public ResponseData postObject(ClassMap clazzmap, RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException
 	{
-		this.bulkSqlCreateServiceConnector.postObject(clazzmap,objectToPost,resourceUrl);
+		RubyModel objectToPost = modelPayload.getRubyModel();
+		ClassMap clazzmap = modelPayload.getClassMap();
+		this.bulkSqlCreateServiceConnector.postObject(modelPayload,resourceUrl);
 
 		SqlObjectBuilder sqlObjectBuilder = new SqlObjectBuilder(managerMock);
 		SqlResponseData responseData = new SqlResponseData();

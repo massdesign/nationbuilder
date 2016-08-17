@@ -8,6 +8,8 @@ import nationbuilder.lib.collections.DoubleLinkedList;
 /**
  * Created by patrick on 2/26/16.
  */
+
+// TODO: aantal tests schrijven voor de classmap
 public class ClassMap implements Iterable<Class>,Iterator<Class>
 {
     private DoubleLinkedList<Class> classHierarchy;

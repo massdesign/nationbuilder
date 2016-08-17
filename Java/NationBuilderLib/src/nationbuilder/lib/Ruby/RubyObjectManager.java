@@ -36,16 +36,18 @@ public class RubyObjectManager {
 
     }
 
-    public boolean store(ClassMap clazzMap,RubyModel model, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
+    public boolean store(ModelPayload modelPayload, String resourceUrl) throws PostRequestFailedException, ObjectPersistanceFailedException, MissingAnnotationException, ObjectConversionFailedException, IOException, ColumnNotFoundException {
 
-        Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
+        RubyModel model = modelPayload.getRubyModel();
+        ClassMap clazzMap = modelPayload.getClassMap();
+       // Entity entityAnnotation = model.getClass().getAnnotation(Entity.class);
         boolean result = false;
         // mogelijke situaties die we kunnen hebben waar we op moeten slaan, update niet meegerekend
         if(model.getId() == null ||
-           (model.getId() != null && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass)
+           (model.getId() != null && modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass)
          )
         {
-            ResponseData data = this.rubyService.postObject(clazzMap, model, resourceUrl);
+            ResponseData data = this.rubyService.postObject(modelPayload, resourceUrl);
             // TODO: dit moet anders.. de structuur m.b.t ObjectBuilders is raar.. Er moet een manier gemaakt worden die de juiste Objectbuilder selecteert vanuit de service
             ID resultObject = this.objectBuilder.createIDFromResponse(data);
             resultObject.setType(model.getClass().getName());
@@ -54,8 +56,8 @@ public class RubyObjectManager {
             model.setDirty(false);
 
             // Als we niet de root klasse zijn van een modelboom en we inheritstrategy is TablePerClass dan moeten we het ID opslaan in de overervende superklasse
-            if (entityAnnotation != null && clazzMap.getSuperClassFromCurrent() != BaseRubyModel.class
-                && entityAnnotation.strategy() == InhiritanceStrategy.TablePerClass)
+            if (clazzMap.getSubClassFrom(model.getClass()) != BaseRubyModel.class
+                && modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass)
             {
                 Field idField = RubyAssociationResolver.getIDFromSuperClass(clazzMap, model);
 

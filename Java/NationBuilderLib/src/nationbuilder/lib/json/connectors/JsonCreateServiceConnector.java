@@ -10,6 +10,7 @@ import nationbuilder.lib.Ruby.Exceptions.ObjectConversionFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyCreateService;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.connectors.ObjectBuilder;
 import nationbuilder.lib.http.HttpRequestUtil;
@@ -28,13 +29,15 @@ public class JsonCreateServiceConnector implements RubyCreateService
 		this.objectBuilder = objectBuilder;
 	}
 	@Override
-	public HttpResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
+	public HttpResponseData postObject(ModelPayload modelPayload, String resourceUrl, String rootValue) throws IOException
 	{
 		// TODO: remove this method this one is not used
 		return null;
 	}
 	@Override
-	public HttpResponseData postObject(ClassMap clazzMap,RubyModel objectToPost, String resourceUrl) throws PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+	public HttpResponseData postObject(ModelPayload modelPayload, String resourceUrl) throws PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException {
+		RubyModel objectToPost = modelPayload.getRubyModel();
+
 		String json = objectBuilder.createStringFromObject(objectToPost.getClass(),objectToPost);
 		//	String json = gson.toJson(objectToPost);
 		Log.writeInfo("Json object" + json.toString());

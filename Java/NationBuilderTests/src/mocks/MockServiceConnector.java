@@ -9,6 +9,7 @@ import nationbuilder.lib.Ruby.Exceptions.ObjectPersistanceFailedException;
 import nationbuilder.lib.Ruby.Exceptions.PostRequestFailedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
+import nationbuilder.lib.Ruby.ModelPayload;
 import nationbuilder.lib.connectors.BaseServiceConnector;
 import nationbuilder.lib.data.map.ResponseData;
 import nationbuilder.lib.data.map.entities.BaseRubyResourceModel;
@@ -24,13 +25,13 @@ public class MockServiceConnector extends BaseServiceConnector
 	}
 
 	@Override
-	public ResponseData postObject(RubyModel objectToPost, String resourceUrl, String rootValue) throws IOException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl, String rootValue) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public ResponseData postObject(ClassMap clazzmap, RubyModel objectToPost, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException
+	public ResponseData postObject(ModelPayload modelPayload, String resourceUrl) throws IOException, ObjectPersistanceFailedException, PostRequestFailedException, ObjectConversionFailedException, MissingAnnotationException, ColumnNotFoundException
 	{
 		return null;
 	}

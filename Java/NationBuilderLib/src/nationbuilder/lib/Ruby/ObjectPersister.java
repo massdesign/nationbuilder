@@ -8,6 +8,7 @@ import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Exceptions.MissingAnnotationException;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
@@ -23,25 +24,22 @@ public class ObjectPersister
 {
 
 	private RubyContext context;
-	private RubyModel rubyModel;
-	private ClassMap classMap;
+	private ModelPayload modelPayload;
 
-	public ObjectPersister(RubyContext rubyContext,RubyModel  rubyModel) throws RubyDataServiceNotInitializedException
+	public ObjectPersister(RubyContext rubyContext,ModelPayload modelPayload) throws RubyDataServiceNotInitializedException
 	{
-
 		this.context = rubyContext;
-		this.rubyModel =  rubyModel;
-		ClassMapService classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
-		this.classMap = classMapService.createClassMap(rubyModel);
+		this.modelPayload = modelPayload;
+
 	}
 
 	// TODO: Resource URL wegrefactoren omdat dit zowizo niet gaat werken met de nieuwe auto class Saver
 	public void persistObject() throws RubyException
 	{
-		Log.write(this.rubyModel.toString(),LogType.DEBUG);
+		Log.write(this.modelPayload.getRubyModel().toString(),LogType.DEBUG);
 		// voordat we dit object op gaan slaan moeten alle onderliggende entiteiten op gaan slaan..
 
-		if (RubyAssociationResolver.StrategyIsTablePerClass(rubyModel) && !context.getRubyService().ignoreClassMapInsertStrategy())
+		if (modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass && !context.getRubyService().ignoreClassMapInsertStrategy())
 		{
 			this.handleTablePerClassSave();
 		}
@@ -53,15 +51,16 @@ public class ObjectPersister
 
 	private void saveToContext() throws RubyException
 	{
+		RubyModel rubyModel = this.modelPayload.getRubyModel();
 		// voordat we dit object gaan opslaan moeten we kijken of dit object dirty is
-		if(this.rubyModel.markDirty())
+		if(rubyModel.markDirty())
 		{
 			// voordat we gaan opslaan moeten we eerst zeker weten dat de onderliggende objectstructuur ook  opgeslagen is
 			if (persistObjectHierarchy())
 			{
 				// als dat gelukt is mogen we het root element saven
-				context.SaveObject(classMap, rubyModel);
-				this.rubyModel.setDirty(false);
+				context.SaveObject(modelPayload);
+				rubyModel.setDirty(false);
 			}
 			else
 			{
@@ -73,7 +72,10 @@ public class ObjectPersister
 
 	private boolean persistObjectHierarchy() throws RubyException
 	{
-		Class currentClass = this.rubyModel.getClass();
+
+		RubyModel object = this.modelPayload.getRubyModel();
+
+		Class currentClass = object.getClass();
 
 		while(currentClass != BaseRubyModel.class)
 		{
@@ -84,7 +86,7 @@ public class ObjectPersister
 				{
 
 					field.setAccessible(true);
-					Object currentField = field.get(rubyModel);
+					Object currentField = field.get(object);
 					// Als het een databaseoject is willen we het natuurlijk opslaan
 					if (currentField != null && currentField instanceof RubyModel)
 					{
@@ -161,9 +163,10 @@ public class ObjectPersister
 
 	private void handleTablePerClassSave() throws RubyException
 	{
-
+		RubyModel rubyModel = this.modelPayload.getRubyModel();
+		ClassMap classMap = this.modelPayload.getClassMap();
 		// TODO: afhankelijkheid met het object BaseRubyModel hier geintroduceerd
-		classMap.reverseIterator();
+		this.modelPayload.getClassMap().reverseIterator();
 		// voor we gaan besluiten om een tableperclass sitatie te handelen is het handig dat we vastgesteld hebben of dit object dirty is
 		if (rubyModel.markDirty())
 		{
@@ -179,7 +182,7 @@ public class ObjectPersister
 							this.saveToContext();
 							// Het handelt zich hier om een meerdere tabellen per klasse, dat betekend dat we er vanuit mogen gaan dat 1 SaveToContext niet genoeg is om de dirty staat van het object op te heffen
 							// we gaan er dus standaard vanuit dat dit object nog dirty is
-							this.rubyModel.setDirty(true);
+							rubyModel.setDirty(true);
 						}
 						else
 						{
