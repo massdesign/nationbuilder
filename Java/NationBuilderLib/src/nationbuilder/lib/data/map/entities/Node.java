@@ -18,7 +18,7 @@ public class Node extends BaseRubyModel
 
 	private boolean destroyable;
 
-	@ID()
+	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.PowerGridNode")
 	private ReferenceMapping power_grid_node;
 
 	public boolean isDestroyable()

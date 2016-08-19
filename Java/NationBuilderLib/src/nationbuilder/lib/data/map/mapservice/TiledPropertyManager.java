@@ -3,7 +3,11 @@ package nationbuilder.lib.data.map.mapservice;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import nationbuilder.lib.data.map.exceptions.MapConvertException;
 import nationbuilder.lib.data.map.xml.Property;
+import nationbuilder.lib.data.map.xml.TiledXmlMap;
+import nationbuilder.lib.data.map.xml.XmlObject;
+import nationbuilder.lib.data.map.xml.XmlObjectGroup;
 import nationbuilder.lib.data.map.xml.XmlTileDefinition;
 import nationbuilder.lib.data.map.xml.XmlTileSet;
 
@@ -13,17 +17,55 @@ import nationbuilder.lib.data.map.xml.XmlTileSet;
 public class TiledPropertyManager
 {
 	private List<XmlTileSet> tileSets;
+	private TiledXmlMap tiledXmlMap;
 	boolean indexed = false;
 
 	private HashMap<Integer, List<IndexedProperty>> indexedPropertyHashMap;
-	public TiledPropertyManager(List<XmlTileSet> tileSets) {
+	public TiledPropertyManager(List<XmlTileSet> tileSets,TiledXmlMap tiledXmlMap) {
 
 		this.tileSets = tileSets;
+		this.tiledXmlMap = tiledXmlMap;
 		this.indexedPropertyHashMap =  new HashMap<>();
 	}
 
 
-	public TileProperty getTileProperty(TilePropertyType type,int gid) {
+	public List<TiledXmlProperty> getObjectGroupProperties(int xposition,int yposition) throws MapConvertException
+	{
+		// TODO: dit kunnen we uit de map halen
+		int tileWidth  = 32;
+		int tileHeight = 32;
+		xposition *= tileWidth;
+		yposition *= tileHeight;
+		List<TiledXmlProperty> result = new ArrayList<>();
+
+
+		List<XmlObjectGroup> objectGroups = this.tiledXmlMap.getObjectGroups();
+
+		for(XmlObjectGroup objectGroup : objectGroups) {
+
+
+				 List<XmlObject> xmlObjects = objectGroup.getObjects();
+			for(XmlObject xmlObject : xmlObjects) {
+
+				float x1 = xmlObject.getX();
+				float x2 = xmlObject.getX() + Float.valueOf(xmlObject.width());
+				float y1 = xmlObject.getY();
+				float y2 = xmlObject.getY() + Float.valueOf(xmlObject.height());
+				if((xposition > x1 && xposition < x2) && (yposition > y1  && yposition < y2))
+				{
+					for (Property property : xmlObject.getProperties())
+					{
+
+						result.add(new TileProperty(TilePropertyType.convertToEnum(property.getName()), property.getValue()));
+					}
+				}
+
+			}
+		}
+		return result;
+	}
+
+	public TiledXmlProperty getTileProperty(TilePropertyType type,int gid) {
 
 		TileProperty result =  null;
 		if(indexed) {

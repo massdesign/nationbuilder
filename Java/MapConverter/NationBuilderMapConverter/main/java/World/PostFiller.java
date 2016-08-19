@@ -28,70 +28,20 @@ public class PostFiller {
         this.save();
 
     }
-   /* public void testFill() {
 
-
-        Tile tile1 = this.context.createRubyModel(Tile.class);
-        tile1.setXposition(20);
-        tile1.setYposition(20);
-        tile1.setXoffset(3);
-        tile1.setYoffset(4);
-
-        Tile tile2 = this.context.createRubyModel(Tile.class);
-        tile2.setXposition(23);
-        tile2.setYposition(43);
-        tile2.setXoffset(9);
-        tile2.setYoffset(15);
-
-        Layer layer1  = this.context.createRubyModel(Layer.class);
-
-        layer1.setName("Testlayer");
-        layer1.setTileHeight(32);
-        layer1.setTileWidth(44);
-        layer1.setZindex(3);
-
-        tile1.setLayer(layer1);
-        tile2.setLayer(layer1);
-
-        layer1.addTile(tile1);
-        layer1.addTile(tile2);
-
-
-        try
-        {
-            layer1.Save("layers");
-            tile1.Save("tiles");
-            tile2.Save("tiles");
-
-
-            this.context.commit();
-        }
-        catch (RubyException e)
-        {
-            e.printStackTrace();
-        }
-
-
-    } */
-
-
-     // NODE: powergrid components voorbeeld, niet weggooien totdat we powergrid components uit de xmlmap kunnen halen
     public void testFill() {
 
 
-        WareHouse wareHouse = this.context.createRubyModel(WareHouse.class);
+        PowerRelayStation powerRelayStation = this.context.createRubyModel(PowerRelayStation.class);
 
-        wareHouse.setName("testwarehouse1");
+        PowerRelayStationType powerRelayStationType = this.context.createRubyModel(PowerRelayStationType.class);
 
-        try
-        {
-            wareHouse.Save();
-            this.context.commit();
-        }
-        catch (RubyException e)
-        {
-            e.printStackTrace();
-        }
+        powerRelayStationType.setName("testje in je moeder");
+        powerRelayStationType.setResponseTime("even testen");
+
+        powerRelayStation.setPowerRelayStationType(powerRelayStationType);
+
+
 
       /*  MapMap map = this.context.createRubyModel(MapMap.class);
         map.setHeight(39);

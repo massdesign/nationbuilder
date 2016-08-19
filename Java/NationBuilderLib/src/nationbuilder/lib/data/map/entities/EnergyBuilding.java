@@ -11,6 +11,7 @@ import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 @Entity(tableName = "energy_buildings")
 public class EnergyBuilding extends Building
 {
+    // TODO: zie todo hierboven, tableperclass structuur hier aanbrengen
     public EnergyBuildingType getBuildingType() {
         return buildingType;
     }

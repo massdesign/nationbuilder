@@ -3,7 +3,7 @@ package nationbuilder.lib.data.map.mapservice;
 /**
  * @author patrick.ekkel
  */
-public class TileProperty
+public class TileProperty implements TiledXmlProperty
 {
 
 	private  TilePropertyType type;

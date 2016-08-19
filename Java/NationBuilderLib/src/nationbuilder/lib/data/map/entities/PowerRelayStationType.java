@@ -11,6 +11,7 @@ public class PowerRelayStationType extends BaseRubyModel
 {
 	private int capacity;
 	private String name;
+	private String responseTime;
 
 
 	public int getCapacity()
@@ -31,5 +32,15 @@ public class PowerRelayStationType extends BaseRubyModel
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String getResponseTime()
+	{
+		return responseTime;
+	}
+
+	public void setResponseTime(String responseTime)
+	{
+		this.responseTime = responseTime;
 	}
 }

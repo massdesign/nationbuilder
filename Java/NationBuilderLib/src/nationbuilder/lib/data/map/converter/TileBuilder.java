@@ -2,11 +2,19 @@ package nationbuilder.lib.data.map.converter;
 
 import java.util.ArrayList;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.Ruby.services.PropertyManagerService;
+import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
+import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.Tile;
+import nationbuilder.lib.data.map.exceptions.MapConvertException;
+import nationbuilder.lib.data.map.mapservice.TileProperty;
+import nationbuilder.lib.data.map.mapservice.TilePropertyType;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
+import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
 /**
@@ -17,7 +25,6 @@ public class TileBuilder
 	private Layer layer;
 	private RubyContext rubyContext;
 	private ArrayList<Image> images;
-	//private TiledPropertyManager tiledPropertyManager;
 	public TileBuilder(Layer  layer,RubyContext rubyContext,ArrayList<Image> images)  {
 		this.layer = layer;
 		this.rubyContext = rubyContext;
@@ -25,7 +32,7 @@ public class TileBuilder
 	}
 
 
-	public Tile createTile(int xposition,int yposition,XmlTile xmlTile) throws RubyDataServiceNotInitializedException
+	public Tile createTile(int xposition,int yposition,XmlTile xmlTile) throws RubyDataServiceNotInitializedException, MapConvertException
 	{
 
 		Tile result =   this.rubyContext.createRubyModel(Tile.class);
@@ -67,10 +74,25 @@ public class TileBuilder
 		result.setYoffset(currentrow - 1);
 
 		// Terraintype toevoegen
-
 		TerrainTypeBuilder terrainTypeBuilder = new TerrainTypeBuilder(this.rubyContext);
-
 		result.setTerrainType(terrainTypeBuilder.createTerraintype(xmlTile));
+
+		PowerRelayStationBuilder powerRelayStationBuilder = new PowerRelayStationBuilder(this.rubyContext);
+		PowerRelayStation powerRelayStation =  powerRelayStationBuilder.createPowerRelayStation(xmlTile,result);
+
+		if(powerRelayStation != null)
+		{
+			// TODO: koppeling tussen building en meerdere tiles  leggen
+			try
+			{
+				powerRelayStation.Save();
+			}
+			catch (RubyException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
 		return result;
 	}
 

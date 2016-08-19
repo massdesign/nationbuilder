@@ -9,6 +9,8 @@ import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.MapMap;
 import nationbuilder.lib.data.map.entities.Tile;
+import nationbuilder.lib.data.map.exceptions.MapConvertException;
+import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.XmlLayer;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
@@ -27,7 +29,6 @@ public class LayerBuilder
 	// NOTE: tijdelijke oplossing
 	private ArrayList<Layer> layers;
 
-
 	public LayerBuilder(RubyContext rubyContext,MapMap map,ArrayList<Image> images) {
 
 		this.rubyContext = rubyContext;
@@ -45,7 +46,7 @@ public class LayerBuilder
 	// Tijdelijk
 	public ArrayList<Layer> getLayers() { return this.layers; }
 
-	public Layer createLayer(XmlLayer xmlLayer) throws RubyDataServiceNotInitializedException
+	public Layer createLayer(XmlLayer xmlLayer) throws RubyDataServiceNotInitializedException, MapConvertException
 	{
 
 		Layer result = this.rubyContext.createRubyModel(Layer.class);

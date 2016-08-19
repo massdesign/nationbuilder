@@ -33,6 +33,8 @@ public class Building extends BaseRubyModel
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.WareHouse")
 	private ReferenceMapping warehouse;
 
+	//private ReferenceMapping en
+
 	public String getName()
 	{
 		return name;

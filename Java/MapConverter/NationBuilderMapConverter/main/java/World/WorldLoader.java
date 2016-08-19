@@ -53,9 +53,9 @@ public class WorldLoader {
 
     public void Run() throws RubyException
     {
-        this.PreFiller();
-       // this.ConvertMap();
-        this.PostFiller();
+        //this.PreFiller();
+        this.ConvertMap();
+       // this.PostFiller();
         this.context.commit();
     }
     public void TestRun()

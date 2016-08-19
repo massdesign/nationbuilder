@@ -12,6 +12,7 @@ import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.MapMap;
 import nationbuilder.lib.data.map.entities.Tile;
+import nationbuilder.lib.data.map.exceptions.MapConvertException;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
 import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.XmlLayer;
@@ -35,7 +36,7 @@ public class MapBuilder
 		this.rubyContext = rubyContext;
 	}
 
-	public MapMap createMap(TiledXmlMap map)
+	public MapMap createMap(TiledXmlMap map) throws MapConvertException
 	{
 		MapMap resultMap = this.rubyContext.createRubyModel(MapMap.class);
 		resultMap.setHeight(map.getHeight());
@@ -50,7 +51,7 @@ public class MapBuilder
 		{   // Class registren als  service
 			RubyDataServiceAccessor.getInstance().registerRubyService(PropertyManagerService.class);
 			PropertyManagerService propertyManagerService  = RubyDataServiceAccessor.getInstance().getService(PropertyManagerService.class);
-			propertyManagerService.setTiledPropertyManager(new TiledPropertyManager(map.getTilesets()));
+			propertyManagerService.setTiledPropertyManager(new TiledPropertyManager(map.getTilesets(),map));
 		}
 		catch (ServiceAlreadyRegisteredException | RubyDataServiceNotInitializedException e)
 		{

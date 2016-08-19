@@ -10214,7 +10214,7 @@
  </layer>
  <objectgroup name="city_territory">
   <properties>
-   <property name="city_name" value="Deventer"/>
+	   <property name="city_name" value="Deventer"/>
   </properties>
   <object id="12" x="387.5" y="512" width="220" height="159">
    <properties>
@@ -10244,38 +10244,38 @@
  <objectgroup name="power_plant_territory">
   <object id="15" x="987.5" y="956" width="39" height="35.5">
    <properties>
-    <property name="capacity" value="600"/>
-    <property name="connections" value="utrecht,vroomshoop1,deventer1"/>
+    <property name="powerplant_capacity" value="600"/>
+    <property name="powerplant_connections" value="utrecht,vroomshoop1,deventer1"/>
     <property name="substation_name" value="Utrecht1"/>
    </properties>
   </object>
   <object id="16" x="571.5" y="1111.5" width="39" height="42">
    <properties>
-    <property name="connection" value="zwolle1"/>
-    <property name="power_output" value="350"/>
-    <property name="power_plant_name" value="Ijsselcentrale"/>
-    <property name="power_plant_type" value="gas"/>
-    <property name="response_time" value="Fast"/>
+    <property name="powerplant_connections" value="zwolle1"/>
+    <property name="powerplant_poweroutput" value="350"/>
+    <property name="powerplant_name" value="Ijsselcentrale"/>
+    <property name="powerplant_type" value="gas"/>
+    <property name="powerplant_responsetime" value="Fast"/>
    </properties>
   </object>
   <object id="17" x="696" y="1113" width="52" height="58">
    <properties>
-    <property name="capacity" value="600"/>
-    <property name="connections" value="zwolle,utrecht1"/>
+    <property name="powerplant_capacity" value="600"/>
+    <property name="powerplant_connections" value="zwolle,utrecht1"/>
     <property name="substation_name" value="Zwolle1"/>
    </properties>
   </object>
   <object id="19" x="476.5" y="509.25" width="39" height="35.5">
    <properties>
-    <property name="capacity" value="600"/>
-    <property name="connections" value="Deventer"/>
+    <property name="powerplant_capacity" value="600"/>
+    <property name="powerplant_connections" value="Deventer"/>
     <property name="substation_name" value="Deventer1"/>
    </properties>
   </object>
   <object id="23" x="863.25" y="1505.33" width="34.25" height="32.4167">
    <properties>
-    <property name="capacity" value="100"/>
-    <property name="connections" value="vroomshoop"/>
+    <property name="powerplant_capacity" value="100"/>
+    <property name="powerplant_connections" value="vroomshoop"/>
     <property name="substation_name" value="Vroomshoop1"/>
    </properties>
   </object>

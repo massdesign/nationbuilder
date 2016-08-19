@@ -6,6 +6,7 @@ import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.*;
 import nationbuilder.lib.data.map.entities.Image;
+import nationbuilder.lib.data.map.exceptions.MapConvertException;
 import nationbuilder.lib.data.map.xml.*;
 
 public class TiledMapConverter {
@@ -135,7 +136,7 @@ public class TiledMapConverter {
 
 
 
-    public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers) throws RubyDataServiceNotInitializedException
+    public ArrayList<Tile> convertLayer(ArrayList<XmlLayer> layers) throws RubyDataServiceNotInitializedException, MapConvertException
     {
             LayerBuilder layerBuilder = new LayerBuilder(this.rubyContext,this.map,this.mapImages);
 
@@ -162,7 +163,14 @@ public class TiledMapConverter {
     {
 
         MapBuilder mapBuilder = new MapBuilder(this.rubyContext);
-        this.map = mapBuilder.createMap(this.xmlMap);
+        try
+        {
+            this.map = mapBuilder.createMap(this.xmlMap);
+        }
+        catch (MapConvertException e)
+        {
+            e.printStackTrace();
+        }
         mapBuilder.Persist();
         //   this.map = this.convertMap(this.xmlMap);
         //this.mapImages = this.convertTilesets(this.xmlMap.getTilesets());

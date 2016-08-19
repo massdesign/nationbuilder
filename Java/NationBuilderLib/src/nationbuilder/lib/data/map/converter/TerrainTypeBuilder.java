@@ -11,6 +11,7 @@ import nationbuilder.lib.data.map.entities.TerrainType;
 import nationbuilder.lib.data.map.mapservice.TileProperty;
 import nationbuilder.lib.data.map.mapservice.TilePropertyType;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
+import nationbuilder.lib.data.map.mapservice.TiledXmlProperty;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
 /**
@@ -35,7 +36,7 @@ public class TerrainTypeBuilder
 
 		PropertyManagerService propertyManagerService = RubyDataServiceAccessor.getInstance().getService(PropertyManagerService.class);
 		TiledPropertyManager propertyManager = propertyManagerService.getTiledPropertyManager();
-		TileProperty tileTypeProperty = propertyManager.getTileProperty(TilePropertyType.TILE_TYPE, xmlTile.getGID());
+		TiledXmlProperty tileTypeProperty = propertyManager.getTileProperty(TilePropertyType.TILE_TYPE, xmlTile.getGID());
 		if (tileTypeProperty != null)
 		{
 			result = rubyContext.createRubyModel(TerrainType.class);

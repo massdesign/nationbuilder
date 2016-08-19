@@ -5,6 +5,7 @@ import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 
+// TODO: responsetime hier ook in verwerken
 /**
  * @author patrick.ekkel
  */

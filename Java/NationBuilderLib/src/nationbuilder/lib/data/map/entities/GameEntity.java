@@ -13,7 +13,6 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
  */
 public class GameEntity extends BaseRubyModel
 {
-
 	private String name;
 	@IgnoreInRails
 	private String rby;

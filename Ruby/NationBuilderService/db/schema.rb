@@ -134,6 +134,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
   create_table "power_relay_station_types", force: true do |t|
     t.string   "name"
     t.integer  "capacity"
+    t.string   "responsetime"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
