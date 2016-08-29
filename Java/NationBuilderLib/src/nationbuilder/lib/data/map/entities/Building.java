@@ -1,10 +1,13 @@
 package nationbuilder.lib.data.map.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
@@ -17,6 +20,10 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 //public class Building extends StaticEntity
 public class Building extends BaseRubyModel
 {
+	private int[] tids;
+	@OneToMany(mapIdTo = "tids",mappedBy = "building",mappedByClazz = Tile.class)
+	private List<Tile> locations = new ArrayList<>();
+
     @Transient
 	private String geo;
 
@@ -33,7 +40,11 @@ public class Building extends BaseRubyModel
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.WareHouse")
 	private ReferenceMapping warehouse;
 
-	//private ReferenceMapping en
+
+
+	public void addLocation(Tile tile) {
+		locations.add(tile);
+	}
 
 	public String getName()
 	{

@@ -1,4 +1,4 @@
-package nationbuilder.lib.data.map.converter;
+package nationbuilder.lib.data.map.builders;
 
 import java.io.File;
 import nationbuilder.lib.Ruby.RubyContext;

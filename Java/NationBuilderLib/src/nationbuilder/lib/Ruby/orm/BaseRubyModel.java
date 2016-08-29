@@ -115,7 +115,7 @@ public class BaseRubyModel implements RubyModel {
         {
             try
             {
-                ModelPayloadBuilder modelPayloadBuilder = new ModelPayloadBuilder(this);
+                ModelPayloadBuilder modelPayloadBuilder = new ModelPayloadBuilder(this,context);
                 this.objectPersister = new ObjectPersister(this.context, modelPayloadBuilder.build());
             }
             catch (RubyDataServiceNotInitializedException e)

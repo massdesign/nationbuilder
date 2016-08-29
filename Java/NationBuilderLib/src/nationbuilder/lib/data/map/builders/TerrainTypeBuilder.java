@@ -1,14 +1,11 @@
-package nationbuilder.lib.data.map.converter;
+package nationbuilder.lib.data.map.builders;
 
-import java.util.List;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.Interfaces.RubyObjectFactory;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.orm.objectfactories.RubyObjectFactoryImpl;
 import nationbuilder.lib.Ruby.services.PropertyManagerService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.TerrainType;
-import nationbuilder.lib.data.map.mapservice.TileProperty;
 import nationbuilder.lib.data.map.mapservice.TilePropertyType;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
 import nationbuilder.lib.data.map.mapservice.TiledXmlProperty;
@@ -17,15 +14,13 @@ import nationbuilder.lib.data.map.xml.XmlTile;
 /**
  * @author patrick.ekkel
  */
-public class TerrainTypeBuilder
+public class TerrainTypeBuilder extends BaseBuilder
 {
-	private RubyContext rubyContext;
-
 	private RubyObjectFactory rubyObjectFactory;
 
 
 	public TerrainTypeBuilder(RubyContext rubyContext) {
-		this.rubyContext = rubyContext;
+		super(rubyContext);
 		this.rubyObjectFactory = rubyContext.createRubyObjectFacory(TerrainType.class,TerrainType[].class);
 
 	}
@@ -40,7 +35,7 @@ public class TerrainTypeBuilder
 		if (tileTypeProperty != null)
 		{
 			result = rubyContext.createRubyModel(TerrainType.class);
-			TerrainType existingTerrainType = getExistingTerrainType(tileTypeProperty.getValue());
+			TerrainType existingTerrainType = getExistingRubyObject(tileTypeProperty.getValue(),TerrainType.class);
 
 			if (existingTerrainType == null)
 			{
@@ -54,18 +49,6 @@ public class TerrainTypeBuilder
 		return result;
 	}
 
-	private TerrainType getExistingTerrainType(String terrainTypeName) {
-		List<TerrainType> terrainTypes = this.rubyContext.getModels(TerrainType.class);
 
-
-		for(TerrainType terrainType : terrainTypes) {
-
-			if(terrainTypeName.equals(terrainType.getName())) {
-				return terrainType;
-			}
-		}
-
-		return null;
-	}
 
 }

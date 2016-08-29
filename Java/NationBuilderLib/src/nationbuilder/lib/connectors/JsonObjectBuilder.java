@@ -35,6 +35,9 @@ public class JsonObjectBuilder implements ObjectBuilder
 				{
 					return true;
 				}
+				else if(fieldAttributes.getName().equals("objectPersister")) {
+					return true;
+				}
 				else
 				{
 					return false;

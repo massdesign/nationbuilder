@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
     t.integer  "layer_id"
     t.integer  "image_id"
     t.integer  "terraintype_id"
+    t.integer  "building_id"
   end
 
   create_table "users", force: true do |t|

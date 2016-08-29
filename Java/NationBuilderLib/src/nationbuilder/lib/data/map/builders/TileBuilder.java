@@ -1,20 +1,14 @@
-package nationbuilder.lib.data.map.converter;
+package nationbuilder.lib.data.map.builders;
 
 import java.util.ArrayList;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
-import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
-import nationbuilder.lib.Ruby.services.PropertyManagerService;
-import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
+import nationbuilder.lib.data.map.entities.PowerGridNode;
 import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.data.map.exceptions.MapConvertException;
-import nationbuilder.lib.data.map.mapservice.TileProperty;
-import nationbuilder.lib.data.map.mapservice.TilePropertyType;
-import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.XmlTile;
 
 /**
@@ -50,7 +44,6 @@ public class TileBuilder
 
 		int offset = result.getImage().getFirstGid();
 		int columns = result.getImage().getWidth() / result.getImage().getTileWidth();
-		//int rows = result.getImage().getHeight() / result.getImage().getTileHeight();
 		int gid_counter = offset;
 		// first
 		int currentrow = 1;
@@ -77,22 +70,8 @@ public class TileBuilder
 		TerrainTypeBuilder terrainTypeBuilder = new TerrainTypeBuilder(this.rubyContext);
 		result.setTerrainType(terrainTypeBuilder.createTerraintype(xmlTile));
 
-		PowerRelayStationBuilder powerRelayStationBuilder = new PowerRelayStationBuilder(this.rubyContext);
-		PowerRelayStation powerRelayStation =  powerRelayStationBuilder.createPowerRelayStation(xmlTile,result);
-
-		if(powerRelayStation != null)
-		{
-			// TODO: koppeling tussen building en meerdere tiles  leggen
-			try
-			{
-				powerRelayStation.Save();
-			}
-			catch (RubyException e)
-			{
-				e.printStackTrace();
-			}
-		}
-
+		PowerGridNodeBuilder powerGridNodeBuilder = new PowerGridNodeBuilder(this.rubyContext);
+		PowerGridNode powerGridNode =  powerGridNodeBuilder.createPowerGridNode(xmlTile,result);
 		return result;
 	}
 

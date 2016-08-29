@@ -1,4 +1,4 @@
-package nationbuilder.lib.data.map.converter;
+package nationbuilder.lib.data.map.builders;
 
 import java.util.ArrayList;
 import nationbuilder.lib.Logging.Log;
@@ -11,7 +11,6 @@ import nationbuilder.lib.Ruby.services.PropertyManagerService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.MapMap;
-import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.data.map.exceptions.MapConvertException;
 import nationbuilder.lib.data.map.mapservice.TiledPropertyManager;
 import nationbuilder.lib.data.map.xml.TiledXmlMap;

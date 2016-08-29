@@ -1,8 +1,6 @@
-package nationbuilder.lib.data.map.converter;
+package nationbuilder.lib.data.map.builders;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.entities.Image;
@@ -10,7 +8,6 @@ import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.MapMap;
 import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.data.map.exceptions.MapConvertException;
-import nationbuilder.lib.data.map.xml.TiledXmlMap;
 import nationbuilder.lib.data.map.xml.XmlLayer;
 import nationbuilder.lib.data.map.xml.XmlTile;
 

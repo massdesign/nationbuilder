@@ -19,6 +19,7 @@ public enum TilePropertyType
 	POWERPLANT_REPSONSETIME("powerplant_responsetime"),
 	POWERPLANT_TYPE("powerplant_type"),
 	POWERPLANT_POWEROUTPUT("powerplant_poweroutput"),
+	POWERPLANT_TYPENAME("powerplant_typename"),
 	SUBSTATION_NAME("substation_name");
 
 	String  xmlName;

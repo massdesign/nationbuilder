@@ -41,6 +41,15 @@ public class PostFiller {
 
         powerRelayStation.setPowerRelayStationType(powerRelayStationType);
 
+        try
+        {
+            powerRelayStation.Save();
+            this.context.commit();
+        }
+        catch (RubyException e)
+        {
+            e.printStackTrace();
+        }
 
 
       /*  MapMap map = this.context.createRubyModel(MapMap.class);

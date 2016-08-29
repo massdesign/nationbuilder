@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 
@@ -7,11 +8,16 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
  * @author patrick.ekkel
  */
 @Entity(tableName = "power_relay_station_types")
-public class PowerRelayStationType extends BaseRubyModel
+public class PowerRelayStationType extends BaseRubyModel implements NamedObject
 {
+	@Column
 	private int capacity;
+	@Column
 	private String name;
-	private String responseTime;
+	@Column
+	private String responsetime;
+	@Column
+	private String powerplantType;
 
 
 	public int getCapacity()
@@ -36,11 +42,21 @@ public class PowerRelayStationType extends BaseRubyModel
 
 	public String getResponseTime()
 	{
-		return responseTime;
+		return responsetime;
 	}
 
 	public void setResponseTime(String responseTime)
 	{
-		this.responseTime = responseTime;
+		this.responsetime = responseTime;
+	}
+
+	public String getPowerplantType()
+	{
+		return powerplantType;
+	}
+
+	public void setPowerplantType(String powerplantType)
+	{
+		this.powerplantType = powerplantType;
 	}
 }

@@ -112,7 +112,7 @@ public class RubyContext {
         // bij een singletableperinstance maken we geen gebruik van de clazzmap
         Entity entityMetaInfo = null;
 
-        if(modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass) {
+        if(modelPayload.getInhiritanceStrategy() == InhiritanceStrategy.TablePerClass && !this.getRubyService().ignoreClassMapInsertStrategy()) {
             entityMetaInfo =  (Entity)clazzMap.getCurrent().getAnnotation(Entity.class);
         }
         else {

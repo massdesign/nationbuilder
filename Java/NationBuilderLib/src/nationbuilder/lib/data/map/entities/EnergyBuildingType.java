@@ -7,6 +7,7 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 /**
  * Created by patrick on 9/23/14.
  */
+// TODO: energybuilding wordt niet meer gebruikt in zijn huidige vorm... we zouden dit dus kunnen deleten
 @Entity(tableName = "energy_building_types")
 public class EnergyBuildingType extends BaseRubyModel
 {

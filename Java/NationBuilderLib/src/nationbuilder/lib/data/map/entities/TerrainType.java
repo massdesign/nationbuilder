@@ -8,7 +8,7 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
  * Created by patrick on 7/1/14.
  */
 @Entity(tableName = "terraintypes")
-public class TerrainType extends BaseRubyModel {
+public class TerrainType extends BaseRubyModel implements NamedObject {
 
     public String getName() {
         return name;
@@ -25,4 +25,5 @@ public class TerrainType extends BaseRubyModel {
     {
         return super.markDirty();
     }
+
 }

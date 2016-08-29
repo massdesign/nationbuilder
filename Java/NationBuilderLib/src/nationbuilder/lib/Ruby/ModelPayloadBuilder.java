@@ -14,10 +14,11 @@ import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
  */
 public class ModelPayloadBuilder
 {
-	RubyModel rubyModel;
-
-	public ModelPayloadBuilder(RubyModel rubyModel) {
+	private RubyModel rubyModel;
+	private RubyContext context;
+	public ModelPayloadBuilder(RubyModel rubyModel,RubyContext context) {
 		this.rubyModel = rubyModel;
+		this.context = context;
 	}
 
 	public ModelPayload build() {
@@ -29,7 +30,7 @@ public class ModelPayloadBuilder
 		{
 			classMapService = RubyDataServiceAccessor.getInstance().getService(ClassMapService.class);
 			classMap = classMapService.createClassMap(rubyModel);
-			if (RubyAssociationResolver.StrategyIsTablePerClass(rubyModel))
+			if (RubyAssociationResolver.StrategyIsTablePerClass(rubyModel) && !context.getRubyService().ignoreClassMapInsertStrategy())
 			{
 			 inhiritanceStrategy = InhiritanceStrategy.TablePerClass;
 			}

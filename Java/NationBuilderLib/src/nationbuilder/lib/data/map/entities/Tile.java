@@ -36,6 +36,9 @@ public class Tile extends BaseRubyModel {
 	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping layer;
 
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping building;
+
 	@OneToOne(mapIdTo = "tti")
 	@Column
 	private TerrainType terrainType;
@@ -48,6 +51,7 @@ public class Tile extends BaseRubyModel {
 
 	// image id copied to local instance
 	private String imd;
+	// TODO: dit werkt waarschijnlijk niet meer... omdat we dit gerefactored hebben.. manier vinden om ReferenceMapping dit te laten doen voor ons
 	// layer id copied to local instance
 	private String lmd;
     // resource id copied to local instance
