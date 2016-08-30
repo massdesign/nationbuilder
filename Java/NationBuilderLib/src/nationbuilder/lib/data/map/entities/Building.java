@@ -7,6 +7,7 @@ import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
@@ -21,8 +22,6 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 public class Building extends BaseRubyModel
 {
 	private int[] tids;
-	@OneToMany(mapIdTo = "tids",mappedBy = "building",mappedByClazz = Tile.class)
-	private List<Tile> locations = new ArrayList<>();
 
     @Transient
 	private String geo;
@@ -40,11 +39,8 @@ public class Building extends BaseRubyModel
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.WareHouse")
 	private ReferenceMapping warehouse;
 
-
-
-	public void addLocation(Tile tile) {
-		locations.add(tile);
-	}
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	private ReferenceMapping tile;
 
 	public String getName()
 	{

@@ -37,14 +37,7 @@ class PowerRelayStationsController < ApplicationController
 	  	@power_relay_station_type = PowerRelayStationType.find(params[:prstid])
 	  	@power_relay_station	.power_relay_station_type = @power_relay_station_type
 	  end
-	   if params[:tids] != nil
-		params[:tids].each {	|x| 
-	 	@tile = Tile.find(x)	 
-	 	@building.tiles << @tile
-		}
-		end
-	  
-     
+	   
 	  @building.save
 	  @power_relay_station.building = @building
        respond_to do |format|

@@ -15,22 +15,21 @@ public class Main {
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, RubyException, NoSuchFieldException
     {
+
+
+        RubyContext testContext = new DefaultRubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,Main.class);
+
         // TODO: kolomnamen zijn nog hoofdletter gevoelig.. dit kunnen we makkelijk fixen met een toLower
-       /* final RubyContext context = new DefaultRubyContextFactory()
-         .createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT, Main.class);
-        WorldLoader worldLoader = new WorldLoader(context);
-        worldLoader.Run(); */
+      //  RubyContext context = new DefaultRubyContextFactory()
+       //  .createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT, Main.class);
+       // WorldLoader worldLoader = new WorldLoader(context);
+        //worldLoader.Run();
 
-      //  RubyContext backendRubtTestContext  = new DefaultRubyContextFactory().createRubyContext(RubyContextType.JSON,Main.class);
-        RubyContext backendRubtTestContext  = new DefaultRubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,Main.class);
-        Tile testTile1 = backendRubtTestContext.createRubyModel(Tile.class);
-        Tile testTile2 = backendRubtTestContext.createRubyModel(Tile.class);
-        PowerRelayStation relayStation = backendRubtTestContext.createRubyModel(PowerRelayStation.class);
-        relayStation.addLocation(testTile1);
-        relayStation.addLocation(testTile2);
-        relayStation.Save();
-        backendRubtTestContext.commit();
-
+        PowerRelayStation powerRelayStation1 =  testContext.createRubyModel(PowerRelayStation.class);
+        Tile tile1 = testContext.createRubyModel(Tile.class);
+        tile1.addBuilding(powerRelayStation1);
+        tile1.Save();
+        testContext.commit();
     }
 
 }

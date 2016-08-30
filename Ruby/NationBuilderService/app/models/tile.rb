@@ -6,4 +6,5 @@ class Tile < ActiveRecord::Base
  has_one  :terraintype
  has_and_belongs_to_many :militarystrongholds
  has_many :resources	
+ has_many :buildings
 end

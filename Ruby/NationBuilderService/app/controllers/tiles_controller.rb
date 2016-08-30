@@ -104,6 +104,12 @@ ActionController::Parameters.permit_all_parameters = true
 	 	@tile.resources << @resource
 		}
 	end		
+	if params[:bids] != nil
+		params[:bids].each {	|x| 
+	 	@building = Building.find(x)	 
+	 	@tile.buildings << @building
+		}
+	end	
 Rails.logger.debug "tile params: " + params[:imd].to_s
   
     respond_to do |format|
