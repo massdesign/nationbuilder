@@ -30,6 +30,7 @@ public class Tile extends BaseRubyModel {
 	private int yoffset;
 
 	private int [] bids;
+	private int [] nids;
 
     private List<GameEntity> claimedBy;
     private GameEntity owner;
@@ -41,7 +42,8 @@ public class Tile extends BaseRubyModel {
 	@OneToMany(mapIdTo = "bids", mappedBy = "tile", mappedByClazz = Building.class)
 	private List<Building> buildings = new ArrayList<>();
 
-
+	@OneToMany(mapIdTo = "nids",mappedBy = "tile",mappedByClazz = Node.class)
+	private List<Node> nodes = new ArrayList<>();
 	@OneToOne(mapIdTo = "tti")
 	@Column
 	private TerrainType terrainType;
@@ -138,7 +140,16 @@ public class Tile extends BaseRubyModel {
 	}
 
 	public void addBuilding(Building building) {
-		this.buildings.add(building);
+		if(building != null) {
+			this.buildings.add(building);
+		}
+	}
+
+	public void addNode(Node node)
+	{
+		if (node != null) {
+			this.nodes.add(node);
+		}
 	}
 
 }

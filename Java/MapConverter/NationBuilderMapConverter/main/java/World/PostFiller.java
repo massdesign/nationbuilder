@@ -37,7 +37,6 @@ public class PostFiller {
         PowerRelayStationType powerRelayStationType = this.context.createRubyModel(PowerRelayStationType.class);
 
         powerRelayStationType.setName("testje in je moeder");
-        powerRelayStationType.setResponseTime("even testen");
 
         powerRelayStation.setPowerRelayStationType(powerRelayStationType);
 

@@ -72,8 +72,17 @@ public class TileBuilder
 
 		PowerGridNodeBuilder powerGridNodeBuilder = new PowerGridNodeBuilder(this.rubyContext);
 		PowerGridNode powerGridNode =  powerGridNodeBuilder.createPowerGridNode(xmlTile,result);
-		if(powerGridNode != null && powerGridNode.getRelayStation() !=  null) {
+		// niet elke tile heeft een powergridnode..
+		if(powerGridNode != null)
+		{
+			// geef de node een locatie op de map
+			result.addNode(powerGridNode);
 			result.addBuilding(powerGridNode.getRelayStation());
+			result.addBuilding(powerGridNode.getEnergyBuilding());
+			if (powerGridNode != null && powerGridNode.getRelayStation() != null)
+			{
+				result.addBuilding(powerGridNode.getRelayStation());
+			}
 		}
 		return result;
 	}

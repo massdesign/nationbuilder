@@ -17,8 +17,15 @@ public class EnergyBuildingType extends BaseRubyModel
      */
 	@Column
 	private int powerOutput;
+
 	@Column
 	private String energySource;
+
+	@Column
+	private String responsetime;
+
+	@Column
+	private String powerplantType;
 
 	public String getEnergySource()
 	{
@@ -48,5 +55,25 @@ public class EnergyBuildingType extends BaseRubyModel
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	public String getResponsetime()
+	{
+		return responsetime;
+	}
+
+	public void setResponsetime(String responsetime)
+	{
+		this.responsetime = responsetime;
+	}
+
+	public String getPowerplantType()
+	{
+		return powerplantType;
+	}
+
+	public void setPowerplantType(String powerplantType)
+	{
+		this.powerplantType = powerplantType;
 	}
 }

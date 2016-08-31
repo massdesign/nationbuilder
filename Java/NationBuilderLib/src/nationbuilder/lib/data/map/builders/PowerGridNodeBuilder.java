@@ -1,10 +1,15 @@
 package nationbuilder.lib.data.map.builders;
 
+import java.util.HashMap;
 import java.util.List;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.Ruby.services.PropertyManagerService;
 import nationbuilder.lib.Ruby.services.RubyDataServiceAccessor;
+import nationbuilder.lib.data.map.entities.Building;
+import nationbuilder.lib.data.map.entities.EnergyBuilding;
+import nationbuilder.lib.data.map.entities.EnergyBuildingType;
+import nationbuilder.lib.data.map.entities.PowerGridComponent;
 import nationbuilder.lib.data.map.entities.PowerGridNode;
 import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.PowerRelayStationType;
@@ -33,57 +38,79 @@ public class PowerGridNodeBuilder extends BaseBuilder
 		propertyManager = propertyManagerService.getTiledPropertyManager();
 	}
 
+	// TODO: deze methode zou ook naar de base kunnen
+	private HashMap<TilePropertyType,String> mapProperties(List<TiledXmlProperty> properties) {
 
-	private PowerRelayStationType getOrCreatePowerPlantType(List<TiledXmlProperty> properties) throws MapConvertException
+		HashMap<TilePropertyType,String> result = new HashMap<>();
+
+		for(TiledXmlProperty property : properties) {
+
+			result.put(property.getType(),property.getValue());
+		}
+		return result;
+	}
+
+	private PowerGridComponent getOrCreatePowerGridComponent(HashMap<TilePropertyType,String> mappedProperties) throws MapConvertException
 	{
-		PowerRelayStationType result =  null;
-		String typeName = null;
-		String responseTime = null;
-		String powerplanttype = null;
-		int capacity = 0;
-		for (TiledXmlProperty property : properties)
-		{
-			switch (property.getType())
-			{
-			case  POWERPLANT_TYPENAME:
-				typeName = property.getValue();
-				break;
-			case POWERPLANT_CAPACITY:
-			case POWERPLANT_POWEROUTPUT:
-				capacity =  Integer.valueOf(property.getValue());
-				break;
-			case POWERPLANT_REPSONSETIME:
-				responseTime = property.getValue();
-				break;
-			case POWERPLANT_TYPE:
-				powerplanttype = property.getValue();
-				break;
+		PowerGridComponent result;
+
+
+
+		// Bepalen of we hier te maken met een powerplant of een substation
+		String substationName =    mappedProperties.get(TilePropertyType.SUBSTATION_NAME);
+		String powerplantName =    mappedProperties.get(TilePropertyType.POWERPLANT_NAME);
+		// Dan is het een powerplant
+		if(substationName == null) {
+			// TODO: dit weer opdelen in in een classe/builder/methodes
+			// mapped van de powerplant entity
+			EnergyBuilding intermittentResult = this.rubyContext.createRubyModel(EnergyBuilding.class);
+		    String powerplantTypename = mappedProperties.get(TilePropertyType.POWERPLANT_TYPENAME);
+			// Dit moet gevuld zijn anders keuren we de import af
+			if(powerplantTypename == null)  {
+				throw new  MapConvertException("powerplanttypename is null,on powerplant object");
 			}
-		}
 
-		if(typeName != null)  {
-
-			result = getExistingRubyObject(typeName,PowerRelayStationType.class);
-			if(result == null) {
-				result = this.rubyContext.createRubyModel(PowerRelayStationType.class);
-				result.setCapacity(capacity);
-				// TODO: deze property geldt alleen voor powerplants niet voor substations
-				result.setResponseTime(responseTime);
-				result.setPowerplantType(powerplanttype);
-				result.setName(typeName);
+			EnergyBuildingType energyBuildingType = getExistingRubyObject(powerplantTypename,EnergyBuildingType.class);
+			// Als hij niet bestaat moeten we hem maken
+			if(energyBuildingType == null) {
+				energyBuildingType = this.rubyContext.createRubyModel(EnergyBuildingType.class);
 			}
-		}
-		return result;
 
-	}
-	private boolean isSubstation(String value) {
-		boolean result = false;
+			energyBuildingType.setResponsetime(mappedProperties.get(TilePropertyType.POWERPLANT_REPSONSETIME));
+			energyBuildingType.setPowerOutput(Integer.valueOf(mappedProperties.get(TilePropertyType.POWERPLANT_POWEROUTPUT)));
+			energyBuildingType.setEnergySource(mappedProperties.get(TilePropertyType.POWERPLANT_TYPE));
+			energyBuildingType.setPowerplantType(mappedProperties.get(TilePropertyType.POWERPLANT_TYPENAME));
+			intermittentResult.setBuildingType(energyBuildingType);
+			intermittentResult.setName(mappedProperties.get(powerplantName));
+			result = intermittentResult;
 
-		if(!value.equals("powerplant")) {
-			result = true;
+
 		}
-		return result;
+		// Dan is het een substation
+		else {
+
+			PowerRelayStation intermittentResult = this.rubyContext.createRubyModel(PowerRelayStation.class);
+			String substationTypename = mappedProperties.get(TilePropertyType.SUBSTATION_TYPENAME);
+
+			if(substationTypename == null) {
+				throw new MapConvertException("substationtypename is null on substationobject");
+			}
+			PowerRelayStationType powerRelayStationType = getExistingRubyObject(substationName,PowerRelayStationType.class);
+			// Als hij niet bestaat moeten we hem maken
+			if(powerRelayStationType == null) {
+				powerRelayStationType = this.rubyContext.createRubyModel(PowerRelayStationType.class);
+			}
+
+			powerRelayStationType.setName(mappedProperties.get(TilePropertyType.SUBSTATION_NAME));
+			powerRelayStationType.setCapacity(Integer.valueOf(mappedProperties.get(TilePropertyType.SUBSTATION_CAPACITY)));
+			intermittentResult.setPowerRelayStationType(powerRelayStationType);
+			intermittentResult.setName(substationName);
+			result = intermittentResult;
+		}
+
+		return  result;
 	}
+
 	public PowerGridNode createPowerGridNode(XmlTile xmlTile,Tile tile) throws MapConvertException
 	{
 		TiledXmlProperty tileTypeProperty = propertyManager.getTileProperty(TilePropertyType.POWERSTATION_TYPE, xmlTile.getGID());
@@ -93,31 +120,28 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 			// TODO: We moeten iets doen met de territory coordinaten van de powerplants.. Deze moeten ergen geregistreerd worden
 			List<TiledXmlProperty> properties = propertyManager.getObjectGroupProperties(tile.getXposition(), tile.getYposition());
-			PowerRelayStation powerRelayStation =	this.rubyContext.createRubyModel(PowerRelayStation.class);
-			PowerGridNode powerGridNode = this.rubyContext.createRubyModel(PowerGridNode.class);
-			powerGridNode.setRelayStation(powerRelayStation);
+			HashMap<TilePropertyType, String> mappedProperties = mapProperties(properties);
+			 PowerGridComponent powerGridComponent = getOrCreatePowerGridComponent(mappedProperties);
+			// Dit is eigenlijk haast zeker, maar hiermee maken we expliciet
+			if(powerGridComponent instanceof Building) {
 
-			PowerRelayStationType powerRelayStationType = getOrCreatePowerPlantType(properties);
-			 powerRelayStation.setPowerRelayStationType(powerRelayStationType);
-
-			// code schrijven die check of dit grid deel uitmaakt van een object
-				for(TiledXmlProperty property : properties) {
-					switch (property.getType()) {
-
-					case POWERPLANT_CONNECTIONS:
-						// TODO: connections mapping toevoegen
-						break;
-					case POWERPLANT_NAME:
-					case SUBSTATION_NAME:
-							powerGridNode.setName(property.getValue());
-						 	powerRelayStation.setName(property.getValue());
-						break;
-					}
-
+				Building building = (Building)powerGridComponent;
+				PowerGridNode powerGridNode = this.rubyContext.createRubyModel(PowerGridNode.class);
+				// TODO: random indentifier genereren
+				powerGridNode.setName(building.getName());
+				// powergrid node koppelen aan een fysiek object
+				if(powerGridComponent instanceof PowerRelayStation) {
+					powerGridNode.setRelayStation((PowerRelayStation)powerGridComponent);
 				}
-
-			return powerGridNode;
-
+				else if(powerGridComponent instanceof EnergyBuilding) {
+					powerGridNode.setEnergyBuilding((EnergyBuilding)powerGridComponent);
+				}
+				return powerGridNode;
+				// bijhorende bij de building hoort ook een powergridnode
+			}
+			else {
+				throw new MapConvertException("powergridcomponent is niet van het type Building");
+			}
 		}
 		else {
 			return null;

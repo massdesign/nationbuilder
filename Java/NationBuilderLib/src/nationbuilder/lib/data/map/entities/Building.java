@@ -39,6 +39,9 @@ public class Building extends BaseRubyModel
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.WareHouse")
 	private ReferenceMapping warehouse;
 
+	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.EnergyBuilding")
+	private ReferenceMapping energybuilding;
+
 	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping tile;
 

@@ -290,17 +290,14 @@ public class RubyAssociationResolver
 			for(int i=0;i<fields.length;i++) {
 				nationbuilder.lib.Ruby.Association.annotation.ID annotation =  fields[i].getAnnotation(nationbuilder.lib.Ruby.Association.annotation.ID.class);
 				if(annotation != null) {
-					// NOTE: dit stukje code werkt niet zoals verwacht
 
 					Entity expectedEntity = null;
 					try
 					{
 						expectedEntity = Class.forName(annotation.mapIdToEntity()).getAnnotation(Entity.class);
-					//Entity expectedEntity = ClassReflection.createInstanceFromClassDef(clazzMap.getSubClassFrom(clazzMap.getSuperClassFrom(baseRubyModel.getClass()))).getClass().getAnnotation(Entity.class);
 
 						if (expectedEntity != null)
 						{
-
 							// we found the correct field for the correct class
 							if (expectedEntity.tableName().equals(currentEntity.tableName()))
 							{

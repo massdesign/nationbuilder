@@ -20,7 +20,10 @@ public enum TilePropertyType
 	POWERPLANT_TYPE("powerplant_type"),
 	POWERPLANT_POWEROUTPUT("powerplant_poweroutput"),
 	POWERPLANT_TYPENAME("powerplant_typename"),
-	SUBSTATION_NAME("substation_name");
+	SUBSTATION_NAME("substation_name"),
+	SUBSTATION_CAPACITY("substation_capacity"),
+	SUBSTATION_CONNECTIONS("substation_connections"),
+	SUBSTATION_TYPENAME("substation_typename");
 
 	String  xmlName;
 	TilePropertyType(String  xmlName) {

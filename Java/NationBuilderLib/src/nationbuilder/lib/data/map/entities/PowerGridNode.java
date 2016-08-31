@@ -14,9 +14,13 @@ public class PowerGridNode extends Node
     @Transient
 	private String rsid;
 
+	private String ebid;
 	// TODO: one to one hier uitbreiden
 	@OneToOne(mapIdTo = "rsid")
 	private PowerRelayStation relayStation;
+
+	@OneToOne(mapIdTo = "ebid")
+	private EnergyBuilding energyBuilding;
 
 	public PowerRelayStation getRelayStation()
 	{
@@ -26,5 +30,15 @@ public class PowerGridNode extends Node
 	public void setRelayStation(PowerRelayStation relayStation)
 	{
 		this.relayStation = relayStation;
+	}
+
+	public EnergyBuilding getEnergyBuilding()
+	{
+		return energyBuilding;
+	}
+
+	public void setEnergyBuilding(EnergyBuilding energyBuilding)
+	{
+		this.energyBuilding = energyBuilding;
 	}
 }

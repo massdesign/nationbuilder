@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
     t.string   "name"
     t.integer  "warehouse_id"
     t.integer  "power_relay_station_id"
+    t.integer  "energy_building_id"
     t.integer  "military_base_id"
     t.integer  "game_entity_id"
     t.integer  "tile_id"
@@ -54,11 +55,9 @@ ActiveRecord::Schema.define(version: 20160120123638) do
   end
 
   create_table "energy_buildings", force: true do |t|
-    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "energy_building_type_id"
-    t.integer  "tile_id"
   end
 
   create_table "game_entities", force: true do |t|

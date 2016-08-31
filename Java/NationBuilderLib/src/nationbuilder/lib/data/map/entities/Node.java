@@ -3,6 +3,8 @@ package nationbuilder.lib.data.map.entities;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.ReferenceMapping;
@@ -13,10 +15,11 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 @Entity(tableName = "node_types",strategy = InhiritanceStrategy.TablePerClass)
 public class Node extends BaseRubyModel
 {
-    // TODO: zelfde reden als building.name.. heeft te maken met superclassing en subclassing wat nog niet goed geregeld is in de RubyDI
     private String name;
 
 	private boolean destroyable;
+	@ManyToOne(mappedBy = MappedBy.SELF)
+	private ReferenceMapping tile;
 
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.PowerGridNode")
 	private ReferenceMapping power_grid_node;

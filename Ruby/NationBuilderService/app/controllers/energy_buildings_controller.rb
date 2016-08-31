@@ -22,16 +22,24 @@ class EnergyBuildingsController < ApplicationController
 
   # POST /energy_buildings
   def create
-    @energy_building = EnergyBuilding.new(energy_building_params)
+    #@energy_building = EnergyBuilding.new(energy_building_params)
+    # leeg object maken want er zit op dit moment nog niks nuttigs in
+	 @energy_building = EnergyBuilding.new()
 
+	  bName = params[:name];
+	  # Overwegen  dit in een factory methode te verpakken..   zelfde code staat ook op power_relay_station_controller.rb
+	  @building = Building.create(name: bName)
+     if params[:geo] != nil      
+	  	@gameentity = GameEntity.find(params[:geo])
+	  	@gameentity.buildings << @building
+	  end
     if params[:btid] != nil
       @energy_building_type = EnergyBuildingType.find(params[:btid])
       @energy_building.energy_building_type = @energy_building_type
     end
-    if params[:loid] != nil
-      @tile = Tile.find(params[:loid])
-      @energy_building.tile = @tile
-    end
+     @building.save
+	  @energy_building.building = @building
+   
     respond_to do |format|
       if @energy_building.save
         format.html { redirect_to @energy_building, notice: 'Energybuilding was successfully created.' }
@@ -66,6 +74,6 @@ class EnergyBuildingsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def energy_building_params
-      params.require(:energy_building).permit(:name)
+      params.require(:energy_building)
     end
 end

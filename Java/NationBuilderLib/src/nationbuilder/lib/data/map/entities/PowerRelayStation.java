@@ -5,12 +5,11 @@ import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
 import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 
-// TODO: responsetime hier ook in verwerken
 /**
  * @author patrick.ekkel
  */
 @Entity(tableName = "power_relay_stations",strategy = InhiritanceStrategy.TablePerClass)
-public class PowerRelayStation  extends Building
+public class PowerRelayStation  extends Building implements PowerGridComponent
 {
 	@ManyToOne(mapIdTo = "prstid")
 	private PowerRelayStationType powerRelayStationType;
