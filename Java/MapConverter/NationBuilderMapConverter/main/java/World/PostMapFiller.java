@@ -44,17 +44,6 @@ public class PostMapFiller
 		this.rubyModels.add((createResourceType("Gold", false, RESOURCELOCATION.SUBSURFACE)));
 		this.rubyModels.add(createResourceType("Iron", false, RESOURCELOCATION.EMBEDDEDROCK));
 		this.rubyModels.add(createResourceType("Natural Gas", false, RESOURCELOCATION.CRUST));
-
-		// TODO: dit migreren naar de nieuwe structuur
-		/*
-		for(Tile tile : tiles) {
-			// add all possible resources in the future we might add some randomisation here
-			addResourceToTile(tile,0);
-		//	addResourceToTile(tile,1);
-			//addResourceToTile(tile,2);
-			//addResourceToTile(tile,3);
-		}
-		*/
 	}
 
 	private void addResourceToTile(Tile tile,int index) {
@@ -67,37 +56,6 @@ public class PostMapFiller
 
 		String resourceTypeUrl = "resourcetypes";
 		String resourceUrl = "resources";
-
-	/*	for (BaseRubyModel type : rubyModels)
-		{
-			if (type instanceof ResourceType)
-			{
-				try
-				{
-					type.Save(resourceTypeUrl);
-				}
-				catch (RubyException ex)
-				{
-					Log.write(ex, LogType.ERROR);
-				}
-			}
-		}
-
-		for (BaseRubyModel type : rubyModels)
-		{
-			if (type instanceof Resource)
-			{
-				try
-				{
-					type.Save(resourceUrl);
-				}
-				catch (RubyException ex)
-				{
-					Log.write(ex, LogType.ERROR);
-				}
-			}
-		}*/
-
 	}
 
 	private ResourceType createResourceType(String name, boolean regenerateing, RESOURCELOCATION location)

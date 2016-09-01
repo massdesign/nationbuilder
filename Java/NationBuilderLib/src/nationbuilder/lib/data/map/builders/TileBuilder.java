@@ -71,7 +71,7 @@ public class TileBuilder
 		result.setTerrainType(terrainTypeBuilder.createTerraintype(xmlTile));
 
 		PowerGridNodeBuilder powerGridNodeBuilder = new PowerGridNodeBuilder(this.rubyContext);
-		PowerGridNode powerGridNode =  powerGridNodeBuilder.createPowerGridNode(xmlTile,result);
+		PowerGridNode powerGridNode = powerGridNodeBuilder.createPowerGridNode(xmlTile,result);
 		// niet elke tile heeft een powergridnode..
 		if(powerGridNode != null)
 		{

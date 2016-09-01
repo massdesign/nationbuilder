@@ -75,6 +75,7 @@ public class ObjectPersister
 
 		RubyModel object = this.modelPayload.getRubyModel();
 
+
 		Class currentClass = object.getClass();
 
 		while(currentClass != BaseRubyModel.class)

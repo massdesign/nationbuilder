@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
@@ -27,6 +28,7 @@ public class RelationScanService implements RubyDataService
 			RubyObjectKey objectKey = (RubyObjectKey) pair.getKey();
 
 			RubyModel model = objectKey.getObject();
+			Log.writeDebug("scan model " + model.toString() + " for relations");
 			// TODO: superclass ook meenemen in het scan for relations systeem
 			Class currentClass = model.getClass();
 			while (currentClass != null)

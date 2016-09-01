@@ -52,15 +52,14 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 	private PowerGridComponent getOrCreatePowerGridComponent(HashMap<TilePropertyType,String> mappedProperties) throws MapConvertException
 	{
-		PowerGridComponent result;
-
+		PowerGridComponent result = null;
 
 
 		// Bepalen of we hier te maken met een powerplant of een substation
 		String substationName =    mappedProperties.get(TilePropertyType.SUBSTATION_NAME);
 		String powerplantName =    mappedProperties.get(TilePropertyType.POWERPLANT_NAME);
 		// Dan is het een powerplant
-		if(substationName == null) {
+		if(substationName == null && powerplantName != null ) {
 			// TODO: dit weer opdelen in in een classe/builder/methodes
 			// mapped van de powerplant entity
 			EnergyBuilding intermittentResult = this.rubyContext.createRubyModel(EnergyBuilding.class);
@@ -87,7 +86,7 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 		}
 		// Dan is het een substation
-		else {
+		else if(substationName != null && powerplantName == null) {
 
 			PowerRelayStation intermittentResult = this.rubyContext.createRubyModel(PowerRelayStation.class);
 			String substationTypename = mappedProperties.get(TilePropertyType.SUBSTATION_TYPENAME);
@@ -113,6 +112,7 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 	public PowerGridNode createPowerGridNode(XmlTile xmlTile,Tile tile) throws MapConvertException
 	{
+		PowerGridNode result = null;
 		TiledXmlProperty tileTypeProperty = propertyManager.getTileProperty(TilePropertyType.POWERSTATION_TYPE, xmlTile.getGID());
 
 		// Eerst moeten we zeker weten dat deze tile powerrelaystation bevat.. anders heeft het geen zin om een RubyModel aan te maken
@@ -123,28 +123,34 @@ public class PowerGridNodeBuilder extends BaseBuilder
 			HashMap<TilePropertyType, String> mappedProperties = mapProperties(properties);
 			 PowerGridComponent powerGridComponent = getOrCreatePowerGridComponent(mappedProperties);
 			// Dit is eigenlijk haast zeker, maar hiermee maken we expliciet
-			if(powerGridComponent instanceof Building) {
+			if(powerGridComponent != null)
+			{
+				if (powerGridComponent instanceof Building)
+				{
 
-				Building building = (Building)powerGridComponent;
-				PowerGridNode powerGridNode = this.rubyContext.createRubyModel(PowerGridNode.class);
-				// TODO: random indentifier genereren
-				powerGridNode.setName(building.getName());
-				// powergrid node koppelen aan een fysiek object
-				if(powerGridComponent instanceof PowerRelayStation) {
-					powerGridNode.setRelayStation((PowerRelayStation)powerGridComponent);
+					Building building = (Building) powerGridComponent;
+					result = this.rubyContext.createRubyModel(PowerGridNode.class);
+					// TODO: random indentifier genereren
+					result.setName(building.getName());
+					// powergrid node koppelen aan een fysiek object
+					if (powerGridComponent instanceof PowerRelayStation)
+					{
+						result.setRelayStation((PowerRelayStation) powerGridComponent);
+					}
+					else if (powerGridComponent instanceof EnergyBuilding)
+					{
+						result.setEnergyBuilding((EnergyBuilding) powerGridComponent);
+					}
+					// bijhorende bij de building hoort ook een powergridnode
 				}
-				else if(powerGridComponent instanceof EnergyBuilding) {
-					powerGridNode.setEnergyBuilding((EnergyBuilding)powerGridComponent);
+				else
+				{
+					throw new MapConvertException("powergridcomponent is niet van het type Building");
 				}
-				return powerGridNode;
-				// bijhorende bij de building hoort ook een powergridnode
 			}
-			else {
-				throw new MapConvertException("powergridcomponent is niet van het type Building");
-			}
+
+
 		}
-		else {
-			return null;
-		}
+		return result;
 	}
 }
