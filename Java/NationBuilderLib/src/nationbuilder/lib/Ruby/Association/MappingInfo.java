@@ -1,11 +1,10 @@
 package nationbuilder.lib.Ruby.Association;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.FieldAccessor_Double;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import nationbuilder.lib.Ruby.Association.annotation.ID;
+import java.util.HashMap;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 
 /**
@@ -13,32 +12,47 @@ import nationbuilder.lib.Ruby.Interfaces.RubyModel;
  */
 public class MappingInfo
 {
-	public MappingInfo(String mappedBy,Class mappedByClazz,RubyModel instance,Field field,String foreignKey)
+
+	public MappingInfo(String mappedBy,Class mappedByClazz,RubyModel instance,Field field,String foreignKey) throws NoSuchFieldException
 	{
 		this.mappedBy = mappedBy;
-		this.mappedByClazz = mappedByClazz;
+
 		this.instance = instance;
 		this.field = field;
         this.foreignKey = foreignKey;
+		if(mappedByClazz != null)
+		{
+			this.mappedByClazz = mappedByClazz.getSimpleName();
+			if(mappedBy != null && !mappedBy.isEmpty())
+			{
+				this.mappedByField = mappedByClazz.getDeclaredField(mappedBy);
+			}
+		}
 	}
-	public MappingInfo(Class mappedByClazz,RubyModel instance,Field field) {
-
-		this.mappedByClazz = mappedByClazz;
+	public MappingInfo(Class mappedByClazz,RubyModel instance,Field field) throws NoSuchFieldException
+	{
+		if(mappedByClazz != null)
+		{
+			this.mappedByClazz = mappedByClazz.getSimpleName();
+			this.mappedByField = mappedByClazz.getDeclaredField(mappedBy);
+		}
 		this.instance = instance;
 		this.field = field;
+
 	}
 
 	private RubyModel instance;
 	private String mappedBy;
-	private Class mappedByClazz;
+	private String mappedByClazz;
 	private Field field;
     private String foreignKey;
 	private MappingInfoType mappingInfoType;
+	private Field mappedByField;
 
 	public String getMappedBy() {
 		return mappedBy;
 	}
-	public Class getMappedByClazz()
+	public String getMappedByClazz()
 	{
 		return mappedByClazz;
 	}
@@ -54,37 +68,48 @@ public class MappingInfo
 		}
 	}
 
+	public Field getMappedByField() {
+		return this.mappedByField;
+	}
+
 	public String getObjectKey() {
 		String result = "";
 		String  mappedByClassComponent = "";
 		String  field = "";
 		if(mappedByClazz != null) {
-			mappedByClassComponent =  mappedByClazz.getSimpleName();
+			mappedByClassComponent = mappedByClazz;
 		}
 		if(this.getField() != null) {
 			field = this.getField().getName();
 		}
 		// Get some unique value and create a MD5 hash to give this mapping info an uniqe Value
+		// NOTE: this.instance.toString() geeft altijd een andere waarde terug en dit zorgt ervoort dat we nooit dezelfde combinatie van strings op een mappinginfo hebben
+		// TODO: this.instance.toString vervangen door het type ipv toString van het object
 		result += this.mappingInfoType.toString() + mappedByClassComponent + field + this.instance.toString();
-		try
-		{
-			 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-			 messageDigest.reset();
-			 messageDigest.update(result.getBytes());
-			 byte  [] digest = messageDigest.digest();
-			BigInteger resultInt = new BigInteger(1,digest);
-			String hashtext = resultInt.toString();
-			// Now we need to zero pad it if you actually want the full 32 chars.
-			while (hashtext.length() < 32)
+
+
+		// NOTE: dit is duur om te doen.. en het voegt niet zo heel veel toe
+		/*	try
 			{
-				hashtext = "0" + hashtext;
+				MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+				messageDigest.reset();
+				messageDigest.update(result.getBytes());
+				byte[] digest = messageDigest.digest();
+				BigInteger resultInt = new BigInteger(1, digest);
+				String hashtext = resultInt.toString();
+				// Now we need to zero pad it if you actually want the full 32 chars.
+				while (hashtext.length() < 32)
+				{
+					hashtext = "0" + hashtext;
+				}
+				result = hashtext;
 			}
-			result = hashtext;
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			e.printStackTrace();
-		}
+			catch (NoSuchAlgorithmException e)
+			{
+				e.printStackTrace();
+			}
+		*/
+
 		return result;
 	}
 

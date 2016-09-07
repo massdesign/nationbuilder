@@ -20,7 +20,8 @@ public class OneToOneStrategy extends ResolveStrategy
 	public void resolve() throws IllegalAccessException, NoSuchFieldException
 	{
 		RubyModel foreignKeyHolder = (RubyModel) this.getMappingInfo().getField().get(this.getMappingInfo().getInstance());
-		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
+		Field objectReferenceField = this.getMappingInfo().getMappedByField();
+	//	Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
 		objectReferenceField.setAccessible(true);
 		if (foreignKeyHolder != null)
 		{

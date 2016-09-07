@@ -171,7 +171,7 @@ public class RubyAssociationResolver
 		}
 		return result;
 	}
-	public static MappingInfo getMappingInfo(Field field,RubyModel instance)
+	public static MappingInfo getMappingInfo(Field field,RubyModel instance) throws NoSuchFieldException
 	{
 		MappingInfo result = null;
 		if(field.getAnnotation(OneToOne.class) != null)  {
@@ -179,8 +179,6 @@ public class RubyAssociationResolver
 			result = new MappingInfo(o.mappedBy(), o.mappedByClazz(), instance, field,
 					o.foreignKey());
 			result.setMappingInfoType(MappingInfoType.OneToOne);
-
-
 		}
 		else  if(field.getAnnotation(OneToMany.class) != null) {
 			OneToMany o = field.getAnnotation(OneToMany.class);
@@ -200,30 +198,6 @@ public class RubyAssociationResolver
 			result = new MappingInfo(null,instance,field);
 			result.setMappingInfoType(MappingInfoType.IDMapping);
 		}
-		// TODO: weggooien als bovenstaande code goed werkt
-		/*
-	   Object o =  field.getAnnotation(OneToOne.class);
-		if(o != null)
-		{
-
-			result = new MappingInfo(((OneToOne)o).mappedBy(),((OneToOne)o).mappedByClazz(),instance,field,((OneToOne)o).foreignKey());
-		}
-		else
-		{
-		   o =	field.getAnnotation(OneToMany.class);
-		   if(o != null)
-		   {
-			   result = new MappingInfo(((OneToMany) o).mappedBy(), ((OneToMany) o).mappedByClazz(), instance, field,null);
-		   }
-			else  {
-			   o = field.getAnnotation(ManyToOne.class);
-			   if(o != null)
-			   {
-				   result = new MappingInfo(((ManyToOne)o).mappedBy(), ((ManyToOne) o).mappedByClazz(),instance,field,null);
-			   }
-		   }
-
-		}*/
 		return result;
 	}
 	private static Field getMappedField(Class annotationType,Field field,Class currentClass)

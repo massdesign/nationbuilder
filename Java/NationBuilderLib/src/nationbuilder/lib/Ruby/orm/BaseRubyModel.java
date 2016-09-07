@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import java.util.Stack;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Logging.LogType;
+import nationbuilder.lib.Ruby.Association.MappingInfo;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
@@ -67,6 +68,8 @@ public class BaseRubyModel implements RubyModel {
 			Log.write(e,LogType.ERROR);
 		}
 	}
+
+
     private String createSignature() {
 
         // get all columns..

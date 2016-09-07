@@ -114,4 +114,11 @@ public class TestModel1 extends BaseRubyModel
 	{
 		this.testModel2 = testModel2;
 	}
+
+
+	@Override
+	public String toString()
+	{
+		return "TestModel1";
+	}
 }

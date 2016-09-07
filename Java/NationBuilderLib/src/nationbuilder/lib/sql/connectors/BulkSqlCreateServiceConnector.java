@@ -78,11 +78,12 @@ public class BulkSqlCreateServiceConnector implements RubyCreateService
     @Override
     public void commit() throws RubyException {
 
+
         Iterator poit = this.persistedObjects.entrySet().iterator();
         HashMap<String,List<String>> rows = new HashMap<>();
         RelationResolveService relationResolveService = RubyDataServiceAccessor.getInstance().getService(RelationResolveService.class);
         RelationScanService relationScanService = RubyDataServiceAccessor.getInstance().getService(RelationScanService.class);
-        ResolveUnresolvedFieldsService resolveUnresolvedFieldsService = RubyDataServiceAccessor.getInstance().getService(ResolveUnresolvedFieldsService.class);
+       ResolveUnresolvedFieldsService resolveUnresolvedFieldsService = RubyDataServiceAccessor.getInstance().getService(ResolveUnresolvedFieldsService.class);
         relationResolveService.resolveForeignKeys(relationScanService.scanForRelations(
          this.persistedObjects.entrySet().iterator()));
 

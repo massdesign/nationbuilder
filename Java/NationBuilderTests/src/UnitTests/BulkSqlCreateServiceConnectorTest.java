@@ -1,13 +1,8 @@
 package UnitTests;
 
-import mocks.TestModel1;
 import mocks.TestModel2;
 import nationbuilder.lib.Ruby.services.ResolveUnresolvedFieldsService;
-import nationbuilder.lib.sql.connectors.BulkSqlCreateServiceConnector;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

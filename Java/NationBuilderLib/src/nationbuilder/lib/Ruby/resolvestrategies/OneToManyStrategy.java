@@ -20,7 +20,8 @@ public class OneToManyStrategy extends ResolveStrategy
 	{
 		List list = (List) this.getMappingInfo().getField().get(this.getMappingInfo().getInstance());
 
-		Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
+		//Field objectReferenceField = this.getMappingInfo().getMappedByClazz().getDeclaredField(this.getMappingInfo().getMappedBy());
+		Field objectReferenceField = this.getMappingInfo().getMappedByField();
 		objectReferenceField.setAccessible(true);
 		if(list != null)
 		{

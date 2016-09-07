@@ -8,6 +8,7 @@ import java.util.Map;
 import nationbuilder.lib.Logging.Log;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.Interfaces.RubyModel;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
@@ -19,7 +20,12 @@ import nationbuilder.lib.Ruby.services.RubyDataService;
 public class RelationScanService implements RubyDataService
 {
 
-	public List<MappingInfo> scanForRelations(Iterator poit) {
+	public RelationScanService() {
+
+	}
+
+	public List<MappingInfo> scanForRelations(Iterator poit) throws RubyException
+	{
 
 		List<MappingInfo> mappingList = new ArrayList<>();
 		while (poit.hasNext())
@@ -42,7 +48,16 @@ public class RelationScanService implements RubyDataService
 						if (field.getAnnotations().length > 0)
 						{
 							field.setAccessible(true);
-							MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
+							MappingInfo mappingInfo = null;
+							try
+							{
+								mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
+							}
+							catch (NoSuchFieldException e)
+							{
+
+								throw new RubyException("Missing field " + field.getName());
+							}
 							if (mappingInfo != null && mappingInfo.isForeignRelation())
 							{
 								if(!mappingList.contains(mappingInfo))

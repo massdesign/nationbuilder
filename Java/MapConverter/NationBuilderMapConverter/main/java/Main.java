@@ -24,9 +24,6 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
         context.commit();
-
-
-
     }
 
 }

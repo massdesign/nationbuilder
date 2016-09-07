@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import mocks.TestModel1;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
+import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RelationScanService;
 import nationbuilder.lib.Ruby.orm.RubyObjectKey;
 import org.junit.Assert;
@@ -14,7 +15,8 @@ import org.junit.Test;
 public class RelationScanServiceTests
 {
 	@Test
-	public void scanForRelationsTest() {
+	public void scanForRelationsTest() throws RubyException
+	{
 
 		HashMap<RubyObjectKey, String> objects  = new HashMap<>();
 		TestModel1 testModel1 = new TestModel1();

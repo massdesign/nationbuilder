@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Association.RubyAssociationResolver;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.MappingInfo;
@@ -97,7 +98,7 @@ public class SqlObjectToRowConverter
         return result;
     }
 
-    private ObjectMap.ObjectMapRow createObjectMapKV(Field field,Class currentClass,RubyModel model,ObjectMap om) throws IllegalAccessException, MissingAnnotationException
+    private ObjectMap.ObjectMapRow createObjectMapKV(Field field,Class currentClass,RubyModel model,ObjectMap om) throws IllegalAccessException, MissingAnnotationException, NoSuchFieldException
     {
         ObjectMap.ObjectMapRow result = null;
         if(!isSystemfield(field))
@@ -223,9 +224,12 @@ public class SqlObjectToRowConverter
 
                 catch (IllegalAccessException e)
                 {
-                    e.printStackTrace();
-                    //System.out.println(e)
+                    Log.write(e,LogType.ERROR);
 
+                }
+                catch (NoSuchFieldException e)
+                {
+                    Log.write(e, LogType.ERROR);
                 }
 
             }
