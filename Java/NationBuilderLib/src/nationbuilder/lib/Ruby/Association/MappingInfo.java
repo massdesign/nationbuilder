@@ -87,7 +87,7 @@ public class MappingInfo
 		// TODO: this.instance.toString vervangen door het type ipv toString van het object
 		result += this.mappingInfoType.toString() + mappedByClassComponent + field + this.instance.toString();
 
-
+		// TODO: deze code weggooien.. er is geen reden om een md5 string te
 		// NOTE: dit is duur om te doen.. en het voegt niet zo heel veel toe
 		/*	try
 			{

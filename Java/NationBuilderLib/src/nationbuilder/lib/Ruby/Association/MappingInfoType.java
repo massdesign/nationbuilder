@@ -6,6 +6,4 @@ package nationbuilder.lib.Ruby.Association;
 public enum  MappingInfoType
 {
 	OneToOne,OneToMany,ManyToOne,IDMapping;
-
-
 }
