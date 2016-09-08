@@ -28,6 +28,7 @@ public class SqlObjectToRowConverter
 	public static String STRING_TYPE = "string";
 	public static String INT_TYPE = "int";
     public static String LIST_TYPE = "list";
+    public static String BOOLEAN_TYPE = "boolean";
     public static String REFERENCE_TYPE = "referencemapping";
 
     private List<String> systemFields;
@@ -116,9 +117,6 @@ public class SqlObjectToRowConverter
 
                 if (fieldEntityAnnotation != null)
                 {
-
-
-
                        MappingInfo mappingInfo = RubyAssociationResolver.getMappingInfo(field, model);
                        String field_id = "";
                        String fieldValue = (String) mappedField.get(model);
@@ -168,7 +166,9 @@ public class SqlObjectToRowConverter
                     String fieldType = field.getType().getSimpleName();
                     
            
-                    if (fieldType.toLowerCase().equals(STRING_TYPE) || fieldType.toLowerCase().equals(INT_TYPE))
+                    if (fieldType.toLowerCase().equals(STRING_TYPE)
+                        || fieldType.toLowerCase().equals(INT_TYPE)
+                        || fieldType.toLowerCase().equals(BOOLEAN_TYPE))
                     {
                         field.setAccessible(true);
 

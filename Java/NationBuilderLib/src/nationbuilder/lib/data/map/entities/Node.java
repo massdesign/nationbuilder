@@ -1,5 +1,6 @@
 package nationbuilder.lib.data.map.entities;
 
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.ID;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
@@ -15,10 +16,13 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 @Entity(tableName = "node_types",strategy = InhiritanceStrategy.TablePerClass)
 public class Node extends BaseRubyModel
 {
+	@Column
     private String name;
 
+	@Column
 	private boolean destroyable;
-	@ManyToOne(mappedBy = MappedBy.SELF)
+
+	@ManyToOne(mapIdTo = MappedBy.SELF)
 	private ReferenceMapping tile;
 
 	@ID(mapIdToEntity = "nationbuilder.lib.data.map.entities.PowerGridNode")

@@ -55,7 +55,6 @@ public class RelationScanService implements RubyDataService
 							}
 							catch (NoSuchFieldException e)
 							{
-
 								throw new RubyException("Missing field " + field.getName());
 							}
 							if (mappingInfo != null && mappingInfo.isForeignRelation())

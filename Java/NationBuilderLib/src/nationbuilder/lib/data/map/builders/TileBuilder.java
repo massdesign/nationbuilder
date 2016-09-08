@@ -79,10 +79,6 @@ public class TileBuilder
 			result.addNode(powerGridNode);
 			result.addBuilding(powerGridNode.getRelayStation());
 			result.addBuilding(powerGridNode.getEnergyBuilding());
-			if (powerGridNode != null && powerGridNode.getRelayStation() != null)
-			{
-				result.addBuilding(powerGridNode.getRelayStation());
-			}
 		}
 		return result;
 	}
