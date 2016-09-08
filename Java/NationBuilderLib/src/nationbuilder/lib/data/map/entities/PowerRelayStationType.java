@@ -12,10 +12,9 @@ public class PowerRelayStationType extends BaseRubyModel implements NamedObject
 {
 	@Column
 	private int capacity;
+
 	@Column
 	private String name;
-
-
 
 	public int getCapacity()
 	{

@@ -22,12 +22,7 @@ public class Main {
         RubyContext context = new DefaultRubyContextFactory()
          .createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT, Main.class);
         WorldLoader worldLoader = new WorldLoader(context);
-      //  worldLoader.Run();
-     //   context.commit();
-
-        EnergyBuilding energyBuilding =  context.createRubyModel(EnergyBuilding.class);
-        energyBuilding.setName("test12345");
-        energyBuilding.Save();
+        worldLoader.Run();
         context.commit();
     }
 

@@ -78,9 +78,9 @@ public class PowerGridNodeBuilder extends BaseBuilder
 			energyBuildingType.setResponsetime(mappedProperties.get(TilePropertyType.POWERPLANT_REPSONSETIME));
 			energyBuildingType.setPowerOutput(Integer.valueOf(mappedProperties.get(TilePropertyType.POWERPLANT_POWEROUTPUT)));
 			energyBuildingType.setEnergySource(mappedProperties.get(TilePropertyType.POWERPLANT_TYPE));
-			energyBuildingType.setPowerplantType(mappedProperties.get(TilePropertyType.POWERPLANT_TYPENAME));
+			energyBuildingType.setName(mappedProperties.get(TilePropertyType.POWERPLANT_TYPENAME));
 			intermittentResult.setBuildingType(energyBuildingType);
-			intermittentResult.setName(mappedProperties.get(powerplantName));
+			intermittentResult.setName(powerplantName);
 			result = intermittentResult;
 
 
@@ -94,14 +94,16 @@ public class PowerGridNodeBuilder extends BaseBuilder
 			if(substationTypename == null) {
 				throw new MapConvertException("substationtypename is null on substationobject");
 			}
-			PowerRelayStationType powerRelayStationType = getExistingRubyObject(substationName,PowerRelayStationType.class);
+			PowerRelayStationType powerRelayStationType = getExistingRubyObject(substationTypename,PowerRelayStationType.class);
 			// Als hij niet bestaat moeten we hem maken
 			if(powerRelayStationType == null) {
 				powerRelayStationType = this.rubyContext.createRubyModel(PowerRelayStationType.class);
 			}
 
-			powerRelayStationType.setName(mappedProperties.get(TilePropertyType.SUBSTATION_NAME));
+			powerRelayStationType.setName(mappedProperties.get(TilePropertyType.SUBSTATION_TYPENAME));
 			powerRelayStationType.setCapacity(Integer.valueOf(mappedProperties.get(TilePropertyType.SUBSTATION_CAPACITY)));
+
+
 			intermittentResult.setPowerRelayStationType(powerRelayStationType);
 			intermittentResult.setName(substationName);
 			result = intermittentResult;

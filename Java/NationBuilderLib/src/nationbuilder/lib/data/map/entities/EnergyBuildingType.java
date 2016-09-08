@@ -9,8 +9,9 @@ import nationbuilder.lib.Ruby.orm.BaseRubyModel;
  */
 // TODO: energybuilding wordt niet meer gebruikt in zijn huidige vorm... we zouden dit dus kunnen deleten
 @Entity(tableName = "energy_building_types")
-public class EnergyBuildingType extends BaseRubyModel
+public class EnergyBuildingType extends BaseRubyModel implements NamedObject
 {
+	@Column
 	private String name;
     /**
      * Power output is measures per game turn in megawatt
@@ -24,8 +25,6 @@ public class EnergyBuildingType extends BaseRubyModel
 	@Column
 	private String responsetime;
 
-	@Column
-	private String powerplantType;
 
 	public String getEnergySource()
 	{
@@ -65,15 +64,5 @@ public class EnergyBuildingType extends BaseRubyModel
 	public void setResponsetime(String responsetime)
 	{
 		this.responsetime = responsetime;
-	}
-
-	public String getPowerplantType()
-	{
-		return powerplantType;
-	}
-
-	public void setPowerplantType(String powerplantType)
-	{
-		this.powerplantType = powerplantType;
 	}
 }
