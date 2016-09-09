@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "energy_building_type_id"
+    t.integer  "power_grid_node_id"
   end
 
   create_table "game_entities", force: true do |t|
@@ -128,8 +129,6 @@ ActiveRecord::Schema.define(version: 20160120123638) do
   create_table "power_grid_nodes", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "power_relay_station_id"
-    t.integer  "energy_building_id"
   end
 
   create_table "power_relay_station_types", force: true do |t|
@@ -142,6 +141,7 @@ ActiveRecord::Schema.define(version: 20160120123638) do
   create_table "power_relay_stations", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "power_grid_node_id"
     t.integer  "power_relay_station_type_id"
   end
 

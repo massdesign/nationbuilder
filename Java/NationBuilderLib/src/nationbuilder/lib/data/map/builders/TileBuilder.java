@@ -3,10 +3,10 @@ package nationbuilder.lib.data.map.builders;
 import java.util.ArrayList;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.data.map.entities.Building;
 import nationbuilder.lib.data.map.entities.Image;
 import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.PowerGridNode;
-import nationbuilder.lib.data.map.entities.PowerRelayStation;
 import nationbuilder.lib.data.map.entities.Tile;
 import nationbuilder.lib.data.map.exceptions.MapConvertException;
 import nationbuilder.lib.data.map.xml.XmlTile;
@@ -70,15 +70,13 @@ public class TileBuilder
 		TerrainTypeBuilder terrainTypeBuilder = new TerrainTypeBuilder(this.rubyContext);
 		result.setTerrainType(terrainTypeBuilder.createTerraintype(xmlTile));
 
-		PowerGridNodeBuilder powerGridNodeBuilder = new PowerGridNodeBuilder(this.rubyContext);
-		PowerGridNode powerGridNode = powerGridNodeBuilder.createPowerGridNode(xmlTile,result);
+		PowerBuildingBuilder powerGridNodeBuilder = new PowerBuildingBuilder(this.rubyContext);
+		Building building = powerGridNodeBuilder.createPowerBuilding(xmlTile,result);
 		// niet elke tile heeft een powergridnode..
-		if(powerGridNode != null)
+		if(building != null)
 		{
 			// geef de node een locatie op de map
-			result.addNode(powerGridNode);
-			result.addBuilding(powerGridNode.getRelayStation());
-			result.addBuilding(powerGridNode.getEnergyBuilding());
+			result.addBuilding(building);
 		}
 		return result;
 	}

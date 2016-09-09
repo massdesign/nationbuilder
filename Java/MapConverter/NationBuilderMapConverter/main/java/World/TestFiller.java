@@ -64,8 +64,8 @@ public class TestFiller
 
 		powerRelayStation1.setPowerRelayStationType(powerRelayStationType);
 		powerRelayStation2.setPowerRelayStationType(powerRelayStationType);
-		powerGridNode1.setRelayStation(powerRelayStation1);
-		powerGridNode2.setRelayStation(powerRelayStation2);
+		//powerGridNode1.setRelayStation(powerRelayStation1);
+		//powerGridNode2.setRelayStation(powerRelayStation2);
 
 		powerGridNode3.setName("test in je moeder");
 		powerGridNode3.setDestroyable(true);

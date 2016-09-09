@@ -3,6 +3,7 @@ class CreateEnergyBuildings < ActiveRecord::Migration
     create_table :energy_buildings do |t|
       t.timestamps
       t.belongs_to :energy_building_type
-    end
+      t.integer :power_grid_node_id  
+   end
   end
 end

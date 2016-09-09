@@ -25,17 +25,20 @@ import nationbuilder.lib.data.map.xml.XmlTile;
 /**
  * @author patrick.ekkel
  */
-public class PowerGridNodeBuilder extends BaseBuilder
+public class PowerBuildingBuilder extends BaseBuilder
 {
 	PropertyManagerService propertyManagerService;
 	TiledPropertyManager propertyManager;
+	PowergridNodeBuilder powergridNodeBuilder;
 
-	public PowerGridNodeBuilder(RubyContext rubyContext) throws RubyDataServiceNotInitializedException
+	public PowerBuildingBuilder(RubyContext rubyContext) throws RubyDataServiceNotInitializedException
 	{
 		super(rubyContext);
 		// TODO: dit is misschien handig om in de basebuilder te zetten
 		propertyManagerService = RubyDataServiceAccessor.getInstance().getService(PropertyManagerService.class);
 		propertyManager = propertyManagerService.getTiledPropertyManager();
+		powergridNodeBuilder = new PowergridNodeBuilder(rubyContext);
+
 	}
 
 	// TODO: deze methode zou ook naar de base kunnen
@@ -111,10 +114,9 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 		return  result;
 	}
-
-	public PowerGridNode createPowerGridNode(XmlTile xmlTile,Tile tile) throws MapConvertException
+	public Building createPowerBuilding(XmlTile xmlTile,Tile tile) throws MapConvertException
 	{
-		PowerGridNode result = null;
+		PowerGridComponent result = null;
 		TiledXmlProperty tileTypeProperty = propertyManager.getTileProperty(TilePropertyType.POWERSTATION_TYPE, xmlTile.getGID());
 
 		// Eerst moeten we zeker weten dat deze tile powerrelaystation bevat.. anders heeft het geen zin om een RubyModel aan te maken
@@ -131,19 +133,11 @@ public class PowerGridNodeBuilder extends BaseBuilder
 				{
 
 					Building building = (Building) powerGridComponent;
-					result = this.rubyContext.createRubyModel(PowerGridNode.class);
+					PowerGridNode powerGridNode =  powergridNodeBuilder.createPowerGridNode(building);
 					// TODO: random indentifier genereren
-					result.setName(building.getName());
-					// powergrid node koppelen aan een fysiek object
-					if (powerGridComponent instanceof PowerRelayStation)
-					{
-						result.setRelayStation((PowerRelayStation) powerGridComponent);
-					}
-					else if (powerGridComponent instanceof EnergyBuilding)
-					{
-						result.setEnergyBuilding((EnergyBuilding) powerGridComponent);
-					}
+					powerGridNode.setName(building.getName());
 					// bijhorende bij de building hoort ook een powergridnode
+					result  = powerGridComponent;
 				}
 				else
 				{
@@ -153,6 +147,6 @@ public class PowerGridNodeBuilder extends BaseBuilder
 
 
 		}
-		return result;
+		return (Building)result;
 	}
 }

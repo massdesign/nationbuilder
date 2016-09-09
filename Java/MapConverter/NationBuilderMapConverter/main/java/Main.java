@@ -24,13 +24,6 @@ public class Main {
         WorldLoader worldLoader = new WorldLoader(context);
         worldLoader.Run();
         context.commit();
-       // PowerGridNode powerGridNode =   context.createRubyModel(PowerGridNode.class);
-
-       // powerGridNode.setName("lekker testen");
-       // powerGridNode.Save();
-        //context.commit();
-
-
     }
 
 }

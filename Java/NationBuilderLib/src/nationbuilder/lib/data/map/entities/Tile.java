@@ -42,8 +42,8 @@ public class Tile extends BaseRubyModel {
 	@OneToMany(mapIdTo = "bids", mappedBy = "tile", mappedByClazz = Building.class)
 	private List<Building> buildings = new ArrayList<>();
 
-	@OneToMany(mapIdTo = "nids",mappedBy = "tile",mappedByClazz = Node.class)
-	private List<Node> nodes = new ArrayList<>();
+	//@OneToMany(mapIdTo = "nids",mappedBy = "tile",mappedByClazz = Node.class)
+	//private List<Node> nodes = new ArrayList<>();
 	@OneToOne(mapIdTo = "tti")
 	@Column
 	private TerrainType terrainType;
@@ -145,11 +145,11 @@ public class Tile extends BaseRubyModel {
 		}
 	}
 
-	public void addNode(Node node)
+	/*public void addNode(Node node)
 	{
 		if (node != null) {
 			this.nodes.add(node);
 		}
-	}
+	}*/
 
 }

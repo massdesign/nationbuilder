@@ -30,7 +30,7 @@ public class ConnectionFiller extends BaseFiller
 		PowerGridNode nodeType = this.getContext().createRubyModel(PowerGridNode.class);
 		nodeType.setName(name);
 		nodeType.setDestroyable(destroyable);
-		nodeType.setRelayStation(powerRelayStation);
+		//nodeType.setRelayStation(powerRelayStation);
 
 		return nodeType;
 	}
