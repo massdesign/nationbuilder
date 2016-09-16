@@ -14,7 +14,7 @@ NB-10: Gebruikerslogin. Het Mogelijk maken om een account aan te maken binnen na
 NB-11: Refactoren van de Javacode die interfaced met Ruby(fetchIDs wegrefactored uitde pojos), daarnaast nog wat entities toevoegen tbv het plaatsen van gebouwen(eerste opzet)*
 NB-12: problemen en inconssstensies fixen in de json response van de verschillende ruby controllers.. alles veranderen naar prefixloze json*
 
-NB-13: Connections beschikbaar maken in de tiled editor en map maken met verbinding tussen 2 objecten en dit ook tonen in mapengine met behulp van lijnen  
+NB-13: Connections beschikbaar maken in de tiled editor en map maken met verbinding tussen 2 objecten  
 NB-14: Performance problemen met scrollen oplossen* 
 NB-15: Basic caching mechanisme implementeren voor json calls in de python client*
 NB-16: Mogelijk maken om een object toe te voegen op een tile via drag drop* 
@@ -46,8 +46,7 @@ NB-39: AI ontwerpen die een fabriek draaiende kan houden met verschillende strat
 NB-40: De database compleet maken wat betreft grondstoffen die in het spel verwerkt kunnen worden
 NB-41: startup process van de gehele gamewereld scripten 
 NB-42: Mogelijk maken een building te plaatsen in de gamewereld vanuit de GUI
-NB-43: Energybuilding en State entities opwaarderen met het TablePerClass systeem
-NB-44: minimaliseren van het exposen van database_ids,op teveel plekken wordt dit door de applicatie gebruikt
+NB-43: Energybuilding(is al gedaan in NB-13) en State entities opwaarderen met het TablePerClass systeem
 NB-45: losse assets zoals military bases en iconen ook mee laten komen in het install process 
 NB-48: achtergrond als een plaatje renderen om geheugen te bespareni*
 NB-49: plaatjes in pythonserver al combineren in een PNG
@@ -58,3 +57,4 @@ NB-60: id generatie is niet optimaal, dit was gefixt dacht ik, opnieuw implement
 NB-53: javascript performance verbeteren door gebruik te maken van prototype initialisatie 
 NB-46: inzoomen,uitzoomen gebeurt nu niet op een goede manier.. De map is niet gecenterteerd. Zorg ervoor dat inzoomen uitzoomen consistent wertk*
 NB-54: landgenerator maken die contininten/eilandgroepen kan genereren inclusief kustlijn
+NB-55: connections zichtbaar maken in de GUI doormiddel van lijnen te tekenen
