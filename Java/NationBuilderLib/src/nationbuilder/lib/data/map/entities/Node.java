@@ -14,7 +14,7 @@ import nationbuilder.lib.Ruby.orm.ReferenceMapping;
  * @author patrick.ekkel
  */
 @Entity(tableName = "node_types",strategy = InhiritanceStrategy.TablePerClass)
-public class Node extends BaseRubyModel
+public class Node extends BaseRubyModel implements NamedObject
 {
 	@Column
     private String name;

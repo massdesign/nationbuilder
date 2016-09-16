@@ -28,6 +28,63 @@ public class TiledPropertyManager
 		this.indexedPropertyHashMap =  new HashMap<>();
 	}
 
+	public List<TiledXmlProperty> getAllObjectGroupProperties() throws MapConvertException
+	{
+
+		List<TiledXmlProperty> result = new ArrayList<>();
+
+		for(XmlObjectGroup objectGroup : this.tiledXmlMap.getObjectGroups()) {
+
+			for(XmlObject xmlObject : objectGroup.getObjects()) {
+
+				for(Property property : xmlObject.getProperties()) {
+
+					result.add(new TileProperty(TilePropertyType.convertToEnum(property.getName()), property.getValue()));
+				}
+			}
+		}
+		return result;
+	}
+
+	public List<Integer> getAllObjectIds() throws MapConvertException
+	{
+
+		List<Integer> result = new ArrayList<>();
+
+		for (XmlObjectGroup objectGroup : this.tiledXmlMap.getObjectGroups())
+		{
+
+			for (XmlObject xmlObject : objectGroup.getObjects())
+			{
+				result.add(Integer.valueOf(xmlObject.getId()));
+
+			}
+		}
+		return result;
+	}
+	public List<TiledXmlProperty> getObjectGroupPropertiesById(Integer id) throws MapConvertException
+	{
+
+		List<TiledXmlProperty> result = new ArrayList<>();
+
+		for (XmlObjectGroup objectGroup : this.tiledXmlMap.getObjectGroups())
+		{
+
+			for (XmlObject xmlObject : objectGroup.getObjects())
+			{
+				if(Integer.valueOf(xmlObject.getId()).equals(id))
+				{
+					for (Property property : xmlObject.getProperties())
+					{
+
+						result.add(new TileProperty(TilePropertyType.convertToEnum(property.getName()), property.getValue()));
+					}
+					break;
+				}
+			}
+		}
+		return result;
+	}
 
 	public List<TiledXmlProperty> getObjectGroupProperties(int xposition,int yposition) throws MapConvertException
 	{

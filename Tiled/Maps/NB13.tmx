@@ -98,35 +98,35 @@
    <properties>
     <property name="city_type" value="large_city"/>
     <property name="max_population" value="800000"/>
-	<property name="tiletype" value="city"/>
+    <property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="52">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
-	<property name="tiletype" value="city"/>
+    <property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="53">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
-	<property name="tiletype" value="city"/>
+    <property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="60">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
-	<property name="tiletype" value="city"/>
+    <property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="61">
    <properties>
     <property name="city_type" value="city_outskirts"/>
     <property name="max_population" value="20000"/>
-	<property name="tiletype" value="city"/>
+    <property name="tiletype" value="city"/>
    </properties>
   </tile>
   <tile id="72">
@@ -10214,7 +10214,7 @@
  </layer>
  <objectgroup name="city_territory">
   <properties>
-	   <property name="city_name" value="Deventer"/>
+   <property name="city_name" value="Deventer"/>
   </properties>
   <object id="12" x="387.5" y="512" width="220" height="159">
    <properties>
@@ -10245,43 +10245,43 @@
   <object id="15" x="987.5" y="956" width="39" height="35.5">
    <properties>
     <property name="substation_capacity" value="600"/>
-    <property name="substation_connections" value="utrecht,vroomshoop1,deventer1"/>
+    <property name="substation_connections" value=""/>
     <property name="substation_name" value="Utrecht1"/>
-	<property name="substation_typename" value="Medium Substation"/>
+    <property name="substation_typename" value="Medium Substation"/>
    </properties>
   </object>
   <object id="16" x="571.5" y="1111.5" width="39" height="42">
    <properties>
     <property name="powerplant_connections" value="zwolle1"/>
-    <property name="powerplant_poweroutput" value="350"/>
     <property name="powerplant_name" value="Ijsselcentrale"/>
-    <property name="powerplant_type" value="Gas"/>
+    <property name="powerplant_poweroutput" value="350"/>
     <property name="powerplant_responsetime" value="Fast"/>
-	<property name="powerplant_typename" value="MK I Gasplant"/>
+    <property name="powerplant_type" value="Gas"/>
+    <property name="powerplant_typename" value="MK I Gasplant"/>
    </properties>
   </object>
   <object id="17" x="696" y="1113" width="52" height="58">
    <properties>
     <property name="substation_capacity" value="600"/>
-    <property name="substation_connections" value="zwolle,utrecht1"/>
+    <property name="substation_connections" value="Utrecht1,Deventer1,vroomshoop1"/>
     <property name="substation_name" value="Zwolle1"/>
-	<property name="substation_typename" value="Medium Substation"/>
+    <property name="substation_typename" value="Medium Substation"/>
    </properties>
   </object>
   <object id="19" x="476.5" y="509.25" width="39" height="35.5">
    <properties>
     <property name="substation_capacity" value="600"/>
-    <property name="substation_connections" value="Deventer"/>
+    <property name="substation_connections" value=""/>
     <property name="substation_name" value="Deventer1"/>
-	<property name="substation_typename" value="Medium Substation"/>
+    <property name="substation_typename" value="Medium Substation"/>
    </properties>
   </object>
-  <object id="23" x="863.25" y="1505.33" width="34.25" height="32.4167">
+  <object id="23" x="861.583" y="1501.41" width="36.75" height="36.9167">
    <properties>
     <property name="substation_capacity" value="100"/>
     <property name="substation_connections" value="vroomshoop"/>
     <property name="substation_name" value="Vroomshoop1"/>
-	<property name="substation_typename" value="Small Substation"/>
+    <property name="substation_typename" value="Small Substation"/>
    </properties>
   </object>
  </objectgroup>

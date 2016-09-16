@@ -44,7 +44,11 @@ public class BaseBuilder
 		for (T currentType : types)
 		{
 			NamedObject namedObject = currentType;
-			if (name.equals(namedObject.getName()))
+			String namedObjectName = null;
+			if(namedObject != null && namedObject.getName() != null) {
+				namedObjectName = namedObject.getName().toLowerCase();
+			}
+			if (name.toLowerCase().equals(namedObjectName))
 			{
 				return currentType;
 			}

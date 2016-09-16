@@ -116,9 +116,7 @@ public class PowerBuildingBuilder extends BaseBuilder
 				{
 
 					Building building = (Building) powerGridComponent;
-					PowerGridNode powerGridNode =  powergridNodeBuilder.createPowerGridNode(building,tile);
-					// TODO: random indentifier genereren
-					powerGridNode.setName(building.getName());
+					PowerGridNode powerGridNode =  powergridNodeBuilder.createPowerGridNode(building);
 					// bijhorende bij de building hoort ook een powergridnode
 					result  = powerGridComponent;
 				}

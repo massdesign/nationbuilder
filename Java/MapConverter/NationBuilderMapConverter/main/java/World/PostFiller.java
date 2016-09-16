@@ -32,9 +32,8 @@ public class PostFiller {
     public void testFill() throws RubyException
     {
 
-
-        TestFiller testFiller = new TestFiller(this.context);
-        testFiller.testFillPowergridDatastructure();
+        //TestFiller testFiller = new TestFiller(this.context);
+        //testFiller.testFillPowergridDatastructure();
 
     }
     private void save()

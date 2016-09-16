@@ -35,7 +35,7 @@ public class MapBuilder
 		this.rubyContext = rubyContext;
 	}
 
-	public MapMap createMap(TiledXmlMap map) throws MapConvertException
+	public MapMap createMap(TiledXmlMap map) throws MapConvertException, RubyDataServiceNotInitializedException
 	{
 		MapMap resultMap = this.rubyContext.createRubyModel(MapMap.class);
 		resultMap.setHeight(map.getHeight());
@@ -74,7 +74,9 @@ public class MapBuilder
 				Log.write(e,LogType.ERROR);
 			}
 		}
-
+		PowerConnectionBuilder powerConnectionBuilder = new PowerConnectionBuilder(this.rubyContext);
+		powerConnectionBuilder.createConnections();
+		
 		// NOTE: tijdelijke oplossing
 		this.map = resultMap;
 		return resultMap;

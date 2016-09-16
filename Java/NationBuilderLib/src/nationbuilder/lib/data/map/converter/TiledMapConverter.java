@@ -2,6 +2,8 @@ package nationbuilder.lib.data.map.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import nationbuilder.lib.Logging.Log;
+import nationbuilder.lib.Logging.LogType;
 import nationbuilder.lib.Ruby.Exceptions.RubyDataServiceNotInitializedException;
 import nationbuilder.lib.Ruby.RubyContext;
 import nationbuilder.lib.data.map.builders.LayerBuilder;
@@ -52,6 +54,10 @@ public class TiledMapConverter {
         catch (MapConvertException e)
         {
             e.printStackTrace();
+        }
+        catch (RubyDataServiceNotInitializedException e)
+        {
+            Log.write(e, LogType.ERROR);
         }
         mapBuilder.Persist();
     }
