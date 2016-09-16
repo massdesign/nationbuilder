@@ -2,6 +2,7 @@ package World;
 
 import nationbuilder.lib.Ruby.Exceptions.RubyException;
 import nationbuilder.lib.Ruby.RubyContext;
+import nationbuilder.lib.data.map.entities.EnergyBuilding;
 import nationbuilder.lib.data.map.entities.Layer;
 import nationbuilder.lib.data.map.entities.MapMap;
 import nationbuilder.lib.data.map.entities.PowerConnection;
@@ -90,6 +91,45 @@ public class TestFiller
 	} */
 
 		// test12345
+	}
+	public void testFillPowergridDatastructure() throws RubyException
+	{
+
+		PowerRelayStation powerRelayStation1 = this.context.createRubyModel(PowerRelayStation.class);
+		PowerRelayStation powerRelayStation2 = this.context.createRubyModel(PowerRelayStation.class);
+		EnergyBuilding energyBuilding1 = this.context.createRubyModel(EnergyBuilding.class);
+
+
+		PowerGridNode powerGridNode1 = this.context.createRubyModel(PowerGridNode.class);
+		PowerGridNode powerGridNode2 = this.context.createRubyModel(PowerGridNode.class);
+		PowerGridNode powerGridNode3 = this.context.createRubyModel(PowerGridNode.class);
+
+		energyBuilding1.setPowerGridNode(powerGridNode3);
+
+
+		powerRelayStation1.setPowerGridNode(powerGridNode1);
+		powerRelayStation2.setPowerGridNode(powerGridNode2);
+
+		PowerConnection powerConnection1 = this.context.createRubyModel(PowerConnection.class);
+		powerConnection1.setName("verbinding tussen powerelaystation1 en powerrelaystation2");
+
+		PowerConnection powerConnection2 = this.context.createRubyModel(PowerConnection.class);
+		powerConnection2.setName("verbinding tussen energybuilding1 en powerrelaystation1");
+
+		powerConnection2.setA(powerGridNode3);
+		powerConnection2.setB(powerGridNode1);
+
+
+		powerConnection1.setA(powerGridNode1);
+		powerConnection1.setB(powerGridNode2);
+		powerRelayStation1.addConnection(powerConnection1);
+		energyBuilding1.addConnection(powerConnection2);
+
+
+		energyBuilding1.Save();
+		powerRelayStation1.Save();
+
+		this.context.commit();
 	}
 	public void testFillSmallNationbuilderDatastructure() {
 

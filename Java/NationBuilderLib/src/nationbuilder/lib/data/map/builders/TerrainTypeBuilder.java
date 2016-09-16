@@ -16,13 +16,10 @@ import nationbuilder.lib.data.map.xml.XmlTile;
  */
 public class TerrainTypeBuilder extends BaseBuilder
 {
-	private RubyObjectFactory rubyObjectFactory;
 
-
-	public TerrainTypeBuilder(RubyContext rubyContext) {
+	public TerrainTypeBuilder(RubyContext rubyContext) throws RubyDataServiceNotInitializedException
+	{
 		super(rubyContext);
-		this.rubyObjectFactory = rubyContext.createRubyObjectFacory(TerrainType.class,TerrainType[].class);
-
 	}
 
 	public TerrainType createTerraintype(XmlTile xmlTile) throws RubyDataServiceNotInitializedException

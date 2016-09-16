@@ -27,36 +27,19 @@ import nationbuilder.lib.data.map.xml.XmlTile;
  */
 public class PowerBuildingBuilder extends BaseBuilder
 {
-	PropertyManagerService propertyManagerService;
-	TiledPropertyManager propertyManager;
+
 	PowergridNodeBuilder powergridNodeBuilder;
 
 	public PowerBuildingBuilder(RubyContext rubyContext) throws RubyDataServiceNotInitializedException
 	{
 		super(rubyContext);
-		// TODO: dit is misschien handig om in de basebuilder te zetten
-		propertyManagerService = RubyDataServiceAccessor.getInstance().getService(PropertyManagerService.class);
-		propertyManager = propertyManagerService.getTiledPropertyManager();
 		powergridNodeBuilder = new PowergridNodeBuilder(rubyContext);
 
-	}
-
-	// TODO: deze methode zou ook naar de base kunnen
-	private HashMap<TilePropertyType,String> mapProperties(List<TiledXmlProperty> properties) {
-
-		HashMap<TilePropertyType,String> result = new HashMap<>();
-
-		for(TiledXmlProperty property : properties) {
-
-			result.put(property.getType(),property.getValue());
-		}
-		return result;
 	}
 
 	private PowerGridComponent getOrCreatePowerGridComponent(HashMap<TilePropertyType,String> mappedProperties) throws MapConvertException
 	{
 		PowerGridComponent result = null;
-
 
 		// Bepalen of we hier te maken met een powerplant of een substation
 		String substationName =    mappedProperties.get(TilePropertyType.SUBSTATION_NAME);
@@ -133,7 +116,7 @@ public class PowerBuildingBuilder extends BaseBuilder
 				{
 
 					Building building = (Building) powerGridComponent;
-					PowerGridNode powerGridNode =  powergridNodeBuilder.createPowerGridNode(building);
+					PowerGridNode powerGridNode =  powergridNodeBuilder.createPowerGridNode(building,tile);
 					// TODO: random indentifier genereren
 					powerGridNode.setName(building.getName());
 					// bijhorende bij de building hoort ook een powergridnode

@@ -6,5 +6,7 @@ package nationbuilder.lib.data.map.entities;
  */
 public interface PowerGridComponent extends NamedObject
 {
-	public void setPowerGridNode(PowerGridNode powerGridNode);
+	void setPowerGridNode(PowerGridNode powerGridNode);
+	PowerGridNode getPowergridNode();
+	void addConnection(PowerConnection powerConnection);
 }

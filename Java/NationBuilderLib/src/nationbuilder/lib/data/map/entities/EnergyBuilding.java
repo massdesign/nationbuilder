@@ -1,8 +1,11 @@
 package nationbuilder.lib.data.map.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
 import nationbuilder.lib.Ruby.Association.annotation.InhiritanceStrategy;
+import nationbuilder.lib.Ruby.Association.annotation.OneToMany;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 
@@ -15,7 +18,8 @@ public class EnergyBuilding extends Building implements PowerGridComponent
     private String pgid;
 
     private String btid;
-    // TODO: zie todo hierboven, tableperclass structuur hier aanbrengen
+
+    private int[] pcids;
     public EnergyBuildingType getBuildingType() {
         return buildingType;
     }
@@ -23,6 +27,9 @@ public class EnergyBuilding extends Building implements PowerGridComponent
     public void setBuildingType(EnergyBuildingType buildingType) {
         this.buildingType = buildingType;
     }
+
+    @OneToMany(mapIdTo = "pcids", mappedBy = "energy_building", mappedByClazz = PowerConnection.class)
+    List<PowerConnection> powerConnections = new ArrayList<>();
 
     @OneToOne(mapIdTo = "pgid")
     private PowerGridNode powerGridNode;
@@ -32,9 +39,15 @@ public class EnergyBuilding extends Building implements PowerGridComponent
 	private EnergyBuildingType buildingType;
 
 
-    public PowerGridNode getPowerGridNode()
+    public PowerGridNode getPowergridNode()
     {
         return powerGridNode;
+    }
+
+    @Override
+    public void addConnection(PowerConnection powerConnection)
+    {
+        powerConnections.add(powerConnection);
     }
 
     public void setPowerGridNode(PowerGridNode powerGridNode)

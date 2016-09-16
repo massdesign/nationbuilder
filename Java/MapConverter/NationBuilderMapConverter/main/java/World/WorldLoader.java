@@ -58,7 +58,7 @@ public class WorldLoader {
        // this.PostFiller();
         this.context.commit();
     }
-    public void TestRun()
+    public void TestRun() throws RubyException
     {
         this.postFiller.testFill();
 

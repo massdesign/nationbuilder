@@ -29,11 +29,12 @@ public class PostFiller {
 
     }
 
-    public void testFill() {
+    public void testFill() throws RubyException
+    {
 
 
         TestFiller testFiller = new TestFiller(this.context);
-        testFiller.testFillSmallNationbuilderDatastructure();
+        testFiller.testFillPowergridDatastructure();
 
     }
     private void save()

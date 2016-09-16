@@ -1,10 +1,14 @@
 package nationbuilder.lib.data.map.entities;
 
 import java.util.List;
+import nationbuilder.lib.Ruby.Association.annotation.Column;
 import nationbuilder.lib.Ruby.Association.annotation.Entity;
+import nationbuilder.lib.Ruby.Association.annotation.ManyToOne;
+import nationbuilder.lib.Ruby.Association.annotation.MappedBy;
 import nationbuilder.lib.Ruby.Association.annotation.OneToOne;
 import nationbuilder.lib.Ruby.Association.annotation.Transient;
 import nationbuilder.lib.Ruby.orm.BaseRubyModel;
+import nationbuilder.lib.Ruby.orm.ReferenceMapping;
 
 /**
  * @author patrick.ekkel
@@ -15,16 +19,19 @@ public class PowerConnection extends BaseRubyModel
 	/**
 	 * Name of the power line (most likely a generated value
 	 */
+	@Column
 	private String name;
 
 	/**
 	 * Max capacity that can be handled by this connection
 	 */
+	@Column
 	private int capacity;
 
 	/**
 	 * Current load that is being handled by this connection
 	 */
+	@Column
 	private int load;
 
 	/**
@@ -39,7 +46,13 @@ public class PowerConnection extends BaseRubyModel
 	@OneToOne(mapIdTo = "bid",foreignKey = "power_grid_node_b_id")
 	private PowerGridNode B;
 
-    @Transient
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	ReferenceMapping power_relay_station;
+
+	@ManyToOne(mapIdTo = MappedBy.SELF)
+	ReferenceMapping energy_building;
+
+	@Transient
 	private String bid;
     @Transient
 	private String aid;
