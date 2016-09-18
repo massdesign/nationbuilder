@@ -26,11 +26,6 @@ public class Main {
        // worldLoader.TestRun();
          worldLoader.Run();
         context.commit();
-
-
-
-
-
     }
 
 }

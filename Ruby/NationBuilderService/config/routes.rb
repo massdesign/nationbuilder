@@ -45,16 +45,13 @@ NationBuilderMapsService::Application.routes.draw do
 
   resources :maps
   
-  #post '/tiles/post/fetchsections', to: 'tiles#fetchsections', as: 'fetchsections'
   get '/tiles/find/:xposition/:yposition', to: 'tiles#find', as: 'tile1' 
-  #get '/users/', to: 'tiles#find', as: 'user1' 
   get '/users/names/:name', to: 'users#getuserbyname'
   get '/tiles/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'tiles#getscreen', as: 'tiles1' 
   get '/maps/getscreen/:centerpositionx/:centerpositiony/:width/:height', to: 'maps#getscreen', as: 'map1'
   post '/maps/post/fetchsections', to: 'maps#fetchsections', as: 'fetchsections'
-  
- # get  '/militarystrongholds/getscreen/:centerpositiony/:width/:height', to: 'militarystrongholds#getscreen', as: 'militarystrongholds2'  
-   
+  # TODO: er over  nadenken  om alle resources om de manier zoals hieronder te mappen.. dus op te delen in twee verschillende  delen
+  get '/power_connections/fetch/connections', to: 'power_connections#fetchconnections', as: 'fetchconnections'
   post '/militarystrongholds/createnewbase', to: 'militarystrongholds#createnewbase', as: 'militarystrongholds1'
   get '/states/first', to: 'states#first', as: 'states1'
   resources :states

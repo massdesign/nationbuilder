@@ -13,34 +13,8 @@ class TilesController < ApplicationController
   # GET /tiles/1.json
   def show
   end
-  # NOTE: verplaatst naar maps_controller
- # def fetchsections
-  	# NOTE  X en Y  zijn wat in javascript xOuter en yOuter zijn
-		# TODO: Deze moeten we uit config.js halen.. Hier moeten we nog wat op vinden  		
-  #		@section_width = 7
-  	#	@section_height = 7
-  		
-  	#	@tiles = Array.new  	  		
-	 #  params[:_json].each  do  |i| 
-			
-			#logger.info  "zou die het doen?" + i.to_s	   
-		#	logger.info "X=" + i[:X].to_s
-		#	logger.info "Y=" + i[:Y].to_s
-		#	@xOuter1 = i[:X]
-		#	@yOuter1 = i[:Y]
-		#	@xOuter2 = @xOuter1 + @section_width
-		#	@yOuter2 = @yOuter1 + @section_height 			
-			
-			# Eerst situatie maken zodat alle elke sectie in zijn eigen query opgehaald word. Als dat werkt kunnen we kijken naar optimalisatie
-		#	@tiles += Tile.find(:all,:conditions => 
-  	 	#	{ :xposition => @xOuter1..@xOuter2,
-  	   #	  :yposition => @yOuter1..@yOuter2
-  	 	#	})
-  	 	#	  logger.info "Collected tiles" + @tiles.size.to_s
-  	 		
-	   #end			  
- # end
-  # NOTE: deze getscreen methode wordt nu gebruikt blijkbaar, deze kan dus weg 
+
+  # NOTE: deze getscreen methode wordt niet gebruikt blijkbaar, deze kan dus weg 
   def getscreen
   	 xposrange = params[:width]
 	 yposrange = params[:height]  	 
@@ -48,22 +22,12 @@ class TilesController < ApplicationController
   	 { :xposition => params[:centerpositionx]..xposrange,
   	   :yposition => params[:centerpositiony]..yposrange
   	 })
-  	 #@tiles = Tile.all.where(xposition: params[:centerpositionx],yposition: params[:centerpositiony])
-  	 
-     #  @tile = Tile.where(xposition: 0,yposition: 0).take
-     #respond_to do |format|
- 		#format.json { render action: 'getscreen', status: :created, location: @tile }
-	 #end
+
   end
   # GET /tiles/foo
   def find 
   @tile = Tile.joins("LEFT JOIN claims ON tiles.id = claims.tile_id").joins(:resource).where(xposition: params[:xposition],yposition: params[:yposition]).take
   
-  #@resource = Resource.joins(:resourcetype).joins(:tiles).where(id: @tile.resource_id).take
-	#@resources = Resource.joins(:resourcetype).joins(:tile).where(tile_id: @tile.id)
-   #respond_to do |format|
- 	#	format.json { render action: 'find', status: :created, location: @resources }
-	# end
   end
   # GET /tiles/new
   def new

@@ -24,12 +24,12 @@ class PowerConnectionsController < ApplicationController
   def create
     @power_connection = PowerConnection.new(power_connection_params)
 	  if params[:aid] != nil      
-	  	@power_grid_node_a = PowerGridNode.find(params[:aid])
+	  	@power_grid_node_a = NodeType.find(params[:aid])
 	  	@power_connection.power_grid_node_a = @power_grid_node_a
 	  	#@gameentity.buildings << @building
 	  end
 	  if params[:bid] != nil      
-	  	@power_grid_node_b = PowerGridNode.find(params[:bid])
+	  	@power_grid_node_b = NodeType.find(params[:bid])
 	   @power_connection.power_grid_node_b = @power_grid_node_b
 	  end
       respond_to do |format|
@@ -41,6 +41,10 @@ class PowerConnectionsController < ApplicationController
         format.json { render json: @power_connection.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def fetchconnections
+	@power_connections = PowerConnection.all()  
   end
 
   # PATCH/PUT /power_connections/1
