@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, RubyException, NoSuchFieldException
     {
         ///RubyContext testContext = new DefaultRubyContextFactory().createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT,Main.class);
-        // TODO: kolomnamen zijn nog hoofdletter gevoelig.. dit kunnen we makkelijk fixen met een toLower
+        // TODO: kolomnamen zijn nog hoofdletter gevoelig.. dit kunnen we makkelijk fixen met e en toLower
         RubyContext context = new DefaultRubyContextFactory()
          .createRubyContext(RubyContextType.BULK_INSERT_SQL_JSON_UPDATE_DELETE_SELECT, Main.class);
         WorldLoader worldLoader = new WorldLoader(context);
