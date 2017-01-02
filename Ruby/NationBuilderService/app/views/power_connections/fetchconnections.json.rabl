@@ -13,8 +13,21 @@ object @power_connection
 		child :energy_building do			
 			child :building do
 				attributes :name, :capacity	
-				child :tile do
-					attributes :id				
+				child :tile do |t| 
+					#partial("tiles/index", :object => t)					
+					attributes :id, :xposition,:yposition,:xoffset,:yoffset				
+				end			
+			end	
+			child :energy_building_type do
+				attributes :name, :capacity, :powerOutput				
+			end	
+		end
+		child :power_relay_station	 do			
+			child :building do
+				attributes :name, :capacity	
+				child :tile do |t| 
+					#partial("tiles/index", :object => t)					
+					attributes :id, :xposition,:yposition,:xoffset,:yoffset				
 				end			
 			end	
 			child :energy_building_type do
@@ -27,19 +40,23 @@ object @power_connection
 	end
 
 	child :power_grid_node_b => :power_grid_node_b do
-		attributes :name
+	attributes :name
 		child :power_relay_station do
 			attributes :name	
 			child :power_relay_station_type do
-				attributes :name,:capacity			
+				attributes :name			
 			end 
 		end
 		child :energy_building do			
 			child :building do
-				attributes :name			
+				attributes :name, :capacity	
+				child :tile do |t| 
+					#partial("tiles/index", :object => t)					
+					attributes :id, :xposition,:yposition,:xoffset,:yoffset				
+				end			
 			end	
 			child :energy_building_type do
-				attributes :name,:powerOutput				
+				attributes :name, :capacity, :powerOutput				
 			end	
 		end
 		child :power_grid_node do

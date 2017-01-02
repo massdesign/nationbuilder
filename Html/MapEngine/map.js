@@ -2,10 +2,14 @@ function Map(javascript_console,applicationName)
 {
 		this._mapData = new MapData();
 		this._eventBus = EventBus.instance;
-	
+		
 		this._militaryService = new MilitaryService();
 		this._mapTranslator = new MapTranslator(this);
-		
+		this._powergridService = new PowergridService()
+		// NOTE: testcode 
+		this._powergridService.getAllPowergridConnections(function(data) {
+			console.log(data)		
+		})
 		this._layerService = new LayerService(this,javascript_console)
 		
 		this._angularBridge = new AngularBridge();

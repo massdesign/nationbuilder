@@ -1,6 +1,5 @@
 package test.IntegrationTests.RubyDaoTests;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,6 +39,15 @@ public class DatabaseTest
 		gks.next();
 
 		return  gks;
+	}
+
+	protected ResultSet getAllResultsFromTable(String tablename) throws SQLException
+	{
+		PreparedStatement selectStmt = connection.prepareStatement("SELECT * FROM " + tablename);
+		selectStmt.execute();
+		ResultSet gks = selectStmt.getResultSet();
+
+		return gks;
 	}
 
 }
