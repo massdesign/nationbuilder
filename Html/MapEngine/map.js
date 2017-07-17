@@ -7,8 +7,7 @@ function Map(javascript_console,applicationName)
 		this._mapTranslator = new MapTranslator(this);
 		this._powergridService = new PowergridService()
 		// NOTE: testcode 
-		this._powergridService.getAllPowergridConnections(function(data) {
-			console.log(data)		
+		this._powergridService.getAllPowergridConnections(function(data) {	
 		})
 		this._layerService = new LayerService(this,javascript_console)
 		

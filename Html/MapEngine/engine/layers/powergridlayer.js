@@ -2,19 +2,18 @@ function ItemLayer(parentMap, loginstance) {
     this.parentMap = parentMap;
     this.loginstance = loginstance;
     this._host = "localhost:8083"
-    this.assetUrl = "http://" + this._host + "/assets/mil_symbol.png";
+    this.powerplantAssetUrl = "http://" + this._host + "/assets/power_plant_symbol.png";
+    this.powerstationAssetUrl = "http://" + this._host + "/assets/power_station_symbol.png";
 
     this._items = [];
     this._layer = new Kinetic.Layer({clearBeforeDraw: true});
  
 
     this.renderItem = function (data) {
-    	
-    		console.log("even  testen of dit nog werkt")
-         
         var currentContext = this;
         if (data.tiles[0] != null) {
-			   var newAsset = new Image();
+
+            var newAsset = new Image();
             newAsset.src = this.assetUrl;
 
             var normalizedPosition = this.parentMap.getMapTranslator().normalizePosition(data.tiles[0].tile.xposition, data.tiles[0].tile.yposition);
@@ -41,9 +40,6 @@ function ItemLayer(parentMap, loginstance) {
 				currentContext._layer.draw();
 				
 				}
-
-           
- 
         }
        
     }

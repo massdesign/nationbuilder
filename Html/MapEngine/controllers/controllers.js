@@ -53,7 +53,8 @@ nationbuilderApp.controller('ClickdataCtrl',function($scope) {
 
    		// Hier moet ik dus mijn tile informatie vandaan halen (location)
    		clickedTile = map.getMapData().getClickedTile();
-			console.log(clickedTile)			
+   		console.log("lekker geklikte tile")
+			console.log(newMilitaryBase)			
 			newMilitaryBase.tile_id = clickedTile.tile.id;
 			//newMilitaryBase
    		ms.createNewBase(newMilitaryBase,function(json_data) {
